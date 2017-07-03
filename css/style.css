@@ -1,0 +1,13 @@
+.header { border-bottom: 5px solid #1AA094 }
+.header>.logo { width: 100px; height: 100%;  background: url("../layUi/images/face/0.gif") center no-repeat; }
+.header>.title { font-size: 30px; color: white; }
+.header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
+.header>.layui-nav { right: 0px; position: absolute; background-color: transparent }
+
+/*.side .layui-icon{ font-size: 20px; }*/
+.layui-layout-admin .layui-side{ margin-top: 5px}
+.layui-body{     top: 70px;  left: 203px;
+    width: calc(100% - 203px);  width: -moz-calc(100% - 203px);  width: -webkit-calc(100% - 203px);
+    height: calc(100% - 100px);  height: -moz-calc(100% - 100px);  height: -webkit-calc(100% - 100px);
+    margin: 0px;  overflow-x: hidden;  overflow-y: auto;  z-index: 1000;  border: none !important;  margin-left: -1px;  padding-bottom: 0px;}
+

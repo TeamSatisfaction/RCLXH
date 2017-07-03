@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link href="layUi/css/layui.css" rel="stylesheet">
+
+    <script src="layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: 'js/' //你的模块目录
+        }).use('app'); //加载入口
+    </script>
+</head>
+<body class="main_body">
+    <div class="layui-layout layui-layout-admin">
+        <!--标题栏-->
+        <div class="layui-header header">
+            <div class="layui-inline logo layui-icon" ></div>
+            <h1 class="title layui-inline">title</h1>
+            <span class="time layui-inline" >2017年01月01日 星期一</span>
+
+            <ul class="layui-nav layui-inline " lay-filter="user">
+                <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
+                <li class="layui-nav-item">
+
+                    <a href="#">
+                        <img class="layui-icon" src="layUi/images/face/3.gif" />
+                        <span>用户名11111</span>
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="#">选项1</a></dd>
+                        <dd><a href="#">选项2</a></dd>
+                        <dd><a href="#">跳转</a></dd>
+                    </dl>
+                </li>
+            </ul>
+
+        </div>
+        <!--<h1 class="layui-bg-cyan ">index</h1>-->
+
+        <!--左侧菜单-->
+        <div class="layui-bg-black layui-side side">
+            <ul class="layui-nav layui-nav-tree" lay-filter="left_menu">
+                <li class="layui-nav-item">
+                    <a href="#">
+                        <i class="layui-icon">&#xe609;</i>
+                        <span>首页</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#">
+                        <i class="layui-icon">&#xe62a;</i>
+                        <span>污染源管理</span>
+                    </a>
+                </li>
+                 <li class="layui-nav-item">
+                    <a href="#">
+                        <i class="layui-icon">&#xe620;</i>
+                        <span>系统管理</span>
+                    </a>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <!--主内容区-->
+        <div class="layui-body layui-form">
+            <div class="layui-tab bodyTab" lay-filter="bodyTab">
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
