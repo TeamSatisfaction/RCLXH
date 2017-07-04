@@ -5,7 +5,6 @@
     <title>Title</title>
 
     <link href="layUi/css/layui.css" rel="stylesheet">
-
     <script src="layUi/layui.js"></script>
     <script>
         layui.config({
@@ -45,30 +44,59 @@
             <ul class="layui-nav layui-nav-tree" lay-filter="left_menu">
                 <li class="layui-nav-item">
                     <a href="#" data-url="pages/RTMonitor.html" onclick="layui.index.loadPage('pages/RTMonitor.html')">
-                        <i class="layui-icon">&#xe609;</i>
+                        <i class="layui-icon">&#xe600;</i>
                         <span>首页</span>
                     </a>
                 </li>
                 <li class="layui-nav-item">
                     <a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">
-                        <i class="layui-icon">&#xe62a;</i>
-                        <span>污染源管理</span>
+                        <i class="layui-icon">&#xe636;</i>
+                        <span>污染源</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">
+                        <i class="layui-icon">&#xe645;</i>
+                        <span>报警管理</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">
+                        <i class="layui-icon">&#xe62c;</i>
+                        <span>统计分析</span>
                     </a>
                 </li>
                  <li class="layui-nav-item">
-                    <a href="#">
+                    <a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html')">
                         <i class="layui-icon">&#xe620;</i>
                         <span>系统管理</span>
                     </a>
                 </li>
-
+                <li class="layui-nav-item">
+                    <a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">
+                        <i class="layui-icon">&#xe629;</i>
+                        <span>无人机数据管理</span>
+                    </a>
+                </li>
+                <li class="layui-nav-item">
+                    <a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">
+                        <i class="layui-icon">&#xe688;</i>
+                        <span>水质自动监测站</span>
+                    </a>
+                </li>
+                <!--<li class="layui-nav-item">-->
+                    <!--<a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">-->
+                        <!--<i class="layui-icon">&#xe6ed;</i>-->
+                        <!--<span>视频监控</span>-->
+                    <!--</a>-->
+                <!--</li>-->
             </ul>
 
         </div>
 
         <!--主内容区-->
         <div class="layui-body layui-form">
-            <iframe id="index_frame"></iframe>
+            <iframe id="index_frame" src="pages/RTMonitor.html"></iframe>
         </div>
     </div>
 </body>

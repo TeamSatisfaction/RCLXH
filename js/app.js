@@ -18,7 +18,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
     /*要USE*/
     /*USE完以后才能调用*/
     layui.use('utils');
-
     /*调用JS中的方法*/
     layui.use('index', function () {
         layui.index.init();
