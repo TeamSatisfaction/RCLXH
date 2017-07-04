@@ -24,4 +24,5 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     };
     //输出test接口
     exports('index', obj);
+
 });
