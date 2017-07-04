@@ -11,14 +11,19 @@ layui.define(['layer', 'form', 'element'], function(exports){
 
     /*加载JS模块*/
     layui.extend({ //设定模块别名
-        index : 'index/index'
+        index : 'index/index',
+        utils : 'utils'
+    });
 
-    })
+    /*要USE*/
+    /*USE完以后才能调用*/
+    layui.use('utils');
 
     /*调用JS中的方法*/
     layui.use('index', function () {
         layui.index.init();
     })
+
 
     exports('app', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });

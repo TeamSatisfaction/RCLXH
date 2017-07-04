@@ -7,9 +7,11 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     var init1 = function () {
         // layer.alert("initfunction")
         document.getElementsByTagName("h1")[0].innerHTML = "这是个测试项目"
-        
+        setInterval(
+            'document.getElementById("time").innerHTML = layui.utils.dateFormat("yy年MM月dd日 HH:mm:ss EEE");',
+            100);
     };
-    
+
     var initLeftClick = function () {
         
     }
