@@ -4,17 +4,13 @@
 
 layui.define('layer', function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     /*方法*/
-    var init1 = function () {
-        // layer.alert("initfunction")
-        document.getElementsByTagName("h1")[0].innerHTML = "这是个测试项目"
+    var init = function () {
+        /*标题栏时间*/
         setInterval(
             'document.getElementById("time").innerHTML = layui.utils.dateFormat("yy年MM月dd日 HH:mm:ss EEE");',
             100);
-    };
 
-    var initLeftClick = function () {
-        
-    }
+    };
     
     var loadPage = function (url) {
         var $ = layui.jquery;
@@ -23,7 +19,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
 
     /*输出内容，注意顺序*/
     var obj = {
-        init : init1,
+        init : init,
         loadPage : loadPage
     };
     //输出test接口

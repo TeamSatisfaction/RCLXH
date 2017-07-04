@@ -7,7 +7,7 @@
 .layui-nav-bar{ background-color: #1AA094 }
 /*.side .layui-icon{ font-size: 20px; }*/
 .layui-layout-admin .layui-side{ margin-top: 5px}
-.layui-body{     top: 65px !important;   bottom: 0 !important;
-    margin: 0px;  overflow-x: hidden;  overflow-y: auto;  z-index: 1000;  border: none !important;   padding-bottom: 0px;}
+.layui-body{ top: 65px !important;   bottom: 0 !important;
+    margin: 0px;  overflow-x: hidden;  overflow-y: auto;  z-index: 150;  border: none !important;   padding-bottom: 0px;}
 
 #index_frame{  width: 100%; height: 100%; border:none; }
