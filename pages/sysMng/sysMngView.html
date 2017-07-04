@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ch">
 <head>
     <meta charset="UTF-8">
     <meta name="renderer" content="webkit">
@@ -9,7 +9,9 @@
     <script src="../../layUi/layui.js"></script>
     <!--<script src="../../js/sysMng/sysMng.js"></script>-->
     <script>
-        layui.use('element', function(){})
+        layui.config({
+            base: '../../js/' //你的模块目录
+        }).use('sysMng/sysMng'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
@@ -23,7 +25,7 @@
         <div class="layui-tab-content">
             <!--<iframe id="index_frame" src="../../pages/RTMonitor.html"></iframe>-->
             <div class="layui-tab-item layui-show">
-                <iframe id="index_frame" src="../../pages/RTMonitor.html"></iframe>
+                <button class="layui-btn" onclick="layui.sysMng.a();">click</button>
             </div>
             <div class="layui-tab-item">内容2</div>
             <div class="layui-tab-item">内容3</div>

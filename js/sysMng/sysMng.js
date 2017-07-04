@@ -1,3 +1,8 @@
-layui.define('layer',function (exports) {
+layui.define(['layer', 'element'],function (exports) {
 
+    function a() {
+        alert('123')
+    }
+
+    exports('sysMng', {a:a})
 })
