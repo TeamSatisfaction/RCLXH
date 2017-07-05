@@ -7,7 +7,6 @@
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
-    <!--<script src="../../js/sysMng/sysMng.js"></script>-->
     <script>
         layui.config({
             base: '../../js/' //你的模块目录
@@ -25,10 +24,168 @@
         <div class="layui-tab-content">
             <!--<iframe id="index_frame" src="../../pages/RTMonitor.html"></iframe>-->
             <div class="layui-tab-item layui-show">
-                <button class="layui-btn" onclick="layui.sysMng.a();">click</button>
+                <form class="layui-form" action="" style="margin-bottom: 0px;">
+                    <div class="layui-form-item" style="margin-bottom: 0px;">
+                        <label class="layui-form-label">企业名称</label>
+                        <div class="layui-input-inline">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                        </div>
+                        <button class="layui-btn">
+                            <i class="layui-icon">&#xe615;</i>
+                        </button>
+                        <button class="layui-btn" style="position: absolute;right: 10px">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
+                    </div>
+                </form>
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="60">
+                        <col width="300">
+                        <col>
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                        <col width="100">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>编号</th>
+                        <th>企业名称</th>
+                        <th>企业地址</th>
+                        <th>控制级别</th>
+                        <th>联系人</th>
+                        <th>联系人电话</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="company-result">
+                    </tbody>
+                </table>
+                <div id="demo1" style="position: absolute;bottom: 0px"></div>
             </div>
-            <div class="layui-tab-item">内容2</div>
-            <div class="layui-tab-item">内容3</div>
+            <div class="layui-tab-item">
+                <form class="layui-form" action="" style="margin-bottom: 0px;">
+                    <div class="layui-form-item" style="margin-bottom: 0px;">
+                        <label class="layui-form-label">设备名称</label>
+                        <div class="layui-input-inline">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
+                        </div>
+                        <button class="layui-btn"><i class="layui-icon"></i></button>
+                    </div>
+                </form>
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                        <col width="150">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>人物</th>
+                        <th>民族</th>
+                        <th>出场时间</th>
+                        <th>格言</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>贤心</td>
+                        <td>汉族</td>
+                        <td>1989-10-14</td>
+                        <td>人生似修行</td>
+                    </tr>
+                    <tr>
+                        <td>张爱玲</td>
+                        <td>汉族</td>
+                        <td>1920-09-30</td>
+                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                    </tr>
+                    <tr>
+                        <td>Helen Keller</td>
+                        <td>拉丁美裔</td>
+                        <td>1880-06-27</td>
+                        <td> Life is either a daring adventure or nothing.</td>
+                    </tr>
+                    <tr>
+                        <td>岳飞</td>
+                        <td>汉族</td>
+                        <td>1103-北宋崇宁二年</td>
+                        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
+                    </tr>
+                    <tr>
+                        <td>孟子</td>
+                        <td>华夏族（汉族）</td>
+                        <td>公元前-372年</td>
+                        <td>猿强，则国强。国强，则猿更强！ </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="layui-tab-item">
+                <form class="layui-form" action="" style="margin-bottom: 0px;">
+                    <div class="layui-form-item" style="margin-bottom: 0px;">
+                        <label class="layui-form-label">企业名称</label>
+                        <div class="layui-input-inline">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                        </div>
+                        <button class="layui-btn"><i class="layui-icon"></i></button>
+                    </div>
+                </form>
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="150">
+                        <col width="150">
+                        <col width="200">
+                        <col>
+                        <col width="150">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>人物</th>
+                        <th>民族</th>
+                        <th>出场时间</th>
+                        <th>格言</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>贤心</td>
+                        <td>汉族</td>
+                        <td>1989-10-14</td>
+                        <td>人生似修行</td>
+                    </tr>
+                    <tr>
+                        <td>张爱玲</td>
+                        <td>汉族</td>
+                        <td>1920-09-30</td>
+                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
+                    </tr>
+                    <tr>
+                        <td>Helen Keller</td>
+                        <td>拉丁美裔</td>
+                        <td>1880-06-27</td>
+                        <td> Life is either a daring adventure or nothing.</td>
+                    </tr>
+                    <tr>
+                        <td>岳飞</td>
+                        <td>汉族</td>
+                        <td>1103-北宋崇宁二年</td>
+                        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
+                    </tr>
+                    <tr>
+                        <td>孟子</td>
+                        <td>华夏族（汉族）</td>
+                        <td>公元前-372年</td>
+                        <td>猿强，则国强。国强，则猿更强！ </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </body>
