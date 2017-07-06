@@ -9,7 +9,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         setInterval(
             'document.getElementById("time").innerHTML = layui.utils.dateFormat("yy年MM月dd日 HH:mm:ss EEE");',
             100);
-
+        /*加载首页*/
+        loadPage('pages/map/map.html')
     };
     
     var loadPage = function (url) {

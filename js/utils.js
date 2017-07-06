@@ -40,13 +40,12 @@ layui.define(function(exports){
         return fmt;
     };
 
-    var utilTest = function () {
-        layer.alert("util.js is valid")
-    }
 
-
+    var test = function () {
+        layui.alert("test")
+    };
     exports('utils', {
         dateFormat: dateFormat,
-        utilTest: utilTest
+        test: test
     }); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });

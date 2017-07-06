@@ -13,3 +13,5 @@
 #index_frame{  width: 100%; height: 99.5%; border:none; }
 
 .mng-frame{ width: 100%; height: 100%; border:none; }
+
+#mapDiv { width: 100%; border:none; position: fixed;  top:0; bottom: 0; }
