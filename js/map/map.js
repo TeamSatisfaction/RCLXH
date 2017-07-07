@@ -15,11 +15,16 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     });
 
     function pageInit() {
-        console.log(layui.mapUtils)
         layui.mapUtils.addPoint( new esri.geometry.Point(105.5779702660,29.4048578414, new esri.SpatialReference(4326)), "monistation", false, "123")
     }
 
+    function btnClick() {
+        layer.alert('click')
+    }
+
     //输出test接口
-    exports('map/map', {});
+    exports('map', {
+        btnClick : btnClick
+    });
 
 });

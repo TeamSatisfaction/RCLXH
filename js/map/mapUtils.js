@@ -43,11 +43,9 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     /*地图加载*/
     dojo.ready( function () {
         map.addLayer(basemap);
-
         /*点位点击事件*/
         dojo.connect(map, "onClick", function (evt) {
             //得到当前点位信息
-           console.log(evt)
             var point = evt.graphic.geometry,
                 attr = evt.graphic.attributes;
             map.centerAt(point);
@@ -56,7 +54,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
 
     var obj = {
         map:map,
-        addPoint: addPoint
+        addPoint: addPoint,
+        clearMap:clearMap
     };
     //输出test接口
     exports('mapUtils', obj);
