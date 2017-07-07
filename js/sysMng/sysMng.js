@@ -13,7 +13,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
             if(status == "success") {
                 var cData = data.jsonObject.data,
                     str = "";
-                var nums = 18; //每页出现的数据量
+                var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var render = function(cData, curr){
                     var arr = []
@@ -48,9 +48,10 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
             }
         })
     };
+    loadCompanyData();
     var obj = {
         loadCompanyData : loadCompanyData
     }
     /*输出内容，注意顺序*/
-    exports('sysMng',obj,loadCompanyData())
+    exports('sysMng',obj)
 })
