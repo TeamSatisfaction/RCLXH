@@ -1,10 +1,14 @@
-layui.define(['layer', 'element','laypage'],function (exports) {
+layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
         element = layui.element,
         laypage = layui.laypage,
+        layedit = layui.layedit,
+        laydate = layui.laydate,
         cTobody = $('#company-result');
     var loadCompanyData = function () {
+        var name = $("#name").val();
+        console.log(name);
         $.post("../../data/companyData.json",function (data,status) {
             if(status == "success") {
                 var cData = data.jsonObject.data,
@@ -43,6 +47,10 @@ layui.define(['layer', 'element','laypage'],function (exports) {
                 layer.msg('请求失败！');
             }
         })
+    };
+    var obj = {
+        loadCompanyData : loadCompanyData
     }
-    exports('sysMng/sysMng', loadCompanyData())
+    /*输出内容，注意顺序*/
+    exports('sysMng',obj,loadCompanyData())
 })

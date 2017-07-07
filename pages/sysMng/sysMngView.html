@@ -10,7 +10,9 @@
     <script>
         layui.config({
             base: '../../js/' //你的模块目录
-        }).use('sysMng/sysMng'); //加载入口
+        }).extend({
+            sysMng : 'sysMng/sysMng'
+        }).use('sysMng'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
@@ -24,22 +26,32 @@
             <li lay-id="角色管理">角色管理</li>
         </ul>
         <div class="layui-tab-content">
-            <!--<iframe id="index_frame" src="../../pages/RTMonitor.html"></iframe>-->
             <div class="layui-tab-item layui-show">
-                <form class="layui-form" action="" style="margin-bottom: 0px;">
+                <div class="layui-form" action="" style="margin-bottom: 0px;">
                     <div class="layui-form-item" style="margin-bottom: 0px;">
                         <label class="layui-form-label">企业名称</label>
                         <div class="layui-input-inline">
-                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                            <input id="name" name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">管控级别</label>
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-search="">
+                                    <option value="">直接选择或搜索选择</option>
+                                    <option value="国控">国控</option>
+                                    <option value="省控">省控</option>
+                                    <option value="市控">市控</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="layui-btn" onclick="layui.sysMng.loadCompanyData()">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
                         <button class="layui-btn" style="position: absolute;right: 10px">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
-                </form>
+                </div>
                 <table class="layui-table" lay-even="" lay-skin="row">
                     <colgroup>
                         <col width="60">
@@ -52,10 +64,10 @@
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>编号</th>
+                        <th>序号</th>
                         <th>企业名称</th>
                         <th>企业地址</th>
-                        <th>控制级别</th>
+                        <th>管控级别</th>
                         <th>联系人</th>
                         <th>联系人电话</th>
                         <th>操作</th>
