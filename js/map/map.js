@@ -1,7 +1,7 @@
 /**
  * Created by M4 on 2017/7/5.
  */
-layui.define('layer', function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     /*加载JS模块*/
     layui.extend({ //设定模块别名
         mapUtils : 'map/mapUtils'
@@ -19,12 +19,17 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     }
 
     function btnClick() {
-        layer.alert('click')
+        layui.mapUtils.addRandomPoint();
+    }
+
+    function loadPage(url) {
+        window.parent.layui.index.loadPage(url)
     }
 
     //输出test接口
     exports('map', {
-        btnClick : btnClick
+        btnClick : btnClick,
+        loadPage: loadPage
     });
 
 });

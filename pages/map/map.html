@@ -22,6 +22,74 @@
 </head>
 <body style="height: 100%;">
     <div id="mapDiv"></div>
-    <button class="layui-btn-danger" style="position: absolute; top: 50px; left: 50px;" onclick="layui.map.btnClick();">click</button>
+    <button class="layui-btn-danger" style="position: absolute; top: 50px; right: 50px;" onclick="layui.map.btnClick();">增加模拟点位</button>
+
+    <!--数据统计区域-->
+    <div class="mapStats">
+        <div class="mapStats_close">
+            <i class="layui-icon">&#x1006;</i>
+        </div>
+        <div class="layui-tab layui-tab-card">
+            <ul class="layui-tab-title">
+                <li class="layui-this">监测情况</li>
+                <li>环境统计</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show">
+                    <!--搜索组件-->
+                    <div class="layui-form">
+                        <div class="mapStats_divider">实时监测</div>
+                        <div class="layui-form-item">
+
+                            <label class="layui-form-label" for="mapStats_name">排口名称</label>
+                            <div class="layui-input-inline">
+                                <input id="mapStats_name" name="mapStats_name" autocomplete="true"
+                                       placeholder="请输入排口名称" class="layui-input" type="text">
+                            </div>
+                            <div class="layui-inline">
+                            <label class="layui-form-label" for="mapStats_fac">监测因子</label>
+                            <div class="layui-input-inline" lay-verify="required" >
+                                <select id="mapStats_fac" name="mapStats_fac">
+                                    <option value="">请选择</option>
+                                    <option value="COD">化学需氧量</option>
+                                    <option value="TP">总磷</option>
+                                    <option value="TN">总氮</option>
+                                    <option value="MN">高锰酸盐指数</option>
+                                </select>
+                            </div></div>
+
+                            <button class="layui-btn">
+                                <i class="layui-icon">&#xe615;</i>
+                                查询
+                            </button>
+                        </div>
+                    </div>
+                    <!--统计组件-->
+                    <div>
+                        <div class="mapStats_statsTitle">重庆市荣昌区江特表面处理厂</div>
+                        <div class="mapStats_statsStatus">
+                            <span>排口名称：后营门污水排放口</span>
+                            <span>排口状态：正常</span>
+                        </div>
+                        <div class="mapStats_statsCharts"></div>
+                    </div>
+                    <!--告警组件-->
+                    <div>
+                        <div class="mapStats_divider">报警情况</div>
+                        <div class="mapStats_alarmGeneral">
+                            <i class="layui-icon">&#xe629;</i>
+                            <span>截止当前时间为止视频类报警总数<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">10</a>个，
+                                监测类报警总数<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">20</a>个，
+                                工况类报警<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">11</a>个，
+                                长期未处理报警数达到<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">9</a>个。</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="layui-tab-item">2</div>
+            </div>
+        </div>
+
+    </div>
 </body>
 </html>

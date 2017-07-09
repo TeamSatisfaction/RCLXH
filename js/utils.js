@@ -40,12 +40,18 @@ layui.define(function(exports){
         return fmt;
     };
 
+    var loadPage = function(url){
+        var $ = layui.jquery;
+        console.log($("#mapDiv"));
+        $("#index_frame").attr("src", url)
+    };
 
     var test = function () {
         layui.alert("test")
     };
     exports('utils', {
         dateFormat: dateFormat,
-        test: test
+        test: test,
+        loadPage: loadPage
     }); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });
