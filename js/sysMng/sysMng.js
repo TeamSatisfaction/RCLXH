@@ -6,9 +6,15 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         layedit = layui.layedit,
         laydate = layui.laydate,
         cTobody = $('#company-result');
+        eTobody = $('#equipment-result');
+    var loadPage = function(objectid){
+        console.log(objectid);
+        var url = "../../pages/sysMng/companyDataView.html";
+        $("#index_frame").attr("src", url);
+        console.log( $("#index_frame"))
+    };
     var loadCompanyData = function () {
         var name = $("#name").val();
-        console.log(name);
         $.post("../../data/companyData.json",function (data,status) {
             if(status == "success") {
                 var cData = data.jsonObject.data,
@@ -26,7 +32,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                             '<td>' + item.LEVEL + '</td>' +
                             '<td>' + item.LINKNAME + '</td>' +
                             '<td>' + item.LINKPHONE + '</td>' +
-                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '<td><a href="#" onclick="layui.sysMng.loadPage('+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
@@ -48,9 +54,55 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
             }
         })
     };
+    var loadEquipmentData = function () {
+        $.ajax({
+            url :'../../data/equipmentData.json',
+            type : 'post',
+            success : function (result) {
+                var eData = result.jsonObject.data,
+                    str = "";
+                var nums = 16; //每页出现的数据量
+                //模拟渲染
+                var render = function(eData, curr) {
+                    var arr = []
+                        , thisData = eData.concat().splice(curr * nums - nums, nums);
+                    layui.each(thisData, function(index, item){
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>' + item.eCode + '</td>' +
+                            '<td>' + item.name + '</td>' +
+                            '<td>' + item.eModel + '</td>' +
+                            '<td>' + item.mType + '</td>' +
+                            '<td>' + item.eType + '</td>' +
+                            '<td>' + item.eCType + '</td>' +
+                            '<td>' + item.useTime + '</td>' +
+                            '<td>' + item.ifEquipment + '</td>' +
+                            '<td><a href="#" onclick=""><i class="layui-icon">&#xe63c;</i></a>' +
+                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '</tr>';
+                        arr.push(str);
+                    });
+                    return arr.join('');
+                };
+                //调用分页
+                laypage({
+                    cont: 'demo2'
+                    ,pages: Math.ceil(eData.length/nums) //得到总页数
+                    ,jump: function(obj){
+                        eTobody.html(render(eData, obj.curr));
+                    }
+                    , skip: true
+                });
+            }
+        })
+    }
+    loadEquipmentData();
     loadCompanyData();
     var obj = {
-        loadCompanyData : loadCompanyData
+        loadPage : loadPage,
+        loadCompanyData : loadCompanyData,
+        loadEquipmentData : loadEquipmentData
     }
     /*输出内容，注意顺序*/
     exports('sysMng',obj)
