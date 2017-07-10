@@ -2,6 +2,7 @@
  * Created by M4 on 2017/7/5.
  */
 layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+    var $ = layui.jquery;
     /*加载JS模块*/
     layui.extend({ //设定模块别名
         mapUtils : 'map/mapUtils'
@@ -25,11 +26,153 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
     function loadPage(url) {
         window.parent.layui.index.loadPage(url)
     }
+    
+    function statsSearch() {
 
+    }
+
+    function close() {
+        // $(".mapStats").animate({left:-560},300)
+        $(".mapStats").find(".layui-tab-content").slideToggle();
+        $(".mapStats_close").toggleClass("rotate");
+    }
+
+    /*滚动报警信息*/
+    function alarmNewsScroll() {
+        var ul_container = $(".mapStats_alarmNews"),
+            ul = ul_container.find("ul"),
+            li = ul.find("li"),
+            num = li.length,
+            height = 25,
+            offsetHeight = 0;
+
+        setInterval(function () {
+            offsetHeight += height*3;
+            if(offsetHeight >= num*height){
+                offsetHeight = 0;
+            }
+            ul.animate({marginTop: (0-offsetHeight)+'px'});
+        }, 2000)
+    };
+    alarmNewsScroll();
+
+    function draw3dPie(chartId) {
+        var option = {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 60,
+                    beta: 0
+                }
+            },
+            credits: {enabled: false},
+            title: {text: '2017年6月地表水统计情况'},
+            tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 20,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    },
+                    size: '200%'
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '水质级别占比',
+                data: [
+                    ['Ⅰ类',   45.0],
+                    ['Ⅱ类',   26.8],
+                    ['Ⅲ类',   26.8],
+                    ['Ⅳ类',   8.5],
+                    ['Ⅴ类',   6.2],
+                    ['Ⅵ类',   0.7]
+                ]
+            }]
+        };
+        Highcharts.chart('mapStats_3dPie', option);
+    }
+    draw3dPie();
+
+    function drawLine() {
+        var now = new Date(),
+            today = new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+            data = [];
+        for(var i = today.getTime(); i < now.getTime(); i += 300000){
+            data.push([new Date(i), Math.round(Math.random()*20)])
+        }
+        // console.log((now.getTime()-today.getTime())/30000)
+        var option = {
+            chart: {
+            },
+            title: {
+                text: '化学需氧量（mg/L）'
+            },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            tooltip: {
+                dateTimeLabelFormats: {
+                    millisecond: '%H:%M:%S.%L',
+                    second: '%H:%M:%S',
+                    minute: '%H:%M',
+                    hour: '%H:%M',
+                    day: '%Y-%m-%d',
+                    week: '%m-%d',
+                    month: '%Y-%m',
+                    year: '%Y'
+                }
+            },
+            yAxis: {
+                title: {enabled: false},
+                min: 0
+            },
+            legend: {
+                enabled: false
+            },
+            plotOptions: {
+                area: {
+                    marker: {
+                        radius: 2
+                    },
+                    lineWidth: 1,
+                    states: {
+                        hover: {
+                            lineWidth: 1
+                        }
+                    },
+                    threshold: null
+                }
+            },
+            series: [{
+                type: 'area',
+                name: '化学需氧量',
+                data: data
+            }]
+        };
+        Highcharts.chart('mapStats_Line', option);
+    }
+    setInterval(function(){drawLine()}, 30000)
+    drawLine();
     //输出test接口
     exports('map', {
         btnClick : btnClick,
-        loadPage: loadPage
+        loadPage: loadPage,
+        close: close
     });
 
 });

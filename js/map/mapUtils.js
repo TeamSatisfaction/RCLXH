@@ -52,19 +52,28 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         map.clear()
     };
     /*infoWindow*/
-    var infoWin = function(){
-        /*point鼠标悬浮事件及内容*/
-        graphicLayer.on("mouse-over", function (e) {
-            console.log(e)
-            var str = "<p><span style='width: 48%; display: inline-block'>空气质量指数：<span style='font-weight: bold'>"+18+"</span></span>"
-                +"<span style='display: inline-block; width: 50%'>首要污染物：-</span></p>"
-            +"<p><span style='width: 48%; display: inline-block'>空气质量指数：<span style='font-weight: bold'>"+18+"</span></span>"
-            +"<span style='display: inline-block; width: 50%'>首要污染物：-</span></p>";
-            map.infoWindow.setTitle("空气质量指数(AQI)")
-            map.infoWindow.setContent(str);
-            map.infoWindow.show(e.graphic.geometry);
-        })
-
+    var infoWin = function(e) {
+        var attr = e.graphic.attributes,
+            point = e.graphic.geometry,
+            symbolUrl = e.graphic.symbol.url,
+            contentHtml = "",
+            titleHtml = "";
+        if (symbolUrl.indexOf("factory") != -1) {
+            titleHtml = "重庆永荣矿务局总医院";
+            contentHtml += "<p>企业名称：<span>重庆永荣矿务局总医院</span></p>"
+                +"<p>企业地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
+                +"<p>管控级别：<span>市控</span></p>"
+                +"<p>行业类别：<span>医药制造业</span></p>"
+                +"<p>报警总数：<a onclick='layui.map.loadPage(\"../alarmMng/alarmMng.html\")'>12个</a></p>";
+        } else if (symbolUrl.indexOf("monistation") != -1) {
+            titleHtml = "水质自动监测站";
+            contentHtml += "<p>名称：<span>水质自动监测站</span></p>"
+                +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
+                +"<p>报警总数：<a onclick='layui.map.loadPage(\"../alarmMng/alarmMng.html\")'>12个</a></p>";
+        }
+        map.infoWindow.setTitle(titleHtml)
+        map.infoWindow.setContent(contentHtml);
+        map.infoWindow.show(point);
     };
 
     /*地图加载*/
@@ -77,7 +86,9 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
                 attr = evt.graphic.attributes;
             map.centerAt(point);
         });
-        infoWin();
+        graphicLayer.on("mouse-over", function (e) {
+            infoWin(e);
+        });
     });
 
     var obj = {

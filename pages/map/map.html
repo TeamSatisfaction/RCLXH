@@ -7,8 +7,12 @@
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <link href="../../css/style.css" rel="stylesheet">
     <link rel="stylesheet" href="../../js/lib/arcgis/esri/css/esri.css">
-    <script src="../../layUi/layui.js"></script>
+    <link rel="stylesheet" href="../../js/lib/highcharts/highcharts.css">
+
     <script src="../../js/lib/arcgis/init.js"></script>
+    <script src="../../js/lib/highcharts/highcharts.js"></script>
+    <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
+    <script src="../../layUi/layui.js"></script>
     <script>
         layui.config({
             base: '../../js/' //你的模块目录
@@ -26,8 +30,8 @@
 
     <!--数据统计区域-->
     <div class="mapStats">
-        <div class="mapStats_close">
-            <i class="layui-icon">&#x1006;</i>
+        <div class="mapStats_close" onclick="layui.map.close();">
+            <i class="layui-icon">&#xe625;</i>
         </div>
         <div class="layui-tab layui-tab-card">
             <ul class="layui-tab-title">
@@ -71,7 +75,7 @@
                             <span>排口名称：后营门污水排放口</span>
                             <span>排口状态：正常</span>
                         </div>
-                        <div class="mapStats_statsCharts"></div>
+                        <div class="mapStats_statsCharts" id="mapStats_Line"></div>
                     </div>
                     <!--告警组件-->
                     <div>
@@ -83,10 +87,70 @@
                                 工况类报警<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">11</a>个，
                                 长期未处理报警数达到<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">9</a>个。</span>
                         </div>
+                        <div class="mapStats_alarmNews">
+                            <ul>
+                                <li>
+                                    <span>2017年7月6日14:00:00</span>
+                                    <span>华森制药厂1</span>
+                                    <span>污水车间污水排放口COD排放超标</span>
+                                </li>
+                                <li>
+                                    <span>2017年7月6日14:00:00</span>
+                                    <span>华森制药厂2</span>
+                                    <span>污水车间污水排放口COD排放超标</span>
+                                </li>
+                                <li>
+                                    <span>2017年7月6日14:00:00</span>
+                                    <span>华森制药厂3</span>
+                                    <span>污水车间污水排放口COD排放超标</span>
+                                </li>
+                                <li>
+                                    <span>2017年7月6日14:00:00</span>
+                                    <span>华森制药厂4</span>
+                                    <span>污水车间污水排放口COD排放超标</span>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
 
-                <div class="layui-tab-item">2</div>
+                <!--水环境统计-->
+                <div class="layui-tab-item">
+                    <div>
+                        <div class="mapStats_divider">环境统计</div>
+                        <div class="mapStats_statsCharts" id="mapStats_3dPie"></div>
+                    </div>
+                    <div>
+                        <div class="mapStats_divider">2017年荣昌区濑溪河流域环境统计数据</div>
+                        <div class="mapStats_table">
+                            <table class="layui-table" lay-even="" lay-skin="row">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>指标名称</th>
+                                    <th>计量单位</th>
+                                    <th>排放量</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr><td>六价铬</td><td>千克</td><td>300.21</td></tr>
+                                <tr><td>化学需氧量</td><td>万吨</td><td>30.3</td></tr>
+                                <tr><td>氨氮</td><td>万吨</td><td>6.13</td></tr>
+                                <tr><td>总镍</td><td></td><td></td></tr>
+                                <tr><td>PH</td><td></td><td></td></tr>
+                                <tr><td>高锰酸盐</td><td></td><td></td></tr>
+                                <tr><td>水温</td><td></td><td></td></tr>
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+
+                </div>
             </div>
         </div>
 

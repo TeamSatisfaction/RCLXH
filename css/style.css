@@ -18,22 +18,40 @@
 .layui-btn-danger{ padding: 10px;}
 /*覆盖arcgis窗口CSS*/
 .esriPopup .titleButton.maximize{ display: none}
-.esriPopup .titlePane {line-height: 30px; background-color: #23262E; font-size: 14px;}
-.esriPopup .contentPane{ font-size: 14px; }
+.esriPopup .titlePane {line-height: 30px!important; background-color: #23262E!important; font-size: 14px!important;}
+.esriPopup .contentPane{ font-size: 14px!important; }
+.esriPopup .contentPane p{ font-weight: bold; line-height: 25px; }
+.esriPopup .contentPane p span{ font-weight: normal; }
+.esriPopup .contentPane p a{ color: red  }
 /*数据窗口*/
-.mapStats{ top: 0; bottom: 0; width: 554px; position: absolute; background-color: white; border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
+.mapStats{ top: 0; max-height: calc(100%); width: 554px; position: absolute; background-color: white; border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
 .mapStats_close{ position: absolute; right: 10px; top: 10px; z-index: 200;}
 .mapStats_close i{ font-size: 20px;  cursor: pointer;}
-.mapStats .layui-tab-card{ margin-top: 0; }
+.mapStats_close.rotate{
+    -webkit-transform:rotate(180deg) translateZ(0);
+    -moz-transform: rotate(180deg) translateZ(0); }
+
+.mapStats .layui-tab-card{ margin: 0; width: 100%; }
 .mapStats input,select { width: 130px; }
+.mapStats .layui-form-item { margin-bottom: 7px; }
 .mapStats .layui-form-item .layui-input-inline{ width: 130px; }
 .mapStats label { width: 60px; padding-left: 0; }
 .mapStats .layui-btn { margin-top: -4px; }
 .mapStats_statsTitle{ font-size: 20px; font-weight: bold; text-align: center}
 .mapStats_statsStatus{ text-align: center}
 .mapStats_statsStatus span{ display: inline-block; margin: 10px;}
-.mapStats_statsCharts{ width: 100%; height: 250px; background-color: #92B8B1;}
+.mapStats_statsCharts{ width: 100%; height: 220px; background-color: #92B8B1;}
 .mapStats_divider{ background-color: #f2f2f2; padding: 7px; margin: 7px 0; color: #666666}
+.mapStats_divider:nth-child(1){ margin-top: 0;}
 .mapStats_alarmGeneral i{ display: inline-block; height: 36px; width: 36px; font-size: 30px; text-align: center}
 .mapStats_alarmGeneral span{ display: inline-block; white-space: normal; width: calc(100% - 40px) }
 .mapStats_alarmGeneral span a{ color: red; text-decoration: underline; cursor: pointer; margin: 0 5px;}
+
+.mapStats_alarmNews{ height: 75px; overflow: hidden; border: 1px solid #e2e2e2; box-sizing: border-box; padding: 0 7px; }
+.mapStats_alarmNews li{ line-height: 20px; text-align: left; cursor: pointer;}
+.mapStats_alarmNews li span{ display: inline-block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.mapStats_alarmNews li span:nth-child(1){ width: 150px;}
+.mapStats_alarmNews li span:nth-child(2){ width: calc( (100% - 170PX ) / 5 * 2 ) }
+.mapStats_alarmNews li span:nth-child(3){ width: calc( (100% - 170PX ) / 5 * 3) }
+
+.mapStats_table td{ padding: 4px 15px;}
