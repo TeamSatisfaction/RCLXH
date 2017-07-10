@@ -8,10 +8,9 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         cTobody = $('#company-result');
         eTobody = $('#equipment-result');
     var loadPage = function(objectid){
-        console.log(objectid);
-        var url = "../../pages/sysMng/companyDataView.html";
-        $("#index_frame").attr("src", url);
-        console.log( $("#index_frame"))
+        var url = "pages/sysMng/companyDataView.html";  //相对于主页面的路径
+        var parent = window.parent.document;    //主页面的DOM
+        $(parent).find("#index_frame").attr("src", url);
     };
     var loadCompanyData = function () {
         var name = $("#name").val();
