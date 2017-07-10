@@ -103,9 +103,9 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
             today = new Date(now.getFullYear(), now.getMonth(), now.getDate()),
             data = [];
         for(var i = today.getTime(); i < now.getTime(); i += 300000){
-            data.push([new Date(i), Math.round(Math.random()*20)])
+            var t = new Date(i);
+            data.push([Date.UTC(t.getFullYear(), t.getMonth(), t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds()), Math.round(Math.random()*20)])
         }
-        // console.log((now.getTime()-today.getTime())/30000)
         var option = {
             chart: {
             },
@@ -131,7 +131,7 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
                     second: '%H:%M:%S',
                     minute: '%H:%M',
                     hour: '%H:%M',
-                    day: '%Y-%m-%d',
+                    day: '%m-%d',
                     week: '%m-%d',
                     month: '%Y-%m',
                     year: '%Y'
