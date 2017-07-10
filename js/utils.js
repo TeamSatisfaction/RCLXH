@@ -42,7 +42,6 @@ layui.define(function(exports){
 
     var loadPage = function(url){
         var $ = layui.jquery;
-        console.log($("#mapDiv"));
         $("#index_frame").attr("src", url)
     };
 

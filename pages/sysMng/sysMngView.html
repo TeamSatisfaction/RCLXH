@@ -44,7 +44,7 @@
                                 </select>
                             </div>
                         </div>
-                        <button class="layui-btn" onclick="layui.sysMng.loadCompanyData()">
+                        <button class="layui-btn" style="position: absolute" onclick="layui.sysMng.loadCompanyData()">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
                         <button class="layui-btn" style="position: absolute;right: 10px">
@@ -55,7 +55,7 @@
                 <table class="layui-table" lay-even="" lay-skin="row">
                     <colgroup>
                         <col width="60">
-                        <col width="300">
+                        <col width="350">
                         <col>
                         <col width="100">
                         <col width="100">
@@ -76,68 +76,65 @@
                     <tbody id="company-result">
                     </tbody>
                 </table>
+                <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
-            <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             <div class="layui-tab-item">
-                <form class="layui-form" action="" style="margin-bottom: 0px;">
+                <div class="layui-form" action="" style="margin-bottom: 0px;">
                     <div class="layui-form-item" style="margin-bottom: 0px;">
                         <label class="layui-form-label">设备名称</label>
                         <div class="layui-input-inline">
                             <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn"><i class="layui-icon"></i></button>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">设备类型</label>
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-search="">
+                                    <option value="">直接选择或搜索选择</option>
+                                    <option value="国控">类型1</option>
+                                    <option value="省控">类型2</option>
+                                    <option value="市控">类型3</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button class="layui-btn" style="position: absolute">
+                            <i class="layui-icon">&#xe615;</i>
+                        </button>
+                        <button class="layui-btn" style="position: absolute;right: 10px">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
                     </div>
-                </form>
+                </div>
                 <table class="layui-table" lay-even="" lay-skin="row">
                     <colgroup>
+                        <col width="60">
                         <col width="150">
-                        <col width="150">
-                        <col width="200">
                         <col>
                         <col width="150">
+                        <col>
+                        <col width="120">
+                        <col width="120">
+                        <col width="120">
+                        <col width="120">
+                        <col width="100">
                     </colgroup>
                     <thead>
                     <tr>
-                        <th>人物</th>
-                        <th>民族</th>
-                        <th>出场时间</th>
-                        <th>格言</th>
+                        <th>序号</th>
+                        <th>设备编码</th>
+                        <th>设备名称</th>
+                        <th>设备型号</th>
+                        <th>生产厂家</th>
+                        <th>设备类型</th>
+                        <th>设备分类类型</th>
+                        <th>投入使用时间</th>
+                        <th>是否关键设备</th>
                         <th>操作</th>
                     </tr>
                     </thead>
-                    <tbody>
-                    <tr>
-                        <td>贤心</td>
-                        <td>汉族</td>
-                        <td>1989-10-14</td>
-                        <td>人生似修行</td>
-                    </tr>
-                    <tr>
-                        <td>张爱玲</td>
-                        <td>汉族</td>
-                        <td>1920-09-30</td>
-                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                    </tr>
-                    <tr>
-                        <td>Helen Keller</td>
-                        <td>拉丁美裔</td>
-                        <td>1880-06-27</td>
-                        <td> Life is either a daring adventure or nothing.</td>
-                    </tr>
-                    <tr>
-                        <td>岳飞</td>
-                        <td>汉族</td>
-                        <td>1103-北宋崇宁二年</td>
-                        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-                    </tr>
-                    <tr>
-                        <td>孟子</td>
-                        <td>华夏族（汉族）</td>
-                        <td>公元前-372年</td>
-                        <td>猿强，则国强。国强，则猿更强！ </td>
-                    </tr>
+                    <tbody id="equipment-result">
                     </tbody>
                 </table>
+                <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <div class="layui-tab-item">
                 <form class="layui-form" action="" style="margin-bottom: 0px;">
