@@ -56,6 +56,7 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
     };
     alarmNewsScroll();
 
+    /*3D饼图*/
     function draw3dPie(chartId) {
         var option = {
             chart: {
@@ -98,6 +99,7 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
     }
     draw3dPie();
 
+    /*曲线图*/
     function drawLine() {
         var now = new Date(),
             today = new Date(now.getFullYear(), now.getMonth(), now.getDate()),
@@ -168,11 +170,23 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
     }
     setInterval(function(){drawLine()}, 30000)
     drawLine();
+
+    /*新报警提示*/
+    function showNotification() {
+        $(".notification").slideDown();
+    }
+    function closeNotification() {
+        $(".notification").slideUp();
+    }
+    setInterval('layui.map.showNotification()', 15000);
+
     //输出test接口
     exports('map', {
         btnClick : btnClick,
         loadPage: loadPage,
-        close: close
+        close: close,
+        showNotification:showNotification,
+        closeNotification:closeNotification
     });
 
 });

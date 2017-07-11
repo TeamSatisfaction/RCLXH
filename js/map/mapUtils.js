@@ -64,12 +64,12 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
                 +"<p>企业地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
                 +"<p>管控级别：<span>市控</span></p>"
                 +"<p>行业类别：<span>医药制造业</span></p>"
-                +"<p>报警总数：<a onclick='layui.map.loadPage(\"../alarmMng/alarmMng.html\")'>12个</a></p>";
+                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         } else if (symbolUrl.indexOf("monistation") != -1) {
             titleHtml = "水质自动监测站";
             contentHtml += "<p>名称：<span>水质自动监测站</span></p>"
                 +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
-                +"<p>报警总数：<a onclick='layui.map.loadPage(\"../alarmMng/alarmMng.html\")'>12个</a></p>";
+                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         }
         map.infoWindow.setTitle(titleHtml)
         map.infoWindow.setContent(contentHtml);

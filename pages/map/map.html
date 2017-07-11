@@ -40,28 +40,33 @@
             </ul>
             <div class="layui-tab-content">
                 <div class="layui-tab-item layui-show">
-                    <!--搜索组件-->
                     <div class="layui-form">
                         <div class="mapStats_divider">实时监测</div>
                         <div class="layui-form-item">
-
-                            <label class="layui-form-label" for="mapStats_name">排口名称</label>
                             <div class="layui-input-inline">
-                                <input id="mapStats_name" name="mapStats_name" autocomplete="true"
-                                       placeholder="请输入排口名称" class="layui-input" type="text">
-                            </div>
-                            <div class="layui-inline">
-                            <label class="layui-form-label" for="mapStats_fac">监测因子</label>
-                            <div class="layui-input-inline" lay-verify="required" >
-                                <select id="mapStats_fac" name="mapStats_fac">
-                                    <option value="">请选择</option>
-                                    <option value="COD">化学需氧量</option>
-                                    <option value="TP">总磷</option>
-                                    <option value="TN">总氮</option>
-                                    <option value="MN">高锰酸盐指数</option>
+                                <select name="EntName" lay-verify="" lay-search>
+                                    <option>选择企业</option>
+                                    <option value="010">重庆市荣昌区江特表面处理厂</option>
+                                    <option value="021">华森制药厂</option>
+                                    <option value="0571">华森制药厂1</option>
                                 </select>
-                            </div></div>
-
+                            </div>
+                            <div class="layui-input-inline">
+                                <select name="ExitName" lay-verify="" lay-search>
+                                    <option>选择排口</option>
+                                    <option value="010">废水排口1</option>
+                                    <option value="021">废水排口2</option>
+                                    <option value="0571">废水排口3</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <select name="FacName" lay-verify="" lay-search>
+                                    <option>监测因子</option>
+                                    <option value="010">总磷</option>
+                                    <option value="021">总氮</option>
+                                    <option value="0571">化学需氧量</option>
+                                </select>
+                            </div>
                             <button class="layui-btn">
                                 <i class="layui-icon">&#xe615;</i>
                                 查询
@@ -82,10 +87,10 @@
                         <div class="mapStats_divider">报警情况</div>
                         <div class="mapStats_alarmGeneral">
                             <i class="layui-icon">&#xe629;</i>
-                            <span>截止当前时间为止视频类报警总数<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">10</a>个，
-                                监测类报警总数<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">20</a>个，
-                                工况类报警<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">11</a>个，
-                                长期未处理报警数达到<a onclick="layui.map.loadPage('pages/sysMng/sysMngView.html')">9</a>个。</span>
+                            <span>截止当前时间为止视频类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">10</a>个，
+                                监测类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">20</a>个，
+                                工况类报警<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">11</a>个，
+                                长期未处理报警数达到<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">9</a>个。</span>
                         </div>
                         <div class="mapStats_alarmNews">
                             <ul>
@@ -154,6 +159,16 @@
             </div>
         </div>
 
+    </div>
+
+    <div class="notification">
+        <div>
+            <span class="time">2017年7月6日14:00:00</span>
+            <i class="layui-icon" onclick="layui.map.closeNotification()">&#x1006;</i>
+        </div>
+        <div class="content" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
+            重庆市荣昌区江特表面处理厂<br/>后营门污水排放口 COD排放超标
+        </div>
     </div>
 </body>
 </html>
