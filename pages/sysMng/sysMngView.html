@@ -5,7 +5,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
-    <link href="../../css/style.css" rel="stylesheet">
+    <!--<link href="../../css/style.css" rel="stylesheet">-->
     <script src="../../layUi/layui.js"></script>
     <script>
         layui.config({
@@ -20,6 +20,7 @@
     <div class="layui-tab layui-layout-admin" lay-filter="test">
         <ul class="layui-tab-title">
             <li class="layui-this" lay-id="企业管理" >企业管理</li>
+            <li lay-id="设备管理">监测站管理</li>
             <li lay-id="设备管理">设备管理</li>
             <li lay-id="联网管理">联网管理</li>
             <li lay-id="用户管理">用户管理</li>
@@ -47,7 +48,7 @@
                         <button class="layui-btn" style="position: absolute" onclick="layui.sysMng.loadCompanyData()">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
-                        <button class="layui-btn" style="position: absolute;right: 10px">
+                        <button class="layui-btn" style="position: absolute;right: 10px" onclick="layui.sysMng.loadPage('pages/sysMng/addCompanyView.html')">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
@@ -59,7 +60,7 @@
                         <col>
                         <col width="100">
                         <col width="100">
-                        <col width="100">
+                        <col width="120">
                         <col width="100">
                     </colgroup>
                     <thead>
@@ -78,6 +79,7 @@
                 </table>
                 <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
+            <div class="layui-tab-item">监测站管理</div>
             <div class="layui-tab-item">
                 <div class="layui-form" action="" style="margin-bottom: 0px;">
                     <div class="layui-form-item" style="margin-bottom: 0px;">
@@ -197,7 +199,49 @@
                     </tbody>
                 </table>
             </div>
-            <div class="layui-tab-item">用户管理</div>
+            <div class="layui-tab-item">
+                <div class="layui-form" action="" style="margin-bottom: 0px;">
+                    <div class="layui-form-item" style="margin-bottom: 0px;">
+                        <label class="layui-form-label">用户姓名</label>
+                        <div class="layui-input-inline">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
+                        </div>
+                        <button class="layui-btn" style="position: absolute">
+                            <i class="layui-icon">&#xe615;</i>
+                        </button>
+                        <button class="layui-btn" style="position: absolute;right: 10px">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
+                    </div>
+                </div>
+                <table class="layui-table" lay-even="" lay-skin="row">
+                    <colgroup>
+                        <col width="60">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col>
+                        <col width="100">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>登录账号</th>
+                        <th>用户姓名</th>
+                        <th>联系电话</th>
+                        <th>最后更新人</th>
+                        <th>最后更新时间</th>
+                        <th>状态</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="user-result">
+                    </tbody>
+                </table>
+                <div id="demo4" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+            </div>
             <div class="layui-tab-item">角色管理</div>
         </div>
     </div>
