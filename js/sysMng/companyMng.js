@@ -4,6 +4,7 @@
 layui.define(['layer', 'element','form','laydate','upload'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer;
+
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);

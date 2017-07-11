@@ -12,11 +12,12 @@
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             sysMng : 'sysMng/companyMng'
-        }).use('companyMng'); //加载入口
+        }).use('companyMng')
+        .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body>
-<div class="layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief">
+<div class="layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief" id="addCompany">
     <!--面包屑-->
     <div style="margin-left: 20px;margin-top: 10px">
         <span class="layui-breadcrumb">
@@ -26,71 +27,56 @@
         </span>
     </div>
     <!--表单-->
-    <div  style="margin-top: 10px;left: 0;top: 25px;" class="layui-body">
+    <div class="layui-layout-admin">
         <form class="layui-collapse layui-form" lay-filter="test" action="">
-                <div class="layui-colla-item">
+            <!--基本信息-->
+            <div class="layui-colla-item">
                     <h2 class="layui-colla-title">企业基本信息</h2>
                     <div class="layui-colla-content layui-show" style="text-align: center">
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">企业名称：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">企业名称：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">法人代表：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">法人代表：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">企业负责人：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">企业负责人：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">负责人电话：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">负责人电话：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">组织机构代码：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">组织机构代码：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">管控级别：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">管控级别：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">联系人：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">联系人：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">联系人电话：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">联系人电话：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">建设状态：</label>
-                                <div class="layui-input-inline" style="width: 400px">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">建设状态：</label>
+                                <div class="layui-input-inline">
                                     <select name="modules" lay-verify="required" lay-search="">
                                         <option value="建成">建成</option>
                                         <option value="待建设">待建设</option>
@@ -101,34 +87,30 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">运行状态：</label>
-                                <div class="layui-input-inline" style="width: 400px">
+                                <label class="layui-form-label">运行状态：</label>
+                                <div class="layui-input-inline">
                                     <select name="modules" lay-verify="required" lay-search="">
-                                        <option value="正常运行">正常运行</option>
-                                        <option value="非正常运行">非正常运行</option>
-                                        <option value="正常停产">正常停产</option>
+                                    <option value="正常运行">正常运行</option>
+                                    <option value="非正常运行">非正常运行</option>
+                                    <option value="正常停产">正常停产</option>
                                     </select>
                                 </div>
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">设计处理量(吨/天)：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设计处理量(吨/天)：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">实际处理量(吨/天)：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">实际处理量(吨/天)：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">行业类别：</label>
-                                <div class="layui-input-inline" style="width: 400px">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">行业类别：</label>
+                                <div class="layui-input-inline">
                                     <select name="modules" lay-verify="required" lay-search="">
                                         <option value="汽车制造业">汽车制造业</option>
                                         <option value="模具制造业">模具制造业</option>
@@ -136,9 +118,9 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">建设目标：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <select name="modules" lay-verify="required" lay-search="">
+                                <label class="layui-form-label">建设目标：</label>
+                                <div class="layui-input-inline">
+                                    <select name="modules" lay-verify="required" lay-search="" >
                                         <option value="2017">2017</option>
                                         <option value="2018">2018</option>
                                         <option value="2019">2019</option>
@@ -147,143 +129,133 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">经度：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">经度：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">纬度：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                                <label class="layui-form-label">纬度：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="">
-                                <label class="layui-form-label" style="width: 130px">地址：</label>
-                                <div class="layui-input-inline" style="width: 1055px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                            <div class="layui-inline" style="width: calc(90% + 20px);">
+                                <label class="layui-form-label">地址：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">排污许可证信息</h2>
-                    <div class="layui-colla-content layui-show" style="text-align: center">
-                        <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">许可证类型：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">许可证性质：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <select name="modules" lay-verify="required" lay-search="">
-                                        <option value="正式证">正式证</option>
-                                        <option value="临时证">临时证</option>
-                                    </select>
-                                </div>
-                            </div>
+            <!--排污许可证-->
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">排污许可证信息</h2>
+                <div class="layui-colla-content layui-show" style="text-align: center">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">许可证类型：</label>
+                            <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                         </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">许可证编号：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">许可证状态：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">起始时间：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input class="layui-input" placeholder="起始时间" onclick="layui.laydate({elem: this})">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">截至时间：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input class="layui-input" placeholder="截至时间" onclick="layui.laydate({elem: this})">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline" style="margin-right: 80px">
-                                <label class="layui-form-label" style="width: 130px">发证日期：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input class="layui-input" placeholder="发证日期" onclick="layui.laydate({elem: this})">
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">办理人：</label>
-                                <div class="layui-input-inline" style="width: 400px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label" style="width: 130px">发证机关：</label>
-                                <div class="layui-input-inline" style="width: 1055px">
-                                    <input name="title" lay-verify="title" autocomplete="off" class="layui-input" type="text">
-                                </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">许可证性质：</label>
+                            <div class="layui-input-inline">
+                                <select name="modules" lay-verify="required" lay-search="">
+                                    <option value="正式证">正式证</option>
+                                    <option value="临时证">临时证</option>
+                                </select>
                             </div>
                         </div>
                     </div>
-                    <div style="width: 1200px;height:300px;margin: auto;border: 1px">
-                        <div class="layui-tab">
-                            <ul class="layui-tab-title">
-                                <li class="layui-this">正本</li>
-                                <li>副本</li>
-                                <li>污水排污口</li>
-                            </ul>
-                            <div class="layui-tab-content">
-                                <div class="layui-tab-item layui-show" >
-                                    <div class="site-demo-upload">
-                                        <img id="LAY_demo_upload1" src="../../img/map/factory.png">
-                                        <div class="site-demo-upbar">
-                                            <input name="file" class="layui-upload-file" id="test1" type="file">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">许可证编号：</label>
+                            <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">许可证状态：</label>
+                            <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">起始时间：</label>
+                            <input class="layui-input layui-input-inline" placeholder="起始时间" onclick="layui.laydate({elem: this})">
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">截至时间：</label>
+                            <input class="layui-input layui-input-inline" placeholder="截至时间" onclick="layui.laydate({elem: this})">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">发证日期：</label>
+                            <input class="layui-input layui-input-inline" placeholder="发证日期" onclick="layui.laydate({elem: this})">
+                        </div>
+                        <div class="layui-inline">
+                            <label class="layui-form-label">办理人：</label>
+                            <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <div class="layui-inline" style="width: calc(90% + 20px);">
+                            <label class="layui-form-label">许可证状态：</label>
+                            <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <!--照片-->
+                        <div class="photo-area">
+                            <div class="layui-tab">
+                                <ul class="layui-tab-title">
+                                    <li class="layui-this">正本</li>
+                                    <li>副本</li>
+                                </ul>
+                                <div class="layui-tab-content">
+                                    <div class="layui-tab-item layui-show" >
+                                        <div class="thumbs">
+                                            <div class="thumb">
+                                                <img src="../../img/map/factory.png">
+                                                <i class="layui-icon">&#x1006;</i>
+                                            </div>
+                                            <div class="thumb">
+                                                <img src="../../img/map/factory.png">
+                                                <i class="layui-icon">&#x1006;</i>
+                                            </div>
                                         </div>
+                                        <input name="file" class="layui-upload-file" id="test1" type="file">
+                                    </div>
+                                    <div class="layui-tab-item">
+                                        <div class="thumbs">
+                                            <div class="thumb">
+                                                <img src="../../img/map/factory.png">
+                                                <i class="layui-icon">&#x1006;</i>
+                                            </div>
+                                        </div>
+                                        <input name="file" class="layui-upload-file" id="test2" type="file">
                                     </div>
                                 </div>
-                                <div class="layui-tab-item">
-                                    <div class="site-demo-upload">
-                                        <img id="LAY_demo_upload2" src="../../img/map/factory.png">
-                                        <div class="site-demo-upbar">
-                                            <input name="file" class="layui-upload-file" id="test2" type="file">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="layui-tab-item">内容3</div>
-
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">企业污染设置照片</h2>
-                    <div class="layui-colla-content layui-show">
+                    <!--排口-->
+                    <div class="layui-form-item">
 
                     </div>
                 </div>
-                <div class="layui-colla-item">
-                    <h2 class="layui-colla-title">企业处理工艺</h2>
-                    <div class="layui-colla-content layui-show">
+            </div>
 
-                    </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">企业污染设置照片</h2>
+                <div class="layui-colla-content layui-show">
+
                 </div>
-            </form>
+            </div>
+            <div class="layui-colla-item">
+                <h2 class="layui-colla-title">企业处理工艺</h2>
+                <div class="layui-colla-content layui-show">
+
+                </div>
+            </div>
+        </form>
     </div>
     <!--按钮-->
     <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">

@@ -3,6 +3,7 @@
  */
 layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var $ = layui.jquery;
+    layui.link('../../css/style.css');
     /*加载JS模块*/
     layui.extend({ //设定模块别名
         mapUtils : 'map/mapUtils'
