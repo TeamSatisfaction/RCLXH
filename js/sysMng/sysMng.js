@@ -2,21 +2,22 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
-        layedit = layui.layedit,
-        laydate = layui.laydate,
+        // layedit = layui.layedit,
+        // laydate = layui.laydate,
         cTobody = $('#company-result');
         eTobody = $('#equipment-result');
         uTobody = $('#user-result');
     //页面跳转
     var loadPage = function(url,objectid){
-      // var url = "pages/sysMng/companyDataView.html";  //相对于主页面的路径
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
     //加载企业列表
     var loadCompanyData = function () {
-        $.post("../../data/companyData.json",function (data,status) {
-            if(status == "success") {
+        $.ajax({
+            url :'../../data/companyData.json',
+            type : 'post',
+            success : function (data) {
                 var cData = data.jsonObject.data,
                     pages = data.jsonObject.totalCount,
                     pageNumber = data.jsonObject.pageNumber,
@@ -52,8 +53,6 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                     }
                     , skip: true
                 });
-            }else{
-                layer.msg('请求失败！');
             }
         })
     };
@@ -81,9 +80,9 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                             '<td>' + item.eCType + '</td>' +
                             '<td>' + item.useTime + '</td>' +
                             '<td>' + item.ifEquipment + '</td>' +
-                            '<td><a href="#" onclick=""><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            // '<td><a href="#" onclick=""><i class="layui-icon">&#xe63c;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -113,7 +112,8 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
     var obj = {
         loadPage : loadPage,
         loadCompanyData : loadCompanyData,
-        loadEquipmentData : loadEquipmentData
+        loadEquipmentData : loadEquipmentData,
+        loadUserData : loadUserData
     };
     /*输出内容，注意顺序*/
     exports('sysMng',obj)

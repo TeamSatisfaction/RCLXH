@@ -16,13 +16,16 @@
     </script>
 </head>
 <body>
-<div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief">
-    <!--<ul class="layui-tab-title">-->
-        <!--<li class="layui-this" lay-id="企业管理" >企业基本详情</li>-->
-    <!--</ul>-->
-    <div class="layui-body layui-tab-content" style="left: 0">
-        <div class="layui-tab-item layui-show">
-            <form class="layui-collapse layui-form" lay-filter="test" action="">
+<div class="layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief">
+    <div style="margin-left: 20px;margin-top: 10px">
+        <span class="layui-breadcrumb">
+        <a href="#">系统管理</a>
+        <a href="#"  onclick="layui.companyMng.loadPage('pages/sysMng/sysMngView.html')">企业管理</a>
+        <a><cite>新增企业</cite></a>
+        </span>
+    </div>
+    <div  style="margin-top: 10px;left: 0;top: 25px;" class="layui-body">
+        <form class="layui-collapse layui-form" lay-filter="test" action="">
                 <div class="layui-colla-item">
                     <h2 class="layui-colla-title">企业基本信息</h2>
                     <div class="layui-colla-content layui-show" style="text-align: center">
@@ -250,11 +253,6 @@
                     </div>
                 </div>
             </form>
-        </div>
-        <!--<div class="layui-tab-item">在线监测-->
-        <!--</div>-->
-        <!--<div class="layui-tab-item">设备工况-->
-        <!--</div>-->
     </div>
     <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
         <button class="layui-btn">
