@@ -8,8 +8,8 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         eTobody = $('#equipment-result');
         uTobody = $('#user-result');
     //页面跳转
-    var loadPage = function(objectid){
-        var url = "pages/sysMng/companyDataView.html";  //相对于主页面的路径
+    var loadPage = function(url,objectid){
+      // var url = "pages/sysMng/companyDataView.html";  //相对于主页面的路径
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
@@ -34,7 +34,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                             '<td>' + item.LEVEL + '</td>' +
                             '<td>' + item.LINKNAME + '</td>' +
                             '<td>' + item.LINKPHONE + '</td>' +
-                            '<td><a href="#" onclick="layui.sysMng.loadPage('+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '<td><a href="#" onclick="layui.sysMng.loadPage(\'pages/sysMng/companyDataView.html\','+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
