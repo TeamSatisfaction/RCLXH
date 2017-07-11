@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-
     <link href="layUi/css/layui.css" rel="stylesheet">
     <script src="layUi/layui.js"></script>
     <script>
@@ -15,30 +14,23 @@
 <body class="main_body">
     <div class="layui-layout layui-layout-admin">
         <!--标题栏-->
-        <div class="layui-header header">
+        <div class="layui-header header" style="background-color: #00a5dd">
             <div class="layui-inline logo layui-icon" ></div>
-            <h1 class="title layui-inline">title</h1>
+            <h1 class="title layui-inline">荣昌区环保物联网在线监控平台</h1>
             <span class="time layui-inline" id="time"></span>
-
             <ul class="layui-nav layui-inline " lay-filter="user">
-                <!-- 侧边导航: <ul class="layui-nav layui-nav-tree layui-nav-side"> -->
                 <li class="layui-nav-item">
-
                     <a href="javascript:;">
                         <!--<img class="layui-icon" src="layUi/images/face/3.gif" />-->
                         <span>用户名11111</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="#">选项1</a></dd>
-                        <dd><a href="#">选项2</a></dd>
-                        <dd><a href="#">跳转3</a></dd>
+                        <dd><a href="#">退出</a></dd>
                     </dl>
                 </li>
             </ul>
-
         </div>
-        <!--<h1 class="layui-bg-cyan ">index</h1>-->
-
         <!--左侧菜单-->
         <div class="layui-bg-black layui-side side">
             <ul class="layui-nav layui-nav-tree" lay-filter="left_menu">
@@ -84,16 +76,8 @@
                         <span>系统管理</span>
                     </a>
                 </li>
-                <!--<li class="layui-nav-item">-->
-                    <!--<a href="#" onclick="layui.index.loadPage('pages/PollutantManage.html')">-->
-                        <!--<i class="layui-icon">&#xe6ed;</i>-->
-                        <!--<span>视频监控</span>-->
-                    <!--</a>-->
-                <!--</li>-->
             </ul>
-
         </div>
-
         <!--主内容区-->
         <div class="layui-body layui-form">
             <iframe id="index_frame"></iframe>

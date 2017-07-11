@@ -46,6 +46,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                 //调用分页
                 laypage({
                     cont: 'demo1'
+                    ,skin: '#00a5dd'
                     ,pages: Math.ceil(pages/nums) //得到总页数
                     ,curr : pageNumber  //当前页
                     ,jump: function(obj){
@@ -91,6 +92,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                 //调用分页
                 laypage({
                     cont: 'demo2'
+                    ,skin: '#00a5dd'
                     ,pages: Math.ceil(eData.length/nums) //得到总页数
                     ,jump: function(obj){
                         eTobody.html(render(eData, obj.curr));
