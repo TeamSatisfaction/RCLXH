@@ -1,11 +1,12 @@
-.header { border-bottom: 5px solid #1AA094 }
-.header>.logo { width: 100px; height: 100%;  background: url("../layUi/images/face/0.gif") center no-repeat; }
+.header { border-bottom: 5px solid #00a5dd ;}
+.header>.logo { width: 120px; height: 100%;  background: url("../img/index/logo.png") center no-repeat; }
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
-.header>.layui-nav { right: 0px; position: absolute; background-color: transparent }
+.header>.layui-nav { right: 0px; position: absolute; background-color: #00a5dd ;}
+/*.side{background-image: url("../img/index/left.png")}*/
+.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}
 .fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
 .layui-nav-bar{ background-color: #1AA094 }
-/*.side .layui-icon{ font-size: 20px; }*/
 .layui-layout-admin .layui-side{ margin-top: 5px}
 .layui-body{ top: 65px !important;   bottom: 0 !important;
     margin: 0px;  overflow-x: hidden;  overflow-y: auto;  z-index: 150;  border: none !important;   padding-bottom: 0px;}
