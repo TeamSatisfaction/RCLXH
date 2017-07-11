@@ -10,7 +10,7 @@ layui.define(['layer', 'element','form','laydate','upload'],function (exports){
     };
     layui.upload({
         url: ''
-        ,elem: ['#test1','#test2' ]//指定原始元素，默认直接查找class="layui-upload-file"
+        ,elem: ['#test1','#test2']//指定原始元素，默认直接查找class="layui-upload-file"
         ,method: 'get' //上传接口的http类型
         ,success: function(res){
             LAY_demo_upload.src = res.url;
