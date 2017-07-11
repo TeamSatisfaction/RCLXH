@@ -3,7 +3,7 @@
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent }
-
+.fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
 .layui-nav-bar{ background-color: #1AA094 }
 /*.side .layui-icon{ font-size: 20px; }*/
 .layui-layout-admin .layui-side{ margin-top: 5px}
@@ -55,3 +55,5 @@
 .mapStats_alarmNews li span:nth-child(3){ width: calc( (100% - 170PX ) / 5 * 3) }
 
 .mapStats_table td{ padding: 4px 15px;}
+
+

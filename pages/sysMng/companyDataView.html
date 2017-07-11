@@ -3,104 +3,65 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <title>layer弹层 - layui</title>
-    <link href="../layUi/css/layui.css" rel="stylesheet">
-    <style>
-        body{padding: 50px 100px;}
-    </style>
+    <title>title</title>
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <link href="../../css/style.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            sysMng : 'sysMng/companyMng'
+        }).use('companyMng'); //加载入口
+    </script>
 </head>
 <body>
+    <!--<span class="layui-breadcrumb" style="margin-left: 10px">-->
+      <!--<a href="#">系统管理</a>-->
+      <!--<a href="#"  onclick="layui.companyMng.loadPage('pages/sysMng/sysMngView.html')">企业管理</a>-->
+      <!--<a><cite>企业详情</cite></a>-->
+    <!--</span>-->
+    <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief">
+        <ul class="layui-tab-title">
+            <li class="layui-this" lay-id="企业管理" >企业基本详情</li>
+            <li lay-id="设备管理">在线监测</li>
+            <li lay-id="联网管理">设备工况</li>
+        </ul>
+        <div class="layui-body layui-tab-content" style="left: 0">
+            <div class="layui-tab-item layui-show">
+                <form class="layui-collapse layui-form" lay-filter="test" action="">
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">企业基本信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <div class="layui-form-item">
 
-<button class="layui-btn demo" data-type="test">测试一</button>
-<button class="layui-btn demo" data-type="test2">测试二</button>
-<button class="layui-btn demo" data-type="test3">捕获页</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">排污许可证信息</h2>
+                        <div class="layui-colla-content layui-show">
 
-<div id="bbs_update_form" style="display: none;padding: 20px;">
-    <form class="layui-form layui-form-pane" id="update_bbs_info_form">
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">企业处理工艺</h2>
+                        <div class="layui-colla-content layui-show">
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛封面</label>
-            <div class="layui-input-block">
-                <input type="text" name="bbs_bg" autocomplete="off" placeholder="请输入图片地址（1045px*180px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/bbs_bg.jpg">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="layui-tab-item">在线监测
+            </div>
+            <div class="layui-tab-item">设备工况
             </div>
         </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛头像</label>
-            <div class="layui-input-block">
-                <input type="text" name="bbs_avatar" autocomplete="off" placeholder="请输入图片地址（150px*150px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/timg.jpg">
-            </div>
+        <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
+            <button class="layui-btn" onclick="layui.companyMng.loadPage('pages/sysMng/sysMngView.html')">
+                <i class="layui-icon">&#x1006;</i>返回
+            </button>
         </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛介绍</label>
-            <div class="layui-input-block">
-      <textarea placeholder="50字内" class="layui-textarea" name="bbs_desc" >LightSNS是一款wordpress轻社交主题，这里是关于你这个论坛的描述，随便扯吧。
-</textarea>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛公告</label>
-            <div class="layui-input-block">
-                <textarea placeholder="100字内" class="layui-textarea" name="bbs_notice">公告</textarea>
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">付费功能</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="bbs_fufei" lay-skin="switch" title="开启付费可看功能"  checked lay-skin="switch">
-            </div>
-        </div>
-
-        <div class="layui-form-item">
-            <label class="layui-form-label">验证码</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="bbs_captcha" lay-skin="switch" title="开启验证码功能" >
-            </div>
-        </div>
-
-        <div class="layui-form-item" style="text-align: right;">
-            <div class="layui-btn" id="bbs_update_button">更新</div>
-        </div>
-
-    </form>
-</div>
-
-<script src="../layUi/layui.js"></script>
-<script>
-    layui.use('layer', function(){
-        var $ = layui.jquery, layer = layui.layer; //独立版的layer无需执行这一句
-
-        //触发事件
-        var active = {
-            test: function(){
-                layer.alert('你好么，体验者');
-            }
-            ,test2: function(){
-                layer.open({
-                    type: 2
-                    ,content: 'http://fly.layui.com/'
-                    ,area: ['375px', '500px']
-                    ,maxmin: true
-                })
-            }
-            ,test3: function(){
-                layer.open({
-                    title:'更新论坛信息',
-                    type: 1,
-                    skin: 'layui-layer-rim',
-                    area: ['500px', '580px'],
-                    content: $('#bbs_update_form')
-                });
-            }
-        };
-        $('.demo').on('click', function(){
-            var type = $(this).data('type');
-            active[type] ? active[type].call(this) : '';
-        });
-    });
-</script>
+    </div>
 </body>
 </html>
