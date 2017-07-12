@@ -2,13 +2,14 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
+        element = layui.element(),
         // layedit = layui.layedit,
         // laydate = layui.laydate,
         cTobody = $('#company-result');
         eTobody = $('#equipment-result');
         uTobody = $('#user-result');
     //页面跳转
-    var loadPage = function(url,objectid){
+    var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
@@ -81,9 +82,6 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                             '<td>' + item.eCType + '</td>' +
                             '<td>' + item.useTime + '</td>' +
                             '<td>' + item.ifEquipment + '</td>' +
-                            // '<td><a href="#" onclick=""><i class="layui-icon">&#xe63c;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -101,12 +99,16 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                 });
             }
         })
-    }
+    };
     //加载用户列表
     var loadUserData = function () {
         $.ajax({
 
         })
+    };
+    var refresh =function (id) {
+        console.log("1");
+        element.tabChange('demo',id);
     }
     loadEquipmentData();
     loadCompanyData();

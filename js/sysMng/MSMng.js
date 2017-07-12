@@ -3,13 +3,12 @@
 */
 layui.define(['layer','element','laypage','layedit', 'laydate'],function (exports){
     var $ = layui.jquery,
+        element=layui.element(),
         laypage = layui.laypage;
     //页面跳转
-    var loadPage = function(url,objectid){
+    var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
-        $(parent).find("#companyNav").removeClass('layui-show');
-        $(parent).find("#MSNav").addClass('layui-show');
     };
     var obj = {
         loadPage : loadPage

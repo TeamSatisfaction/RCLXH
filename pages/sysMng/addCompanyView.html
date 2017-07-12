@@ -6,14 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>title</title>
     <link href="../../layUi/css/layui.css" rel="stylesheet">
-    <!--<link href="../../css/style.css" rel="stylesheet">-->
     <script src="../../layUi/layui.js"></script>
     <script>
         layui.link('../../css/style.css');
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
-            sysMng : 'sysMng/companyMng'
+            companyMng : 'companyMng'
         }).use('companyMng')
          //加载入口
     </script>

@@ -11,18 +11,18 @@
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
-            sysMng : 'sysMng/MSMng'
+            MSMng : 'MSMng'
         }).use('MSMng')
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body>
-    <div class="layui-layout-admin"id="addMS">
+    <div class="layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief" id="addMS">
         <!--面包屑-->
         <div style="margin-left: 10px;margin-top: 10px">
             <span class="layui-breadcrumb">
             <a href="#">系统管理</a>
-            <a href="#"  onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html')">监测站管理</a>
+            <a href="#"  onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html','监测站')">监测站管理</a>
             <a><cite>新增监测站</cite></a>
             </span>
         </div>
@@ -90,7 +90,7 @@
             <button class="layui-btn layui-btn-normal">
                 <i class="layui-icon">&#xe605;</i>提交
             </button>
-            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html')">
+            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html','监测站')">
                 <i class="layui-icon">&#x1006;</i>返回
             </button>
         </div>
