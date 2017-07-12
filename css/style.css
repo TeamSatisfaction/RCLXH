@@ -71,6 +71,9 @@
 #addCompany .photo-area { width: 90%;margin: auto;border: 1px }
 #addCompany .photo-area .thumb{ width: 100px; height: 100px; display: inline-block; margin-right: 8px; border: 1px solid #aaa; position: relative }
 #addCompany .photo-area .thumb img{ width: 100px; height: 100px; }
-#addCompany .photo-area .thumb i{  position: absolute; right: 2px; top: 2px; font-weight: bold; color: red }
+#addCompany .photo-area .thumb i{  position: absolute; right: 0px; top: 0px; color: red; font-size: 20px; cursor: pointer; }
 #addCompany .photo-area .thumbs{  margin-bottom: 16px; }
+#addCompany .photo-area .thumb-input { border: dashed 1px #bbbbbb; display: inline-block }
+#addCompany .photo-area .thumb-input .layui-upload-file { position: absolute; width: 100px; height: 100px; opacity: 0; top: 0; }
+#addCompany .photo-area .thumb-input img { height: 60px;  width:60px; margin: 20px; }
 

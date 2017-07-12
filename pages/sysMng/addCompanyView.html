@@ -8,12 +8,13 @@
     <!--<link href="../../css/style.css" rel="stylesheet">-->
     <script src="../../layUi/layui.js"></script>
     <script>
+        layui.link('../../css/style.css');
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             sysMng : 'sysMng/companyMng'
         }).use('companyMng')
-        .link('../../css/style.css'); //加载入口
+         //加载入口
     </script>
 </head>
 <body>
@@ -212,25 +213,21 @@
                                 <div class="layui-tab-content">
                                     <div class="layui-tab-item layui-show" >
                                         <div class="thumbs">
-                                            <div class="thumb">
-                                                <img src="../../img/map/factory.png">
-                                                <i class="layui-icon">&#x1006;</i>
-                                            </div>
-                                            <div class="thumb">
-                                                <img src="../../img/map/factory.png">
-                                                <i class="layui-icon">&#x1006;</i>
+                                            <div class="thumb thumb-input">
+                                                <img src="../../img/plus.png">
+                                                <input name="file" class="layui-upload-file" id="test1" type="file"
+                                                       accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
                                             </div>
                                         </div>
-                                        <input name="file" class="layui-upload-file" id="test1" type="file">
                                     </div>
                                     <div class="layui-tab-item">
                                         <div class="thumbs">
-                                            <div class="thumb">
-                                                <img src="../../img/map/factory.png">
-                                                <i class="layui-icon">&#x1006;</i>
+                                            <div class="thumb thumb-input">
+                                                <img src="../../img/plus.png">
+                                                <input name="file" multiple class="layui-upload-file" id="test2" type="file"
+                                                       accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
                                             </div>
                                         </div>
-                                        <input name="file" class="layui-upload-file" id="test2" type="file">
                                     </div>
                                 </div>
                             </div>
