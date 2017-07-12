@@ -4,6 +4,18 @@
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: #00a5dd ;}
 /*.side{background-image: url("../img/index/left.png")}*/
+
+/*颜色*/
+.layui-bg-black, .layui-nav{ background-color: #374760 }
+.layui-nav-bar { background-color: #00a5dd !important}
+.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{  background-color: #00a5dd}
+.layui-nav .layui-nav-item a { color: white }
+.layui-nav .layui-nav-item .layui-nav-more { border-color: white transparent transparent }
+.layui-nav .layui-nav-item dd a{ color: black }
+
+.layui-tab .layui-tab-title .layui-this { color: #333333 }
+
+
 .side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}
 .fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
 .layui-nav-bar{ background-color: #1AA094 }
