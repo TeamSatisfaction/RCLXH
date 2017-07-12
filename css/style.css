@@ -67,6 +67,12 @@
 #addCompany .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
 #addCompany .layui-form .layui-form-item .layui-form-label { width: 130px; }
 #addCompany .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }
+/*新增监测站*/
+#addMS .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px; }
+#addMS .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
+#addMS .layui-form .layui-form-item .layui-form-label { width: 100px; }
+#addMS .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }
+
 /*照片部分*/
 #addCompany .photo-area { width: 90%;margin: auto;border: 1px }
 #addCompany .photo-area .thumb{ width: 100px; height: 100px; display: inline-block; margin-right: 8px; border: 1px solid #aaa; position: relative }

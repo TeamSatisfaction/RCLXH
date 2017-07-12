@@ -1,0 +1,99 @@
+<!--新增监测站信息-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>title</title>
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            sysMng : 'sysMng/MSMng'
+        }).use('MSMng')
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body>
+    <div class="layui-layout-admin"id="addMS">
+        <!--面包屑-->
+        <div style="margin-left: 10px;margin-top: 10px">
+            <span class="layui-breadcrumb">
+            <a href="#">系统管理</a>
+            <a href="#"  onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html')">监测站管理</a>
+            <a><cite>新增监测站</cite></a>
+            </span>
+        </div>
+        <!--表单-->
+        <div class="layui-layout-admin" style="text-align: center;margin-top: 100px">
+            <form class="layui-form" lay-filter="test" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">监测站名称：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">法人代表：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系人：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">联系人电话：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">运行状态：</label>
+                        <div class="layui-input-inline">
+                            <select name="modules" lay-verify="required" lay-search="">
+                                <option value="正常运行">正常运行</option>
+                                <option value="非正常运行">非正常运行</option>
+                                <option value="正常停产">正常停产</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">经度：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">纬度：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">地址：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--按钮-->
+        <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
+            <button class="layui-btn layui-btn-normal">
+                <i class="layui-icon">&#xe605;</i>提交
+            </button>
+            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html')">
+                <i class="layui-icon">&#x1006;</i>返回
+            </button>
+        </div>
+    </div>
+</body>
+</html>
