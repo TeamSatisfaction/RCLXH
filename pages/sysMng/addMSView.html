@@ -18,16 +18,8 @@
 </head>
 <body>
     <div class="layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief" id="addMS">
-        <!--面包屑-->
-        <div style="margin-left: 10px;margin-top: 10px">
-            <span class="layui-breadcrumb">
-            <a href="#">系统管理</a>
-            <a href="#"  onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html','监测站')">监测站管理</a>
-            <a><cite>新增监测站</cite></a>
-            </span>
-        </div>
         <!--表单-->
-        <div class="layui-layout-admin" style="text-align: center;margin-top: 100px">
+        <div class="layui-layout-admin" style="text-align: center;margin-top: 10px">
             <form class="layui-form" lay-filter="test" action="">
                 <div class="layui-form-item">
                     <div class="layui-inline">
@@ -85,14 +77,14 @@
                 </div>
             </form>
         </div>
-        <!--按钮-->
-        <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
-            <button class="layui-btn layui-btn-normal">
-                <i class="layui-icon">&#xe605;</i>提交
-            </button>
-            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html','监测站')">
-                <i class="layui-icon">&#x1006;</i>返回
-            </button>
+        <!--&lt;!&ndash;按钮&ndash;&gt;-->
+        <!--<div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">-->
+            <!--<button class="layui-btn layui-btn-normal">-->
+                <!--<i class="layui-icon">&#xe605;</i>提交-->
+            <!--</button>-->
+            <!--<button class="layui-btn layui-btn-normal" onclick="layui.MSMng.loadPage('pages/sysMng/sysMngView.html','监测站')">-->
+                <!--<i class="layui-icon">&#x1006;</i>返回-->
+            <!--</button>-->
         </div>
     </div>
 </body>

@@ -1,10 +1,11 @@
 /*
 /企业管理ctrl
  */
-layui.define(['layer', 'element','form','laydate','upload'],function (exports){
+layui.define(['layer', 'element','laypage','form','laydate','upload'],function (exports){
     var $ = layui.jquery,
-        layer = layui.layer;
-
+        layer = layui.layer,
+        laypage = layui.laypage
+        cTobody = $('#company-result');
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -17,7 +18,51 @@ layui.define(['layer', 'element','form','laydate','upload'],function (exports){
     //         LAY_demo_upload.src = res.url;
     //     }
     // });
-
+    //加载企业列表
+    var loadCompanyData = function () {
+        $.ajax({
+            url :'../../data/companyData.json',
+            type : 'post',
+            success : function (data) {
+                var cData = data.jsonObject.data,
+                    pages = data.jsonObject.totalCount,
+                    pageNumber = data.jsonObject.pageNumber,
+                    str = "";
+                var nums = 16; //每页出现的数据量
+                //模拟渲染
+                var render = function(cData, curr){
+                    var arr = []
+                        ,thisData = cData.concat().splice(curr*nums-nums, nums);
+                    layui.each(thisData, function(index, item){
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>' + item.NAME + '</td>' +
+                            '<td>' + item.ADDRESS + '</td>' +
+                            '<td>' + item.LEVEL + '</td>' +
+                            '<td>' + item.LINKNAME + '</td>' +
+                            '<td>' + item.LINKPHONE + '</td>' +
+                            '<td><a href="#" onclick="layui.sysMng.loadPage(\'pages/sysMng/companyDataView.html\','+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '</tr>';
+                        arr.push(str);
+                    });
+                    return arr.join('');
+                };
+                //调用分页
+                laypage({
+                    cont: 'demo1'
+                    ,skin: '#00a5dd'
+                    ,pages: Math.ceil(pages/nums) //得到总页数
+                    ,curr : pageNumber  //当前页
+                    ,jump: function(obj){
+                        cTobody.html(render(cData, obj.curr));
+                    }
+                    , skip: true
+                });
+            }
+        })
+    };
     /*选择图片*/
     var imgSelect = function (input) {
         /*创建图片路径*/
@@ -69,15 +114,29 @@ layui.define(['layer', 'element','form','laydate','upload'],function (exports){
         /*formData打印不出来的，需要有接口才能测试*/
         console.log(zb_formData, fb_formData);
     };
+    var addCompanyWin = function () {
+        layer.open({
+            title : '新增监控站',
+            type : 2,
+            area : ['1200px','700px'],
+            content : '../../pages/sysMng/addCompanyView.html',
+            btn: ['提交', '关闭'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1})
+                layer.close(index);
+            }
+        })
+    }
 
-
-
-
+    loadCompanyData();
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
+        loadCompanyData : loadCompanyData,
         imgSelect: imgSelect,
-        imgDelete: imgDelete
+        imgDelete: imgDelete,
+        addCompanyWin : addCompanyWin
     };
     exports('companyMng',obj)
 })

@@ -5,58 +5,12 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         element = layui.element(),
         // layedit = layui.layedit,
         // laydate = layui.laydate,
-        cTobody = $('#company-result');
-        eTobody = $('#equipment-result');
+        eTobody = $('#equipment-result'),
         uTobody = $('#user-result');
     //页面跳转
     var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
-    };
-    //加载企业列表
-    var loadCompanyData = function () {
-        $.ajax({
-            url :'../../data/companyData.json',
-            type : 'post',
-            success : function (data) {
-                var cData = data.jsonObject.data,
-                    pages = data.jsonObject.totalCount,
-                    pageNumber = data.jsonObject.pageNumber,
-                    str = "";
-                var nums = 16; //每页出现的数据量
-                //模拟渲染
-                var render = function(cData, curr){
-                    var arr = []
-                        ,thisData = cData.concat().splice(curr*nums-nums, nums);
-                    layui.each(thisData, function(index, item){
-                        str = '<tr>' +
-                            '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.NAME + '</td>' +
-                            '<td>' + item.ADDRESS + '</td>' +
-                            '<td>' + item.LEVEL + '</td>' +
-                            '<td>' + item.LINKNAME + '</td>' +
-                            '<td>' + item.LINKPHONE + '</td>' +
-                            '<td><a href="#" onclick="layui.sysMng.loadPage(\'pages/sysMng/companyDataView.html\','+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
-                            '</tr>';
-                        arr.push(str);
-                    });
-                    return arr.join('');
-                };
-                //调用分页
-                laypage({
-                    cont: 'demo1'
-                    ,skin: '#00a5dd'
-                    ,pages: Math.ceil(pages/nums) //得到总页数
-                    ,curr : pageNumber  //当前页
-                    ,jump: function(obj){
-                        cTobody.html(render(cData, obj.curr));
-                    }
-                    , skip: true
-                });
-            }
-        })
     };
     //加载设备列表
     var loadEquipmentData = function () {
@@ -106,16 +60,16 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
 
         })
     };
-    var refresh =function (id) {
-        console.log("1");
-        element.tabChange('demo',id);
-    }
+    //Hash地址的定位
+    var layid = location.hash.replace(/^#test=/, '');
+    element.tabChange('test', layid);
+    element.on('tab(test)', function(elem){
+        location.hash = 'test='+ $(this).attr('lay-id');
+    });
     loadEquipmentData();
-    loadCompanyData();
     loadUserData();
     var obj = {
         loadPage : loadPage,
-        loadCompanyData : loadCompanyData,
         loadEquipmentData : loadEquipmentData,
         loadUserData : loadUserData
     };

@@ -75,7 +75,7 @@
 .notification .content{ cursor: pointer }
 
 /*新增企业*/
-#addCompany .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px;}
+#addCompany .layui-layout-admin{ margin-top: -4px; margin-bottom: 40px;}
 #addCompany .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
 #addCompany .layui-form .layui-form-item .layui-form-label { width: 130px; }
 #addCompany .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }
