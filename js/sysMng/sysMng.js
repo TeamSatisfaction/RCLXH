@@ -26,6 +26,9 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                     var arr = []
                         , thisData = eData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
+                        // var num = curr * nums - nums+1;
+                        // console.log(curr);
+                        // console.log(num);
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.eCode + '</td>' +
@@ -43,7 +46,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
                 };
                 //调用分页
                 laypage({
-                    cont: 'demo2'
+                    cont: 'demo3'
                     ,skin: '#00a5dd'
                     ,pages: Math.ceil(eData.length/nums) //得到总页数
                     ,jump: function(obj){

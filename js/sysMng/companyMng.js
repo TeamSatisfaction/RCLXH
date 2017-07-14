@@ -4,7 +4,7 @@
 layui.define(['layer', 'element','laypage','form','laydate','upload'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
-        laypage = layui.laypage
+        laypage = layui.laypage,
         cTobody = $('#company-result');
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
@@ -34,6 +34,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                     var arr = []
                         ,thisData = cData.concat().splice(curr*nums-nums, nums);
                     layui.each(thisData, function(index, item){
+                        // var num = curr * nums - nums+1;
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.NAME + '</td>' +
@@ -54,9 +55,12 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                     cont: 'demo1'
                     ,skin: '#00a5dd'
                     ,pages: Math.ceil(pages/nums) //得到总页数
-                    ,curr : pageNumber  //当前页
-                    ,jump: function(obj){
+                    // ,curr: curr || 1 //当前页,
+                    ,jump: function(obj,first){
                         cTobody.html(render(cData, obj.curr));
+                        // if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
+                        //     loadCompanyData(obj.curr);
+                        // }
                     }
                     , skip: true
                 });
@@ -116,8 +120,9 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     };
     var addCompanyWin = function () {
         layer.open({
-            title : '新增监控站',
+            title : '新增企业',
             type : 2,
+            moveOut: true,
             area : ['1200px','700px'],
             content : '../../pages/sysMng/addCompanyView.html',
             btn: ['提交', '关闭'],

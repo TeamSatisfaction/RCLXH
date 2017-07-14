@@ -6,7 +6,6 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
-    <!--<link href="../../css/style.css" rel="stylesheet">-->
     <script src="../../layUi/layui.js"></script>
     <script>
         layui.link('../../css/style.css');
@@ -92,7 +91,7 @@
                         <div class="layui-input-inline">
                             <input id="MSName" name="name" lay-verify="name" autocomplete="off" placeholder="请输入监测站名称" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute">
+                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.MSMng.loadMSData()">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
                         <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.MSMng.addMSWin()">
@@ -105,6 +104,8 @@
                             <col width="350">
                             <col>
                             <col width="120">
+                            <col width="120">
+                            <col width="120">
                             <col width="150">
                             <col width="100">
                         </colgroup>
@@ -115,13 +116,15 @@
                             <th>监测站地址</th>
                             <th>联系人</th>
                             <th>联系人电话</th>
+                            <th>精度</th>
+                            <th>维度</th>
                             <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="ms-result">
                         </tbody>
                     </table>
-                    <div id="demo3" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+                    <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
                 </div>
             </div>
             <!--设备管理-->
@@ -181,7 +184,7 @@
                     <tbody id="equipment-result">
                     </tbody>
                 </table>
-                <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+                <div id="demo3" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--联网管理-->
             <div class="layui-tab-item">
@@ -245,6 +248,8 @@
                     </tbody>
                 </table>
             </div>
+            <!--报警规则管理-->
+            <div class="layui-tab-item">报警规则管理</div>
             <!--用户管理-->
             <div class="layui-tab-item">
                 <div class="layui-form" action="" style="margin-bottom: 0px;">
