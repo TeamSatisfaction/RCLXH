@@ -15,7 +15,13 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     
     var loadPage = function (url) {
         var $ = layui.jquery;
-        $("#index_frame").attr("src", url)
+        $("#index_frame").attr("src", url);
+        //左侧目录
+        $(".side").find("li").each(function () {
+            if($(this).find("a").attr("onclick").indexOf(url.substring(url.lastIndexOf('/'), url.length)) != -1){
+                $(this).addClass("layui-this").siblings().removeClass("layui-this")
+            }
+        })
     };
 
     /*输出内容，注意顺序*/
