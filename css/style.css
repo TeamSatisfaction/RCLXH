@@ -20,10 +20,11 @@
 
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
 .side .layui-nav .layui-nav-item a span{ color: #333333 }
-.side .layui-nav .layui-nav-item.layui-this a{ background-color: #fff}
+.side .layui-nav .layui-nav-item.layui-this a{ background-image: url("../img/index/choose.png"); background-color: transparent}
+.side .layui-nav .layui-nav-item.layui-this{ background-color: transparent}
 .side .layui-nav .layui-nav-item.layui-this a span{ color: #00bfff}
-.side .layui-nav .layui-nav-item a:hover{ background-color: #fff }
-.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #333333 }
+.side .layui-nav .layui-nav-item a:hover{ background-image: url("../img/index/choose.png"); background-color: transparent; }
+.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #00bfff }
 .side .layui-nav  { background-color: transparent }
 .side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px;  margin-right: 2px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
