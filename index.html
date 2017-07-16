@@ -2,10 +2,11 @@
 <html lang="ch">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>荣昌区环保物联网在线监控平台</title>
     <link href="layUi/css/layui.css" rel="stylesheet">
     <script src="layUi/layui.js"></script>
     <script>
+        layui.link('css/style.css');
         layui.config({
             base: 'js/' //你的模块目录
         }).use('app'); //加载入口
@@ -15,14 +16,14 @@
     <div class="layui-layout layui-layout-admin">
         <!--标题栏-->
         <div class="layui-header header" style="background-color: #00a5dd">
-            <div class="layui-inline logo layui-icon" ></div>
+            <div class="layui-inline logo layui-icon" onclick="layui.index.loadPage('pages/Map/Map.html')"></div>
             <h1 class="title layui-inline">荣昌区环保物联网在线监控平台</h1>
             <span class="time layui-inline" id="time"></span>
             <ul class="layui-nav layui-inline " lay-filter="user">
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="img/index/name.png" style="width: 18px; margin: -2px 4px 0 4px;   "/>
-                        <span>用户名11111</span>
+                        <span>用户名</span>
                     </a>
                     <dl class="layui-nav-child">
                         <dd><a href="#">选项1</a></dd>

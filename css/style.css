@@ -1,5 +1,5 @@
 .header { border-bottom: 5px solid #404040 ; background-color: transparent; background-image: url("../img/index/background.png")}
-.header>.logo { width: 120px; height: 100%;  background: url("../img/index/logo.png") center no-repeat; }
+.header>.logo { width: 120px; height: 100%;  background: url("../img/index/logo.png") center no-repeat; cursor: pointer }
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}

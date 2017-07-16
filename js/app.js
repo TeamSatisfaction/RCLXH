@@ -7,7 +7,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         element = layui.element(),
         form = layui.form();
     /*加载CSS文件*/
-    layui.link('css/style.css');
+
 
     /*加载JS模块*/
     layui.extend({ //设定模块别名
