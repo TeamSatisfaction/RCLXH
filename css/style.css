@@ -1,21 +1,47 @@
-.header { border-bottom: 5px solid #00a5dd ;}
+.header { border-bottom: 5px solid #404040 ; background-color: transparent; background-image: url("../img/index/background.png")}
 .header>.logo { width: 120px; height: 100%;  background: url("../img/index/logo.png") center no-repeat; }
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
-.header>.layui-nav { right: 0px; position: absolute; background-color: #00a5dd ;}
-/*.side{background-image: url("../img/index/left.png")}*/
+.header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
+.side{background-image: url("../img/index/left.png")}
 
 /*颜色*/
 .layui-bg-black, .layui-nav{ background-color: #544d4e}
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/
 .layui-nav-bar { background-color: #00a5dd !important}
-.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{  background-color: #1AA094}
-/*.layui-nav .layui-nav-item{background-image: url("../img/index/caidan-.png")}*/
+/*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{  background-color: #1AA094}*/
+.side .layui-nav .layui-nav-item{background-image: url("../img/index/caidan-.png")}
 .layui-nav .layui-nav-item a { color: white }
 .layui-nav .layui-nav-item .layui-nav-more { border-color: white transparent transparent }
 .layui-nav .layui-nav-item dd a{ color: black }
 
-.layui-tab .layui-tab-title .layui-this { color: #333333 }
+.layui-tab-brief>.layui-tab-title .layui-this{ color: #00a5dd  }
+.layui-tab-brief>.layui-tab-title .layui-this:after{ border-bottom: 3px solid #00a5dd  }
+
+/*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
+.side .layui-nav .layui-nav-item a span{ color: #333333 }
+.side .layui-nav .layui-nav-item.layui-this a{ background-color: #fff}
+.side .layui-nav .layui-nav-item.layui-this a span{ color: #00bfff}
+.side .layui-nav .layui-nav-item a:hover{ background-color: #fff }
+.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #333333 }
+.side .layui-nav  { background-color: transparent }
+.side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px;  margin-right: 2px;
+    background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
+.side .layui-nav .layui-nav-item:nth-child(1) a i{  background-image: url(../img/index/shouye_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(1).layui-this a i{  background-image: url(../img/index/shouye.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/index/wuranyuan.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/index/wuranyuan_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/index/baojing.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/index/baojing_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/index/wurenji-.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/index/wurenji_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/index/jiancezhan.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/index/jiancezhan_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/index/tongji.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/index/tongji_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
+
 
 
 .side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}
