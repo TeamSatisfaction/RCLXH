@@ -18,6 +18,13 @@
     <title>Title</title>
 </head>
 <body>
+    <!--面包屑-->
+    <div style="margin-left: 10px;margin-top: 10px">
+    <span class="layui-breadcrumb">
+    <a href="#"  onclick="layui.alarmMng.loadPage('pages/alarmMng/alarmMng.html')">报警管理</a>
+    <a><cite>报警详情</cite></a>
+    </span>
+    </div>
     <fieldset class="layui-elem-field">
         <legend>报警详情</legend>
         <div>
@@ -54,24 +61,24 @@
                             报警状态：
                         </td>
                         <td>
-                            <span class="warning ng-binding" ng-bind="bjStatus" style="background-color: rgb(13, 186, 0);">已关闭</span>
+                            <span class="warning ng-binding" ng-bind="bjStatus" style="background-color: rgb(13, 186, 0);">未处理</span>
                         </td>
                     </tr>
                     </tbody>
                 </table>
-            <div class="layui-inline">
-                <span>报警时间图片：</span>
-                <div>暂无相关图片</div>
+            <div class="layui-inline" style="width: 45%">
+                <span class="layui-inline">报警时间图片：</span>
+                <div class="layui-inline">暂无相关图片</div>
             </div>
         </div>
         <div class="layui-footer" style="width: 100%;height:39px;left: 0;text-align: center">
-            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">
+            <button class="layui-btn layui-btn-normal">
                 处理
             </button>
-            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.closeAddWin()">
+            <button class="layui-btn layui-btn-normal">
                 关闭
             </button>
-            <button class="layui-btn layui-btn-normal" onclick="layui.MSMng.closeAddWin()">
+            <button class="layui-btn layui-btn-normal">
                 上报
             </button>
         </div>

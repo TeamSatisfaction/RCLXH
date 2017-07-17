@@ -12,9 +12,9 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         center: center_point,
         slider: false,
         logo: false,
-        zoom: 11,//地图大小级别
-        minZoom: 0,//地图缩放的小级别
-        maxZoom: 19//地图缩放的最大级别
+        zoom: 13,//地图大小级别
+        minZoom: 12,//地图缩放的小级别
+        maxZoom: 16//地图缩放的最大级别
     });
     var basemap = new esri.layers.ArcGISTiledMapServiceLayer(mapServer);
     var graphicLayer = new esri.layers.GraphicsLayer({id: 'point_layer'});         //点位图层
