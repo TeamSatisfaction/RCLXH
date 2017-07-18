@@ -175,7 +175,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         pk_win.find('.thumb-input').show();
         layer.open({
             type: 1 //此处以iframe举例
-<<<<<<< Updated upstream
             ,title: '新增排口'
             ,area: ['800px']
             ,shade: 0.3
@@ -210,16 +209,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,zIndex: layer.zIndex //重点1
             ,success: function(layero){
                 layer.setTop(layero); //重点2
-=======
-            ,title: '新增污水排口'
-            ,area: ['600px', '400px']
-            ,maxmin: true
-            ,content: $('#pk_window')
-            ,btn: ['新增', '关闭'] //只是为了演示
-            ,yes: function(index){
-                layer.msg('添加成功！', {icon: 1});
-                layer.close(index);
->>>>>>> Stashed changes
             }
         })
     };

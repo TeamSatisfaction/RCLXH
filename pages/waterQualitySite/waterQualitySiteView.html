@@ -6,13 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/highcharts/highcharts.js"></script>
+    <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
     <script>
         layui.link('../../css/style.css');
         layui.config({
             base: '../../js/waterQualitySite/' //你的模块目录
         }).extend({
             waterQualitySiteMng : 'waterQualitySiteMng'
-        }).use('waterQualitySiteMng'); //加载入口
+        }).use('waterQualitySiteMng',function () {
+            layui.waterQualitySiteMng.chart();
+        }); //加载入口
     </script>
 </head>
 <body style="width:100%;height: 100%">
@@ -90,7 +94,7 @@
                             查询
                         </button>
                     </div>
-                    <div>下面是一个曲线图</div>
+                    <div id="container" style="min-width:100%;height:500px;margin-top: 10px">图</div>
                 </div>
                 <div class="layui-tab-item" >2
                 </div>

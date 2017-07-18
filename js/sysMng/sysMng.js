@@ -12,22 +12,14 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
-    //加载用户列表
-    var loadUserData = function () {
-        $.ajax({
-
-        })
-    };
     //Hash地址的定位
     var layid = location.hash.replace(/^#test=/, '');
     element.tabChange('test', layid);
     element.on('tab(test)', function(elem){
         location.hash = 'test='+ $(this).attr('lay-id');
     });
-    loadUserData();
     var obj = {
-        loadPage : loadPage,
-        loadUserData : loadUserData
+        loadPage : loadPage
     };
     /*输出内容，注意顺序*/
     exports('sysMng',obj)

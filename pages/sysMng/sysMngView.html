@@ -21,6 +21,7 @@
             layui.companyMng.loadCompanyData();
             layui.MSMng.loadMSData();
             layui.equipmentMng.loadEquipmentData();
+            layui.userMng.loadUserData();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -258,9 +259,9 @@
                     <div class="layui-form-item" style="margin-bottom: 0px;">
                         <label class="layui-form-label">用户姓名</label>
                         <div class="layui-input-inline">
-                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
+                            <input name="name" id="uName" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute">
+                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick=" layui.userMng.loadUserData()">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
                         <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.userMng.addUserWin()">
@@ -271,7 +272,7 @@
                 <table class="layui-table" lay-even="" lay-skin="row">
                     <colgroup>
                         <col width="60">
-                        <col>
+                        <!--<col>-->
                         <col>
                         <col>
                         <col>
@@ -282,7 +283,7 @@
                     <thead>
                     <tr>
                         <th>序号</th>
-                        <th>登录账号</th>
+                        <!--<th>登录账号</th>-->
                         <th>用户姓名</th>
                         <th>联系电话</th>
                         <th>最后更新人</th>
