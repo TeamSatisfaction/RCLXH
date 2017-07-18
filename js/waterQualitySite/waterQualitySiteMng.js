@@ -17,7 +17,7 @@ layui.define(['layer', 'element','layedit', 'laydate'],function (exports){
         laydate(start);
     };
     document.getElementById('endTime1').onclick = function(){
-        start.elem = this;
+        end.elem = this;
         laydate(end);
     };
     $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));

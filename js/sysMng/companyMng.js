@@ -132,7 +132,23 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                 layer.close(index);
             }
         })
-    }
+    };
+
+    var addPk = function () {
+        layer.open({
+            title : '新增排口',
+            type : 1,
+            moveOut: true,
+            area : ['800px','560px'],
+            content : $('#pk_window'),
+            btn: ['提交', '关闭'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1})
+                layer.close(index);
+            }
+        })
+    };
 
     loadCompanyData();
     /*输出内容，注意顺序*/
@@ -141,7 +157,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         loadCompanyData : loadCompanyData,
         imgSelect: imgSelect,
         imgDelete: imgDelete,
-        addCompanyWin : addCompanyWin
+        addCompanyWin : addCompanyWin,
+        addPk : addPk
     };
     exports('companyMng',obj)
 })
