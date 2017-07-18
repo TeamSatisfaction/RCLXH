@@ -103,9 +103,11 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
             data : field,
             success : function (result){
                 if(result.resultdesc == '成功'){
-                    closeAddWin();
+                    //closeAddWin();
                     layer.msg('提交成功！', {icon: 1});
-                    $(parent).find("#index_frame").location.reload();
+                    //$(parent).find("#index_frame").location.reload();
+                    parent.location.reload(); // 父页面刷新
+                    closeAddWin();
                 }else {
                     layer.msg('提交失败！', {icon: 2});
                 }
@@ -117,8 +119,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
     var closeAddWin = function () {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
-        $(parent).find("#index_frame").location.reload();
-    }
+    };
     // var saveMSData = function () {
     //     form.on('submit(formDemo)', function(data){
     //         console.log(data);
@@ -132,7 +133,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
         loadMSData : loadMSData,
         addMSWin : addMSWin,
         closeAddWin : closeAddWin
-    }
+    };
     /*输出内容，注意顺序*/
     exports('MSMng',obj)
 })

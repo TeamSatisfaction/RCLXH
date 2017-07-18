@@ -14,8 +14,9 @@
         }).extend({
             sysMng : 'sysMng/sysMng',
             MSMng  : 'sysMng/MSMng',
-            companyMng : 'sysMng/companyMng'
-        }).use(['sysMng','MSMng','companyMng']); //加载入口
+            companyMng : 'sysMng/companyMng',
+            userMng : 'sysMng/userMng'
+        }).use(['sysMng','MSMng','companyMng','userMng']); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
@@ -256,10 +257,10 @@
                         <div class="layui-input-inline">
                             <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn" style="position: absolute">
+                        <button class="layui-btn layui-btn-normal" style="position: absolute">
                             <i class="layui-icon">&#xe615;</i>
                         </button>
-                        <button class="layui-btn" style="position: absolute;right: 10px">
+                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.userMng.addUserWin()">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
