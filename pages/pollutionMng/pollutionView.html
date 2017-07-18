@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/' //你的模块目录
+        }).extend({
+            pollutionMng : 'pollutionMng/pollutionMng'
+        }).use(['pollutionMng'],function () {
+            layui.pollutionMng.loadCompanyData();
+        }); //加载入口
+    </script>
+    <title>Title</title>
+</head>
+<body>
+    <div class="layui-layout-admin" lay-filter="test">
+        <div class="layui-form" action="" style="margin-top: 10px;">
+            <div class="layui-form-item" style="margin-bottom: 0px;">
+                <label class="layui-form-label">企业名称：</label>
+                <div class="layui-input-inline">
+                    <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                </div>
+                <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.companyMng.loadCompanyData()">
+                    <i class="layui-icon">&#xe615;</i>
+                </button>
+            </div>
+        </div>
+        <table class="layui-table" lay-even="" lay-skin="row">
+            <colgroup>
+                <col width="60">
+                <col width="350">
+                <col>
+                <col width="100">
+                <col width="120">
+                <col width="100">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>企业名称</th>
+                <th>企业地址</th>
+                <th>联系人</th>
+                <th>联系人电话</th>
+                <th style="text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody id="company-result">
+            </tbody>
+        </table>
+        <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+    </div>
+</body>
+</html>
