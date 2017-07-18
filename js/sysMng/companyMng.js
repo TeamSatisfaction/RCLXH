@@ -77,18 +77,45 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         var str =
                 '<img src="' + src + '"> ' +
                 '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' ;
-        console.log(thumb);
+
         $(input).removeAttr("onchange").hide();
         thumb.find("img").remove();
-        thumb.removeClass("thumb-input").prepend(str);
+        thumb.removeClass("thumb-input").prepend(str).show();
         thumb.after(thisContent);
-        getImgSelection();
+        getImgSelection(input);
     };
+
     /*移除选择的图片*/
     var imgDelete = function (i) {
         var thumb = $(i).parent(".thumb");
         thumb.remove();
     };
+
+    /*处理工艺的图片事件*/
+    var clgyImgSelect = function (input) {
+        /*创建图片路径*/
+        var src = window.URL.createObjectURL(input.files[0]),
+            thumb =  $(input).parent(".thumb"),
+            thisContent = thumb[0].outerHTML;
+        /*写HTML*/
+        var str =
+            '<img src="' + src + '"> ' +
+            '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> '+
+            '<div>' + ($(".clgy_item").find("select").val()) + '</div>';    //工艺类型
+        $(input).removeAttr("onchange").hide();
+        thumb.find("img").remove();
+        thumb.removeClass("thumb-input").prepend(str).show();
+        thumb.after(thisContent);
+        //重新定义上传按钮的事件
+        // $('#clgy_upload').off("click").click(function () {
+        //     $(".clgy_photos").find(".thumb-input").find("input").click()
+        // });
+        getImgSelection(input);
+    };
+    //定义上传按钮事件
+    $('#clgy_upload').click(function () {
+        $(".clgy_photos").find(".thumb-input").find("input").click()
+    });
 
     /*获取所有图片的方法
     * urls: 图片的本地路径，若为C://fakepath/ 是被浏览器保护了
@@ -98,25 +125,18 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     * 		contentType: false,  	//必要
     * 		processData: false,  	//必要，防止ajax处理文件流
     * */
-    var getImgSelection = function () {
-        var zb_thumbs = $(".photo-area").find(".thumbs").eq(0),
-            fb_thumbs = $(".photo-area").find(".thumbs").eq(1),
-            zb_urls = [],
-            fb_urls = [],
-            zb_formData = new FormData(),
-            fb_formData = new FormData();
-        /*正本*/
-        $(zb_thumbs).each(function () {
-            zb_formData.append($(this).index().toString(), $(this).find("input")[0].files[0]);
-            zb_urls.push($(this).find("input").val());
+    var getImgSelection = function (input) {
+        var thumbs = $(input).parents(".photo-area").find(".thumbs"),
+            urls = [],
+            formData = new FormData();
+        /*遍历*/
+        $(thumbs).find('.thumb').each(function () {
+            formData.append($(this).index().toString(), $(this).find("input")[0].files[0]);
+            urls.push($(this).find("input").val());
         });
-        /*副本*/
-        $(fb_thumbs).each(function () {
-            fb_formData.append($(this).index().toString(), $(this).find("input")[0].files[0]);
-            fb_urls.push($(this).find("input").val());
-        });
+        console.log(urls);
         /*formData打印不出来的，需要有接口才能测试*/
-        console.log(zb_formData, fb_formData);
+        console.log(formData);
     };
     var addCompanyWin = function () {
         layer.open({
@@ -128,24 +148,56 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             btn: ['提交', '关闭'],
             btnAlign: 'c',
             yes : function (index) {
-                layer.msg('提交成功！', {icon: 1})
+                layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
+            }
+            ,zIndex: layer.zIndex //重点1
+            ,success: function(layero){
+                layer.setTop(layero); //重点2
             }
         })
     };
-
+    /*新增排口*/
     var addPk = function () {
+        var pk_win =  $('#pk_window');
+        pk_win.find('input').attr('disabled', false);
+        pk_win.find('.thumb-input').show();
         layer.open({
-            title : '新增排口',
-            type : 1,
-            moveOut: true,
-            area : ['800px','560px'],
-            content : $('#pk_window'),
-            btn: ['提交', '关闭'],
-            btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1})
+            type: 1 //此处以iframe举例
+            ,title: '新增排口'
+            ,area: ['800px']
+            ,shade: 0.3
+            ,content: pk_win
+            ,btn: ['提交', '关闭'] //只是为了演示
+            ,yes: function(){
+                layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
+            }
+            ,zIndex: layer.zIndex //重点1
+            ,success: function(layero){
+                layer.setTop(layero); //重点2
+            }
+        })
+    };
+    /*查看排口信息*/
+    var lookPk = function () {
+        var pk_win =  $('#pk_window');
+        pk_win.find('input').attr('disabled', 'disabled');
+        pk_win.find('.thumb-input').hide();
+        layer.open({
+            type: 1 //此处以iframe举例
+            ,title: '查看排口'
+            ,area: ['800px']
+            ,shade: 0.3
+            ,content: pk_win
+            ,btn: ['提交', '关闭'] //只是为了演示
+            ,yes: function(){
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+            ,zIndex: layer.zIndex //重点1
+            ,success: function(layero){
+                layer.setTop(layero); //重点2
             }
         })
     };
@@ -158,7 +210,9 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         imgSelect: imgSelect,
         imgDelete: imgDelete,
         addCompanyWin : addCompanyWin,
-        addPk : addPk
+        addPk : addPk,
+        lookPk : lookPk,
+        clgyImgSelect : clgyImgSelect
     };
     exports('companyMng',obj)
 })
