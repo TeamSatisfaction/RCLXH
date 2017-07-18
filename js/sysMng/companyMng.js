@@ -19,30 +19,41 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     //     }
     // });
     //加载企业列表
-    var loadCompanyData = function () {
+    var loadCompanyData = function (curr) {
+        var name = $('#name').val(),
+            data = {
+                name : name,
+                pageNum : curr||1,
+                pageSize : 16
+               // areaCode : '500153'
+            };
+        var field = JSON.stringify(data);
         $.ajax({
-            url :'../../data/companyData.json',
+            url :'http://172.21.92.63:8092/v01/htwl/lxh/enterprise/page',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
             type : 'post',
-            success : function (data) {
-                var cData = data.jsonObject.data,
-                    pages = data.jsonObject.totalCount,
-                    pageNumber = data.jsonObject.pageNumber,
-                    str = "";
+            data : field,
+            success : function (result) {
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
-                var render = function(cData, curr){
+                var cData = result.data.list,
+                     pages = result.data.pages,
+                     str = "";
+                //模拟渲染
+                var render = function(cData, curr) {
                     var arr = []
-                        ,thisData = cData.concat().splice(curr*nums-nums, nums);
+                        , thisData = cData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        // var num = curr * nums - nums+1;
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.NAME + '</td>' +
-                            '<td>' + item.ADDRESS + '</td>' +
-                            '<td>' + item.LEVEL + '</td>' +
-                            '<td>' + item.LINKNAME + '</td>' +
-                            '<td>' + item.LINKPHONE + '</td>' +
-                            '<td><a href="#" onclick="layui.sysMng.loadPage(\'pages/sysMng/companyDataView.html\','+item.OBJECTID+')"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '<td>' + item.name + '</td>' +
+                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.head+ '</td>' +
+                            '<td>' + item.headPhone + '</td>' +
+                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
                             '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
@@ -50,20 +61,20 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                     });
                     return arr.join('');
                 };
+                cTobody.html(render(cData, obj.curr));
                 //调用分页
                 laypage({
-                    cont: 'demo1'
-                    ,skin: '#00a5dd'
-                    ,pages: Math.ceil(pages/nums) //得到总页数
-                    // ,curr: curr || 1 //当前页,
-                    ,jump: function(obj,first){
-                        cTobody.html(render(cData, obj.curr));
-                        // if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
-                        //     loadCompanyData(obj.curr);
-                        // }
+                    cont: 'demo1',
+                    skin: '#00a5dd',
+                    pages : pages,
+                    curr: curr || 1, //当前页,
+                    skip: true,
+                    jump: function(obj,first){
+                        if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
+                            loadCompanyData(obj.curr);
+                        }
                     }
-                    , skip: true
-                });
+                })
             }
         })
     };
@@ -151,10 +162,10 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                 layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
             }
-            ,zIndex: layer.zIndex //重点1
-            ,success: function(layero){
-                layer.setTop(layero); //重点2
-            }
+            // ,zIndex: layer.zIndex //重点1
+            // ,success: function(layero){
+            //     layer.setTop(layero); //重点2
+            // }
         })
     };
     /*新增排口*/
@@ -164,6 +175,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         pk_win.find('.thumb-input').show();
         layer.open({
             type: 1 //此处以iframe举例
+<<<<<<< Updated upstream
             ,title: '新增排口'
             ,area: ['800px']
             ,shade: 0.3
@@ -198,11 +210,22 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,zIndex: layer.zIndex //重点1
             ,success: function(layero){
                 layer.setTop(layero); //重点2
+=======
+            ,title: '新增污水排口'
+            ,area: ['600px', '400px']
+            ,maxmin: true
+            ,content: $('#pk_window')
+            ,btn: ['新增', '关闭'] //只是为了演示
+            ,yes: function(index){
+                layer.msg('添加成功！', {icon: 1});
+                layer.close(index);
+>>>>>>> Stashed changes
             }
         })
     };
-
-    loadCompanyData();
+    // layer.ready(function(){
+    //     loadCompanyData();
+    // });
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,

@@ -12,7 +12,9 @@
             base: '../../js/' //你的模块目录
         }).extend({
             alarmMng : 'alarmMng/alarmMng'
-        }).use('alarmMng')
+        }).use('alarmMng',function () {
+            layui.alarmMng.loadAlarmData()
+        })
         //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -20,20 +22,28 @@
 <body style="margin-top: 10px" class="layui-layout-admin">
     <div class="layui-form" action="" style="margin-bottom: 0px;">
         <div class="layui-form-item" style="margin-bottom: 0px;">
-            <label class="layui-form-label">问题来源：</label>
-            <input name="problem" id="alarmType" autocomplete="off" placeholder="请输入问题来源" class="layui-input layui-input-inline" type="text">
-            <label class="layui-form-label">开始时间：</label>
-            <input class="layui-input layui-input-inline" id="startTime" placeholder="结束时间">
-            <label class="layui-form-label">结束时间：</label>
+            <div class="layui-inline">
+                <label class="layui-form-label">问题来源：</label>
+                <div class="layui-input-inline">
+                    <select name="state" lay-verify="required" lay-search="" id="alarmType">
+                        <option value="">直接选择或搜索选择</option>
+                        <option value="detection_alarm">在线监控报警</option>
+                        <!--<option value="已处理">已处理</option>-->
+                        <!--<option value="未处理">未处理</option>-->
+                    </select>
+                </div>
+            </div>
+            <label class="layui-form-label">报警时间：</label>
+            <input class="layui-input layui-input-inline" id="startTime" placeholder="开始时间">
             <input class="layui-input layui-input-inline" id="endTime" placeholder="结束时间">
             <div class="layui-inline">
                 <label class="layui-form-label">处理状态：</label>
                 <div class="layui-input-inline">
                     <select name="state" lay-verify="required" lay-search="" id="status">
                         <option value="">直接选择或搜索选择</option>
-                        <option value="已处罚">已处罚</option>
-                        <option value="已处理">已处理</option>
-                        <option value="未处理">未处理</option>
+                        <option value="2">已处罚</option>
+                        <option value="1">已处理</option>
+                        <option value="0">未处理</option>
                     </select>
                 </div>
             </div>

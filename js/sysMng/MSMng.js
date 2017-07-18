@@ -20,9 +20,9 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                 site : site,
                 pageNo : curr||1,
                 pageSize : 16
-            }
+            };
         $.ajax({
-            url :'http://192.168.3.222:8092/v01/htwl/lxh/water/query',
+            url :'http://172.21.92.63:8092/v01/htwl/lxh/water/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -68,16 +68,6 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                         }
                     }
                 })
-                // laypage({
-                //     cont: 'demo2'
-                //     ,skin: '#00a5dd'
-                //     ,pages: pages //得到总页数
-                //     ,jump: function(obj){
-                //         console.log(obj);
-                //         msTobody.html(render(msData, obj.curr));
-                //     }
-                //     , skip: true
-                // });
             }
         })
     };
@@ -93,7 +83,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
     form.on('submit(formDemo)', function(data){
         var field = JSON.stringify(data.field);
         $.ajax({
-            url :'http://172.21.92.77:8092/v01/htwl/lxh/water/add',
+            url :'http://172.21.92.63:8092/v01/htwl/lxh/water/add',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -127,7 +117,6 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
     //     layer.msg('提交成功！', {icon: 1});
     //     loadMSData();
     // }
-    loadMSData();
     var obj = {
         loadPage : loadPage,
         loadMSData : loadMSData,

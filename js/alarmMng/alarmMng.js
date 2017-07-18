@@ -57,7 +57,7 @@ layui.define(['layer','laydate','element','layedit','laypage'], function(exports
             };
         console.log(data);
         $.ajax({
-            url :'http://192.168.3.222:8092/v01/htwl/lxh/alrm/query',
+            url :'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -73,6 +73,20 @@ layui.define(['layer','laydate','element','layedit','laypage'], function(exports
                     var arr = []
                         , thisData = aData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
+                        if(item.alarmType == 'detection_alarm'){
+                            item.alarmType = '在线监控报警'
+                        }
+                       switch (item.status){
+                           case "0":
+                               item.status = '未处理'
+                               break;
+                           case "1":
+                               item.status = '已处理'
+                               break;
+                           case "2":
+                               item.status = '已处罚'
+                               break;
+                       }
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.enterpriseName + '</td>' +
@@ -154,7 +168,6 @@ layui.define(['layer','laydate','element','layedit','laypage'], function(exports
             }
         })
     };
-    loadAlarmData();
     var obj = {
         loadPage : loadPage,
         loadAlarmData : loadAlarmData,
