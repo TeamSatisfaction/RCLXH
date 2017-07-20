@@ -48,9 +48,21 @@ layui.define(function(exports){
     var test = function () {
         layui.alert("test")
     };
+    var getArg = function (key) {
+        var uri = decodeURI(window.location.search),
+            re = new RegExp(String() + key + "=([^&?]*)", "ig");
+        return ((uri.match(re)) ? (uri.match(re)[0].substr(key.length + 1)) : null);
+    };
+    var getUrlArg = function (url, key) {
+        var uri = decodeURI(url),
+            re = new RegExp(String() + key + "=([^&?]*)", "ig");
+        return ((uri.match(re)) ? (uri.match(re)[0].substr(key.length + 1)) : null);
+    };
     exports('utils', {
         dateFormat: dateFormat,
         test: test,
-        loadPage: loadPage
+        loadPage: loadPage,
+        getArg : getArg,
+        getUrlArg : getUrlArg
     }); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });

@@ -11,15 +11,21 @@
         layui.config({
             base: '../../js/' //你的模块目录
         }).extend({
+            utils : 'utils',
             alarmMng : 'alarmMng/alarmMng'
-        }).use('alarmMng')
+        }).use(['alarmMng','utils'],function () {
+            var id = layui.utils.getArg('id');
+            layui.alarmMng.loadAlarmDetails(id);
+//            var value = sessionStorage.getItem("code");
+//            console.log(value);
+        });
         //加载入口
     </script>
     <title>Title</title>
 </head>
 <body>
     <!--面包屑-->
-    <div style="margin-left: 10px;margin-top: 10px">
+    <div style="margin-left: 10px;margin-top: 10px" class="layui-elem-quote">
     <span class="layui-breadcrumb">
     <a href="#"  onclick="layui.alarmMng.loadPage('pages/alarmMng/alarmMng.html')">报警管理</a>
     <a><cite>报警详情</cite></a>
@@ -33,36 +39,31 @@
                     <tbody>
                     <tr>
                         <td class="align-right">报警类型：</td>
-                        <td ng-bind="alarmInfo.alarmTypeName" class="ng-binding">通讯中断报警</td>
+                        <td id="alarmType">通讯中断报警</td>
                     </tr>
                     <tr>
                         <td class="align-right">报警等级：</td>
-                        <td>3级</td>
+                        <td id="alarmLevel">3级</td>
                     </tr>
                     <tr>
                         <td class="align-right">报警时间：</td>
-                        <td ng-bind="alarmInfo.alarmTime" class="ng-binding">2017-07-06 16:24:00</td>
+                        <td id="alarmTime" >2017-07-06 16:24:00</td>
                     </tr>
                     <tr>
                         <td class="align-right">企业名称：</td>
-                        <td ng-bind="alarmInfo.enterpriseName" class="ng-binding">重庆建设雅马哈摩托车有限公司</td>
+                        <td id="enterpriseName">重庆建设雅马哈摩托车有限公司</td>
                     </tr>
                     <tr>
                         <td class="align-right">行政区域：</td>
-                        <td ng-bind="alarmInfo.areaName" class="ng-binding">九龙坡区</td>
-
+                        <td >荣昌区</td>
                     </tr>
                     <tr>
                         <td class="align-right ">报警事件描述：</td>
-                        <td colspan="3" ng-bind="alarmInfo.remark" class="ng-binding">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
+                        <td id="remark">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
                     </tr>
                     <tr>
-                        <td class="align-right">
-                            报警状态：
-                        </td>
-                        <td>
-                            <span class="warning ng-binding" ng-bind="bjStatus" style="background-color: rgb(13, 186, 0);">未处理</span>
-                        </td>
+                        <td class="align-right">报警状态：</td>
+                        <td id="status"></td>
                     </tr>
                     </tbody>
                 </table>
@@ -78,7 +79,7 @@
             <button class="layui-btn layui-btn-normal">
                 关闭
             </button>
-            <button class="layui-btn layui-btn-normal">
+            <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.reportAlarmWin()">
                 上报
             </button>
         </div>
@@ -110,5 +111,24 @@
             </table>
         </div>
     </fieldset>
+    <!--上报-->
+    <form id="report_Alarm" style="display: none;padding: 8px 24px;" class="layui-form" method="post" enctype ="multipart/form-data"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <input type="text" name="dealRemark " placeholder="上报描述" autocomplete="off" class="layui-input">
+            </div>
+        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">报警ID：</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="alarmId " placeholder="上报描述" autocomplete="off" class="layui-input">-->
+            <!--</div>-->
+        <!--</div>-->
+        <div class="layui-form-item">
+            <label class="layui-form-label">附件：</label>
+            <input type="file" name="attachment" id="file_select" class="layui-upload-file">
+        </div>
+    </form>
 </body>
 </html>

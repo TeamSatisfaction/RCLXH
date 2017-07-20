@@ -20,17 +20,28 @@
 </head>
 <body>
     <div class="layui-layout-admin" lay-filter="test">
-        <div class="layui-form" action="" style="margin-top: 10px;">
+        <div class="layui-elem-quote" style="padding: 5px;">
             <div class="layui-form-item" style="margin-bottom: 0px;">
                 <label class="layui-form-label">企业名称：</label>
                 <div class="layui-input-inline">
                     <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
                 </div>
-                <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.companyMng.loadCompanyData()">
+                <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData()">
                     <i class="layui-icon">&#xe615;</i>
                 </button>
             </div>
         </div>
+        <!--<div class="layui-form" action="" style="margin-top: 10px;">-->
+            <!--<div class="layui-form-item" style="margin-bottom: 0px;">-->
+                <!--<label class="layui-form-label">企业名称：</label>-->
+                <!--<div class="layui-input-inline">-->
+                    <!--<input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">-->
+                <!--</div>-->
+                <!--<button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.companyMng.loadCompanyData()">-->
+                    <!--<i class="layui-icon">&#xe615;</i>-->
+                <!--</button>-->
+            <!--</div>-->
+        <!--</div>-->
         <table class="layui-table" lay-even="" lay-skin="row">
             <colgroup>
                 <col width="60">
@@ -53,7 +64,10 @@
             <tbody id="company-result">
             </tbody>
         </table>
-        <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+        <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"><button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);"><i class="layui-icon"></i> 刷新</button></div>
+        <!--<div>-->
+            <!--<button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);"><i class="layui-icon"></i> 刷新</button>-->
+        <!--</div>-->
     </div>
 </body>
 </html>
