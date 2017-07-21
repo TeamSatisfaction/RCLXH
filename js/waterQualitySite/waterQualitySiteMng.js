@@ -84,7 +84,7 @@ layui.define(['layer', 'element','layedit', 'laydate'],function (exports){
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        str = '<tr onclick="layui.waterQualitySiteMng.loadChartForSite(layui.jquery(this))">' +
+                        str = '<tr data-item="'+JSON.stringify(item)+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this)">' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.site + '</td>' +
                             '</tr>';
@@ -98,7 +98,9 @@ layui.define(['layer', 'element','layedit', 'laydate'],function (exports){
     };
     var loadChartForSite = function (e) {
         var site = e.find('td').eq(1).html();
+        var data = JSON.parse($(e).attr('data-item'));
         console.log(site);
+        console.log(data);
         loadDau(site);
     };
     //根据企业查询设备仪
