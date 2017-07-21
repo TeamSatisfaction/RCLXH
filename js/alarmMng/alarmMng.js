@@ -1,11 +1,12 @@
 /*
 /报警管理
  */
-layui.define(['layer','laydate','element','layedit','laypage','upload'], function(exports){
+layui.define(['layer','laydate','element','layedit','laypage','upload','form'], function(exports){
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
         upload = layui.upload(),
+        form = layui.form(),
         aTobody = $('#alarm-result');
     var access_token = sessionStorage.getItem("access_token");
     //页面跳转
@@ -170,40 +171,102 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
         layer.open({
             title : '上报报警',
             type : 1,
-            area : ['500px','330px'],
+            area : ['550px','400px'],
             content : content,
             btn: ['提交', '关闭'],
             btnAlign: 'c',
             yes: function(index){
-                $('#report_Alarm').on('submit', function(){
-                    var formData = new FormData();
-                    console.log(formData.get('attachment'));
-                    $.ajax({
-                        url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
-                        headers : {
-                            'Content-type': 'application/json;charset=UTF-8',
-                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                        },
-                        data : formData,
-                        type : 'post',
-                        dataType: "json",
-                        contentType: false,
-                        processData: false,
-                        success: function (data){
-                            console.log(data);
-                        }
-                    })
-                    return false;
-                }).submit();
+                var alarmId = '4',
+                    userId = '1',
+                    dealTime = '2017-07-21 18:53:01',
+                    dealRemark = '1',
+                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                var data = {
+                    alarmId : alarmId,
+                    userId : userId,
+                    dealTime : dealTime,
+                    dealRemark : dealRemark,
+                    attachment : attachment
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    data : field,
+                    type : 'post',
+                    success: function (result){
+                        console.log(result);
+                    }
+                })
+                // $('#report_Alarm').on('submit', function(){
+                //     var formData = new FormData();
+                //     console.log(formData.get('attachment'));
+                //     $.ajax({
+                //         url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
+                //         headers : {
+                //             'Content-type': 'application/json;charset=UTF-8',
+                //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                //         },
+                //         data : formData,
+                //         type : 'post',
+                //         dataType: "json",
+                //         contentType: false,
+                //         processData: false,
+                //         success: function (data){
+                //             console.log(data);
+                //         }
+                //     })
+                //     return false;
+                // }).submit();
                 // layer.msg('提交成功！', {icon: 1});
                 // layer.close(index);
             }
+        });
+        loadRoleData();
+    };
+    //角色select
+    var loadRoleData = function () {
+        $.ajax({
+            url: 'http://192.168.1.127:8092/v01/htwl/lxh/user/role/query',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+                if(result != null){
+                    // $("#select_role").empty();
+                    for(var i in result){
+                        $("#select_role").append("<option value="+result[i].roleId+">"+result[i].roleName+"</option>");
+                    }
+                }
+                form.render('select');
+            }
         })
     };
-    //上报用户select
-    var loadUserData = function () {
-
-    }
+    //角色select点击事件
+    form.on('select(select_role)', function(data){
+        console.log(data.value);
+        $.ajax({
+            url: 'http://192.168.1.127:8092/v01/htwl/lxh/user/role/'+data.value+'',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result){
+                console.log(result);
+                if(result != null){
+                    $("#select_user").empty();
+                    for(var i in result){
+                        $("#select_user").append("<option value="+result[i].userId+">"+result[i].userName+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    });
     //上报报警
     var reportAlarm = function (id) {
         $.ajax({

@@ -114,10 +114,18 @@
     <!--上报-->
     <form id="report_Alarm" style="display: none;padding: 8px 24px;" class="layui-form" method="post" enctype ="multipart/form-data"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
         <div class="layui-form-item">
-            <label class="layui-form-label">上报用户：</label>
+            <label class="layui-form-label">角色名称：</label>
             <div class="layui-input-block">
-                <select name="upload_user" lay-verify="" lay-search id="select_equipment">
-                    <option value="">无用户</option>
+                <select name="upload_user" lay-verify="" lay-search id="select_role" lay-filter="select_role">
+                    <option value="">选择角色</option>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">用户名称：</label>
+            <div class="layui-input-block">
+                <select name="upload_user" lay-verify="" lay-search id="select_user">
+                    <option value="">请先选择角色</option>
                 </select>
             </div>
         </div>
