@@ -7,6 +7,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
         laypage = layui.laypage,
         upload = layui.upload(),
         aTobody = $('#alarm-result');
+    var access_token = sessionStorage.getItem("access_token");
     //页面跳转
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
@@ -14,7 +15,8 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
     };
     //上传文件
     layui.upload({
-        url : 'http://api.cqhtwl.com.cn/v01/htwl/wljk/file/upload?',
+        url : 'http://api.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
+        // url : 'http://login.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
         method : 'post',
         type : 'json',
         before: function(input){
@@ -23,6 +25,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
         }
         ,success: function(res){
             console.log('上传完毕');
+            console.log(res);
         }
     });
     var initTimeSelect = function () {
@@ -68,9 +71,9 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
                 pageNo : curr||1,
                 pageSize : 16
             };
-        console.log(data);
         $.ajax({
-            url :'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query',
+            // url :'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query',
+            url :'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -136,7 +139,8 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
     var loadAlarmDetails = function (id) {
         console.log(id);
         $.ajax({
-            url : 'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query/'+id+'',
+            // url : 'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query/'+id+'',
+            // url : 'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },

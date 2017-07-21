@@ -19,8 +19,9 @@
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
-<body style="margin-top: 10px" class="layui-layout-admin">
-    <div class="layui-form" action="" style="margin-bottom: 0px;">
+<body  class="layui-layout-admin" style="margin-top: 2px">
+    <div style="margin: 10px">
+    <div class="layui-form layui-elem-quote" action="" style="padding: 2px;margin-bottom: 5px">
         <div class="layui-form-item" style="margin-bottom: 0px;">
             <div class="layui-inline">
                 <label class="layui-form-label">问题来源：</label>
@@ -28,8 +29,6 @@
                     <select name="state" lay-verify="required" lay-search="" id="alarmType">
                         <option value="">直接选择或搜索选择</option>
                         <option value="detection_alarm">在线监控报警</option>
-                        <!--<option value="已处理">已处理</option>-->
-                        <!--<option value="未处理">未处理</option>-->
                     </select>
                 </div>
             </div>
@@ -47,15 +46,20 @@
                     </select>
                 </div>
             </div>
-            <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.alarmMng.loadAlarmData()">
+            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px;" onclick="layui.alarmMng.loadAlarmData()">
                 <i class="layui-icon">&#xe615;</i>
-            </button>
-            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px">
-                <i class="layui-icon">&#xe608;</i>打印
             </button>
         </div>
     </div>
-    <table class="layui-table" lay-even="" lay-skin="row">
+    <div class="layui-form-item" style="margin: 0">
+        <button class="layui-btn layui-btn-small layui-btn-normal" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+            <i class="layui-icon"></i> 刷新
+        </button>
+        <button class="layui-btn layui-btn-small layui-btn-normal" style="margin-left: 0">
+            <i class="layui-icon">&#xe608;</i>打印
+        </button>
+    </div>
+    <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 5px">
         <colgroup>
             <col width="60">
             <col>
@@ -80,5 +84,6 @@
         </tbody>
     </table>
     <div id="alarm-demo" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+    </div>
 </body>
 </html>
