@@ -114,22 +114,22 @@
     <!--上报-->
     <form id="report_Alarm" style="display: none;padding: 8px 24px;" class="layui-form" method="post" enctype ="multipart/form-data"> <!-- 提示：如果你不想用form，你可以换成div等任何一个普通元素 -->
         <div class="layui-form-item">
-            <label class="layui-form-label">描述：</label>
+            <label class="layui-form-label">上报用户：</label>
             <div class="layui-input-block">
-                <input type="text" name="dealRemark " placeholder="上报描述" autocomplete="off" class="layui-input">
+                <select name="upload_user" lay-verify="" lay-search id="select_equipment">
+                    <option value="">无用户</option>
+                </select>
             </div>
         </div>
-        <!--<div class="layui-form-item">-->
-            <!--<label class="layui-form-label">报警ID：</label>-->
-            <!--<div class="layui-input-block">-->
-                <!--<input type="text" name="alarmId " placeholder="上报描述" autocomplete="off" class="layui-input">-->
-            <!--</div>-->
-        <!--</div>-->
         <div class="layui-form-item">
             <label class="layui-form-label">附件：</label>
-            <!--<input type="file" name="attachment" id="file_select" class="layui-upload-file">-->
-            <input name="file1" lay-type="file" class="layui-upload-file" type="file">
-            <input type="file" name="fileUpload"  id="file_select2">
+            <input name="file" lay-type="file" class="layui-upload-file" type="file">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+            </div>
         </div>
     </form>
 </body>

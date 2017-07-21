@@ -29,7 +29,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://172.21.92.63:8092/v01/htwl/lxh/enterprise/page',
+            url :'http://192.168.1.127:8092/v01/htwl/lxh/enterprise/page',
+            // url :'http://172.21.92.63:8092/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'

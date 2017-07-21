@@ -16,12 +16,14 @@
             MSMng  : 'sysMng/MSMng',
             companyMng : 'sysMng/companyMng',
             userMng : 'sysMng/userMng',
-            equipmentMng : 'sysMng/equipmentMng'
-        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng'],function () {
+            equipmentMng : 'sysMng/equipmentMng',
+            roleMng : 'sysMng/roleMng'
+        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng'],function () {
             layui.companyMng.loadCompanyData();
             layui.MSMng.loadMSData();
             layui.equipmentMng.loadEquipmentData();
             layui.userMng.loadUserData();
+            layui.roleMng.loadRoleData();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -35,7 +37,7 @@
             <li lay-id="联网管理">联网管理</li>
             <li lay-id="用户管理">用户管理</li>
             <li lay-id="角色管理">角色管理</li>
-        </ul sty>
+        </ul>
         <div class="layui-tab-content" style="left: 0;height:auto">
             <!--企业管理-->
             <div class="layui-tab-item layui-show" >
@@ -298,7 +300,43 @@
                 <div id="demo4" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--角色管理-->
-            <div class="layui-tab-item">角色管理</div>
+            <div class="layui-tab-item">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                        <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                            <div class="layui-form-item" style="margin: 5px 0;">
+                                <label class="layui-form-label">角色名称：</label>
+                                <div class="layui-input-inline">
+                                    <input id="role" name="name"  autocomplete="off" placeholder="请输入角色名称" class="layui-input" type="text">
+                                </div>
+                                <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData()">
+                                    <i class="layui-icon">&#xe615;</i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="layui-form-item" style="margin: 5px 0;float: right">
+                            <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" >
+                                <i class="layui-icon"></i> 刷新
+                            </button>
+                        </div>
+                        <table class="layui-table" lay-even="" lay-skin="row">
+                            <colgroup>
+                                <col width="60">
+                                <col>
+                                <col width="100">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>序号</th>
+                                <th style="text-align: center">角色名称</th>
+                                <th style="text-align: center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="role-result">
+                            </tbody>
+                        </table>
+                    <div id="demo5" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+                </div>
+            </div>
         </div>
     </div>
 </body>

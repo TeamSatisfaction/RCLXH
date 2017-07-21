@@ -40,7 +40,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         var data={};
         data.client_id="dad449b578874069b7a77976b7d94b91";
         data.client_secret="0ff0b7a8f5b64beba42a58bc15029588";
-        data.code="4d5ea77810c8489b824cb0bcf5c50fff";
+        data.code="995ee5bc51e84eeba141ee4789fecde4";
         $.ajax({
             url : 'http://login.cqhtwl.com.cn/htwl/oauth2/token',
             type : 'post',

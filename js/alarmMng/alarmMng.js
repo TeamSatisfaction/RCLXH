@@ -18,16 +18,12 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
         url : 'http://api.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
         // url : 'http://login.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
         method : 'post',
-        type : 'json',
-        before: function(input){
-            //返回的参数item，即为当前的input DOM对象
-            console.log('文件上传中');
-        }
-        ,success: function(res){
-            console.log('上传完毕');
+        // type : 'json',
+        success: function(res){
             console.log(res);
         }
     });
+
     var initTimeSelect = function () {
         var st = document.getElementById('startTime'),
             et = document.getElementById('endTime');
@@ -137,16 +133,14 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
 
     //加载报警详情
     var loadAlarmDetails = function (id) {
-        console.log(id);
         $.ajax({
             // url : 'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query/'+id+'',
-            // url : 'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query/'+id+'',
+            url : 'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             type : 'get',
             success : function (result){
-                console.log(result);
                 if(result.alarmType == 'detection_alarm'){
                     result.alarmType = '在线监控报警'
                 }
@@ -176,15 +170,16 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
         layer.open({
             title : '上报报警',
             type : 1,
-            area : ['500px','230px'],
+            area : ['500px','330px'],
             content : content,
             btn: ['提交', '关闭'],
+            btnAlign: 'c',
             yes: function(index){
                 $('#report_Alarm').on('submit', function(){
                     var formData = new FormData();
                     console.log(formData.get('attachment'));
                     $.ajax({
-                        url: "http://192.168.3.222:8092/v01/htwl/lxh/alrm/report",
+                        url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
                         headers : {
                             'Content-type': 'application/json;charset=UTF-8',
                             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -204,6 +199,10 @@ layui.define(['layer','laydate','element','layedit','laypage','upload'], functio
                 // layer.close(index);
             }
         })
+    };
+    //上报用户select
+    var loadUserData = function () {
+
     }
     //上报报警
     var reportAlarm = function (id) {

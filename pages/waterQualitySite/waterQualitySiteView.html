@@ -21,24 +21,26 @@
     </script>
 </head>
 <body style="width:100%;height: 100%">
-    <div style="width: 19%;margin-left: 5px" class="layui-inline waterBorder">
+    <div style="width: 19%;height:100%;margin-left: 5px" class="layui-inline waterBorder">
         <div class="water_divider">监测站列表</div>
-        <table class="layui-table" lay-even="" lay-skin="row">
-            <colgroup>
-                <col style="width: 60px;">
-                <col>
-            </colgroup>
-            <thead>
-                <tr>
-                    <th style="text-align: center">序号</th>
-                    <th style="text-align: center">监测站名称</th>
-                </tr>
-            </thead>
-            <tbody id="ms-result1">
-            </tbody>
-        </table>
+        <div style="overflow: scroll;height:100%;">
+            <table class="layui-table" lay-even="" lay-skin="row" style="margin: 0">
+                <colgroup>
+                    <col style="width: 60px;">
+                    <col>
+                </colgroup>
+                <thead>
+                    <tr>
+                        <th style="text-align: center">序号</th>
+                        <th style="text-align: center">监测站名称</th>
+                    </tr>
+                </thead>
+                <tbody id="ms-result1">
+                </tbody>
+            </table>
+        </div>
     </div>
-    <div style="width: 60%;" class="layui-inline waterBorder">
+    <div style="width:60%;" class="layui-inline waterBorder">
         <div class="water_divider">监测详情</div>
         <div class="layui-tab layui-layout-admin" lay-filter="test">
             <ul class="layui-tab-title">
@@ -62,22 +64,28 @@
                             </div>
                         </div>
                         <div class="layui-input-inline">
+                            <label class="layui-form-label">数采仪名称：</label>
+                            <div class="layui-input-inline">
+                                <select id="select_dauId" lay-verify="" lay-search name="dau">
+                                    <option value="">无采集仪</option>
+                                    <!--<option value="021">2</option>-->
+                                    <!--<option value="0571">3</option>-->
+                                </select>
+                            </div>
+                        </div>
+                        <div class="layui-input-inline">
                             <label class="layui-form-label">设备名称：</label>
                             <div class="layui-input-inline">
-                                <select name="ExitName" lay-verify="" lay-search>
-                                    <option value="010">设备1</option>
-                                    <option value="021">设备2</option>
-                                    <option value="0571">设备3</option>
+                                <select name="equipment" lay-verify="" lay-search id="select_equipment">
+                                    <option value="">无设备</option>
                                 </select>
                             </div>
                         </div>
                         <div class="layui-input-inline">
                             <label class="layui-form-label">监测因子：</label>
                             <div class="layui-input-inline">
-                                <select name="FacName" lay-verify="" lay-search>
-                                    <option value="010">总磷</option>
-                                    <option value="021">总氮</option>
-                                    <option value="0571">化学需氧量</option>
+                                <select name="factor" lay-verify="" lay-search id="select_factor">
+                                    <option value="">无监测因子</option>
                                 </select>
                             </div>
                         </div>
@@ -90,12 +98,12 @@
                                 <input class="layui-input layui-input-inline" id="endTime1" placeholder="选择结束时间">
                             </div>
                         </div>
-                        <button class="layui-btn layui-btn-normal" >
+                        <button class="layui-btn layui-btn-normal">
                             <i class="layui-icon">&#xe615;</i>
                             查询
                         </button>
                     </div>
-                    <div id="container" style="min-width:100%;height:500px;margin-top: 10px">图</div>
+                    <div id="container" style="min-width:100%;height:500px;margin-top: 10px">无对应监测因子</div>
                 </div>
                 <div class="layui-tab-item" >2
                 </div>
