@@ -121,6 +121,14 @@
 .add-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
 .add-form .layui-form .layui-form-item .layui-form-label { width: 100px; }
 .add-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }
+/*详情*/
+.detail-form .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px; }
+.detail-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 320px;}
+.detail-form .layui-form .layui-form-item .layui-form-label { width: 100px; }
+.detail-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 140px); }
+.detail-form .detail-form-left { width: 60%; float: left }
+.detail-form .detail-form-right { width: 40%; float: right; background-color: #7FBBDF}
+.detail-form .detail-form-right img{ width: 100%; }
 
 /*照片部分*/
 .photo-area { width: 90%;margin: auto;border: 1px }
