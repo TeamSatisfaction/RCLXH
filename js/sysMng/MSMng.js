@@ -22,7 +22,8 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                 pageSize : 16
             };
         $.ajax({
-            url :'http://172.21.92.63:8092/v01/htwl/lxh/water/query',
+            url: 'http://192.168.1.127:8092/v01/htwl/lxh/water/query',
+            // url :'http://172.21.92.63:8092/v01/htwl/lxh/water/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },

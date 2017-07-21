@@ -15,7 +15,8 @@
         }).extend({
             waterQualitySiteMng : 'waterQualitySiteMng'
         }).use('waterQualitySiteMng',function () {
-            layui.waterQualitySiteMng.chart();
+//            layui.waterQualitySiteMng.chart();
+            layui.waterQualitySiteMng.loadMSData();
         }); //加载入口
     </script>
 </head>
@@ -33,7 +34,7 @@
                     <th style="text-align: center">监测站名称</th>
                 </tr>
             </thead>
-            <tbody id="alarm-result1">
+            <tbody id="ms-result1">
             </tbody>
         </table>
     </div>
@@ -89,7 +90,7 @@
                                 <input class="layui-input layui-input-inline" id="endTime1" placeholder="选择结束时间">
                             </div>
                         </div>
-                        <button class="layui-btn layui-btn-normal">
+                        <button class="layui-btn layui-btn-normal" >
                             <i class="layui-icon">&#xe615;</i>
                             查询
                         </button>
