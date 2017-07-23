@@ -70,11 +70,32 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 })
             }
         })
-    }
+    };
+
+    var addEquipmentWin = function () {
+        layer.open({
+            title : '新增设备',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/addEquipmentView.html',
+            btn: ['提交', '关闭'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+            // ,zIndex: layer.zIndex //重点1
+            // ,success: function(layero){
+            //     layer.setTop(layero); //重点2
+            // }
+        })
+    };
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
-        loadEquipmentData : loadEquipmentData
+        loadEquipmentData : loadEquipmentData,
+        addEquipmentWin : addEquipmentWin
     };
     exports('equipmentMng',obj)
 })

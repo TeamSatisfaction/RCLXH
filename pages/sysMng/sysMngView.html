@@ -16,8 +16,9 @@
             MSMng  : 'sysMng/MSMng',
             companyMng : 'sysMng/companyMng',
             userMng : 'sysMng/userMng',
-            equipmentMng : 'sysMng/equipmentMng'
-        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng'],function () {
+            equipmentMng : 'sysMng/equipmentMng',
+            networkMng : 'sysMng/networkMng'
+        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng','networkMng'],function () {
             layui.companyMng.loadCompanyData();
             layui.MSMng.loadMSData();
             layui.equipmentMng.loadEquipmentData();
@@ -154,12 +155,12 @@
                                 <!--</select>-->
                             <!--</div>-->
                         <!--</div>-->
-                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.equipmentMng.loadEquipmentData()">
+                        <div class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.equipmentMng.loadEquipmentData()">
                             <i class="layui-icon">&#xe615;</i>
-                        </button>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px">
+                        </div>
+                        <div class="layui-btn layui-btn-normal" onclick="layui.equipmentMng.addEquipmentWin();" style="position: absolute;right: 10px">
                             <i class="layui-icon">&#xe608;</i>新增
-                        </button>
+                        </div>
                     </div>
                 </div>
                 <table class="layui-table" lay-even="" lay-skin="row">
@@ -198,61 +199,42 @@
             <div class="layui-tab-item">
                 <form class="layui-form" action="" style="margin-bottom: 0px;">
                     <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">企业名称</label>
+                        <label class="layui-form-label">MN号：</label>
                         <div class="layui-input-inline">
-                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入MN号" class="layui-input" type="text">
                         </div>
-                        <button class="layui-btn"><i class="layui-icon"></i></button>
+                        <label class="layui-form-label" style="width:120px;">监控点名称：</label>
+                        <div class="layui-input-inline">
+                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入监控点名称" class="layui-input" type="text">
+                        </div>
+                        <div class="layui-btn layui-btn-normal"> <i class="layui-icon">&#xe615;</i></div>
+                        <div class="layui-btn layui-btn-normal" onclick="layui.networkMng.addNetworkWin();" style="position: absolute;right: 10px">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </div>
                     </div>
                 </form>
                 <table class="layui-table" lay-even="" lay-skin="row">
                     <colgroup>
-                        <col width="150">
-                        <col width="150">
-                        <col width="200">
+                        <col width="60">
                         <col>
-                        <col width="150">
+                        <col>
+                        <col>
+                        <col>
+                        <col>
                     </colgroup>
                     <thead>
+                    <!--MN号、监控点名称、安装位置、绑定企业-->
                     <tr>
-                        <th>人物</th>
-                        <th>民族</th>
-                        <th>出场时间</th>
-                        <th>格言</th>
+                        <th>序号</th>
+                        <th>MN号</th>
+                        <th>监控点名称</th>
+                        <th>安装位置</th>
+                        <th>绑定企业</th>
                         <th>操作</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>贤心</td>
-                        <td>汉族</td>
-                        <td>1989-10-14</td>
-                        <td>人生似修行</td>
-                    </tr>
-                    <tr>
-                        <td>张爱玲</td>
-                        <td>汉族</td>
-                        <td>1920-09-30</td>
-                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                    </tr>
-                    <tr>
-                        <td>Helen Keller</td>
-                        <td>拉丁美裔</td>
-                        <td>1880-06-27</td>
-                        <td> Life is either a daring adventure or nothing.</td>
-                    </tr>
-                    <tr>
-                        <td>岳飞</td>
-                        <td>汉族</td>
-                        <td>1103-北宋崇宁二年</td>
-                        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-                    </tr>
-                    <tr>
-                        <td>孟子</td>
-                        <td>华夏族（汉族）</td>
-                        <td>公元前-372年</td>
-                        <td>猿强，则国强。国强，则猿更强！ </td>
-                    </tr>
+
                     </tbody>
                 </table>
             </div>

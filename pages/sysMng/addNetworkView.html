@@ -1,0 +1,87 @@
+<!--新增联网信息-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>title</title>
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            equipmentMng : 'networkMng'
+        }).use('networkMng')
+            .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin layui-tab-brief add-form" lay-filter="docDemoTabBrief" id="addNetwork">
+   <!--监控点名称、MN号、排污口名称（自动带入添加企业时添加的排口名称）、IP、密码、安装位置-->
+    <div class="layui-layout-admin" style="text-align: center;margin-top: 10px">
+        <form class="layui-form" action="">
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">监控点名称：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">MN号：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">排污口名称：</label>
+                    <div class="layui-input-inline">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option>排污口1</option>
+                            <option>排污口2</option>
+                            <option>排污口3</option>
+                            <option>排污口4</option>
+                        </select>
+                    </div>
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">IP：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">密码：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">安装位置：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+
+            <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="">
+                    <i class="layui-icon">&#xe605;</i>提交
+                </button>
+                <button class="layui-btn layui-btn-normal" onclick="layui.networkMng.closeAddWin()">
+                    <i class="layui-icon">&#x1006;</i>返回
+                </button>
+            </div>
+        </form>
+        <!--按钮-->
+    </div>
+</div>
+</body>
+</html>
