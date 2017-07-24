@@ -18,7 +18,7 @@
         }).extend({ //设定模块别名
             map : 'map/map'
         }).use('map', function () {
-
+            layui.map.loadCompanySelect()
         }).link('../../css/style.css'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -43,35 +43,23 @@
                         <div class="mapStats_divider">实时监测</div>
                         <div class="layui-form-item">
                             <div class="layui-input-inline">
-                                <select name="EntName" lay-verify="" lay-search>
-                                    <option>选择企业</option>
-                                    <option value="010">重庆市荣昌区江特表面处理厂</option>
-                                    <option value="021">华森制药厂</option>
-                                    <option value="0571">华森制药厂1</option>
+                                <select name="EntName" lay-verify="" lay-search id="c_select" lay-filter="c_select">
+                                    <option value="">选择企业</option>
                                 </select>
                             </div>
                             <div class="layui-input-inline">
-                                <select name="ExitName" lay-verify="" lay-search>
-                                    <option>选择数采仪</option>
-                                    <option value="010">数采仪1</option>
-                                    <option value="021">数采仪2</option>
-                                    <option value="0571">数采仪3</option>
+                                <select name="ExitName" lay-verify="" lay-search id="d_select" lay-filter="d_select">
+                                    <option value="">选择排口</option>
                                 </select>
                             </div>
+                            <!--<div class="layui-input-inline">-->
+                                <!--<select name="ExitName" lay-verify="" lay-search id="e_select" lay-filter="e_select">-->
+                                    <!--<option value="">选择设备</option>-->
+                                <!--</select>-->
+                            <!--</div>-->
                             <div class="layui-input-inline">
-                                <select name="ExitName" lay-verify="" lay-search>
-                                    <option>选择设备</option>
-                                    <option value="010">设备1</option>
-                                    <option value="021">设备2</option>
-                                    <option value="0571">设备3</option>
-                                </select>
-                            </div>
-                            <div class="layui-input-inline">
-                                <select name="FacName" lay-verify="" lay-search>
-                                    <option>监测因子</option>
-                                    <option value="010">总磷</option>
-                                    <option value="021">总氮</option>
-                                    <option value="0571">化学需氧量</option>
+                                <select name="FacName" lay-verify="" lay-search id="f_select" lay-filter="f_select">
+                                    <option value="">监测因子</option>
                                 </select>
                             </div>
                             <button class="layui-btn layui-btn-normal">

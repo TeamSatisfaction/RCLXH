@@ -63,7 +63,7 @@
                         <div class="layui-input-inline">
                             <label class="layui-form-label">数采仪名称：</label>
                             <div class="layui-input-inline">
-                                <select id="select_dauId" lay-verify="" lay-search name="dau">
+                                <select id="select_dauId" lay-verify="" lay-search name="dau" lay-filter="select_dauId">
                                     <option value="">无采集仪</option>
                                 </select>
                             </div>
@@ -71,7 +71,7 @@
                         <div class="layui-input-inline">
                             <label class="layui-form-label">设备名称：</label>
                             <div class="layui-input-inline">
-                                <select name="equipment" lay-verify="" lay-search id="select_equipment">
+                                <select name="equipment" lay-verify="" lay-search id="select_equipment" lay-filter="select_equipment">
                                     <option value="">无设备</option>
                                 </select>
                             </div>
@@ -87,13 +87,13 @@
                         <div class="layui-input-inline">
                             <label class="layui-form-label">监测时间：</label>
                             <div class="layui-inline">
-                                <input class="layui-input layui-input-inline" id="startTime1" placeholder="选择开始时间">
+                                <input class="layui-input layui-input-inline" id="startTime1" placeholder="选择开始时间" style="width: 145px">
                             </div>
                             <div class="layui-inline">
-                                <input class="layui-input layui-input-inline" id="endTime1" placeholder="选择结束时间">
+                                <input class="layui-input layui-input-inline" id="endTime1" placeholder="选择结束时间" style="width: 145px">
                             </div>
                         </div>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px">
+                        <button class="layui-btn layui-btn-normal">
                             <i class="layui-icon">&#xe615;</i>
                             查询
                         </button>
@@ -108,7 +108,7 @@
         </div>
     </div>
     <div style="width: 19%;" class="layui-inline waterBorder">
-        <div class="water_divider">待定</div>
+        <div class="water_divider">报表</div>
 
     </div>
 </body>

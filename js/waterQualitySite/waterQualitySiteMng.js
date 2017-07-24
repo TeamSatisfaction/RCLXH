@@ -25,43 +25,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
     };
     $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));
     $('#endTime1').val(laydate.now(0, "YYYY/MM/DD hh:mm:ss"));
-    // var chart = new Highcharts.Chart('container', {
-    //     title: {
-    //         text: '监测站名称',
-    //         x: -20
-    //     },
-    //     // subtitle: {
-    //     //     text: '设备1',
-    //     //     x: -20
-    //     // },
-    //     xAxis: {
-    //         categories: []
-    //     },
-    //     yAxis: {
-    //         title: {
-    //             text: '含量 (mg/L)'
-    //         },
-    //         plotLines: [{
-    //             value: 0,
-    //             width: 1,
-    //             color: '#808080'
-    //         }]
-    //     },
-    //     tooltip: {
-    //         valueSuffix: 'mg/L'
-    //     },
-    //     legend: {
-    //         layout: 'vertical',
-    //         align: 'right',
-    //         verticalAlign: 'middle',
-    //         borderWidth: 0
-    //     },
-    //     series: [{
-    //         name: '总磷',
-    //         data: []
-    //     }]
-    // });
-    var loadChartsData = function (id) {
+    var loadChartsData = function (id,name) {
         var cn = '2011',
             // enterpriseId = id,
             // factor = $('#select_factor').val(),
@@ -69,9 +33,9 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
             // endDate = $('#endTime1').val();
             enterpriseId = '402880935cf2264b015d064a7c180024',
             factor = 'ez63a01',
+            text = $("#select_factor").find("option:selected").text(),
             beginDate =  '2017-05-12 00:00:00',
             endDate = '2017-05-12 23:59:59';
-        console.log(enterpriseId,factor,beginDate,endDate);
         var data = {
             enterpriseId : enterpriseId,
             factor : factor,
@@ -87,72 +51,47 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             success : function (result){
-                console.log(result);
-                // var data = result.onlineTime;
                 var factorCode = result.onlineData.data[0].factorCode,
                     onlineTime = result.onlineTime.slice(-13,-1),
                     onlineData = result.onlineData.data[0].online.slice(-13,-1);
-                console.log(data);
-                loadaCharts(onlineTime,onlineData,factorCode,name)
+                console.log(onlineTime);
+                console.log(onlineData);
+                loadaCharts(onlineTime,onlineData,factorCode,name,text)
             }
         })
     };
-    var loadaCharts = function (onlineTime,onlineData,factorCode,name) {
+    var loadaCharts = function (onlineTime,onlineData,factorCode,name,text) {
         var option = {
-            // chart: {
-            // },
+            chart: {
+                type : 'line'
+            },
             title: {
-                text: '重庆恒科机械制造有限公司'
+                text: name
             },
             xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    millisecond: '%H:%M:%S.%L',
-                    second: '%H:%M:%S',
-                    minute: '%H:%M',
-                    hour: '%H:%M',
-                    day: '%m-%d',
-                    week: '%m-%d',
-                    month: '%Y-%m',
-                    year: '%Y'
-                }
+                categories : onlineTime
             },
             tooltip: {
-                dateTimeLabelFormats: {
-                    millisecond: '%H:%M:%S.%L',
-                    second: '%H:%M:%S',
-                    minute: '%H:%M',
-                    hour: '%H:%M',
-                    day: '%m-%d',
-                    week: '%m-%d',
-                    month: '%Y-%m',
-                    year: '%Y'
-                }
+                valueSuffix: 'mg/L'
             },
             yAxis: {
-                title: {enabled: false},
-                min: 0
+                title: {
+                    text: 'mg/L'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
             },
             legend: {
-                enabled: false
-            },
-            plotOptions: {
-                area: {
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
             },
             series: [{
-                type: 'area',
-                name: factorCode,
+                name: text,
                 data: onlineData
             }]
         };
@@ -160,14 +99,13 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
     }
     var loadMSData = function (curr){
         var data = {
-            // enterpriseRole : "monitoringStation_enterprise",
+            // enterpriseRole : 'monitoringStation_enterprise',//监测站
             pageNum : curr||1,
             pageSize : 1000
         };
         var field = JSON.stringify(data);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
-            // url: 'http://172.21.92.63:8092/v01/htwl/lxh/water/query',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -183,7 +121,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        str = '<tr data-item = "'+item.baseEnterpriseId+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this)">' +
+                        str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this)">' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.name + '</td>' +
                             '</tr>';
@@ -192,23 +130,25 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     return arr.join('');
                 };
                 msTobody.html(render(msData, obj.curr));
-                loadDau(msData[2].baseEnterpriseId);
-                loadChartsData(msData[2].baseEnterpriseId);
+                loadDau(msData[0].baseEnterpriseId);
+                loadChartsData(msData[0].baseEnterpriseId,msData[0].name);
             }
         })
     };
     var loadChartForSite = function (e) {
-        var id = $(e).attr('data-item');
-        loadDau(id);
-        loadChartsData(id);
+        var Eid = $(e).attr('data-id'),
+            name = $(e).attr('data-name');
+        // var text = $("#select_factor").find("option:selected").text();
+        loadDau(Eid,name);
+        // loadChartsData(id,name,text);
     };
     //根据企业查询数采仪
-    var loadDau = function (id) {
+    var loadDau = function (Eid,name) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             dauMap : {
-                epId : id
+                epId : Eid
             }
         };
         var field = JSON.stringify(data);
@@ -221,8 +161,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
             type: 'post',
             data: field,
             success: function (result){
-                var row = result.data.rows,
-                    str = '';
+                var row = result.data.rows;
                 $("#select_dauId ").empty();
                 if(row == null){
                     $("#select_dauId").append("<option value='' selected='selected'>无采集仪</option>");
@@ -230,18 +169,20 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     $("#select_equipment").append("<option value='' selected='selected'>无设备</option>");
                     $("#select_factor").empty();
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
+                    $("#container").empty();
+                    $("#container").html('<span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
                         $("#select_dauId").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
                     }
-                    loadEquipment(row[0].id);
+                    loadEquipment(row[0].id,Eid,name);
                 }
                 form.render('select');
             }
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (id) {
+    var loadEquipment = function (id,Eid,name) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -265,18 +206,20 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     $("#select_equipment").append("<option value='' selected='selected'>无设备</option>");
                     $("#select_factor").empty();
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
+                    $("#container").empty();
+                    $("#container").html('<span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
                         $("#select_equipment").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
-                    loadFactor(row[0].id);
+                    loadFactor(row[0].id,Eid,name);
                 }
                 form.render('select');
             }
         })
     };
     //根据设备查询因子
-    var loadFactor = function (id) {
+    var loadFactor = function (id,Eid,name) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -294,20 +237,33 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
             type: 'post',
             data: field,
             success: function (result){
-                // console.log(result);
                 var row = result.data.rows;
                 $("#select_factor").empty();
                 if(row == null){
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
+                    $("#container").empty();
+                    $("#container").html('<span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
                         $("#select_factor").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
                 }
                 form.render('select');
+                // var text = $("#select_factor").find("option:selected").text();
+                loadChartsData(Eid,name);
             }
         })
-    }
+    };
+    //数采仪select change事件
+    form.on('select(select_dauId)', function(data){
+        console.log("1");
+        loadEquipment(data.value);
+    });
+    //设备select change事件
+    form.on('select(select_equipment)', function(data){
+        console.log("2");
+        loadFactor(data.value);
+    });
     var obj = {
         // chart : chart,
         loadMSData : loadMSData,

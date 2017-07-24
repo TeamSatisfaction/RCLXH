@@ -90,6 +90,17 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
                         if(item.alarmType == 'detection_alarm'){
                             item.alarmType = '在线监控报警'
                         }
+                        switch (item.alarmType){
+                            case "detection_alarm":
+                                item.alarmType = '在线监控报警'
+                                break;
+                            case "video_alarm":
+                                item.alarmType = '视频报警'
+                                break;
+                            case "working_alarm":
+                                item.alarmType = '工况报警'
+                                break;
+                        }
                        switch (item.status){
                            case "0":
                                item.status = '未处理'

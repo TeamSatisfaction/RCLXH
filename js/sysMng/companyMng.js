@@ -11,14 +11,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
-    // layui.upload({
-    //     url: ''
-    //     ,elem: ['#test1','#test2']//指定原始元素，默认直接查找class="layui-upload-file"
-    //     ,method: 'get' //上传接口的http类型
-    //     ,success: function(res){
-    //         LAY_demo_upload.src = res.url;
-    //     }
-    // });
     //加载企业列表
     var loadCompanyData = function (curr) {
         var name = $('#name').val(),
@@ -207,9 +199,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,btn: ['关闭'] //只是为了演示
         })
     };
-    // layer.ready(function(){
-    //     loadCompanyData();
-    // });
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,

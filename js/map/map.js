@@ -1,8 +1,10 @@
 /**
  * Created by M4 on 2017/7/5.
  */
-layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
-    var $ = layui.jquery;
+layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+    var $ = layui.jquery,
+        form = layui.form();
+    var urlConfig = sessionStorage.getItem("urlConfig");
     layui.link('../../css/style.css');
     /*加载JS模块*/
     layui.extend({ //设定模块别名
@@ -109,62 +111,93 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
             var t = new Date(i);
             data.push([Date.UTC(t.getFullYear(), t.getMonth(), t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds()), Math.round(Math.random()*20)])
         }
+        // var option = {
+        //     chart: {
+        //     },
+        //     title: {
+        //         text: '化学需氧量'
+        //     },
+        //     xAxis: {
+        //         type: 'datetime',
+        //         dateTimeLabelFormats: {
+        //             millisecond: '%H:%M:%S.%L',
+        //             second: '%H:%M:%S',
+        //             minute: '%H:%M',
+        //             hour: '%H:%M',
+        //             day: '%m-%d',
+        //             week: '%m-%d',
+        //             month: '%Y-%m',
+        //             year: '%Y'
+        //         }
+        //     },
+        //     tooltip: {
+        //         dateTimeLabelFormats: {
+        //             millisecond: '%H:%M:%S.%L',
+        //             second: '%H:%M:%S',
+        //             minute: '%H:%M',
+        //             hour: '%H:%M',
+        //             day: '%m-%d',
+        //             week: '%m-%d',
+        //             month: '%Y-%m',
+        //             year: '%Y'
+        //         }
+        //     },
+        //     yAxis: {
+        //         title: {enabled: false},
+        //         min: 0
+        //     },
+        //     legend: {
+        //         enabled: false
+        //     },
+        //     plotOptions: {
+        //         area: {
+        //             marker: {
+        //                 radius: 2
+        //             },
+        //             lineWidth: 1,
+        //             states: {
+        //                 hover: {
+        //                     lineWidth: 1
+        //                 }
+        //             },
+        //             threshold: null
+        //         }
+        //     },
+        //     series: [{
+        //         type: 'area',
+        //         name: '化学需氧量',
+        //         data: data
+        //     }]
+        // };
         var option = {
             chart: {
+                type: 'spline'
             },
             title: {
-                text: '化学需氧量（mg/L）'
+                text: '化学需氧量'
             },
             xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    millisecond: '%H:%M:%S.%L',
-                    second: '%H:%M:%S',
-                    minute: '%H:%M',
-                    hour: '%H:%M',
-                    day: '%m-%d',
-                    week: '%m-%d',
-                    month: '%Y-%m',
-                    year: '%Y'
-                }
+                categories : ["2017-05-12 15:47:03", "2017-05-12 15:47:13", "2017-05-12 15:47:23", "2017-05-12 15:47:33", "2017-05-12 15:47:43", "2017-05-12 15:47:53", "2017-05-12 15:48:03", "2017-05-12 15:48:13", "2017-05-12 15:48:23", "2017-05-12 15:48:33", "2017-05-12 15:48:44", "2017-05-12 15:48:59"]
             },
             tooltip: {
-                dateTimeLabelFormats: {
-                    millisecond: '%H:%M:%S.%L',
-                    second: '%H:%M:%S',
-                    minute: '%H:%M',
-                    hour: '%H:%M',
-                    day: '%m-%d',
-                    week: '%m-%d',
-                    month: '%Y-%m',
-                    year: '%Y'
-                }
+                valueSuffix: 'mg/L'
             },
             yAxis: {
-                title: {enabled: false},
-                min: 0
+                title: {
+                    text: 'mg/L'
+                },
+                plotLines: [{
+                    value: 0,
+                    width: 1,
+                    color: '#808080'
+                }]
             },
             legend: {
                 enabled: false
             },
-            plotOptions: {
-                area: {
-                    marker: {
-                        radius: 2
-                    },
-                    lineWidth: 1,
-                    states: {
-                        hover: {
-                            lineWidth: 1
-                        }
-                    },
-                    threshold: null
-                }
-            },
             series: [{
-                type: 'area',
                 name: '化学需氧量',
-                data: data
+                data: [6.67, 6.51, 6.11, 6.79, 6.95, 6.39, 6.47, 6.59, 6.63, 6.79, 6.55, 6.95]
             }]
         };
         Highcharts.chart('mapStats_Line', option);
@@ -181,13 +214,125 @@ layui.define(['layer', 'element', 'layedit'], function(exports){ //提示：模�
     }
     setInterval('layui.map.showNotification()', 15000);
 
+    //企业select
+    function loadCompanySelect() {
+        var data = {
+            pageNum : 1,
+            pageSize : 1000
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result) {
+                console.log(result);
+                var list = result.data.list;
+                if(list == null){
+                    $("#c_select").empty();
+                    $("#c_select").append("<option value='' selected='selected'>无企业</option>");
+                }else {
+                    for(var i in list){
+                        $("#c_select").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    };
+    //排口select
+    function loadDauSelect(id){
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            dauMap : {
+                epId : id
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                $("#d_select ").empty();
+                if(row == null){
+                    $("#d_select").append("<option value='' selected='selected'>无排口</option>");
+                    $("#f_select").empty();
+                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    $("#d_select").append("<option value='' selected='selected'>选择排口</option>");
+                    for(var i in row){
+                        $("#d_select").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    };
+    //因子select
+    function loadFactorSelect(id) {
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            factorMap : {
+                equipmentId : '402880905cf30410015cf30933370015'
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                // console.log(result);
+                var row = result.data.rows;
+                $("#f_select").empty();
+                if(row == null){
+                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    $("#f_select").append("<option value='' selected='selected'>监测因子</option>");
+                    for(var i in row){
+                        $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    }
+    //企业select change事件
+    form.on('select(c_select)', function(data){
+        loadDauSelect(data.value);
+    });
+    //数采仪select change事件
+    form.on('select(d_select)', function(data){
+        var id = '402880905cf30410015cf30933370015';
+        // loadFactorSelect(data.value);
+        loadFactorSelect(id);
+    });
     //输出test接口
     exports('map', {
         btnClick : btnClick,
         loadPage: loadPage,
         close: close,
         showNotification:showNotification,
-        closeNotification:closeNotification
+        closeNotification:closeNotification,
+        loadCompanySelect : loadCompanySelect,
+        loadDauSelect:loadDauSelect,
+        loadFactorSelect : loadFactorSelect
     });
 
 });
