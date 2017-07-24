@@ -7,6 +7,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
         laypage = layui.laypage,
         form = layui.form(),
         uTobody = $('#user-result');
+    var urlConfig = sessionStorage.getItem("urlConfig");
     //页面跳转
     var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
@@ -29,7 +30,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
     form.on('submit(formDemo)', function(data){
         var field = JSON.stringify(data.field);
         $.ajax({
-            url :'http://172.21.92.63:8092/v01/htwl/lxh/user',
+            url :''+urlConfig+'/v01/htwl/lxh/user',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -63,7 +64,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
             };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://192.168.1.127:8092/v01/htwl/lxh/user/page',
+            url :''+urlConfig+'/v01/htwl/lxh/user/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'

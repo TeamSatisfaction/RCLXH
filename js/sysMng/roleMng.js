@@ -4,10 +4,12 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form(),
         rTobody = $('#role-result');
+    var urlConfig = sessionStorage.getItem("urlConfig");
     //加载角色列表
     var loadRoleData = function () {
+        console.log(urlConfig);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/user/role/query',
+            url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
                 // 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'

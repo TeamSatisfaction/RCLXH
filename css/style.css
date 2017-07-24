@@ -69,7 +69,7 @@
 .esriPopup .contentPane p span{ font-weight: normal; }
 .esriPopup .contentPane p a{ color: red ; cursor: pointer }
 /*数据窗口*/
-.mapStats{ top: 0; max-height: calc(100%); width: 600px; position: absolute; background-color: white; border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
+.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: white; border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
 .mapStats_close{ position: absolute; right: 10px; top: 10px; z-index: 200;}
 .mapStats_close i{ font-size: 20px;  cursor: pointer;}
 .mapStats_close.rotate{
@@ -85,7 +85,7 @@
 .mapStats_statsTitle{ font-size: 20px; font-weight: bold; text-align: center}
 .mapStats_statsStatus{ text-align: center}
 .mapStats_statsStatus span{ display: inline-block; margin: 10px;}
-.mapStats_statsCharts{ width: 100%; height: 220px; background-color: #92B8B1;}
+.mapStats_statsCharts{ width: 100%; height: 280px; background-color: #92B8B1;}
 .mapStats_divider{ background-color: #f2f2f2; padding: 7px; margin: 7px 0; color: #666666}
 .mapStats_divider:nth-child(1){ margin-top: 0;}
 .mapStats_alarmGeneral i{ display: inline-block; height: 36px; width: 36px; font-size: 30px; text-align: center}

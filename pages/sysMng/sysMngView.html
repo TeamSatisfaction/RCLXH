@@ -42,32 +42,28 @@
         <div class="layui-tab-content" style="left: 0;height:auto">
             <!--企业管理-->
             <div class="layui-tab-item layui-show" >
-                <div class="layui-form" action="" style="margin-bottom: 0px;">
-                    <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">企业名称</label>
-                        <div class="layui-input-inline">
-                            <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">企业名称</label>
+                            <div class="layui-input-inline">
+                                <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                            </div>
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData();">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
                         </div>
-                        <!--<div class="layui-inline">-->
-                            <!--<label class="layui-form-label">管控级别</label>-->
-                            <!--<div class="layui-input-inline">-->
-                                <!--<select name="modules" lay-verify="required" lay-search="">-->
-                                    <!--<option value="">直接选择或搜索选择</option>-->
-                                    <!--<option value="国控">国控</option>-->
-                                    <!--<option value="省控">省控</option>-->
-                                    <!--<option value="市控">市控</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.companyMng.loadCompanyData()">
-                            <i class="layui-icon">&#xe615;</i>
+                    </div>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
                         </button>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.addCompanyWin()">
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.companyMng.addCompanyWin()">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
                 </div>
-                <table class="layui-table" lay-even="" lay-skin="row">
+                <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                     <colgroup>
                         <col width="60">
                         <col width="350">
@@ -93,76 +89,79 @@
             </div>
             <!--监测站管理-->
             <div class="layui-tab-item" >
-                <div class="layui-form" action="" style="margin-bottom: 0px;">
-                    <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">监测站名称</label>
-                        <div class="layui-input-inline">
-                            <input id="MSName" name="name" lay-verify="name" autocomplete="off" placeholder="请输入监测站名称" class="layui-input" type="text">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">监测站名称</label>
+                            <div class="layui-input-inline">
+                                <input id="MSName" name="name" lay-verify="name" autocomplete="off" placeholder="请输入监测站名称" class="layui-input" type="text">
+                            </div>
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.MSMng.loadMSData();">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
                         </div>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.MSMng.loadMSData()">
-                            <i class="layui-icon">&#xe615;</i>
+                    </div>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
                         </button>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.MSMng.addMSWin()">
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.MSMng.addMSWin()">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
-                    <table class="layui-table" lay-even="" lay-skin="row">
-                        <colgroup>
-                            <col width="60">
-                            <col width="350">
-                            <col>
-                            <col width="120">
-                            <col width="120">
-                            <col width="120">
-                            <col width="150">
-                            <col width="100">
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th>序号</th>
-                            <th>监测站名称</th>
-                            <th>监测站地址</th>
-                            <th>联系人</th>
-                            <th>联系人电话</th>
-                            <th>经度</th>
-                            <th>纬度</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody id="ms-result">
-                        </tbody>
-                    </table>
-                    <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
                 </div>
+                <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
+                    <colgroup>
+                        <col width="60">
+                        <col width="350">
+                        <col>
+                        <col width="120">
+                        <col width="120">
+                        <col width="120">
+                        <col width="150">
+                        <col width="100">
+                    </colgroup>
+                    <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>监测站名称</th>
+                        <th>监测站地址</th>
+                        <th>联系人</th>
+                        <th>联系人电话</th>
+                        <th>经度</th>
+                        <th>纬度</th>
+                        <th>操作</th>
+                    </tr>
+                    </thead>
+                    <tbody id="ms-result">
+                    </tbody>
+                </table>
+                <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--设备管理-->
             <div class="layui-tab-item">
-                <div class="layui-form" action="" style="margin-bottom: 0px;">
-                    <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">设备名称</label>
-                        <div class="layui-input-inline">
-                            <input name="equipmentName" id="equipmentName" autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">设备名称</label>
+                            <div class="layui-input-inline">
+                                <input name="equipmentName" id="equipmentName" autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
+                            </div>
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.equipmentMng.loadEquipmentData();">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
                         </div>
-                        <!--<div class="layui-inline">-->
-                            <!--<label class="layui-form-label">设备类型</label>-->
-                            <!--<div class="layui-input-inline">-->
-                                <!--<select name="modules" lay-verify="required" lay-search="">-->
-                                    <!--<option value="">直接选择或搜索选择</option>-->
-                                    <!--<option value="国控">类型1</option>-->
-                                    <!--<option value="省控">类型2</option>-->
-                                    <!--<option value="市控">类型3</option>-->
-                                <!--</select>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.equipmentMng.loadEquipmentData()">
-                            <i class="layui-icon">&#xe615;</i>
+                    </div>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
                         </button>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px">
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
                 </div>
-                <table class="layui-table" lay-even="" lay-skin="row">
+                <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                     <colgroup>
                         <col width="60">
                         <col width="150">
@@ -196,83 +195,75 @@
             </div>
             <!--联网管理-->
             <div class="layui-tab-item">
-                <form class="layui-form" action="" style="margin-bottom: 0px;">
-                    <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">企业名称</label>
-                        <div class="layui-input-inline">
-                            <input name="name" lay-verify="name" autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">监控点名称：</label>
+                            <div class="layui-input-inline">
+                                <input id="msName1" name="name"  autocomplete="off" placeholder="请输入监控点名称" class="layui-input" type="text">
+                            </div>
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData()">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
                         </div>
-                        <button class="layui-btn"><i class="layui-icon"></i></button>
                     </div>
-                </form>
-                <table class="layui-table" lay-even="" lay-skin="row">
-                    <colgroup>
-                        <col width="150">
-                        <col width="150">
-                        <col width="200">
-                        <col>
-                        <col width="150">
-                    </colgroup>
-                    <thead>
-                    <tr>
-                        <th>人物</th>
-                        <th>民族</th>
-                        <th>出场时间</th>
-                        <th>格言</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr>
-                        <td>贤心</td>
-                        <td>汉族</td>
-                        <td>1989-10-14</td>
-                        <td>人生似修行</td>
-                    </tr>
-                    <tr>
-                        <td>张爱玲</td>
-                        <td>汉族</td>
-                        <td>1920-09-30</td>
-                        <td>于千万人之中遇见你所遇见的人，于千万年之中，时间的无涯的荒野里…</td>
-                    </tr>
-                    <tr>
-                        <td>Helen Keller</td>
-                        <td>拉丁美裔</td>
-                        <td>1880-06-27</td>
-                        <td> Life is either a daring adventure or nothing.</td>
-                    </tr>
-                    <tr>
-                        <td>岳飞</td>
-                        <td>汉族</td>
-                        <td>1103-北宋崇宁二年</td>
-                        <td>教科书再滥改，也抹不去“民族英雄”的事实</td>
-                    </tr>
-                    <tr>
-                        <td>孟子</td>
-                        <td>华夏族（汉族）</td>
-                        <td>公元前-372年</td>
-                        <td>猿强，则国强。国强，则猿更强！ </td>
-                    </tr>
-                    </tbody>
-                </table>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
+                        </button>
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
+                    </div>
+                    <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
+                        <colgroup>
+                            <col width="60">
+                            <col>
+                            <col width="100">
+                            <col>
+                            <col>
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>监控点名称</th>
+                            <th>MN号</th>
+                            <th>安装位置</th>
+                            <th>绑定企业</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="scy-result">
+                        </tbody>
+                    </table>
+                    <div id="demo6" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+                </div>
             </div>
             <!--用户管理-->
             <div class="layui-tab-item">
-                <div class="layui-form" action="" style="margin-bottom: 0px;">
-                    <div class="layui-form-item" style="margin-bottom: 0px;">
-                        <label class="layui-form-label">用户姓名</label>
-                        <div class="layui-input-inline">
-                            <input name="name" id="uName" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
+                <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">用户姓名：</label>
+                            <div class="layui-input-inline">
+                                <input name="name" id="uName" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
+                            </div>
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.userMng.loadUserData();;">
+                                <i class="layui-icon">&#xe615;</i>
+                            </button>
                         </div>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute" onclick=" layui.userMng.loadUserData()">
-                            <i class="layui-icon">&#xe615;</i>
+                    </div>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
                         </button>
-                        <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.userMng.addUserWin()">
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0">
                             <i class="layui-icon">&#xe608;</i>新增
                         </button>
                     </div>
                 </div>
-                <table class="layui-table" lay-even="" lay-skin="row">
+                <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                     <colgroup>
                         <col width="60">
                         <!--<col>-->
@@ -303,38 +294,41 @@
             <!--角色管理-->
             <div class="layui-tab-item">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
-                        <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
-                            <div class="layui-form-item" style="margin: 5px 0;">
-                                <label class="layui-form-label">角色名称：</label>
-                                <div class="layui-input-inline">
-                                    <input id="role" name="name"  autocomplete="off" placeholder="请输入角色名称" class="layui-input" type="text">
-                                </div>
-                                <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData()">
-                                    <i class="layui-icon">&#xe615;</i>
-                                </button>
+                    <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
+                        <div class="layui-form-item" style="margin: 5px 0;">
+                            <label class="layui-form-label">角色名称：</label>
+                            <div class="layui-input-inline">
+                                <input id="role" name="name"  autocomplete="off" placeholder="请输入角色名称" class="layui-input" type="text">
                             </div>
-                        </div>
-                        <div class="layui-form-item" style="margin: 5px 0;float: right">
-                            <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" >
-                                <i class="layui-icon"></i> 刷新
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick=" layui.roleMng.loadRoleData();">
+                                <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
-                        <table class="layui-table" lay-even="" lay-skin="row">
-                            <colgroup>
-                                <col width="60">
-                                <col>
-                                <col width="100">
-                            </colgroup>
-                            <thead>
-                            <tr>
-                                <th>序号</th>
-                                <th style="text-align: center">角色名称</th>
-                                <th style="text-align: center">操作</th>
-                            </tr>
-                            </thead>
-                            <tbody id="role-result">
-                            </tbody>
-                        </table>
+                    </div>
+                    <div class="layui-form-item" style="margin: 5px 0">
+                        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
+                            <i class="layui-icon"></i> 刷新
+                        </button>
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
+                    </div>
+                    <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
+                        <colgroup>
+                            <col width="60">
+                            <col>
+                            <col width="100">
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th style="text-align: center">角色名称</th>
+                            <th style="text-align: center">操作</th>
+                        </tr>
+                        </thead>
+                        <tbody id="role-result">
+                        </tbody>
+                    </table>
                     <div id="demo5" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
                 </div>
             </div>

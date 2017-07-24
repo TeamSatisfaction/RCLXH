@@ -6,6 +6,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         layer = layui.layer,
         laypage = layui.laypage,
         cTobody = $('#company-result');
+    var urlConfig = sessionStorage.getItem("urlConfig");
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -29,8 +30,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://192.168.1.127:8092/v01/htwl/lxh/enterprise/page',
-            // url :'http://172.21.92.63:8092/v01/htwl/lxh/enterprise/page',
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -180,6 +180,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,area: ['800px']
             ,shade: 0.3
             ,content: pk_win
+            ,btnAlign: 'c'
             ,btn: ['提交', '关闭'] //只是为了演示
             ,yes: function(){
                 layer.msg('提交成功！', {icon: 1});
@@ -202,15 +203,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,area: ['800px']
             ,shade: 0.3
             ,content: pk_win
-            ,btn: ['提交', '关闭'] //只是为了演示
-            ,yes: function(){
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
-            }
-            ,zIndex: layer.zIndex //重点1
-            ,success: function(layero){
-                layer.setTop(layero); //重点2
-            }
+            ,btnAlign: 'c'
+            ,btn: ['关闭'] //只是为了演示
         })
     };
     // layer.ready(function(){

@@ -9,6 +9,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
         form = layui.form(),
         aTobody = $('#alarm-result');
     var access_token = sessionStorage.getItem("access_token");
+    var urlConfig = sessionStorage.getItem("urlConfig");
     //页面跳转
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
@@ -70,7 +71,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
             };
         $.ajax({
             // url :'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query',
-            url :'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query',
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -136,7 +137,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     var loadAlarmDetails = function (id) {
         $.ajax({
             // url : 'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query/'+id+'',
-            url : 'http://192.168.1.127:8092/v01/htwl/lxh/alrm/query/'+id+'',
+            url : ''+urlConfig+'/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -190,7 +191,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
                 };
                 var field = JSON.stringify(data);
                 $.ajax({
-                    url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
+                    url: ""+urlConfig+"/v01/htwl/lxh/alrm/report",
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
                         Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -230,7 +231,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     //角色select
     var loadRoleData = function () {
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/user/role/query',
+            url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -250,7 +251,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     form.on('select(select_role)', function(data){
         console.log(data.value);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/user/role/'+data.value+'',
+            url: ''+urlConfig+'/v01/htwl/lxh/user/role/'+data.value+'',
             headers: {
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -270,7 +271,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     //上报报警
     var reportAlarm = function (id) {
         $.ajax({
-            url : 'http://192.168.3.222:8092/v01/htwl/lxh/alrm/report',
+            url : ''+urlConfig+'/v01/htwl/lxh/alrm/report',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -286,7 +287,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     //处理报警
     var dealAlarm = function (id,status) {
         $.ajax({
-            url : 'http://192.168.3.222:8092/v01/htwl/lxh/alrm/deal',
+            url : ''+urlConfig+'/v01/htwl/lxh/alrm/deal',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },

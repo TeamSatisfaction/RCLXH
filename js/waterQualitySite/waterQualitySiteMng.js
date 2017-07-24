@@ -3,6 +3,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         laydate = layui.laydate,
         form = layui.form(),
         msTobody = $('#ms-result1');
+    var urlConfig = sessionStorage.getItem("urlConfig");
         // layer = layui.layer,
     var start = {
         istime: true
@@ -79,7 +80,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
             cn : cn
         };
         $.ajax({
-            url : 'http://192.168.1.127:8092/v01/htwl/lxh/online',
+            url : ''+urlConfig+'/v01/htwl/lxh/online',
             type : 'get',
             data : data,
             headers : {
@@ -165,7 +166,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/enterprise/page',
+            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             // url: 'http://172.21.92.63:8092/v01/htwl/lxh/water/query',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
@@ -212,7 +213,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/jcsjgz/dau/query/page',
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -250,7 +251,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/jcsjgz/equipment/query/page',
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -285,7 +286,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url: 'http://192.168.1.127:8092/v01/htwl/lxh/jcsjgz/factor/query/page',
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'

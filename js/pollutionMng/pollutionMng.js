@@ -6,6 +6,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
         layer = layui.layer,
         laypage = layui.laypage,
         cTobody = $('#company-result');
+    var urlConfig = sessionStorage.getItem("urlConfig");
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -21,7 +22,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
             };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://172.21.92.63:8092/v01/htwl/lxh/enterprise/page',
+            url : ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
