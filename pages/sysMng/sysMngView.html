@@ -17,8 +17,9 @@
             companyMng : 'sysMng/companyMng',
             userMng : 'sysMng/userMng',
             equipmentMng : 'sysMng/equipmentMng',
-            roleMng : 'sysMng/roleMng'
-        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng'],function () {
+            roleMng : 'sysMng/roleMng',
+            networkMng : 'sysMng/networkMng'
+        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
             layui.companyMng.loadCompanyData();
             layui.MSMng.loadMSData();
             layui.equipmentMng.loadEquipmentData();
