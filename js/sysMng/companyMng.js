@@ -113,7 +113,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         var str =
             '<img src="' + src + '"> ' +
             '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> '+
-            '<div>' + ($(".clgy_item").find("select").val()) + '</div>';    //工艺类型
+            '<div>' + ($(".clgy_item").find("input[name='gylx']").val()) + '</div>';    //工艺类型
         $(input).removeAttr("onchange").hide();
         thumb.find("img").remove();
         thumb.removeClass("thumb-input").prepend(str).show();
@@ -175,7 +175,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         pk_win.find('input').attr('disabled', false);
         pk_win.find('.thumb-input').show();
         layer.open({
-            type: 1 //此处以iframe举例
+            type: 1
             ,title: '新增排口'
             ,area: ['800px']
             ,shade: 0.3
@@ -197,7 +197,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         pk_win.find('input').attr('disabled', 'disabled');
         pk_win.find('.thumb-input').hide();
         layer.open({
-            type: 1 //此处以iframe举例
+            type: 1
             ,title: '查看排口'
             ,area: ['800px']
             ,shade: 0.3
