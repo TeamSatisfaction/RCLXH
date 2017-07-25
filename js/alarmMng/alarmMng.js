@@ -8,6 +8,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
         upload = layui.upload(),
         form = layui.form(),
         aTobody = $('#alarm-result');
+        // tTobody = $('#trail-result');
     var access_token = sessionStorage.getItem("access_token");
     var urlConfig = sessionStorage.getItem("urlConfig");
     //页面跳转
@@ -119,8 +120,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
                             '<td>' + item.ruleName + '</td>' +
                             '<td>' + item.alarmType+ '</td>' +
                             '<td>' + item.status + '</td>' +
-                            // '<td><a href="#" onclick="layui.alarmMng.loadAlarmDetails('+item.alarmId+')"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '<td><a href="#" onclick="layui.alarmMng.loadPage(\'pages/alarmMng/alarmDataView.html?id='+item.alarmId+'\')"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin('+item.alarmId+')">详情</button></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -143,19 +143,43 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
             }
         })
     };
-
+    //报警详情窗口
+    var  alarmDetailsWin = function (e){
+        var index = layer.open({
+            title : '报警详情',
+            type : 2,
+            id : e,
+            // area : ['550px','400px'],
+            content : '../../pages/alarmMng/alarmDataView.html',
+            btn: ['返回'],
+            btnAlign: 'c',
+            success : function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                loadAlarmDetails(id,body);
+            }
+        })
+        layer.full(index);
+    };
     //加载报警详情
-    var loadAlarmDetails = function (id) {
+    var loadAlarmDetails = function (id,body) {
         $.ajax({
-            // url : 'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query/'+id+'',
             url : ''+urlConfig+'/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             type : 'get',
             success : function (result){
-                if(result.alarmType == 'detection_alarm'){
-                    result.alarmType = '在线监控报警'
+                switch (result.alarmType){
+                    case "detection_alarm":
+                        result.alarmType = '在线监控报警'
+                        break;
+                    case "video_alarm":
+                        result.alarmType = '视频报警'
+                        break;
+                    case "working_alarm":
+                        result.alarmType = '工况报警'
+                        break;
                 }
                 switch (result.status){
                     case "0":
@@ -168,12 +192,40 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
                         result.status = '已处罚'
                         break;
                 }
-                document.getElementById('alarmType').innerHTML = result.alarmType;
-                document.getElementById('alarmLevel').innerHTML = result.alarmLevel+'级';
-                document.getElementById('alarmTime').innerHTML = result.alarmTime;
-                document.getElementById('enterpriseName').innerHTML = result.enterpriseName;
-                document.getElementById('remark').innerHTML = result.remark;
-                document.getElementById('status').innerHTML = result.status;
+                body.contents().find("#alarmType1").html(result.alarmType);
+                body.contents().find("#alarmLevel1").html(result.alarmLevel+'级');
+                body.contents().find("#alarmTime1").html(result.alarmTime);
+                body.contents().find("#enterpriseName1").html(result.enterpriseName);
+                body.contents().find("#remark1").html(result.remark);
+                body.contents().find("#status1").html(result.status);
+                var list = result.alarmLogs,
+                    str = '',
+                    arr = [];
+                var render = function(list){
+                    layui.each(list, function(index, item){
+                        switch (item.operateUserLevel){
+                            case "service_level":
+                                item.operateUserLevel = '服务方'
+                                break;
+                            case "enterprise_level":
+                                item.operateUserLevel = '企业方'
+                                break;
+                            case "service_level":
+                                item.regulatory_level = '监管方'
+                                break;
+                        }
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>'+item.operateTime+'</td>' +
+                            '<td>'+item.operateUser+'</td>' +
+                            '<td>'+item.operateUserLevel+'</td>' +
+                            '<td>'+item.remark+'</td>' +
+                            '</tr>';
+                        arr.push(str);
+                    })
+                    return arr.join('');
+                }
+                body.contents().find("#trail-result").html(render(list));
             }
         })
     };
@@ -315,6 +367,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     var obj = {
         loadPage : loadPage,
         loadAlarmData : loadAlarmData,
+        alarmDetailsWin : alarmDetailsWin,
         loadAlarmDetails : loadAlarmDetails,
         reportAlarmWin : reportAlarmWin
     };

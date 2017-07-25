@@ -2,8 +2,8 @@
  项目JS主入口
  以依赖Layui的layer和form模块为例
  **/
-// sessionStorage.setItem("urlConfig", 'http://172.21.92.243:8092');
-sessionStorage.setItem("urlConfig", 'http://192.168.1.127:8092');
+sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8092');
+// sessionStorage.setItem("urlConfig", 'http://192.168.1.127:8092');
 layui.define(['layer', 'form', 'element'], function(exports){
     var $ = layui.jquery,
         layer = layui.layer,

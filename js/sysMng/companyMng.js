@@ -143,7 +143,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         console.log(formData);
     };
     var addCompanyWin = function () {
-        layer.open({
+        var index = layer.open({
             title : '新增企业',
             type : 2,
             moveOut: true,
@@ -159,7 +159,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             // ,success: function(layero){
             //     layer.setTop(layero); //重点2
             // }
-        })
+        });
+        layer.full(index);
     };
     /*新增排口*/
     var addPk = function () {

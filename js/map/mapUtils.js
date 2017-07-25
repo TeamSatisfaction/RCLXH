@@ -4,25 +4,30 @@
 
 layui.define('layer', function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     /*方法*/
+    var $ = layui.jquery;
+    var urlConfig = sessionStorage.getItem("urlConfig");
     var mapServer = "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer";
     var lat0 = 105.5779702660,
         lgt0 = 29.4048578414;
     var center_point = new esri.geometry.Point(lat0,lgt0, new esri.SpatialReference(4326));
+
     var map = new esri.Map("mapDiv", {
         center: center_point,
         slider: false,
         logo: false,
         zoom: 13,//地图大小级别
-        minZoom: 12,//地图缩放的小级别
+        minZoom: 0,//地图缩放的小级别
         maxZoom: 16//地图缩放的最大级别
     });
     var basemap = new esri.layers.ArcGISTiledMapServiceLayer(mapServer);
     var graphicLayer = new esri.layers.GraphicsLayer({id: 'point_layer'});         //点位图层
 
+    map.addLayer(basemap);
+
     /*添加点位*/
     var addPoint = function (point, type, isAlt, attr) {
         var symbolUrl;
-        if(type === "factory"){
+        if(type === "production_enterprise"){
             symbolUrl = "../../img/index/qiye.png"
         }else if (type === "monistation"){
             symbolUrl = "../../img/index/dianmian.png"
@@ -30,7 +35,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         var symbol = new esri.symbol.PictureMarkerSymbol(symbolUrl, 20, 25);		//标记
         var graphic = new esri.Graphic(point, symbol, attr);
         graphicLayer.add(graphic);
-        map.addLayer(graphicLayer);
+        // map.addLayer(graphicLayer);
+
     };
 
     var addRandomPoint = function (){
@@ -39,10 +45,43 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             pt = new esri.geometry.Point(lat, lgt, new esri.SpatialReference(4326)),
             type = Math.random()>0.5?"factory":"monistation";
         addPoint(pt, type, true, {});
-
     };
-
-
+    //请求企业信息
+    function loadCompanydata () {
+        var data = {
+            pageNum : 1,
+            pageSize : 1000
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result) {
+                console.log(result.data.list);
+                var list = result.data.list;
+                if(list != null){
+                    for(var i in list){
+                        var lon = list[i].lon,
+                            lat = list[i].lat,
+                            name = list[i].name,
+                            address = list[i].address,
+                            enterpriseRole = list[i].enterpriseRole;
+                        var pt = new esri.geometry.Point(lon, lat, new esri.SpatialReference({wkid:4326})),
+                            type = enterpriseRole;
+                        addPoint(pt, type, true, {});
+                    }
+                    console.log(graphicLayer)
+                    map.addLayer(graphicLayer);
+                }
+            }
+        })
+    };
+    loadCompanydata();
     /*点位改变样式*/
     var symbolSwitch = function (symbol) {
         
@@ -62,7 +101,6 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             titleHtml = "重庆永荣矿务局总医院";
             contentHtml += "<p>企业名称：<span>重庆永荣矿务局总医院</span></p>"
                 +"<p>企业地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
-                +"<p>管控级别：<span>市控</span></p>"
                 +"<p>行业类别：<span>医药制造业</span></p>"
                 +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         } else if (symbolUrl.indexOf("dianmian") != -1) {
@@ -78,7 +116,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
 
     /*地图加载*/
     dojo.ready( function () {
-        map.addLayer(basemap);
+        // map.addLayer(basemap);
         /*点位点击事件*/
         dojo.connect(map, "onClick", function (evt) {
             //得到当前点位信息
@@ -90,13 +128,12 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             infoWin(e);
         });
     });
-
     var obj = {
         map:map,
         addPoint: addPoint,
         clearMap:clearMap,
-
-        addRandomPoint:addRandomPoint //添加随机点位，测试用
+        addRandomPoint:addRandomPoint, //添加随机点位，测试用
+        loadCompanydata : loadCompanydata
     };
     //输出test接口
     exports('mapUtils', obj);

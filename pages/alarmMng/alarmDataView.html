@@ -14,8 +14,8 @@
             utils : 'utils',
             alarmMng : 'alarmMng/alarmMng'
         }).use(['alarmMng','utils'],function () {
-            var id = layui.utils.getArg('id');
-            layui.alarmMng.loadAlarmDetails(id);
+//            var id = layui.utils.getArg('id');
+//            layui.alarmMng.loadAlarmDetails(id);
 //            var value = sessionStorage.getItem("code");
 //            console.log(value);
         });
@@ -24,34 +24,48 @@
     <title>Title</title>
 </head>
 <body>
-    <!--面包屑-->
-    <div style="margin-left: 10px;margin-top: 10px" class="layui-elem-quote">
-    <span class="layui-breadcrumb">
-    <a href="#"  onclick="layui.alarmMng.loadPage('pages/alarmMng/alarmMng.html')">报警管理</a>
-    <a><cite>报警详情</cite></a>
-    </span>
-    </div>
+    <!--&lt;!&ndash;面包屑&ndash;&gt;-->
+    <!--<div style="margin-left: 10px;margin-top: 10px" class="layui-elem-quote">-->
+    <!--<span class="layui-breadcrumb">-->
+    <!--<a href="#"  onclick="layui.alarmMng.loadPage('pages/alarmMng/alarmMng.html')">报警管理</a>-->
+    <!--<a><cite>报警详情</cite></a>-->
+    <!--</span>-->
+    <!--</div>-->
     <fieldset class="layui-elem-field">
         <legend>报警详情</legend>
-        <div>
+        <!--<div style="width: 100%;text-align: center">-->
+            <!--<div class="layui-form-item">-->
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">企业名称：</label>-->
+                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="site" value="企业123ASD">-->
+                <!--</div>-->
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">法人代表：</label>-->
+                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" value="李先生">-->
+                <!--</div>-->
+            <!--</div>-->
+        <!--</div>-->
+        <div    >
                 <!--<table style="margin-bottom: 20px;margin-left: 15px;width:50%">-->
-                <table class="layui-table layui-inline"  lay-skin="nob" style="margin-bottom: 20px;margin-left: 15px;width:50%">
+                <table class="layui-table layui-inline"  lay-skin="nob">
                     <tbody>
                     <tr>
                         <td class="align-right">报警类型：</td>
-                        <td id="alarmType">通讯中断报警</td>
+                        <td id="alarmType1">通讯中断报警</td>
                     </tr>
                     <tr>
                         <td class="align-right">报警等级：</td>
-                        <td id="alarmLevel">3级</td>
+                        <td id="alarmLevel1">3级</td>
                     </tr>
                     <tr>
                         <td class="align-right">报警时间：</td>
-                        <td id="alarmTime" >2017-07-06 16:24:00</td>
+                        <td id="alarmTime1" >2017-07-06 16:24:00</td>
+                        <!--<td class="align-right">企业名称：</td>-->
+                        <!--<td id="enterpriseName">重庆建设雅马哈摩托车有限公司</td>-->
                     </tr>
                     <tr>
                         <td class="align-right">企业名称：</td>
-                        <td id="enterpriseName">重庆建设雅马哈摩托车有限公司</td>
+                        <td id="enterpriseName1">重庆建设雅马哈摩托车有限公司</td>
                     </tr>
                     <tr>
                         <td class="align-right">行政区域：</td>
@@ -59,18 +73,18 @@
                     </tr>
                     <tr>
                         <td class="align-right ">报警事件描述：</td>
-                        <td id="remark">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
+                        <td id="remark1">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
                     </tr>
                     <tr>
                         <td class="align-right">报警状态：</td>
-                        <td id="status"></td>
+                        <td id="status1"></td>
                     </tr>
                     </tbody>
                 </table>
-            <div class="layui-inline" style="width: 45%">
-                <span class="layui-inline">报警时间图片：</span>
-                <div class="layui-inline">暂无相关图片</div>
-            </div>
+            <!--<div class="layui-inline" style="width: 45%">-->
+                <!--<span class="layui-inline">报警时间图片：</span>-->
+                <!--<div class="layui-inline">暂无相关图片</div>-->
+            <!--</div>-->
         </div>
         <div class="layui-footer" style="width: 100%;height:39px;left: 0;text-align: center">
             <button class="layui-btn layui-btn-normal">
@@ -87,14 +101,13 @@
     <fieldset class="layui-elem-field layui-field-title">
         <legend>报警轨迹</legend>
         <div class="layui-field-box">
-            <table class="layui-table" lay-even="" lay-skin="row" >
+            <table class="layui-table" lay-even="" lay-skin="row">
                 <colgroup>
                     <col width="60">
-                    <col>
-                    <col width="120">
-                    <col>
                     <col width="200">
                     <col width="120">
+                    <col width="150">
+                    <col>
                 </colgroup>
                 <thead>
                 <tr>
@@ -103,7 +116,6 @@
                     <th>处理人员</th>
                     <th>处理人级别</th>
                     <th>报警描述</th>
-                    <th>相关图片</th>
                 </tr>
                 </thead>
                 <tbody id="trail-result">
