@@ -25,13 +25,17 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
     };
     $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));
     $('#endTime1').val(laydate.now(0, "YYYY/MM/DD hh:mm:ss"));
-    var loadChartsData = function (id,name) {
-        var cn = '2011',
+    //监测详情数据
+    var loadChartsData = function (cn,name,Eid) {
+        console.log(cn);
+        // var Eid = sessionStorage.getItem("companyId");
+        // var name = sessionStorage.getItem("companyName");
+        // var cn = '2011',
             // enterpriseId = id,
             // factor = $('#select_factor').val(),
             // beginDate =  $('#startTime1').val(),
             // endDate = $('#endTime1').val();
-            enterpriseId = '402880935cf2264b015d064a7c180024',
+        var enterpriseId = '402880935cf2264b015d064a7c180024',
             factor = 'ez63a01',
             text = $("#select_factor").find("option:selected").text(),
             beginDate =  '2017-05-12 00:00:00',
@@ -51,16 +55,18 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             success : function (result){
-                var factorCode = result.onlineData.data[0].factorCode,
-                    onlineTime = result.onlineTime.slice(-13,-1),
-                    onlineData = result.onlineData.data[0].online.slice(-13,-1);
-                console.log(onlineTime);
-                console.log(onlineData);
-                loadaCharts(onlineTime,onlineData,factorCode,name,text)
+                console.log(result);
+                if(result.onlineTime){
+                    var onlineTime = result.onlineTime.slice(-13,-1),
+                        onlineData = result.onlineData.data[0].online.slice(-13,-1);
+                    loadaCharts(onlineTime,onlineData,name,text)
+                }
+                // var factorCode = result.onlineData.data[0].factorCode,
             }
         })
     };
-    var loadaCharts = function (onlineTime,onlineData,factorCode,name,text) {
+    //监测详情曲线图
+    var loadaCharts = function (onlineTime,onlineData,name,text) {
         var option = {
             chart: {
                 type : 'line'
@@ -96,8 +102,20 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
             }]
         };
         Highcharts.chart('container', option);
-    }
-    var loadMSData = function (curr){
+    };
+    //监测站list
+    var loadMSData = function (curr,cn){
+        switch (cn){
+            case "实时监测数据":
+                cn = '2011'
+                break;
+            case "小时监测数据":
+                cn = '2061'
+                break;
+            case "日监测数据":
+                cn = '2041'
+                break;
+        }
         var data = {
             // enterpriseRole : 'monitoringStation_enterprise',//监测站
             pageNum : curr||1,
@@ -121,7 +139,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this)">' +
+                        str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.name + '</td>' +
                             '</tr>';
@@ -130,20 +148,18 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     return arr.join('');
                 };
                 msTobody.html(render(msData, obj.curr));
-                loadDau(msData[0].baseEnterpriseId);
-                loadChartsData(msData[0].baseEnterpriseId,msData[0].name);
+                loadDau(msData[0].baseEnterpriseId,cn,msData[0].name);
             }
         })
     };
-    var loadChartForSite = function (e) {
+    var loadChartForSite = function (e,cn) {
+        console.log(cn);
         var Eid = $(e).attr('data-id'),
             name = $(e).attr('data-name');
-        // var text = $("#select_factor").find("option:selected").text();
-        loadDau(Eid,name);
-        // loadChartsData(id,name,text);
+        loadDau(Eid,cn,name);
     };
     //根据企业查询数采仪
-    var loadDau = function (Eid,name) {
+        var loadDau = function (Eid,cn,name) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -170,19 +186,19 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     $("#select_factor").empty();
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
                     $("#container").empty();
-                    $("#container").html('<span>无相关监测因子</span>');
+                    $("#container").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
                         $("#select_dauId").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
                     }
-                    loadEquipment(row[0].id,Eid,name);
+                    loadEquipment(row[0].id,cn,name,Eid);
                 }
                 form.render('select');
             }
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (id,Eid,name) {
+    var loadEquipment = function (id,cn,name,Eid) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -212,14 +228,14 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                     for(var i in row){
                         $("#select_equipment").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
-                    loadFactor(row[0].id,Eid,name);
+                    loadFactor(row[0].id,cn,name,Eid);
                 }
                 form.render('select');
             }
         })
     };
     //根据设备查询因子
-    var loadFactor = function (id,Eid,name) {
+    var loadFactor = function (id,cn,name,Eid) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -250,7 +266,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                 }
                 form.render('select');
                 // var text = $("#select_factor").find("option:selected").text();
-                loadChartsData(Eid,name);
+                loadChartsData(cn,name,Eid);
             }
         })
     };
@@ -264,8 +280,8 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         console.log("2");
         loadFactor(data.value);
     });
+
     var obj = {
-        // chart : chart,
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite
     };

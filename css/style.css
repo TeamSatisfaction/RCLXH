@@ -5,7 +5,6 @@
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
 .side{background-image: url("../img/index/left.png")}
-
 /*颜色*/
 .layui-bg-black, .layui-nav{ background-color: #544d4e}
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/

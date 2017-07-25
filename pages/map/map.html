@@ -18,7 +18,8 @@
         }).extend({ //设定模块别名
             map : 'map/map'
         }).use('map', function () {
-            layui.map.loadCompanySelect()
+            layui.map.loadCompanySelect();
+            layui.map.loadMonthlydata();
         }).link('../../css/style.css'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -116,7 +117,7 @@
                         <div class="mapStats_statsCharts" id="mapStats_3dPie"></div>
                     </div>
                     <div>
-                        <div class="mapStats_divider">2017年荣昌区濑溪河流域环境统计数据</div>
+                        <div class="mapStats_divider" id="m_title"></div>
                         <div class="mapStats_table">
                             <table class="layui-table" lay-even="" lay-skin="row">
                                 <colgroup>
@@ -131,14 +132,14 @@
                                     <th>排放量</th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <tr><td>六价铬</td><td>千克</td><td>300.21</td></tr>
-                                <tr><td>化学需氧量</td><td>万吨</td><td>30.3</td></tr>
-                                <tr><td>氨氮</td><td>万吨</td><td>6.13</td></tr>
-                                <tr><td>总镍</td><td></td><td></td></tr>
-                                <tr><td>PH</td><td></td><td></td></tr>
-                                <tr><td>高锰酸盐</td><td></td><td></td></tr>
-                                <tr><td>水温</td><td></td><td></td></tr>
+                                <tbody id="monthly_result">
+                                <!--<tr><td>六价铬</td><td>千克</td><td>300.21</td></tr>-->
+                                <!--<tr><td>化学需氧量</td><td>万吨</td><td>30.3</td></tr>-->
+                                <!--<tr><td>氨氮</td><td>万吨</td><td>6.13</td></tr>-->
+                                <!--<tr><td>总镍</td><td></td><td></td></tr>-->
+                                <!--<tr><td>PH</td><td></td><td></td></tr>-->
+                                <!--<tr><td>高锰酸盐</td><td></td><td></td></tr>-->
+                                <!--<tr><td>水温</td><td></td><td></td></tr>-->
                                 </tbody>
                             </table>
 
@@ -153,7 +154,7 @@
 
     <div class="notification">
         <div>
-            <span class="time">2017年7月6日14:00:00</span>
+            <span class="time">2017-07-22 04:38:35</span>
             <i class="layui-icon" onclick="layui.map.closeNotification()">&#x1006;</i>
         </div>
         <div class="content" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">

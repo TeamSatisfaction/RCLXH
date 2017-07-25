@@ -25,6 +25,7 @@
             layui.equipmentMng.loadEquipmentData();
             layui.userMng.loadUserData();
             layui.roleMng.loadRoleData();
+            layui.networkMng.loadNetWorkData();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -63,7 +64,7 @@
                         </button>
                     </div>
                 </div>
-                <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
+                <table class="layui-table" lay-even="" lay-skin="nob" style="margin-top: 0">
                     <colgroup>
                         <col width="60">
                         <col width="350">
@@ -198,9 +199,9 @@
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                         <div class="layui-form-item" style="margin: 5px 0;">
-                            <label class="layui-form-label">监控点名称：</label>
+                            <label class="layui-form-label">数采仪名称：</label>
                             <div class="layui-input-inline">
-                                <input id="msName1" name="name"  autocomplete="off" placeholder="请输入监控点名称" class="layui-input" type="text">
+                                <input id="Mn_address" name="name"  autocomplete="off" placeholder="请输入数采仪名称" class="layui-input" type="text">
                             </div>
                             <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData()">
                                 <i class="layui-icon">&#xe615;</i>

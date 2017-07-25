@@ -7,7 +7,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
     var urlConfig = sessionStorage.getItem("urlConfig");
     //加载角色列表
     var loadRoleData = function () {
-        console.log(urlConfig);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {

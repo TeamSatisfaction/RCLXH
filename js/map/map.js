@@ -111,64 +111,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             var t = new Date(i);
             data.push([Date.UTC(t.getFullYear(), t.getMonth(), t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds()), Math.round(Math.random()*20)])
         }
-        // var option = {
-        //     chart: {
-        //     },
-        //     title: {
-        //         text: '化学需氧量'
-        //     },
-        //     xAxis: {
-        //         type: 'datetime',
-        //         dateTimeLabelFormats: {
-        //             millisecond: '%H:%M:%S.%L',
-        //             second: '%H:%M:%S',
-        //             minute: '%H:%M',
-        //             hour: '%H:%M',
-        //             day: '%m-%d',
-        //             week: '%m-%d',
-        //             month: '%Y-%m',
-        //             year: '%Y'
-        //         }
-        //     },
-        //     tooltip: {
-        //         dateTimeLabelFormats: {
-        //             millisecond: '%H:%M:%S.%L',
-        //             second: '%H:%M:%S',
-        //             minute: '%H:%M',
-        //             hour: '%H:%M',
-        //             day: '%m-%d',
-        //             week: '%m-%d',
-        //             month: '%Y-%m',
-        //             year: '%Y'
-        //         }
-        //     },
-        //     yAxis: {
-        //         title: {enabled: false},
-        //         min: 0
-        //     },
-        //     legend: {
-        //         enabled: false
-        //     },
-        //     plotOptions: {
-        //         area: {
-        //             marker: {
-        //                 radius: 2
-        //             },
-        //             lineWidth: 1,
-        //             states: {
-        //                 hover: {
-        //                     lineWidth: 1
-        //                 }
-        //             },
-        //             threshold: null
-        //         }
-        //     },
-        //     series: [{
-        //         type: 'area',
-        //         name: '化学需氧量',
-        //         data: data
-        //     }]
-        // };
         var option = {
             chart: {
                 type: 'spline'
@@ -323,6 +265,61 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         // loadFactorSelect(data.value);
         loadFactorSelect(id);
     });
+    //环境统计list
+    function loadMonthlydata() {
+        var myDate = new Date(),
+            year = myDate.getFullYear(),
+            currMonth = myDate.getMonth(), //获取当前月份(0-11,0代表1月)
+            currQuarter = Math.floor( ( currMonth % 3 == 0 ? ( currMonth / 3 ) : ( currMonth / 3 + 1 ) ) ),
+            beginDate = '',
+            endDate = '';
+        switch (currQuarter){
+            case 1:
+                beginDate = year+'-01-01 00:00:00',
+                endDate = year+'-03-31 23:59:59'
+                break;
+            case 2:
+                beginDate = year+'-04-01 00:00:00',
+                endDate = year+'-06-30 23:59:59'
+                break;
+            case 3:
+                beginDate = year+'-07-01 00:00:00',
+                endDate = year+'-09-30 23:59:59'
+                break;
+            case 4:
+                beginDate = year+'-10-01 00:00:00',
+                endDate = year+'-12-31 23:59:59'
+                break;
+        }
+        console.log(currQuarter,beginDate,endDate);
+        var data = {
+            beginDate : beginDate,
+            endDate : endDate
+        };
+        var str = '';
+        var m_tobody = $('#monthly_result');
+        var m_title = $('#m_title');
+        m_title.html('2017年荣昌区濑溪河流域第'+currQuarter+'季度环境统计数据');
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/online/monthly',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data,
+            success : function (result){
+                console.log(result);
+                str = '<tr><td>六价铬</td><td>千克</td><td>'+result.e207I+'</td></tr>' +
+                    '<tr><td>COD</td><td>万吨</td><td>'+result.e202B+'</td></tr>' +
+                    '<tr><td>氨氮</td><td></td><td>'+result.e203F+'</td></tr>' +
+                    '<tr><td>总镍</td><td></td><td>'+result.e208J+'</td></tr>' +
+                    '<tr><td>PH</td><td></td><td>'+result.e206C+'</td></tr>' +
+                    '<tr><td>高锰酸盐</td><td></td><td>'+result.e211M+'</td></tr>' +
+                    '<tr><td>水温</td><td></td><td>'+result.e210L+'</td></tr>';
+                m_tobody.html(str);
+            }
+        })
+    }
     //输出test接口
     exports('map', {
         btnClick : btnClick,
@@ -332,7 +329,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         closeNotification:closeNotification,
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,
-        loadFactorSelect : loadFactorSelect
+        loadFactorSelect : loadFactorSelect,
+        loadMonthlydata : loadMonthlydata
     });
 
 });

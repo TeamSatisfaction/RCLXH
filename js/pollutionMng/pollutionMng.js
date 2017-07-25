@@ -46,7 +46,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td style="text-align: center"><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal">详情</button></td>' +
                             '</tr>';
                         arr.push(str);
                     });
