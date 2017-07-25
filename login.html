@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+    <meta charset="UTF-8">
+    <title>荣昌区环保物联网在线监控平台</title>
+    <link href="layUi/css/layui.css" rel="stylesheet">
+    <style>.layui-layer-page{background: transparent!important;}</style>
+    <script src="layUi/layui.js"></script>
+    <script src="js/lib/gVerify.js"></script>
+    <script>
+        layui.link('css/style.css');
+        layui.config({
+            base: 'js/' //你的模块目录
+        }).use('login'); //加载入口
+    </script>
+</head>
+<body class="main_body">
+    <div id="login_container">
+        <h1>荣昌区环保物联网在线监控平台</h1>
+        <h1>登陆</h1>
+        <form class="layui-form">
+            <div class="layui-form-item">
+                <input autocomplete="off" placeholder="用户名"  class="layui-input" type="text" name="username" lay-verify="required">
+            </div>
+            <div class="layui-form-item">
+                <input autocomplete="off" placeholder="密码"  class="layui-input" type="password" name="password" lay-verify="required">
+            </div>
+            <div class="layui-form-item">
+                <input type="text" id="verify" name="verify" placeholder="验证码" maxlength="4" class="layui-input layui-input-inline" lay-verify="required">
+                <div id="verify_image" class="layui-inline"></div>
+            </div>
+            <div class="layui-footer">
+                <div class="layui-btn layui-btn-normal">
+                    注册
+                </div>
+                <div class="layui-btn layui-btn-normal" lay-submit lay-filter="formDemo">
+                    登陆
+                </div>
+            </div>
+        </form>
+    </div>
+    <div id="login_bg"></div>
+</body>
+</html>
