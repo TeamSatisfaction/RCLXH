@@ -16,7 +16,7 @@
             waterQualitySiteMng : 'waterQualitySiteMng'
         }).use('waterQualitySiteMng',function () {
 //            layui.waterQualitySiteMng.chart();
-            layui.waterQualitySiteMng.loadMSData();
+            layui.waterQualitySiteMng.loadMSData("1",'实时监测数据');
         }); //加载入口
     </script>
 </head>
@@ -43,10 +43,10 @@
     <div style="width:60%;" class="layui-inline waterBorder">
         <div class="water_divider">监测详情</div>
         <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
-            <ul class="layui-tab-title">
-                <li class="layui-this" lay-id="实时监测数据" >实时监测数据</li>
-                <li lay-id="小时监测数据">小时监测数据</li>
-                <li lay-id="日监测数据">日监测数据</li>
+            <ul class="layui-tab-title" id="getType">
+                <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
+                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
+                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
             </ul>
             <div class="layui-tab-content">
                 <!--实时监测数据-->
@@ -100,16 +100,50 @@
                     </div>
                     <div id="container" style="min-width:100%;height:500px;margin-top: 10px">无对应监测因子</div>
                 </div>
-                <div class="layui-tab-item" >2
-                </div>
-                <div class="layui-tab-item" >3
-                </div>
+                <!--<div class="layui-tab-item" >2-->
+                <!--</div>-->
+                <!--<div class="layui-tab-item" >3-->
+                <!--</div>-->
             </div>
         </div>
     </div>
     <div style="width: 19%;" class="layui-inline waterBorder">
         <div class="water_divider">报表</div>
-
+        <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
+            <ul class="layui-tab-title">
+                <li class="layui-this" lay-id="日报" >日报</li>
+                <li lay-id="月报">月报</li>
+                <li lay-id="年报">年报</li>
+            </ul>
+            <div class="layui-tab-content">
+                <div class="layui-tab-item layui-show" >
+                    <!--<table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 5px">-->
+                        <!--<colgroup>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                            <!--<col>-->
+                        <!--</colgroup>-->
+                        <!--<thead>-->
+                        <!--<tr>-->
+                            <!--<th>时间</th>-->
+                            <!--<th>在线率</th>-->
+                            <!--<th>废水排放量</th>-->
+                            <!--<th>废气排放量</th>-->
+                            <!--<th>电导率</th>-->
+                            <!--<th>关键设备运行时间</th>-->
+                            <!--<th>能耗</th>-->
+                        <!--</tr>-->
+                        <!--</thead>-->
+                        <!--<tbody id="report-result">-->
+                        <!--</tbody>-->
+                    <!--</table>-->
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
