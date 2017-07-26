@@ -90,9 +90,9 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                             '<td>' + item.createUser+ '</td>' +
                             '<td>' + item.createTime + '</td>' +
                             '<td>' + item.status + '</td>' +
-                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });

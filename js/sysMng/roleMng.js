@@ -25,10 +25,10 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     layui.each(thisData, function(index, item){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.roleName + '</td>' +
-                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '<td style="text-align: center">' + item.roleName + '</td>' +
+                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });

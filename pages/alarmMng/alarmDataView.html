@@ -24,73 +24,47 @@
     <title>Title</title>
 </head>
 <body>
-    <!--&lt;!&ndash;面包屑&ndash;&gt;-->
-    <!--<div style="margin-left: 10px;margin-top: 10px" class="layui-elem-quote">-->
-    <!--<span class="layui-breadcrumb">-->
-    <!--<a href="#"  onclick="layui.alarmMng.loadPage('pages/alarmMng/alarmMng.html')">报警管理</a>-->
-    <!--<a><cite>报警详情</cite></a>-->
-    <!--</span>-->
-    <!--</div>-->
     <fieldset class="layui-elem-field">
         <legend>报警详情</legend>
-        <!--<div style="width: 100%;text-align: center">-->
-            <!--<div class="layui-form-item">-->
-                <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">企业名称：</label>-->
-                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="site" value="企业123ASD">-->
-                <!--</div>-->
-                <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">法人代表：</label>-->
-                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" value="李先生">-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-        <div    >
-                <!--<table style="margin-bottom: 20px;margin-left: 15px;width:50%">-->
-                <table class="layui-table layui-inline"  lay-skin="nob">
-                    <tbody>
-                    <tr>
-                        <td class="align-right">报警类型：</td>
-                        <td id="alarmType1">通讯中断报警</td>
-                    </tr>
-                    <tr>
-                        <td class="align-right">报警等级：</td>
-                        <td id="alarmLevel1">3级</td>
-                    </tr>
-                    <tr>
-                        <td class="align-right">报警时间：</td>
-                        <td id="alarmTime1" >2017-07-06 16:24:00</td>
-                        <!--<td class="align-right">企业名称：</td>-->
-                        <!--<td id="enterpriseName">重庆建设雅马哈摩托车有限公司</td>-->
-                    </tr>
-                    <tr>
-                        <td class="align-right">企业名称：</td>
-                        <td id="enterpriseName1">重庆建设雅马哈摩托车有限公司</td>
-                    </tr>
-                    <tr>
-                        <td class="align-right">行政区域：</td>
-                        <td >荣昌区</td>
-                    </tr>
-                    <tr>
-                        <td class="align-right ">报警事件描述：</td>
-                        <td id="remark1">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
-                    </tr>
-                    <tr>
-                        <td class="align-right">报警状态：</td>
-                        <td id="status1"></td>
-                    </tr>
-                    </tbody>
-                </table>
-            <!--<div class="layui-inline" style="width: 45%">-->
-                <!--<span class="layui-inline">报警时间图片：</span>-->
-                <!--<div class="layui-inline">暂无相关图片</div>-->
-            <!--</div>-->
+        <div>
+            <table class="layui-table layui-inline"  lay-skin="nob">
+                <tbody>
+                <tr>
+                    <td class="align-right">报警类型：</td>
+                    <td id="alarmType1">通讯中断报警</td>
+                </tr>
+                <tr>
+                    <td class="align-right">报警等级：</td>
+                    <td id="alarmLevel1">3级</td>
+                </tr>
+                <tr>
+                    <td class="align-right">报警时间：</td>
+                    <td id="alarmTime1" >2017-07-06 16:24:00</td>
+                </tr>
+                <tr>
+                    <td class="align-right">企业名称：</td>
+                    <td id="enterpriseName1">重庆建设雅马哈摩托车有限公司</td>
+                </tr>
+                <tr>
+                    <td class="align-right">行政区域：</td>
+                    <td >荣昌区</td>
+                </tr>
+                <tr>
+                    <td class="align-right ">报警事件描述：</td>
+                    <td id="remark1">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
+                </tr>
+                <tr>
+                    <td class="align-right">报警状态：</td>
+                    <td id="status1"></td>
+                </tr>
+                </tbody>
+            </table>
         </div>
         <div class="layui-footer" style="width: 100%;height:39px;left: 0;text-align: center">
-            <button class="layui-btn layui-btn-normal">
+            <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.dealAlarmWin()">
                 处理
             </button>
-            <button class="layui-btn layui-btn-normal">
+            <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.closeAlarmWin()">
                 关闭
             </button>
             <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.reportAlarmWin()">
@@ -101,7 +75,7 @@
     <fieldset class="layui-elem-field layui-field-title">
         <legend>报警轨迹</legend>
         <div class="layui-field-box">
-            <table class="layui-table" lay-even="" lay-skin="row">
+            <table class="layui-table" lay-even="" lay-skin="nob">
                 <colgroup>
                     <col width="60">
                     <col width="200">
@@ -124,11 +98,11 @@
         </div>
     </fieldset>
     <!--上报-->
-    <form id="report_Alarm" style="display: none;" class="layui-form" method="post" enctype ="multipart/form-data">
+    <form id="report_Alarm" style="display: none;padding: 10px 20px 10px 0" class="layui-form" method="post" enctype ="multipart/form-data">
         <div class="layui-form-item">
             <label class="layui-form-label">角色名称：</label>
             <div class="layui-input-block">
-                <select name="upload_user" lay-verify="" lay-search id="select_role" lay-filter="select_role">
+                <select name="upload_role" lay-verify="" lay-search id="select_role" lay-filter="select_role">
                     <option value="">选择角色</option>
                 </select>
             </div>
@@ -148,7 +122,20 @@
         <div class="layui-form-item">
             <label class="layui-form-label">描述：</label>
             <div class="layui-input-block">
-                <textarea name="desc" placeholder="请输入内容" class="layui-textarea"></textarea>
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" id="desc"></textarea>
+            </div>
+        </div>
+    </form>
+    <!--处理-->
+    <form id="deal_Alarm" style="display: none;padding: 10px 20px 10px 0" class="layui-form" method="post" enctype ="multipart/form-data">
+        <div class="layui-form-item">
+            <label class="layui-form-label">附件：</label>
+            <input name="file" lay-type="file" class="layui-upload-file" type="file">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">描述：</label>
+            <div class="layui-input-block">
+                <textarea name="desc" placeholder="请输入内容" class="layui-textarea" id="desc1"></textarea>
             </div>
         </div>
     </form>

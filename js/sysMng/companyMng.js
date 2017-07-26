@@ -46,9 +46,9 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });

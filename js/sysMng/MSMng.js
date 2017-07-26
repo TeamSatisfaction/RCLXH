@@ -18,20 +18,23 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
     var loadMSData = function (curr) {
         var site = $('#MSName').val(),
             data = {
-                site : site,
-                pageNo : curr||1,
+                name : site,
+                pageNum : curr||1,
                 pageSize : 16
             };
+        var field = JSON.stringify(data);
         $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/water/query',
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
+                'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
-            type : 'get',
-            data : data,
+            type : 'post',
+            data : field,
             success : function (result){
-                var msData = result.list,
-                    pages = result.pages,
+                console.log(result)
+                var msData = result.data.list,
+                    pages = result.data.pages,
                     str = "",
                     nums = 16; //每页出现的数据量
                 //模拟渲染
@@ -41,15 +44,15 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                     layui.each(thisData, function(index, item){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.site + '</td>' +
+                            '<td>' + item.name + '</td>' +
                             '<td>' + item.address + '</td>' +
-                            '<td>' + item.contacts + '</td>' +
-                            '<td>' + item.mobile+ '</td>' +
-                            '<td>' + item.latitude + '</td>' +
-                            '<td>' + item.longitude + '</td>' +
-                            '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '<td>' + item.head + '</td>' +
+                            '<td>' + item.headPhone+ '</td>' +
+                            '<td>' + item.lon + '</td>' +
+                            '<td>' + item.lat + '</td>' +
+                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });

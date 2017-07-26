@@ -11,6 +11,21 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
         // tTobody = $('#trail-result');
     var access_token = sessionStorage.getItem("access_token");
     var urlConfig = sessionStorage.getItem("urlConfig");
+    //当前时间
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var dealTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+        + " " + date.getHours() + seperator2 + date.getMinutes()
+        + seperator2 + date.getSeconds();
     //页面跳转
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
@@ -163,6 +178,7 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
     };
     //加载报警详情
     var loadAlarmDetails = function (id,body) {
+        sessionStorage.setItem("AlarmId", id);
         $.ajax({
             url : ''+urlConfig+'/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
@@ -235,16 +251,16 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
         layer.open({
             title : '上报报警',
             type : 1,
-            area : ['550px','400px'],
+            area : ['600px','400px'],
             content : content,
-            btn: ['提交', '关闭'],
+            btn: ['提交', '返回'],
             btnAlign: 'c',
             yes: function(index){
-                var alarmId = '4',
-                    userId = '1',
-                    dealTime = '2017-07-21 18:53:01',
-                    dealRemark = '1',
+                var alarmId = sessionStorage.getItem("AlarmId"),
+                    userId = $('#select_role').val(),
+                    dealRemark = $('#desc').val(),
                     attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                console.log(dealTime);
                 var data = {
                     alarmId : alarmId,
                     userId : userId,
@@ -263,33 +279,100 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
                     type : 'post',
                     success: function (result){
                         console.log(result);
+                        if(result.resultdesc == '成功'){
+                            layer.msg('提交成功！', {icon: 1});
+                            layer.close(index);
+                            parent.location.reload(); // 父页面刷新
+                        }
                     }
                 })
-                // $('#report_Alarm').on('submit', function(){
-                //     var formData = new FormData();
-                //     console.log(formData.get('attachment'));
-                //     $.ajax({
-                //         url: "http://192.168.1.127:8092/v01/htwl/lxh/alrm/report",
-                //         headers : {
-                //             'Content-type': 'application/json;charset=UTF-8',
-                //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                //         },
-                //         data : formData,
-                //         type : 'post',
-                //         dataType: "json",
-                //         contentType: false,
-                //         processData: false,
-                //         success: function (data){
-                //             console.log(data);
-                //         }
-                //     })
-                //     return false;
-                // }).submit();
-                // layer.msg('提交成功！', {icon: 1});
-                // layer.close(index);
             }
         });
         loadRoleData();
+    };
+    //关闭报警窗口
+    var  closeAlarmWin = function () {
+        var content = $('#deal_Alarm');
+        layer.open({
+            title : '关闭报警',
+            type : 1,
+            area : ['600px','300px'],
+            content : content,
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes: function(index){
+                var alarmId = sessionStorage.getItem("AlarmId"),
+                    dealRemark = $('#desc1').val(),
+                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                var data = {
+                    alarmId : alarmId,
+                    dealTime : dealTime,
+                    dealRemark : dealRemark,
+                    attachment : attachment,
+                    status  : '3'
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    data : field,
+                    type : 'post',
+                    success: function (result){
+                        console.log(result);
+                        if(result.resultdesc == '成功'){
+                            layer.msg('关闭成功！', {icon: 1});
+                            layer.close(index);
+                            parent.location.reload(); // 父页面刷新
+                        }
+                    }
+                })
+            }
+        });
+    };
+    //处理 报警窗口
+    var  dealAlarmWin = function () {
+        var content = $('#deal_Alarm');
+        layer.open({
+            title : '关闭报警',
+            type : 1,
+            area : ['600px','300px'],
+            content : content,
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes: function(index){
+                var alarmId = sessionStorage.getItem("AlarmId"),
+                    dealRemark = $('#desc1').val(),
+                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                var data = {
+                    alarmId : alarmId,
+                    dealTime : dealTime,
+                    dealRemark : dealRemark,
+                    attachment : attachment,
+                    status  : '2'
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    data : field,
+                    type : 'post',
+                    success: function (result){
+                        console.log(result);
+                        if(result.resultdesc == '成功'){
+                            layer.msg('处理成功！', {icon: 1});
+                            layer.close(index);
+                            parent.location.reload(); // 父页面刷新
+                        }
+                    }
+                })
+            }
+        });
     };
     //角色select
     var loadRoleData = function () {
@@ -331,45 +414,14 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
             }
         })
     });
-    //上报报警
-    var reportAlarm = function (id) {
-        $.ajax({
-            url : ''+urlConfig+'/v01/htwl/lxh/alrm/report',
-            headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type : 'post',
-            // data : {
-            //     alarmId : id s
-            // },
-            success : function (result){
-                console.log(result);
-            }
-        })
-    };
-    //处理报警
-    var dealAlarm = function (id,status) {
-        $.ajax({
-            url : ''+urlConfig+'/v01/htwl/lxh/alrm/deal',
-            headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type : 'post',
-            data : {
-                alarmId : id,
-                status : status
-            },
-            success : function (result){
-                console.log(result);
-            }
-        })
-    };
     var obj = {
         loadPage : loadPage,
         loadAlarmData : loadAlarmData,
         alarmDetailsWin : alarmDetailsWin,
         loadAlarmDetails : loadAlarmDetails,
-        reportAlarmWin : reportAlarmWin
+        reportAlarmWin : reportAlarmWin,
+        closeAlarmWin : closeAlarmWin,
+        dealAlarmWin : dealAlarmWin
     };
     exports('alarmMng',obj);
 })

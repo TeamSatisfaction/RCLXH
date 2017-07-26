@@ -16,8 +16,9 @@
         .config({
             base: '../../js/' //你的模块目录
         }).extend({ //设定模块别名
-            map : 'map/map'
-        }).use('map', function () {
+            map : 'map/map',
+            alarmMng : 'alarmMng/alarmMng'
+        }).use(['map','alarmMng'], function () {
             layui.map.loadCompanySelect();
             layui.map.loadMonthlydata();
         }).link('../../css/style.css'); //加载入口
@@ -26,7 +27,7 @@
 </head>
 <body style="height: 100%;">
     <div id="mapDiv"></div>
-    <button class="layui-btn-danger" style="position: absolute; top: 50px; right: 50px;" onclick="layui.map.btnClick();">增加模拟点位</button>
+    <!--<button class="layui-btn-danger" style="position: absolute; top: 50px; right: 50px;" onclick="layui.map.btnClick();">增加模拟点位</button>-->
 
     <!--数据统计区域-->
     <div class="mapStats">
@@ -91,19 +92,19 @@
                         <div class="mapStats_alarmNews">
                             <ul>
                                 <li>
-                                    <span>2017年7月6日14:00:00</span>
-                                    <span>华森制药厂1</span>
-                                    <span>污水车间污水排放口COD排放超标</span>
+                                    <span>2017-07-26 04:17:12</span>
+                                    <span>企业名称</span>
+                                    <span>规则名称</span>
                                 </li>
                                 <li>
-                                    <span>2017年7月6日14:00:00</span>
-                                    <span>华森制药厂2</span>
-                                    <span>污水车间污水排放口COD排放超标</span>
+                                    <span>2017-07-26 04:17:02</span>
+                                    <span>企业名称</span>
+                                    <span>规则名称</span>
                                 </li>
                                 <li>
-                                    <span>2017年7月6日14:00:00</span>
-                                    <span>华森制药厂3</span>
-                                    <span>污水车间污水排放口COD排放超标</span>
+                                    <span>2017-07-26 03:52:40</span>
+                                    <span>企业名称</span>
+                                    <span>规则名称</span>
                                 </li>
                             </ul>
                         </div>
@@ -133,32 +134,21 @@
                                 </tr>
                                 </thead>
                                 <tbody id="monthly_result">
-                                <!--<tr><td>六价铬</td><td>千克</td><td>300.21</td></tr>-->
-                                <!--<tr><td>化学需氧量</td><td>万吨</td><td>30.3</td></tr>-->
-                                <!--<tr><td>氨氮</td><td>万吨</td><td>6.13</td></tr>-->
-                                <!--<tr><td>总镍</td><td></td><td></td></tr>-->
-                                <!--<tr><td>PH</td><td></td><td></td></tr>-->
-                                <!--<tr><td>高锰酸盐</td><td></td><td></td></tr>-->
-                                <!--<tr><td>水温</td><td></td><td></td></tr>-->
                                 </tbody>
                             </table>
-
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
-
     </div>
-
-    <div class="notification">
-        <div>
+    <div class="notification" style="width: 300px;height: 100px;text-align: center">
+        <div style="margin-bottom: 15px">
             <span class="time">2017-07-22 04:38:35</span>
             <i class="layui-icon" onclick="layui.map.closeNotification()">&#x1006;</i>
         </div>
-        <div class="content" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
-            重庆市荣昌区江特表面处理厂<br/>后营门污水排放口 COD排放超标
+        <div class="content" onclick="layui.alarmMng.alarmDetailsWin('3')">
+            重庆市荣昌区江特表面处理厂<br/>后营门污水排放口 COD排放超标<br/>点击处理
         </div>
     </div>
 </body>
