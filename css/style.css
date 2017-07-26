@@ -73,7 +73,7 @@
 .esriPopup .contentPane p span{ font-weight: normal; }
 .esriPopup .contentPane p a{ color: red ; cursor: pointer }
 /*数据窗口*/
-.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: white; border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
+.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: rgba(0,0,0,0.4); border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
 .mapStats_close{ position: absolute; right: 10px; top: 10px; z-index: 200;}
 .mapStats_close i{ font-size: 20px;  cursor: pointer;}
 .mapStats_close.rotate{
@@ -89,12 +89,17 @@
 .mapStats_statsTitle{ font-size: 20px; font-weight: bold; text-align: center}
 .mapStats_statsStatus{ text-align: center}
 .mapStats_statsStatus span{ display: inline-block; margin: 10px;}
-.mapStats_statsCharts{ width: 100%; height: 280px; background-color: #92B8B1;}
-.mapStats_divider{ background-color: #f2f2f2; padding: 7px; margin: 7px 0; color: #666666}
+.mapStats_statsCharts{ width: 100%; height: 280px; }
+.mapStats_divider{ background-color: rgba(255,255,255,0.2); padding: 7px; margin: 7px 0; color: #eeeeee}
 .mapStats_divider:nth-child(1){ margin-top: 0;}
 .mapStats_alarmGeneral i{ display: inline-block; height: 36px; width: 36px; font-size: 30px; text-align: center}
 .mapStats_alarmGeneral span{ display: inline-block; white-space: normal; width: calc(100% - 40px) }
 .mapStats_alarmGeneral span a{ color: red; text-decoration: underline; cursor: pointer; margin: 0 5px;}
+.mapStats input{ background-color: transparent; }
+.mapStats input::-webkit-input-placeholder{ color: white}
+.mapStats input:-moz-placeholder{ color: white}
+.mapStats input::-moz-placeholder{color: white}
+.mapStats input:-ms-input-placeholder{color: white}
 
 .mapStats_alarmNews{ height: 75px; overflow: hidden; border: 1px solid #e2e2e2; box-sizing: border-box; padding: 0 7px; }
 .mapStats_alarmNews li{ line-height: 20px; text-align: left; cursor: pointer;}
