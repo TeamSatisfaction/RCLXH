@@ -68,7 +68,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     enabled: true,
                     alpha: 60,
                     beta: 0
-                }
+                },
+                backgroundColor: 'rgba(0,0,0,0)'
             },
             credits: {enabled: false},
             title: {text: '2017年6月地表水统计情况'},
@@ -113,20 +114,34 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         }
         var option = {
             chart: {
-                type: 'spline'
+                type: 'spline',
+                backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
                 text: '化学需氧量'
             },
             xAxis: {
                 categories : ["2017-05-12 15:47:03", "2017-05-12 15:47:13", "2017-05-12 15:47:23", "2017-05-12 15:47:33", "2017-05-12 15:47:43", "2017-05-12 15:47:53", "2017-05-12 15:48:03", "2017-05-12 15:48:13", "2017-05-12 15:48:23", "2017-05-12 15:48:33", "2017-05-12 15:48:44", "2017-05-12 15:48:59"]
+                ,labels : {
+                    style : {
+                        color: '#FFFFFF'
+                    }
+                }
             },
             tooltip: {
                 valueSuffix: 'mg/L'
             },
             yAxis: {
                 title: {
-                    text: 'mg/L'
+                    text: 'mg/L',
+                    style : {
+                        color: '#FFFFFF'
+                    }
+                },
+                labels : {
+                    style : {
+                        color: '#FFFFFF'
+                    }
                 },
                 plotLines: [{
                     value: 0,
