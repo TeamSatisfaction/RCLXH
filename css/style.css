@@ -43,7 +43,12 @@
 .side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
 .side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
 
-
+.side .layui-nav .layui-nav-itemed>a{ background-color: transparent !important;}
+.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}
+.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}
+.side .layui-nav .layui-nav-item .layui-nav-child dd a{ background-color:#e2e2e2;  }
+.side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:#00a5dd;  }
+.side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:#dddddd; color: #00a5dd; background-image: url("../img/index/choose.png");   }
 
 .side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}
 .fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
