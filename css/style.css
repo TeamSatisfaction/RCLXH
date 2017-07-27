@@ -4,28 +4,28 @@
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
-.side{background-image: url("../img/index/left.png")}
+/*.side{background-image: url("../img/index/left.png")}*/
 /*颜色*/
-.layui-bg-black, .layui-nav{ background-color: #544d4e}
+/*.layui-bg-black, .layui-nav{ background-color: #544d4e}*/
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/
 .layui-nav-bar { background-color: #00a5dd !important}
 /*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{  background-color: #1AA094}*/
-.side .layui-nav .layui-nav-item{background-image: url("../img/index/caidan-.png")}
-.layui-nav .layui-nav-item a { color: white }
-.layui-nav .layui-nav-item .layui-nav-more { border-color: white transparent transparent }
-.layui-nav .layui-nav-item dd a{ color: black }
+/*.side .layui-nav .layui-nav-item{background-image: url("../img/index/caidan-.png")}*/
+.header .layui-nav .layui-nav-item a { color: white }
+.header .layui-nav .layui-nav-item .layui-nav-more { border-color: white transparent transparent }
+.header .layui-nav .layui-nav-item dd a{ color: black }
 
 .layui-tab-brief>.layui-tab-title .layui-this{ color: #00a5dd  }
 .layui-tab-brief>.layui-tab-title .layui-this:after{ border-bottom: 3px solid #00a5dd  }
 
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
-.side .layui-nav .layui-nav-item a span{ color: #333333 }
-.side .layui-nav .layui-nav-item.layui-this a{ background-image: url("../img/index/choose.png"); background-color: transparent}
+/*.side .layui-nav .layui-nav-item a span{ color: #333333 }*/
+.side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: #00a5dd}
 .side .layui-nav .layui-nav-item.layui-this{ background-color: transparent}
-.side .layui-nav .layui-nav-item.layui-this a span{ color: #00bfff}
-.side .layui-nav .layui-nav-item a:hover{ background-image: url("../img/index/choose.png"); background-color: transparent; }
-.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #00bfff }
-.side .layui-nav  { background-color: transparent }
+/*.side .layui-nav .layui-nav-item.layui-this a span{ color: #00bfff}*/
+/*.side .layui-nav .layui-nav-item a:hover{ background-image: url("../img/index/choose.png"); background-color: transparent; }*/
+/*.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #00bfff }*/
+/*.side .layui-nav  { background-color: transparent }*/
 .side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px;  margin-right: 2px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
 .side .layui-nav .layui-nav-item:nth-child(1) a i{  background-image: url(../img/index/shouye_1.png);  }
@@ -43,14 +43,14 @@
 .side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
 .side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
 
-.side .layui-nav .layui-nav-itemed>a{ background-color: transparent !important;}
-.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}
-.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}
-.side .layui-nav .layui-nav-item .layui-nav-child dd a{ background-color:#e2e2e2;  }
-.side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:#00a5dd;  }
-.side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:#dddddd; color: #00a5dd; background-image: url("../img/index/choose.png");   }
+.side .layui-nav .layui-nav-itemed>a{ background-color: rgb(78,84,101) !important;}
+/*.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}*/
+/*.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}*/
+/*.side .layui-nav .layui-nav-item .layui-nav-child dd a{ background-color:#e2e2e2;  }*/
+.side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:white; background-color: rgb(78,84,101)  }
+.side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:#00a5dd; color: white; /*background-image: url("../img/index/choose.png"); */  }
 
-.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}
+/*.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}*/
 .fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
 .layui-nav-bar{ background-color: #1AA094 }
 .layui-layout-admin .layui-side{ margin-top: 5px}
