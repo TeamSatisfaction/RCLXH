@@ -2,7 +2,9 @@
  * Created by HNCG on 2017/7/3.
  */
 
-layui.define('layer', function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+layui.define(['layer','element'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
+    var $ = layui.jquery,
+        element = layui.element();
     /*方法*/
     var init = function () {
         /*标题栏时间*/
@@ -23,6 +25,12 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             }
         })
     };
+    //导航栏点击
+    element.on('nav(left_menu)', function(elem){
+        console.log(elem.text()); //得到当前点击的DOM对象
+        var company_tab = $('#company_tab');
+        console.log(company_tab);
+    });
 
     /*输出内容，注意顺序*/
     var obj = {

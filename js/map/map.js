@@ -118,13 +118,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
-                text: '化学需氧量'
+                text: '化学需氧量(mg/L)'
             },
             xAxis: {
-                categories : ["2017-05-12 15:47:03", "2017-05-12 15:47:13", "2017-05-12 15:47:23", "2017-05-12 15:47:33", "2017-05-12 15:47:43", "2017-05-12 15:47:53", "2017-05-12 15:48:03", "2017-05-12 15:48:13", "2017-05-12 15:48:23", "2017-05-12 15:48:33", "2017-05-12 15:48:44", "2017-05-12 15:48:59"]
+                categories : ["15:47:03", "15:47:13", "15:47:23", "15:47:33", "15:47:43", "15:47:53", "15:48:03", "15:48:13", "15:48:23", "15:48:33", "15:48:44", "15:48:59"]
                 ,labels : {
                     style : {
-                        color: '#FFFFFF'
+                        color: '#000000'
                     }
                 }
             },
@@ -133,20 +133,20 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             },
             yAxis: {
                 title: {
-                    text: 'mg/L',
+                    text: '',
                     style : {
-                        color: '#FFFFFF'
+                        color: '#000000'
                     }
                 },
                 labels : {
                     style : {
-                        color: '#FFFFFF'
+                        color: '#000000'
                     }
                 },
                 plotLines: [{
                     value: 0,
                     width: 1,
-                    color: '#808080'
+                    color: '#000000'
                 }]
             },
             legend: {
@@ -323,9 +323,18 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type : 'get',
             data : data,
             success : function (result){
+                if(result.resultdesc == "暂时没有mn企业"){
+                    result.e207I = 0;
+                    result.e202B = 0;
+                    result.e203F = 0;
+                    result.e208J = 0;
+                    result.e206C = 0;
+                    result.e211M = 0;
+                    result.e210L = 0;
+                }
                 console.log(result);
-                str = '<tr><td>六价铬</td><td>千克</td><td>'+result.e207I+'</td></tr>' +
-                    '<tr><td>COD</td><td>万吨</td><td>'+result.e202B+'</td></tr>' +
+                str = '<tr><td>六价铬</td><td></td><td>'+result.e207I+'</td></tr>' +
+                    '<tr><td>COD</td><td></td><td>'+result.e202B+'</td></tr>' +
                     '<tr><td>氨氮</td><td></td><td>'+result.e203F+'</td></tr>' +
                     '<tr><td>总镍</td><td></td><td>'+result.e208J+'</td></tr>' +
                     '<tr><td>PH</td><td></td><td>'+result.e206C+'</td></tr>' +

@@ -31,18 +31,19 @@
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
 <body style="height: 100%">
-    <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test" style="margin-top: 0">
-        <ul class="layui-tab-title">
-            <li class="layui-this" lay-id="企业管理" >企业管理</li>
-            <li lay-id="监测站管理">监测站管理</li>
-            <li lay-id="设备管理">设备管理</li>
-            <li lay-id="联网管理">联网管理</li>
-            <li lay-id="用户管理">用户管理</li>
-            <li lay-id="角色管理">角色管理</li>
-        </ul>
+    <div class="layui-layout-admin" lay-filter="test" style="margin-top: 0">
+        <!--<div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test" style="margin-top: 0">-->
+        <!--<ul class="layui-tab-title">-->
+            <!--<li class="layui-this" lay-id="企业管理" >企业管理</li>-->
+            <!--<li lay-id="监测站管理">监测站管理</li>-->
+            <!--<li lay-id="设备管理">设备管理</li>-->
+            <!--<li lay-id="联网管理">联网管理</li>-->
+            <!--<li lay-id="用户管理">用户管理</li>-->
+            <!--<li lay-id="角色管理">角色管理</li>-->
+        <!--</ul>-->
         <div class="layui-tab-content" style="left: 0;height:auto">
             <!--企业管理-->
-            <div class="layui-tab-item layui-show" >
+            <div class="layui-tab-item layui-show" id="company_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                         <div class="layui-form-item" style="margin: 5px 0;">
@@ -59,9 +60,9 @@
                         <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="float: right">
                             <i class="layui-icon"></i> 刷新
                         </button>
-                        <!--<button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.companyMng.addCompanyWin()">-->
-                            <!--<i class="layui-icon">&#xe608;</i>新增-->
-                        <!--</button>-->
+                        <button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.companyMng.addCompanyWin()">
+                            <i class="layui-icon">&#xe608;</i>新增
+                        </button>
                     </div>
                 </div>
                 <table class="layui-table" lay-even="" lay-skin="nob    " style="margin-top: 0">
@@ -71,7 +72,7 @@
                         <col>
                         <col width="100">
                         <col width="120">
-                        <!--<col width="100">-->
+                        <col width="150">
                     </colgroup>
                     <thead>
                     <tr>
@@ -80,7 +81,7 @@
                         <th>企业地址</th>
                         <th>联系人</th>
                         <th>联系人电话</th>
-                        <!--<th>操作</th>-->
+                        <th>操作</th>
                     </tr>
                     </thead>
                     <tbody id="company-result">
@@ -89,7 +90,7 @@
                 <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--监测站管理-->
-            <div class="layui-tab-item" >
+            <div class="layui-tab-item" id="ms_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                         <div class="layui-form-item" style="margin: 5px 0;">
@@ -140,7 +141,7 @@
                 <div id="demo2" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--设备管理-->
-            <div class="layui-tab-item">
+            <div class="layui-tab-item" id="eq_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                         <div class="layui-form-item" style="margin: 5px 0;">
@@ -195,7 +196,7 @@
                 <div id="demo3" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--联网管理-->
-            <div class="layui-tab-item">
+            <div class="layui-tab-item" id="mn_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <!--<div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">-->
                         <!--<div class="layui-form-item" style="margin: 5px 0;">-->
@@ -242,7 +243,7 @@
                 </div>
             </div>
             <!--用户管理-->
-            <div class="layui-tab-item">
+            <div class="layui-tab-item" id="user_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                         <div class="layui-form-item" style="margin: 5px 0;">
@@ -293,7 +294,7 @@
                 <div id="demo4" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
             </div>
             <!--角色管理-->
-            <div class="layui-tab-item">
+            <div class="layui-tab-item" id="role_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                     <!--<div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">-->
                         <!--<div class="layui-form-item" style="margin: 5px 0;">-->

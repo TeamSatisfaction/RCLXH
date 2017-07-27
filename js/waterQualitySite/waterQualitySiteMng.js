@@ -149,6 +149,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
                 };
                 msTobody.html(render(msData, obj.curr));
                 loadDau(msData[0].baseEnterpriseId,cn,msData[0].name);
+                loadChartsData(cn,msData[0].name);
             }
         })
     };

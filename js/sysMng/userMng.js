@@ -59,7 +59,8 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                 pageNumber : curr||1,
                 pageSize : 16,
                 epMap : {
-                    realName : name
+                    realName : name,
+                    epId : '2c9180875bd26a21015bd75bbcc80040'
                 }
             };
         var field = JSON.stringify(data);

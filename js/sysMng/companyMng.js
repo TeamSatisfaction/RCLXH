@@ -18,7 +18,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                 name : name,
                 pageNum : curr||1,
                 pageSize : 16
-               // areaCode : '500153'
+                // enterpriseRole : 'production_enterprise',
+                // areaCode : '500000-500153'
             };
         var field = JSON.stringify(data);
         $.ajax({
@@ -46,9 +47,9 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">详情</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')">规则</button></a>' +
+                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -155,10 +156,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                 layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
             }
-            // ,zIndex: layer.zIndex //重点1
-            // ,success: function(layero){
-            //     layer.setTop(layero); //重点2
-            // }
         });
         layer.full(index);
     };
@@ -200,6 +197,96 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             ,btn: ['关闭'] //只是为了演示
         })
     };
+    //企业详情
+    var detailCompanyWin = function () {
+        var index = layer.open({
+            title : '企业详情',
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/sysMng/companyDataView.html',
+            btn: [ '返回'],
+            btnAlign: 'c'
+        });
+        layer.full(index);
+    };
+    //企业规则列表
+    var alarmRuleList = function (id) {
+        var index = layer.open({
+            title : '报警规则',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/sysMng/alarmRuleList.html',
+            btn: [ '返回'],
+            btnAlign: 'c',
+            success : function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                loadAlarmRuleDetails(id,body,'1');
+            }
+        });
+        layer.full(index);
+    };
+    //加载企业列表
+    var loadAlarmRuleDetails = function (id,body,curr) {
+        var ruleTobody = body.contents().find("#rule-result");
+        var data = {
+            refId : id,
+            pageNo : curr||1,
+            pageSize : 16
+        };
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/rule/query',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data,
+            success : function (result){
+                console.log(result);
+                var list = result.list,
+                    str = "",
+                    nums = 16; //每页出现的数据量
+                var render = function(list, curr){
+                    var arr = []
+                        , thisData = list.concat().splice(curr * nums - nums, nums);
+                    layui.each(thisData, function(index, item) {
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>' + item.ruleName + '</td>' +
+                            '<td>' + item.sensorEquipmentName + '</td>' +
+                            '<td>' + item.equipmentName + '</td>' +
+                            '<td>' + item.sensorName+ '</td>' +
+                            '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">详情</button></td>' +
+                            '</tr>';
+                        arr.push(str);
+                    })
+                    return arr.join('');
+                }
+                ruleTobody.html(render(list, obj.curr));
+            }
+        })
+    };
+    //新增规则
+    var addAlarmRuleWin = function () {
+        var rule_form =  $('#rule_form');
+        layer.open({
+            title : '新增报警规则',
+            type : 1,
+            moveOut: true,
+            area : ['1000px','650px'],
+            content : rule_form,
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            success : function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                loadAlarmRuleDetails(id,body,'1');
+            }
+        });
+    }
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
@@ -209,7 +296,11 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         addCompanyWin : addCompanyWin,
         addPk : addPk,
         lookPk : lookPk,
-        clgyImgSelect : clgyImgSelect
+        clgyImgSelect : clgyImgSelect,
+        detailCompanyWin : detailCompanyWin,
+        alarmRuleList : alarmRuleList,
+        loadAlarmRuleDetails : loadAlarmRuleDetails,
+        addAlarmRuleWin : addAlarmRuleWin
     };
     exports('companyMng',obj)
 })

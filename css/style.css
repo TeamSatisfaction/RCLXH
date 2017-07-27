@@ -73,7 +73,7 @@
 .esriPopup .contentPane p span{ font-weight: normal; }
 .esriPopup .contentPane p a{ color: red ; cursor: pointer }
 /*数据窗口*/
-.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: rgba(0,0,0,0.4); border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
+.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: rgba(0,0,0,0.1); border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
 .mapStats_close{ position: absolute; right: 10px; top: 10px; z-index: 200;}
 .mapStats_close i{ font-size: 20px;  cursor: pointer;}
 .mapStats_close.rotate{
@@ -169,6 +169,11 @@ tr .align-right{width:120px;text-align: right}
 #addEquipment .photo-area .thumbs{ padding-left: 100px; text-align: left}
 #addEquipment .photo-area .thumbs input{ left:0;}
 
+/*新增规则*/
+/*#rule_form .layui-form-label{ width: 100px; text-align: right}*/
+/*#rule_form .layui-inline input,#rule_form .layui-inline select{ width: 400px;}{ width: 400px;}*/
+/*#rule_form .photo-area .thumbs{ padding-left: 100px; text-align: left}*/
+/*#rule_form .photo-area .thumbs input{ left:0;}*/
 /*登陆页面*/
 #login_bg{ position: fixed; top: 0; bottom: 0; right: 0; left: 0; background-color: #61baf3
 }
