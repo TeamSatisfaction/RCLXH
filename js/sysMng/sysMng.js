@@ -22,13 +22,14 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
     var getTab = function () {
         var tabIndex = layui.utils.getArg("token");
         element.tabChange('sysmng', tabIndex.toString());
+        $('#index_frame', parent.document).show();
         switch (tabIndex){
-            case 0:layui.companyMng.loadCompanyData();break;
-            case 1:layui.MSMng.loadMSData();break;
-            case 2:layui.equipmentMng.loadEquipmentData();break;
-            case 3:layui.networkMng.loadNetWorkData();break;
-            case 4:layui.userMng.loadUserData();break;
-            case 5:layui.roleMng.loadRoleData();break;
+            case '0':layui.companyMng.loadCompanyData();break;
+            case '1':layui.MSMng.loadMSData();break;
+            case '2':layui.equipmentMng.loadEquipmentData();break;
+            case '3':layui.networkMng.loadNetWorkData();break;
+            case '4':layui.userMng.loadUserData();break;
+            case '5':layui.roleMng.loadRoleData();break;
         }
     };
 

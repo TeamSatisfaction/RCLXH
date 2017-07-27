@@ -16,7 +16,9 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     };
     
     var loadPage = function (url) {
-        var $ = layui.jquery;
+        if(url.indexOf('sysMngView')!=-1){
+            $("#index_frame").hide()
+        }
         $("#index_frame").attr("src", url);
         //左侧目录
         // $(".side").find("li").each(function () {
