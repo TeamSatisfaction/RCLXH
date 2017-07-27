@@ -12,6 +12,7 @@
         layui.config({
             base: '../../js/' //你的模块目录
         }).extend({
+            utils : 'utils',
             sysMng : 'sysMng/sysMng',
             MSMng  : 'sysMng/MSMng',
             companyMng : 'sysMng/companyMng',
@@ -19,28 +20,23 @@
             equipmentMng : 'sysMng/equipmentMng',
             roleMng : 'sysMng/roleMng',
             networkMng : 'sysMng/networkMng'
-        }).use(['sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
-            layui.companyMng.loadCompanyData();
-            layui.MSMng.loadMSData();
-            layui.equipmentMng.loadEquipmentData();
-            layui.userMng.loadUserData();
-            layui.roleMng.loadRoleData();
-            layui.networkMng.loadNetWorkData();
+        }).use(['utils', 'sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
+            layui.sysMng.getTab();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
 </head>
 <body style="height: 100%">
-    <div class="layui-layout-admin" lay-filter="test" style="margin-top: 0">
-        <!--<div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test" style="margin-top: 0">-->
-        <!--<ul class="layui-tab-title">-->
-            <!--<li class="layui-this" lay-id="企业管理" >企业管理</li>-->
-            <!--<li lay-id="监测站管理">监测站管理</li>-->
-            <!--<li lay-id="设备管理">设备管理</li>-->
-            <!--<li lay-id="联网管理">联网管理</li>-->
-            <!--<li lay-id="用户管理">用户管理</li>-->
-            <!--<li lay-id="角色管理">角色管理</li>-->
-        <!--</ul>-->
+    <div class="layui-layout-admin" style="margin-top: 0">
+        <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="sysmng" style="margin-top: 0">
+        <ul class="layui-tab-title" style="display: none;">
+            <li class="layui-this" lay-id="0" >企业管理</li>
+            <li lay-id="1">监测站管理</li>
+            <li lay-id="2">设备管理</li>
+            <li lay-id="3">联网管理</li>
+            <li lay-id="4">用户管理</li>
+            <li lay-id="5">角色管理</li>
+        </ul>
         <div class="layui-tab-content" style="left: 0;height:auto">
             <!--企业管理-->
             <div class="layui-tab-item layui-show" id="company_tab">

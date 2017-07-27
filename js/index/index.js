@@ -19,18 +19,18 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         var $ = layui.jquery;
         $("#index_frame").attr("src", url);
         //左侧目录
-        $(".side").find("li").each(function () {
-            if($(this).find("a").attr("onclick").indexOf(url.substring(url.lastIndexOf('/'), url.length)) != -1){
-                $(this).addClass("layui-this").siblings().removeClass("layui-this")
-            }
-        })
+        // $(".side").find("li").each(function () {
+        //     if($(this).find("a").attr("onclick").indexOf(url.substring(url.lastIndexOf('/'), url.length)) != -1){
+        //         $(this).addClass("layui-this").siblings().removeClass("layui-this");
+        //     }
+        // })
     };
     //导航栏点击
-    element.on('nav(left_menu)', function(elem){
-        console.log(elem.text()); //得到当前点击的DOM对象
-        var company_tab = $('#company_tab');
-        console.log(company_tab);
-    });
+    // element.on('nav(left_menu)', function(elem){
+    //     console.log(elem.text()); //得到当前点击的DOM对象
+    //     var company_tab = $('#company_tab');
+    //     console.log(company_tab);
+    // });
 
     /*输出内容，注意顺序*/
     var obj = {

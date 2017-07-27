@@ -13,13 +13,29 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
         $(parent).find("#index_frame").attr("src", url);
     };
     //Hash地址的定位
-    var layid = location.hash.replace(/^#test=/, '');
-    element.tabChange('test', layid);
-    element.on('tab(test)', function(elem){
-        location.hash = 'test='+ $(this).attr('lay-id');
-    });
+    // var layid = location.hash.replace(/^#test=/, '');
+    // element.tabChange('test', layid);
+    // element.on('tab(test)', function(elem){
+    //     location.hash = 'test='+ $(this).attr('lay-id');
+    // });
+
+    var getTab = function () {
+        var tabIndex = layui.utils.getArg("token");
+        element.tabChange('sysmng', tabIndex.toString());
+        switch (tabIndex){
+            case 0:layui.companyMng.loadCompanyData();break;
+            case 1:layui.MSMng.loadMSData();break;
+            case 2:layui.equipmentMng.loadEquipmentData();break;
+            case 3:layui.networkMng.loadNetWorkData();break;
+            case 4:layui.userMng.loadUserData();break;
+            case 5:layui.roleMng.loadRoleData();break;
+        }
+    };
+
+
     var obj = {
-        loadPage : loadPage
+        loadPage : loadPage,
+        getTab: getTab
     };
     /*输出内容，注意顺序*/
     exports('sysMng',obj)
