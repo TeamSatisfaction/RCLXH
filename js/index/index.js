@@ -5,6 +5,21 @@
 layui.define(['layer','element'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var $ = layui.jquery,
         element = layui.element();
+
+    function hideSidebar() {
+        $(".side").find("li").find("a").find("span").hide();
+        $(".side").find("li").find("a").find(".layui-nav-more").show();
+        $(".side").animate({width : "70"}, 800 );
+        $(".side").find(".layui-nav").animate({width : "70"}, 800 );
+        $(".layui-body").animate({width : $(".layui-body")+130, marginLeft: -130}, 800 );
+    }
+    function showSidebar() {
+        $(".side").find("li").find("a").find("span").show();
+        $(".side").animate({width : "200"}, 800 );
+        $(".side").find(".layui-nav").animate({width : "200"}, 800 );
+        $(".layui-body").animate({width : $(".layui-body")-130, marginLeft: 0}, 800 );
+    }
+
     /*方法*/
     var init = function () {
         /*标题栏时间*/
@@ -12,7 +27,12 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             'document.getElementById("time").innerHTML = layui.utils.dateFormat("yy年MM月dd日 HH:mm:ss EEE");',
             100);
         /*加载首页*/
-        loadPage('pages/map/map.html')
+        loadPage('pages/map/map.html');
+
+        $(".side-hider").click(function () {
+            $(this).toggleClass("off");
+            $(this).hasClass("off")?hideSidebar():showSidebar();
+        })
     };
     
     var loadPage = function (url) {
@@ -27,6 +47,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         //     }
         // })
     };
+
     //导航栏点击
     // element.on('nav(left_menu)', function(elem){
     //     console.log(elem.text()); //得到当前点击的DOM对象

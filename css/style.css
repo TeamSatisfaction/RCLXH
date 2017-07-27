@@ -43,6 +43,9 @@
 .side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
 .side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
 
+.side-hider { height: 45px; text-align: center}
+.side-hider i{ line-height: 45px; font-size: 30px; color: white}
+
 .side .layui-nav .layui-nav-itemed>a{ background-color: rgb(78,84,101) !important;}
 /*.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}*/
 /*.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}*/
