@@ -178,9 +178,11 @@ tr .align-right{width:120px;text-align: right}
 /*#rule_form .photo-area .thumbs{ padding-left: 100px; text-align: left}*/
 /*#rule_form .photo-area .thumbs input{ left:0;}*/
 /*登陆页面*/
-#login_bg{ position: fixed; top: 0; bottom: 0; right: 0; left: 0; background-color: #61baf3
+#login_bg{ position: fixed; top: 0; bottom: 0; right: 0; left: 0;
+    /*background-color: #61baf3*/
+    background-image: url('../img/login-bg.jpg'); background-repeat: no-repeat; background-size: cover;
 }
-#login_container{ background-color: rgba(255,255,255,0); text-align: center; display: none; padding: 16px;}
+#login_container{ background-color: rgba(0,0,0,0.3); text-align: center; display: none; padding: 16px;}
 #login_container h1{ line-height: 2em; font-size: 24px; padding: 0 20px; font-weight: bold; color: white; text-shadow: #5d5f62 0px 0px 2px; letter-spacing: 3px; }
 #login_container h1:nth-child(2){ letter-spacing: 16px; }
 #login_container .layui-form{ padding: 16px; }
@@ -193,4 +195,4 @@ tr .align-right{width:120px;text-align: right}
 #login_container .layui-form .layui-input::-moz-placeholder { /* Mozilla Firefox 19+ */  color:#eee;  }
 #login_container .layui-form .layui-input:-ms-input-placeholder { /* Internet Explorer 10+ */  color:#eee;  }
 
-#verify_image{ width: 20px; height: 20px; background-color: white }
+#verify_image{ width: 170px; height: 36px; }
