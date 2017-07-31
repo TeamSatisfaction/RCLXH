@@ -9,15 +9,15 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     function hideSidebar() {
         $(".side").find("li").find("a").find("span").hide();
         $(".side").find("li").find("a").find(".layui-nav-more").show();
-        $(".side").animate({width : "70"}, 800 );
-        $(".side").find(".layui-nav").animate({width : "70"}, 800 );
-        $(".layui-body").animate({width : $(".layui-body")+130, marginLeft: -130}, 800 );
+        $(".side").animate({width : "70"}, 200 );
+        $(".side").find(".layui-nav").animate({width : "70"}, 200 );
+        $(".layui-body").animate({width : $(".layui-body")+130, marginLeft: -130}, 200 );
     }
     function showSidebar() {
         $(".side").find("li").find("a").find("span").show();
-        $(".side").animate({width : "200"}, 800 );
-        $(".side").find(".layui-nav").animate({width : "200"}, 800 );
-        $(".layui-body").animate({width : $(".layui-body")-130, marginLeft: 0}, 800 );
+        $(".side").animate({width : "200"}, 200 );
+        $(".side").find(".layui-nav").animate({width : "200"}, 200 );
+        $(".layui-body").animate({width : $(".layui-body")-130, marginLeft: 0}, 200 );
     }
 
     /*方法*/

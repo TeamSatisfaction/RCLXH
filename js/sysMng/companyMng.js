@@ -49,7 +49,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                             '<td>' + item.headPhone + '</td>' +
                             '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">详情</button></a>'+
                             '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')">规则</button></a>' +
-                            '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -212,6 +212,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     };
     //企业规则列表
     var alarmRuleList = function (id) {
+        sessionStorage.setItem("company_id", id);
         var index = layer.open({
             title : '报警规则',
             id : id,
@@ -229,7 +230,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
         });
         layer.full(index);
     };
-    //加载企业列表
+    //加载报警规则列表
     var loadAlarmRuleDetails = function (id,body,curr) {
         var ruleTobody = body.contents().find("#rule-result");
         var data = {
@@ -271,19 +272,20 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     };
     //新增规则
     var addAlarmRuleWin = function () {
+        var id = sessionStorage.getItem("company_id");
         var rule_form =  $('#rule_form');
+        console.log(id);
         layer.open({
             title : '新增报警规则',
             type : 1,
+            id : id,
             moveOut: true,
             area : ['1000px','650px'],
             content : rule_form,
             btn: [ '提交','返回'],
             btnAlign: 'c',
             success : function (layero, index) {
-                var body = layer.getChildFrame('body', index);
-                var id = $('.layui-layer-content').attr('id');
-                loadAlarmRuleDetails(id,body,'1');
+
             }
         });
     }

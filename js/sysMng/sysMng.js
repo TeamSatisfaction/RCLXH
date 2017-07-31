@@ -20,6 +20,7 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
     // });
 
     var getTab = function () {
+        // layui.companyMng.loadCompanyData();
         var tabIndex = layui.utils.getArg("token");
         element.tabChange('sysmng', tabIndex.toString());
         $('#index_frame', parent.document).show();
@@ -32,8 +33,6 @@ layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (expor
             case '5':layui.roleMng.loadRoleData();break;
         }
     };
-
-
     var obj = {
         loadPage : loadPage,
         getTab: getTab
