@@ -97,9 +97,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
             data : field,
             success : function (result){
                 if(result.resultdesc == '成功'){
-                    //closeAddWin();
                     layer.msg('提交成功！', {icon: 1});
-                    //$(parent).find("#index_frame").location.reload();
                     parent.location.reload(); // 父页面刷新
                     closeAddWin();
                 }else {

@@ -164,12 +164,11 @@ layui.define(['layer','laydate','element','layedit','laypage','upload','form'], 
             title : '报警详情',
             type : 2,
             id : e,
-            // area : ['550px','400px'],
             content : '../../pages/alarmMng/alarmDataView.html',
             btn: ['返回'],
             btnAlign: 'c',
-            success : function (layero, index) {
-                var body = layer.getChildFrame('body', index);
+            success : function (index, layero) {
+                var body = layer.getChildFrame('body', layero);
                 var id = $('.layui-layer-content').attr('id');
                 loadAlarmDetails(id,body);
             }

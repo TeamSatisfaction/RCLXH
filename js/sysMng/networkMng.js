@@ -34,8 +34,8 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
             data : field,
             type: 'post',
             success: function (result) {
-                console.log(result);
-                var rows = result.data.rows;
+                var rows = result.data.rows,
+                    pages = result.data.totalPage;
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var str = "";
@@ -56,15 +56,92 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                     return arr.join('');
                 };
                 scyTobody.html(render(rows, obj.curr));
+                //调用分页
+                laypage({
+                    cont: 'demo6',
+                    skin: '#00a5dd',
+                    pages : pages,
+                    curr: curr || 1, //当前页,
+                    skip: true,
+                    jump: function(obj,first){
+                        if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
+                            loadNetWorkData(obj.curr);
+                        }
+                    }
+                })
             }
         })
-    }
+    };
     var addNetworkWin = function () {
-        layer.open({
+        var index = layer.open({
             title : '新增联网信息',
             type : 2,
             area : ['800px','500px'],
-            content : '../../pages/sysMng/addNetworkView.html'
+            content : '../../pages/sysMng/addNetworkView.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            success: function(layero, index){
+
+            },
+            yes  : function (index,layero) {
+                console.log(layero);
+                layero.find("iframe").contents().find('#netWork-save').click();
+            }
+        });
+        layer.full(index);
+    };
+    form.on('submit(netWork_save)', function(data){
+        var field = JSON.stringify(data.field);
+        console.log(field);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            dataType : 'json',
+            type : 'post',
+            data : field,
+            success : function (result){
+                console.log(result);
+                if(result.code == '1000'){
+                    layer.msg('提交成功！', {icon: 1});
+                    parent.location.reload(); // 父页面刷新
+                    closeAddWin();
+                }else {
+                    layer.msg('提交失败！', {icon: 2});
+                }
+            }
+        });
+        return false;
+    });
+    //加载企业select
+    function loadCompanySelect() {
+        var data = {
+            pageNum : 1,
+            pageSize : 1000
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result) {
+                var list = result.data.list;
+                if(list == null){
+                    $("#c_select1").empty();
+                    $("#c_select1").append("<option value='' selected='selected'>无企业</option>");
+                }else {
+                    for(var i in list){
+                        $("#c_select1").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                    }
+                }
+                form.render('select');
+            }
         })
     };
     //关闭窗口
@@ -77,7 +154,8 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
         loadPage : loadPage,
         loadNetWorkData : loadNetWorkData,
         addNetworkWin : addNetworkWin,
-        closeAddWin : closeAddWin
+        closeAddWin : closeAddWin,
+        loadCompanySelect : loadCompanySelect
     };
     /*输出内容，注意顺序*/
     exports('networkMng',obj)

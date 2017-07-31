@@ -46,7 +46,7 @@
 .side-hider { height: 45px; text-align: center}
 .side-hider i{ line-height: 45px; font-size: 30px; color: white}
 
-.side .layui-nav .layui-nav-itemed>a{ background-color: rgb(78,84,101) !important;}
+.side .layui-nav .layui-nav-itemed>a{ background-color: #00a5dd !important;}
 /*.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}*/
 /*.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}*/
 /*.side .layui-nav .layui-nav-item .layui-nav-child dd a{ background-color:#e2e2e2;  }*/

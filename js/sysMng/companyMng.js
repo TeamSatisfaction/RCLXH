@@ -5,6 +5,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
+        form = layui.form(),
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
     var loadPage = function(url){
@@ -246,7 +247,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             type : 'get',
             data : data,
             success : function (result){
-                console.log(result);
                 var list = result.list,
                     str = "",
                     nums = 16; //每页出现的数据量
@@ -274,7 +274,6 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
     var addAlarmRuleWin = function () {
         var id = sessionStorage.getItem("company_id");
         var rule_form =  $('#rule_form');
-        console.log(id);
         layer.open({
             title : '新增报警规则',
             type : 1,
@@ -284,11 +283,135 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             content : rule_form,
             btn: [ '提交','返回'],
             btnAlign: 'c',
-            success : function (layero, index) {
-
+            success: function(index, layero){
+                loadDau(id);
+                form.render();
+                form.verify({
+                    threshold : function (value) {
+                        if(!new RegExp("^(([1-9])|(1\d)|(2[0-4]))$").test(value)){
+                            return '只能输入1~24的整数';
+                        }
+                    }
+                })
+                form.on('submit(save)', function(data){
+                    var field = JSON.stringify(data.field);
+                });
+            },
+            yes  : function (index,layero) {
+                layero.find('.icon-save').click();
             }
         });
-    }
+    };
+    //根据企业查询数采仪
+    var loadDau = function (id) {
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            dauMap : {
+                epId : id
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                if(row == null){
+                    $("#select_dauId1").empty();
+                    $("#select_dauId1").append("<option value='' selected='selected'>无采集仪</option>");
+                    $("#select_equipment1").empty();
+                    $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
+                    $("#select_factor1").empty();
+                    $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in row){
+                        $("#select_dauId1").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    };
+    // 根据数采仪查询设备
+    var loadEquipment = function (id) {
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            equipmentMap : {
+                dauId : id
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                if(row == null){
+                    $("#select_equipment1").empty();
+                    $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
+                    $("#select_factor").empty();
+                    $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in row){
+                        $("#select_equipment1").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    };
+    //根据设备查询因子
+    var loadFactor = function (id) {
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            factorMap : {
+                equipmentId : id
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                if(row == null){
+                    $("#select_factor1").empty();
+                    $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in row){
+                        $("#select_factor1").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+                    }
+                }
+                form.render('select');
+            }
+        })
+    };
+    //数采仪select change事件
+    form.on('select(select_dauId1)', function(data){
+        loadEquipment(data.value);
+    });
+    //设备select change事件
+    form.on('select(select_equipment1)', function(data){
+        loadFactor(data.value);
+    });
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,

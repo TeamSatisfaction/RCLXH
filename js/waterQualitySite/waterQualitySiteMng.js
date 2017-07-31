@@ -160,7 +160,7 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         loadDau(Eid,cn,name);
     };
     //根据企业查询数采仪
-        var loadDau = function (Eid,cn,name) {
+    var loadDau = function (Eid,cn,name) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -281,7 +281,6 @@ layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports)
         console.log("2");
         loadFactor(data.value);
     });
-
     var obj = {
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite

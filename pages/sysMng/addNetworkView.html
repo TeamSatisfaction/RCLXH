@@ -11,8 +11,10 @@
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
-            equipmentMng : 'networkMng'
-        }).use('networkMng')
+            networkMng : 'networkMng'
+        }).use('networkMng',function(){
+            layui.networkMng.loadCompanySelect();
+        })
             .link('../../css/style.css'); //加载入口
     </script>
 </head>
@@ -23,62 +25,53 @@
         <form class="layui-form" action="">
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">监控点名称：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <label class="layui-form-label">数采仪名称：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="aname" lay-verify="required">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">MN号：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
-                    <span class="required">*</span>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">排污口名称：</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option>排污口1</option>
-                            <option>排污口2</option>
-                            <option>排污口3</option>
-                            <option>排污口4</option>
-                        </select>
-                    </div>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="mn" lay-verify="required">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">IP：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="ip" lay-verify="required">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">密码：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="password" lay-verify="required">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">安装位置：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="address" lay-verify="required">
                     <span class="required">*</span>
                 </div>
             </div>
-
-            <div class="layui-footer" style="bottom: 0;width: 100%;height:39px;left: 0;text-align: center">
-                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="">
-                    <i class="layui-icon">&#xe605;</i>提交
-                </button>
-                <button class="layui-btn layui-btn-normal" onclick="layui.networkMng.closeAddWin()">
-                    <i class="layui-icon">&#x1006;</i>返回
-                </button>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">绑定企业名称：</label>
+                    <div class="layui-input-inline">
+                        <select name="epId" lay-verify="required" lay-search="" id="c_select1">
+                            <option value="">--请选择--</option>
+                        </select>
+                    </div>
+                    <span class="required">*</span>
+                </div>
             </div>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="netWork_save" style="display: none" id="netWork-save">
+                <i class="layui-icon">&#xe605;</i>提交
+            </button>
         </form>
         <!--按钮-->
     </div>
