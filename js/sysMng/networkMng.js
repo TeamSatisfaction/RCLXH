@@ -46,10 +46,13 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.aname + '</td>' +
+                            '<td>' + item.ip + '</td>' +
                             '<td>' + item.mn + '</td>' +
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.epName + '</td>' +
-                            // '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">详情</button></td>' +
+                            '<td style="text-align: center">' +
+                            // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">配置</button></a>&nbsp;' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -80,11 +83,8 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
             content : '../../pages/sysMng/addNetworkView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',
-            success: function(layero, index){
-
-            },
             yes  : function (index,layero) {
-                console.log(layero);
+                // console.log(layero);
                 layero.find("iframe").contents().find('#netWork-save').click();
             }
         });

@@ -279,7 +279,7 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             type : 1,
             id : id,
             moveOut: true,
-            area : ['1000px','650px'],
+            area : ['1000px','700px'],
             content : rule_form,
             btn: [ '提交','返回'],
             btnAlign: 'c',
@@ -288,13 +288,38 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                 form.render();
                 form.verify({
                     threshold : function (value) {
-                        if(!new RegExp("^(([1-9])|(1\d)|(2[0-4]))$").test(value)){
+                        if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
                             return '只能输入1~24的整数';
                         }
                     }
                 })
                 form.on('submit(save)', function(data){
+                    console.log(data.field);
+                    data.field.id = id;
+                    console.log(data.field);
                     var field = JSON.stringify(data.field);
+                    console.log(field);
+                    $.ajax({
+                        url :''+urlConfig+'/v01/htwl/lxh/alrm/rule/add',
+                        headers : {
+                            'Content-type': 'application/json;charset=UTF-8',
+                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        dataType : 'json',
+                        type : 'post',
+                        data : field,
+                        success : function (result){
+                            console.log(result);
+                            if(result.code == '2'){
+                                layer.msg('提交成功！', {icon: 1});
+                                parent.location.reload(); // 父页面刷新
+                                closeAddWin();
+                            }else {
+                                layer.msg('提交失败！', {icon: 2});
+                            }
+                        }
+                    });
+                    return false;
                 });
             },
             yes  : function (index,layero) {
@@ -302,13 +327,19 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             }
         });
     };
+    //关闭窗口
+    var closeAddWin = function () {
+        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+        parent.layer.close(index); //再执行关闭
+    };
     //根据企业查询数采仪
     var loadDau = function (id) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             dauMap : {
-                epId : id
+                // epId : id
+                epId : '402880955cede873015cee1e28ae0089'
             }
         };
         var field = JSON.stringify(data);
@@ -322,8 +353,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             data: field,
             success: function (result){
                 var row = result.data.rows;
+                $("#select_dauId1").empty();
                 if(row == null){
-                    $("#select_dauId1").empty();
                     $("#select_dauId1").append("<option value='' selected='selected'>无采集仪</option>");
                     $("#select_equipment1").empty();
                     $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
@@ -331,7 +362,8 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
                     $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
                     for(var i in row){
-                        $("#select_dauId1").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
+                        $("#select_dauId1").append("<option value='' selected='selected'>--请选择--</option>");
+                        $("#select_dauId1").append("<option row-key="+row[i]+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
                 }
                 form.render('select');
@@ -358,14 +390,15 @@ layui.define(['layer', 'element','laypage','form','laydate','upload'],function (
             data: field,
             success: function (result){
                 var row = result.data.rows;
+                $("#select_equipment1").empty();
                 if(row == null){
-                    $("#select_equipment1").empty();
                     $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
                     $("#select_factor").empty();
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
                     for(var i in row){
-                        $("#select_equipment1").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                        $("#select_equipment1").append("<option value='' selected='selected'>--请选择--</option>");
+                        $("#select_equipment1").append("<option row-key="+row[i].classicType+" value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
                 }
                 form.render('select');

@@ -74,7 +74,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
 
     var addEquipmentWin = function () {
-        layer.open({
+        var index = layer.open({
             title : '新增设备',
             type : 2,
             moveOut: true,
@@ -86,11 +86,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
             }
-            // ,zIndex: layer.zIndex //重点1
-            // ,success: function(layero){
-            //     layer.setTop(layero); //重点2
-            // }
-        })
+        });
+        layer.full(index);
     };
     /*输出内容，注意顺序*/
     var obj = {

@@ -47,7 +47,7 @@
                             <div class="layui-input-inline">
                                 <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
                             </div>
-                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.companyMng.loadCompanyData();">
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;" onclick="layui.companyMng.loadCompanyData();">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
@@ -94,7 +94,7 @@
                             <div class="layui-input-inline">
                                 <input id="MSName" name="name" lay-verify="name" autocomplete="off" placeholder="请输入监测站名称" class="layui-input" type="text">
                             </div>
-                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.MSMng.loadMSData();">
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;" onclick="layui.MSMng.loadMSData();">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
@@ -145,7 +145,7 @@
                             <div class="layui-input-inline">
                                 <input name="equipmentName" id="equipmentName" autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
                             </div>
-                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.equipmentMng.loadEquipmentData();">
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;" onclick="layui.equipmentMng.loadEquipmentData();">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
@@ -154,7 +154,7 @@
                         <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="float: right">
                             <i class="layui-icon"></i> 刷新
                         </button>
-                        <!--<button class="layui-btn layui-btn-small" style="margin-left: 0">-->
+                        <!--<button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.equipmentMng.addEquipmentWin()">-->
                             <!--<i class="layui-icon">&#xe608;</i>新增-->
                         <!--</button>-->
                     </div>
@@ -194,42 +194,33 @@
             <!--联网管理-->
             <div class="layui-tab-item" id="mn_tab">
                 <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
-                    <!--<div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">-->
-                        <!--<div class="layui-form-item" style="margin: 5px 0;">-->
-                            <!--<label class="layui-form-label">放置位置：</label>-->
-                            <!--<div class="layui-input-inline">-->
-                                <!--<input id="epAddress" name="name"  autocomplete="off" placeholder="请输入放置位置" class="layui-input" type="text">-->
-                            <!--</div>-->
-                            <!--<button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick=" layui.networkMng.loadNetWorkData();">-->
-                                <!--<i class="layui-icon">&#xe615;</i>-->
-                            <!--</button>-->
-                        <!--</div>-->
-                    <!--</div>-->
                     <div class="layui-form-item" style="margin: 5px 0">
                         <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="float: right">
                             <i class="layui-icon"></i> 刷新
                         </button>
-                        <button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">
-                            <i class="layui-icon">&#xe608;</i>新增
-                        </button>
+                        <!--<button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">-->
+                            <!--<i class="layui-icon">&#xe608;</i>新增-->
+                        <!--</button>-->
                     </div>
                     <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                         <colgroup>
                             <col width="60">
                             <col>
+                            <col width="120">
                             <col width="100">
                             <col>
                             <col>
-                            <!--<col width="80">-->
+                            <col width="120">
                         </colgroup>
                         <thead>
                         <tr>
                             <th>序号</th>
                             <th>数采仪名称</th>
+                            <th>IP</th>
                             <th>MN号</th>
                             <th>安装位置</th>
                             <th>绑定企业</th>
-                            <!--<th style="text-align: center">操作</th>-->
+                            <th style="text-align: center">操作</th>
                         </tr>
                         </thead>
                         <tbody id="scy-result">
@@ -247,7 +238,7 @@
                             <div class="layui-input-inline">
                                 <input name="name" id="uName" lay-verify="name" autocomplete="off" placeholder="请输入用户姓名" class="layui-input" type="text">
                             </div>
-                            <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.userMng.loadUserData();;">
+                            <button class="layui-btn layui-btn-normal" style="position: absolute;" onclick="layui.userMng.loadUserData();;">
                                 <i class="layui-icon">&#xe615;</i>
                             </button>
                         </div>
