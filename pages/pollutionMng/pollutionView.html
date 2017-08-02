@@ -21,13 +21,14 @@
 <body>
     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
         <div style="margin: 10px">
+            <div class="mapStats_divider">污染源-列表</div>
             <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
                 <div class="layui-form-item" style="margin: 5px 0;">
                     <label class="layui-form-label">企业名称：</label>
                     <div class="layui-input-inline">
                         <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
                     </div>
-                    <button class="layui-btn layui-btn-normal" style="position: absolute;right: 10px" onclick="layui.pollutionMng.loadCompanyData()">
+                    <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.pollutionMng.loadCompanyData()">
                         <i class="layui-icon">&#xe615;</i>
                     </button>
                 </div>
