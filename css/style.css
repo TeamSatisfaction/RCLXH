@@ -1,26 +1,29 @@
 /*.header { border-bottom: 5px solid #404040 ; background-color: transparent; background-image: url("../img/index/background.png")}*/
-.header { border-bottom: 5px solid #4e5465 ; background-color: transparent;}
-.header>.logo { width: 120px; height: 100%;  background: url("../img/index/logo.png") center no-repeat; cursor: pointer }
-.header>.title { font-size: 30px; color: white; }
-.header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
+.header { border-bottom: 5px solid rgb(244,249,252) ; background-color: rgb(244,249,252) !important; }
+.header>.title { font-size: 30px; padding-left: 30px; line-height: 65px; color: #008cee; }
+.header>.time {  color: #008cee; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
-.side{background-color: rgb(104,159,242) !important}
+
+.logo { width: 200px; height: 65px;  background: url("../img/切图/logo.png") center no-repeat; cursor: pointer; border-bottom: 1px white solid; background-color: rgb(104,159,242) !important; }
 /*颜色*/
 /*.layui-bg-black, .layui-nav{ background-color: #544d4e}*/
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/
-.layui-nav-bar { background-color: #00a5dd !important}
+.layui-nav-bar { background-color: #008cee !important}
 /*.layui-nav-tree .layui-nav-child dd.layui-this, .layui-nav-tree .layui-this, .layui-nav-tree .layui-this>a, .layui-nav-tree .layui-this>a:hover{  background-color: #1AA094}*/
 /*.side .layui-nav .layui-nav-item{background-image: url("../img/index/caidan-.png")}*/
-.header .layui-nav .layui-nav-item a { color: white }
-.header .layui-nav .layui-nav-item .layui-nav-more { border-color: white transparent transparent }
+.header .layui-nav .layui-nav-item a { color: #008cee }
+.header .layui-nav .layui-nav-item .layui-nav-more { border-color: #008cee transparent transparent }
+.header .layui-nav .layui-nav-item .layui-nav-mored { transform: scale(1,-1); }
 .header .layui-nav .layui-nav-item dd a{ color: black }
 
 .layui-tab-brief>.layui-tab-title .layui-this{ color: #00a5dd  }
 .layui-tab-brief>.layui-tab-title .layui-this:after{ border-bottom: 3px solid #00a5dd  }
 
+.side{background-color: rgb(104,159,242) !important; }
 .side .layui-nav{ background-color: rgb(104,159,242) !important}
+/*.side .layui-nav-tree{ background-color: rgb(104,159,242) !important}*/
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
-.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important }
+.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important; overflow: hidden }
 .side .layui-nav .layui-nav-item a{ color: white }
 .side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: rgba(244,249,252, 1); color: #999}
 .side .layui-nav .layui-nav-item.layui-this{ background-color: rgba(244,249,252, 1);}
@@ -28,29 +31,29 @@
 .side .layui-nav .layui-nav-item a:hover{ background-color: rgba(255,255,255, 0.2); }
 .side .layui-nav .layui-nav-item.layui-this a:hover span{ color: white }
 .side .layui-nav  { background-color: transparent }
-.side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px;  margin:0 8px;
+.side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px!important;  margin:0 6px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
-.side .layui-nav .layui-nav-item:nth-child(1) a i{  background-image: url(../img/index/shouye_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(1).layui-this a i{  background-image: url(../img/index/shouye.png);  }
-.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/index/wuranyuan.png);  }
-.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/index/wuranyuan_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/index/baojing.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/index/baojing_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/index/wurenji-.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/index/wurenji_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/index/jiancezhan.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/index/jiancezhan_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/index/tongji.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/index/tongji_1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/切图/首页1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/切图/首页.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/切图/污染，核能1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/切图/污染，核能.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/切图/报警1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/切图/报警.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/切图/设备监测1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/切图/设备监测.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/切图/系统管理1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/系统管理.png);  }
+/*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/切图/tongji.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/切图/tongji_1.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/切图/guanli-.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/切图/guanli_1.png);  }*/
 
 .side-hider { height: 45px; text-align: center; background-color:  rgb(104,159,242) !important}
 .side-hider i{ line-height: 45px; font-size: 30px; color: white}
 
 .side .layui-nav .layui-nav-itemed>a{ background-color: rgb(104,159,242) !important;}
 .side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #fff transparent transparent}
-.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #fff transparent transparent}
+.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #fff transparent transparent; right: 4px;}
 .side .layui-nav .layui-nav-item .layui-nav-child dd { background-color: rgb(104,159,242);  }
 .side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:white; background-color: rgba(244,249,252, 0.2) }
 .side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:rgba(244,249,252, 1); color: #999999; /*background-image: url("../img/index/choose.png"); */  }
@@ -62,7 +65,7 @@
 .layui-body{ top: 65px !important;   bottom: 0 !important;
     margin: 0px;  overflow-x: hidden;  overflow-y: auto;  z-index: 150;  border: none !important;   padding-bottom: 0px;}
 
-#index_frame{  width: 100%; height: 99.5%; border:none; }
+#index_frame{  width: calc(100% ); height: calc(100% - 5px); border: none;}
 
 .required{ color: red;  font-size: 300%;}
 
