@@ -4,7 +4,7 @@
 .header>.title { font-size: 30px; color: white; }
 .header>.time {  color: white; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
-/*.side{background-image: url("../img/index/left.png")}*/
+.side{background-color: rgb(104,159,242) !important}
 /*颜色*/
 /*.layui-bg-black, .layui-nav{ background-color: #544d4e}*/
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/
@@ -18,14 +18,16 @@
 .layui-tab-brief>.layui-tab-title .layui-this{ color: #00a5dd  }
 .layui-tab-brief>.layui-tab-title .layui-this:after{ border-bottom: 3px solid #00a5dd  }
 
+.side .layui-nav{ background-color: rgb(104,159,242) !important}
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
-/*.side .layui-nav .layui-nav-item a span{ color: #333333 }*/
-.side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: #00a5dd}
-.side .layui-nav .layui-nav-item.layui-this{ background-color: transparent}
-/*.side .layui-nav .layui-nav-item.layui-this a span{ color: #00bfff}*/
-/*.side .layui-nav .layui-nav-item a:hover{ background-image: url("../img/index/choose.png"); background-color: transparent; }*/
-/*.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: #00bfff }*/
-/*.side .layui-nav  { background-color: transparent }*/
+.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important }
+.side .layui-nav .layui-nav-item a{ color: white }
+.side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: rgba(244,249,252, 1); color: #999}
+.side .layui-nav .layui-nav-item.layui-this{ background-color: rgba(244,249,252, 1);}
+.side .layui-nav .layui-nav-item.layui-this a span{ color: white}
+.side .layui-nav .layui-nav-item a:hover{ background-color: rgba(255,255,255, 0.2); }
+.side .layui-nav .layui-nav-item.layui-this a:hover span{ color: white }
+.side .layui-nav  { background-color: transparent }
 .side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px;  margin:0 8px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
 .side .layui-nav .layui-nav-item:nth-child(1) a i{  background-image: url(../img/index/shouye_1.png);  }
@@ -43,15 +45,15 @@
 .side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/index/guanli-.png);  }
 .side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/index/guanli_1.png);  }
 
-.side-hider { height: 45px; text-align: center}
+.side-hider { height: 45px; text-align: center; background-color:  rgb(104,159,242) !important}
 .side-hider i{ line-height: 45px; font-size: 30px; color: white}
 
-.side .layui-nav .layui-nav-itemed>a{ background-color: #00a5dd !important;}
-/*.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #333333 transparent transparent}*/
-/*.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #333333 transparent transparent}*/
-/*.side .layui-nav .layui-nav-item .layui-nav-child dd a{ background-color:#e2e2e2;  }*/
-.side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:white; background-color: rgb(78,84,101)  }
-.side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:#00a5dd; color: white; /*background-image: url("../img/index/choose.png"); */  }
+.side .layui-nav .layui-nav-itemed>a{ background-color: rgb(104,159,242) !important;}
+.side .layui-nav .layui-nav-itemed>a .layui-nav-more{  transform: scale(1,-1); border-color: #fff transparent transparent}
+.side .layui-nav .layui-nav-item>a .layui-nav-more{ border-color: #fff transparent transparent}
+.side .layui-nav .layui-nav-item .layui-nav-child dd { background-color: rgb(104,159,242);  }
+.side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:white; background-color: rgba(244,249,252, 0.2) }
+.side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:rgba(244,249,252, 1); color: #999999; /*background-image: url("../img/index/choose.png"); */  }
 
 /*.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}*/
 .fieldname{font: 12px simsun; text-align: left; background: #D7E4F4; }
