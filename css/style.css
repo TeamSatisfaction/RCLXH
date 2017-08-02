@@ -20,7 +20,7 @@
 
 .side .layui-nav{ background-color: rgb(104,159,242) !important}
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
-.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important }
+/*.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important }*/
 .side .layui-nav .layui-nav-item a{ color: white }
 .side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: rgba(244,249,252, 1); color: #999}
 .side .layui-nav .layui-nav-item.layui-this{ background-color: rgba(244,249,252, 1);}
