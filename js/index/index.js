@@ -39,6 +39,8 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     var loadPage = function (url) {
         if(url.indexOf('sysMngView')!=-1){
             $("#index_frame").hide()
+        }else{
+            $("#index_frame").show()
         }
         $("#index_frame").attr("src", url);
         //左侧目录
