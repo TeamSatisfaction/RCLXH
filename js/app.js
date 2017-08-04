@@ -36,13 +36,12 @@ layui.define(['layer', 'form', 'element'], function(exports){
         // console.log(elem)
     });
     layer.ready(function () {
-        // var code = sessionStorage.getItem("code");
         var code = window.location.href;
         console.log(code);
         var data={};
         data.client_id="dad449b578874069b7a77976b7d94b91";
         data.client_secret="0ff0b7a8f5b64beba42a58bc15029588";
-        data.code="995ee5bc51e84eeba141ee4789fecde4";
+        data.code="4bb310ab49f94e59b1905a8a13fb9cf2";
         $.ajax({
             url : 'http://login.cqhtwl.com.cn/htwl/oauth2/token',
             type : 'post',

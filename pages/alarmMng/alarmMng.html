@@ -21,7 +21,7 @@
 </head>
 <body  class="layui-layout-admin" style="margin-top: 2px">
     <div style="margin: 10px">
-    <div class="layui-form layui-elem-quote" action="" style="padding: 2px;margin-bottom: 0">
+    <div class="layui-form" action="" style="padding: 2px;margin-bottom: 0">
         <div class="layui-form-item" style="margin: 5px 0">
             <div class="layui-inline">
                 <label class="layui-form-label">问题来源：</label>
@@ -36,7 +36,7 @@
                 </div>
             </div>
             <label class="layui-form-label">报警时间：</label>
-            <input class="layui-input layui-input-inline" id="startTime" placeholder="开始时间">
+            <input class="layui-input layui-input-inline" id="startTime" placeholder="开始时间" style="margin-right: 5px">
             <input class="layui-input layui-input-inline" id="endTime" placeholder="结束时间">
             <div class="layui-inline">
                 <label class="layui-form-label">处理状态：</label>
@@ -50,44 +50,55 @@
                     </select>
                 </div>
             </div>
-            <button class="layui-btn layui-btn-normal" style="position: absolute;" onclick="layui.alarmMng.loadAlarmData()">
-                <i class="layui-icon">&#xe615;</i>
-            </button>
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.loadAlarmData()">
+                    <i class="layui-icon">&#xe615;</i> 搜索
+                </button>
+            </div>
+            <div class="layui-inline">
+                <button class="layui-btn layui-btn-warm">
+                    <i class="layui-icon">&#xe60a;</i>导出
+                </button>
+            </div>
         </div>
     </div>
-    <div class="layui-form-item" style="margin: 0">
-        <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">
-            <i class="layui-icon"></i> 刷新
-        </button>
-        <button class="layui-btn layui-btn-small layui-btn-normal" style="margin-left: 0">
-            <i class="layui-icon">&#xe60a;</i>导出
-        </button>
-    </div>
-    <table class="layui-table" lay-even="" lay-skin="nob" style="margin-top: 5px">
-        <colgroup>
-            <col width="60">
-            <col>
-            <col width="180">
-            <col>
-            <col width="200">
-            <col width="120">
-            <col width="80">
-        </colgroup>
-        <thead>
-        <tr>
-            <th>序号</th>
-            <th>企业名称</th>
-            <th>报警时间</th>
-            <th>报警详情</th>
-            <th>问题来源</th>
-            <th>处理状态</th>
-            <th style="text-align: center">操作</th>
-        </tr>
-        </thead>
-        <tbody id="alarm-result">
-        </tbody>
-    </table>
-    <div id="alarm-demo" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+        <!--<div class="layui-form-item" style="margin: 0">-->
+            <!--<button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="position: absolute;right: 10px">-->
+                <!--<i class="layui-icon"></i> 刷新-->
+            <!--</button>-->
+        <!--</div>-->
+        <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 5px">
+            <colgroup>
+                <col width="60">
+                <col>
+                <col width="180">
+                <col>
+                <col width="200">
+                <col width="120">
+                <col width="80">
+            </colgroup>
+            <thead>
+            <tr>
+                <th>序号</th>
+                <th>企业名称</th>
+                <th>报警时间</th>
+                <th>报警详情</th>
+                <th>问题来源</th>
+                <th>处理状态</th>
+                <th style="text-align: center">操作</th>
+            </tr>
+            </thead>
+            <tbody id="alarm-result">
+            </tbody>
+        </table>
+        <div class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+            <div class="layui-input-inline" style="float: right">
+                <div id="alarm-demo"></div>
+            </div>
+            <button class="layui-btn  layui-btn-warm layui-btn-small" onclick="javascript:history.go(0);" style="position: fixed;left: 10px;bottom: 0">
+                <i class="layui-icon"></i> 刷新
+            </button>
+        </div>
     </div>
 </body>
 </html>

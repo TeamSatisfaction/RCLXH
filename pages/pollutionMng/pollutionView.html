@@ -21,25 +21,15 @@
 <body>
     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
         <div style="margin: 10px">
-            <!--<div class="mapStats_divider">污染源-列表</div>-->
-            <div class="layui-elem-quote layui-form" style="padding: 2px;margin-bottom: 0">
-                <div class="layui-form-item" style="margin: 5px 0;">
-                    <label class="layui-form-label">企业名称：</label>
-                    <div class="layui-input-inline">
-                        <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
-                    </div>
-                    <button class="layui-btn layui-btn-normal" style="position: absolute" onclick="layui.pollutionMng.loadCompanyData()">
-                        <i class="layui-icon">&#xe615;</i>
-                    </button>
+            <div class="layui-form-item" style="margin: 5px 0;">
+                <!--<div class="layui-input-inline listTitle"><cite>污染源</cite></div>-->
+                <!--<div class="mapStats_divider">报警情况</div>-->
+                <div class="layui-input-inline" style="float: right">
+                    <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                    <div class="search" onclick="layui.pollutionMng.loadCompanyData()"></div>
                 </div>
             </div>
-            <div class="layui-form-item" style="margin: 5px 0;float: right">
-                <button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" >
-                    <i class="layui-icon"></i> 刷新
-                    <!--<i class="layui-icon">ဂ</i>-->
-                </button>
-            </div>
-            <table class="layui-table" lay-even="" lay-skin="nob">
+            <table class="layui-table" lay-even="" lay-skin="row">
                 <colgroup>
                     <col width="60">
                     <col width="350">
@@ -61,7 +51,14 @@
                 <tbody id="company-result">
                 </tbody>
             </table>
-            <div id="demo1" class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white"></div>
+            <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+                <div class="layui-input-inline" style="float: right">
+                    <div id="demo1"></div>
+                </div>
+                <button class="layui-btn  layui-btn-warm layui-btn-small" onclick="javascript:history.go(0);" style="position: fixed;left: 10px;bottom: 0">
+                    <i class="layui-icon"></i> 刷新
+                </button>
+            </div>
         </div>
     </div>
 </body>

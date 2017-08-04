@@ -102,7 +102,7 @@ layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
                 uTobody.html(render(uData, obj.curr));
                 //调用分页
                 laypage({
-                    cont: 'demo1',
+                    cont: 'demo4',
                     skin: '#00a5dd',
                     pages : pages,
                     curr: curr || 1, //当前页,

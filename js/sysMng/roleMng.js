@@ -35,6 +35,19 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     return arr.join('');
                 };
                 rTobody.html(render(result, obj.curr));
+                //调用分页
+                laypage({
+                    cont: 'demo5',
+                    skin: '#00a5dd',
+                    pages : 1,
+                    curr: 1, //当前页,
+                    skip: true,
+                    jump: function(obj,first){
+                        // if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
+                        //     loadRoleData(obj.curr);
+                        // }
+                    }
+                })
             }
         })
     };

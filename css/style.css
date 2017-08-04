@@ -98,7 +98,7 @@
 .mapStats_statsStatus{ text-align: center}
 .mapStats_statsStatus span{ display: inline-block; margin: 10px;}
 .mapStats_statsCharts{ width: 100%; height: 280px; }
-.mapStats_divider{ background-color: #00a5dd; padding: 7px; margin: 7px 0; color: #eeeeee;font-size: 20px}
+.mapStats_divider{ background-color: #689ff2; padding: 7px; margin: 7px 0; color: #eeeeee;font-size: 20px}
 .mapStats_divider:nth-child(1){ margin-top: 0;}
 .mapStats_alarmGeneral i{ display: inline-block; height: 36px; width: 36px; font-size: 30px; text-align: center}
 .mapStats_alarmGeneral span{ display: inline-block; white-space: normal; width: calc(100% - 40px) }
@@ -166,7 +166,7 @@
 tr .align-right{width:120px;text-align: right}
 
 .waterBorder{height:100%;border-color:#e2e2e2;border-style:solid; border-width:1px;margin: 0}
-.water_divider{ background-color: #f2f2f2; padding: 7px; margin: 1px 0; color: #666666}
+.water_divider{ background-color: white; padding: 7px; margin: 1px 0; color: #666666}
 .waterBorder input,.waterBorder select,.waterBorder button,.waterBorder label {margin-top:5px}
 .waterBorder label{padding: 10px 5px;}
 .waterBorder input,.waterBorder select{width: 150px}
@@ -206,3 +206,9 @@ tr .align-right{width:120px;text-align: right}
 #login_container .layui-form .layui-input:-ms-input-placeholder { /* Internet Explorer 10+ */  color:#eee;  }
 
 #verify_image{ width: 170px; height: 36px; }
+
+.search{background-image:url(../img/切图/search.png);  position:absolute;  width:30px;  height:30px;  top:4px;  left:150px;  z-index:99;cursor:pointer}
+
+.listTitle{ margin: 7px 0;font-size: 20px}
+
+.alarm-icon{background-image: url(../img/切图/baojing1.png)}

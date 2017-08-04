@@ -7,6 +7,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
         laypage = layui.laypage,
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var access_token = sessionStorage.getItem("access_token");
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -18,11 +19,11 @@ layui.define(['layer', 'element','laypage'],function (exports){
                 name : name,
                 pageNum : curr||1,
                 pageSize : 16
-                // areaCode : '500153'
+                // areaId : 500153
             };
         var field = JSON.stringify(data);
         $.ajax({
-            url : ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -30,6 +31,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
             type : 'post',
             data : field,
             success : function (result) {
+                console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var cData = result.data.list,
@@ -58,7 +60,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
                     cont: 'demo1',
                     skin: '#00a5dd',
                     pages : pages,
-                    curr: curr || 1, //当前页,
+                    curr: curr||1, //当前页,
                     skip: true,
                     jump: function(obj,first){
                         if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
