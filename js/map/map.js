@@ -169,7 +169,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     function closeNotification() {
         $(".notification").slideUp();
     }
-    setInterval('layui.map.showNotification()', 15000);
+    setInterval('layui.map.showNotification()', 1000);
 
     //企业select
     function loadCompanySelect() {

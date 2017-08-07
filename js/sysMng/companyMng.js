@@ -283,7 +283,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             content : rule_form,
             btn: [ '提交','返回'],
             btnAlign: 'c',
-            success: function(index, layero){
+            success: function(layero,index){
                 loadDau(id);
                 form.render();
                 form.verify({
@@ -292,7 +292,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             return '只能输入1~24的整数';
                         }
                     }
-                })
+                });
                 form.on('submit(save)', function(data){
                     console.log(data.field);
                     data.field.id = id;

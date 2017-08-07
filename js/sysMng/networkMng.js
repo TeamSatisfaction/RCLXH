@@ -84,7 +84,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
             btn: [ '提交','返回'],
             btnAlign: 'c',
             yes  : function (index,layero) {
-                // console.log(layero);
                 layero.find("iframe").contents().find('#netWork-save').click();
             }
         });

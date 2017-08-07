@@ -80,7 +80,23 @@ layui.define(['layer','element','laypage','form'],function (exports){
             title : '新增监控站',
             type : 2,
             area : ['800px','500px'],
-            content : '../../pages/sysMng/addMsView.html'
+            content : '../../pages/sysMng/addMsView.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            success: function(layero,index){
+                form.render();
+                //表单验证
+                // form.verify({
+                //     threshold : function (value) {
+                //         if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
+                //             return '只能输入1~24的整数';
+                //         }
+                //     }
+                // });
+            },
+            yes  : function (index,layero) {
+                layero.find("iframe").contents().find('#ms-save').click();
+            }
         })
     };
     //form表单提交
@@ -108,10 +124,10 @@ layui.define(['layer','element','laypage','form'],function (exports){
         return false;
     });
     //关闭窗口
-    var closeAddWin = function () {
-        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-        parent.layer.close(index); //再执行关闭
-    };
+    // var closeAddWin = function () {
+    //     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    //     parent.layer.close(index); //再执行关闭
+    // };
     // var saveMSData = function () {
     //     form.on('submit(formDemo)', function(data){
     //         console.log(data);
@@ -122,8 +138,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
     var obj = {
         loadPage : loadPage,
         loadMSData : loadMSData,
-        addMSWin : addMSWin,
-        closeAddWin : closeAddWin
+        addMSWin : addMSWin
     };
     /*输出内容，注意顺序*/
     exports('MSMng',obj)

@@ -11,7 +11,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
         form = layui.form();
     /*加载CSS文件*/
 
-
     /*加载JS模块*/
     layui.extend({ //设定模块别名
         index : 'index/index',
