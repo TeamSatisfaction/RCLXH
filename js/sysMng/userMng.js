@@ -1,7 +1,7 @@
 /*
 /用户管理
  */
-layui.define(['layer','element','laypage', 'laydate','form'],function (exports){
+layui.define(['layer','element','laypage','form'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,

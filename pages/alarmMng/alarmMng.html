@@ -5,6 +5,7 @@
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script type="text/javascript" src="../../js/lib/My97DatePicker/WdatePicker.js"></script>
     <script src="../../layUi/layui.js"></script>
     <script>
         layui.link('../../css/style.css');
@@ -36,8 +37,12 @@
                 </div>
             </div>
             <label class="layui-form-label">报警时间：</label>
-            <input class="layui-input layui-input-inline" id="startTime" placeholder="开始时间" style="margin-right: 5px">
-            <input class="layui-input layui-input-inline" id="endTime" placeholder="结束时间">
+            <!--<input class="layui-input layui-input-inline" id="startTime" placeholder="开始时间" style="margin-right: 5px">-->
+            <!--<input class="layui-input layui-input-inline" id="endTime" placeholder="结束时间">-->
+            <input type="date" class="layui-input input-date layui-input-inline" id="startTime" value="2017-01-01"
+                   onClick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'#F{$dp.$D(\'endTime\')||\'new Date()\'}'})" style="margin-right: 5px"/>
+            <input type="date" class="layui-input input-date layui-input-inline" id="endTime" value="2017-08-04"
+                   onClick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'#F{$dp.$D(\'startTime\')}', maxDate:new Date()})"/>
             <div class="layui-inline">
                 <label class="layui-form-label">处理状态：</label>
                 <div class="layui-input-inline">
@@ -95,7 +100,7 @@
             <div class="layui-input-inline" style="float: right">
                 <div id="alarm-demo"></div>
             </div>
-            <button class="layui-btn  layui-btn-warm layui-btn-small" onclick="javascript:history.go(0);" style="position: fixed;left: 10px;bottom: 0">
+            <button class="layui-btn  layui-btn-warm layui-btn-small" onclick="window.location.reload();" style="position: fixed;left: 10px;bottom: 0">
                 <i class="layui-icon"></i> 刷新
             </button>
         </div>

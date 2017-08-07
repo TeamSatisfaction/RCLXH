@@ -1,26 +1,16 @@
-layui.define(['layer', 'element','laypage','layedit', 'laydate'],function (exports) {
+layui.define(['layer', 'element'],function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
-        laypage = layui.laypage,
-        element = layui.element(),
-        // layedit = layui.layedit,
-        // laydate = layui.laydate,
-        eTobody = $('#equipment-result'),
-        uTobody = $('#user-result');
+        element = layui.element();
     //页面跳转
     var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
-    //Hash地址的定位
-    // var layid = location.hash.replace(/^#test=/, '');
-    // element.tabChange('test', layid);
-    // element.on('tab(test)', function(elem){
-    //     location.hash = 'test='+ $(this).attr('lay-id');
-    // });
 
     var getTab = function () {
-        // layui.companyMng.loadCompanyData();
+        console.log('1');
+        layui.companyMng.loadCompanyData();
         var tabIndex = layui.utils.getArg("token");
         element.tabChange('sysmng', tabIndex.toString());
         $('#index_frame', parent.document).show();

@@ -1,30 +1,28 @@
-layui.define(['layer', 'element','layedit', 'laydate','form'],function (exports){
+layui.define(['layer', 'element','layedit','form'],function (exports){
     var $ = layui.jquery,
-        laydate = layui.laydate,
         form = layui.form(),
         msTobody = $('#ms-result1');
     var urlConfig = sessionStorage.getItem("urlConfig");
-        // layer = layui.layer,
-    var start = {
-        istime: true
-        ,format: 'YYYY-MM-DD hh:mm:ss'
-        ,issure: true
-    };
-    var end = {
-        istime: true
-        ,format: 'YYYY-MM-DD hh:mm:ss'
-        ,issure: true
-    };
-    document.getElementById('startTime1').onclick = function(){
-        start.elem = this;
-        laydate(start);
-    };
-    document.getElementById('endTime1').onclick = function(){
-        end.elem = this;
-        laydate(end);
-    };
-    $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));
-    $('#endTime1').val(laydate.now(0, "YYYY/MM/DD hh:mm:ss"));
+    // var start = {
+    //     istime: true
+    //     ,format: 'YYYY-MM-DD hh:mm:ss'
+    //     ,issure: true
+    // };
+    // var end = {
+    //     istime: true
+    //     ,format: 'YYYY-MM-DD hh:mm:ss'
+    //     ,issure: true
+    // };
+    // document.getElementById('startTime1').onclick = function(){
+    //     start.elem = this;
+    //     laydate(start);
+    // };
+    // document.getElementById('endTime1').onclick = function(){
+    //     end.elem = this;
+    //     laydate(end);
+    // };
+    // $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));
+    // $('#endTime1').val(laydate.now(0, "YYYY/MM/DD hh:mm:ss"));
     //监测详情数据
     var loadChartsData = function (cn,name,Eid) {
         console.log(cn);

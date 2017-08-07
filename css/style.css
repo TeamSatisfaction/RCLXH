@@ -23,7 +23,7 @@
 .side .layui-nav{ background-color: rgb(104,159,242) !important}
 /*.side .layui-nav-tree{ background-color: rgb(104,159,242) !important}*/
 /*.layui-tab .layui-tab-title .layui-this { color: #333333 }*/
-.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important; overflow: hidden }
+/*.side .layui-nav li { border-bottom: 1px solid rgb(164, 197, 255) !important; overflow: hidden }*/
 .side .layui-nav .layui-nav-item a{ color: white }
 .side .layui-nav .layui-nav-item.layui-this a{ /*background-image: url("../img/index/choose.png");*/ background-color: rgba(244,249,252, 1); color: #999}
 .side .layui-nav .layui-nav-item.layui-this{ background-color: rgba(244,249,252, 1);}
@@ -43,6 +43,7 @@
 .side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/切图/设备监测.png);  }
 .side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/切图/系统管理1.png);  }
 .side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/系统管理.png);  }
+#con_mng{background-image: url(../img/切图/系统管理.png)}
 /*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/切图/tongji.png);  }*/
 /*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/切图/tongji_1.png);  }*/
 /*.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/切图/guanli-.png);  }*/
@@ -81,7 +82,7 @@
 .esriPopup .contentPane p span{ font-weight: normal; }
 .esriPopup .contentPane p a{ color: red ; cursor: pointer }
 /*数据窗口*/
-.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: rgba(0,0,0,0); border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
+.mapStats{ top: 0; max-height: calc(100%); width: 750px; position: absolute; background-color: rgba(255,255,255,0.7); border: 1px solid #8baac2; box-shadow: #0E3043 0px 0 2px 0px}
 .mapStats_close{ position: absolute; right: 10px; top: 10px; z-index: 200;}
 .mapStats_close i{ font-size: 20px;  cursor: pointer;}
 .mapStats_close.rotate{
@@ -123,7 +124,7 @@
 .black_placeholder ::-moz-placeholder{color:black}
 .black_placeholder input::-webkit-input-placeholder{color:black}
 
-.notification{ position: fixed; top:10px; right:20px; background-color: rgba(0,0,0,0.7); color: white; padding: 10px; border-radius: 5px; min-width: 200px }
+.notification{ position: fixed; top:10px; right:20px; background-color: rgba(255,255,255,0.7); color: white; padding: 10px; border-radius: 5px; min-width: 200px }
 .notification{ display: none }
 .notification i{ float: right; cursor: pointer }
 .notification .content{ cursor: pointer }
@@ -182,6 +183,8 @@ tr .align-right{width:120px;text-align: right}
 #addEquipment .photo-area .thumbs{ padding-left: 100px; text-align: left}
 #addEquipment .photo-area .thumbs input{ left:0;}
 
+
+.input-date{ width: 200px;}
 /*新增规则*/
 /*#rule_form .layui-form-label{ width: 100px; text-align: right}*/
 /*#rule_form .layui-inline input,#rule_form .layui-inline select{ width: 400px;}{ width: 400px;}*/

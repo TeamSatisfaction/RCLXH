@@ -45,9 +45,6 @@ layui.define(function(exports){
         $("#index_frame").attr("src", url)
     };
 
-    var test = function () {
-        layui.alert("test")
-    };
     var getArg = function (key) {
         var uri = decodeURI(window.location.search),
             re = new RegExp(String() + key + "=([^&?]*)", "ig");
@@ -60,7 +57,6 @@ layui.define(function(exports){
     };
     exports('utils', {
         dateFormat: dateFormat,
-        test: test,
         loadPage: loadPage,
         getArg : getArg,
         getUrlArg : getUrlArg

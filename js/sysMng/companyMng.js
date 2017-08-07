@@ -1,7 +1,7 @@
 /*
 /企业管理ctrl
  */
-layui.define(['layer', 'element','laypage','form','laydate','upload'],function (exports){
+layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
