@@ -165,7 +165,7 @@
 .detail-form .layui-form .layui-form-item .layui-form-label { width: 100px; }
 .detail-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 140px); }
 .detail-form .detail-form-left { width: 60%; float: left }
-.detail-form .detail-form-right { width: 40%; float: right; background-color: #7FBBDF;}
+.detail-form .detail-form-right { width: 40%;position: absolute;right: 10px;top:100px}
 .detail-form .detail-form-right img{ width: 100%; }
 
 /*照片部分*/
@@ -175,7 +175,7 @@
 .photo-area .thumb i{  position: absolute; right: 0px; top: 0px; color: red; font-size: 20px; cursor: pointer; }
 .photo-area .thumbs{  margin-bottom: 16px; }
 .photo-area .thumb-input { border: dashed 1px #bbbbbb; display: inline-block }
-.photo-area .thumb-input .layui-upload-file { position: absolute; width: 100px; height: 100px; opacity: 0; top: 0; }
+.photo-area .thumb-input .layui-upload-file { position: absolute; width: 100px; height: 100px; opacity: 0; top: 0;}
 .photo-area .thumb-input img { height: 60px;  width:60px; margin: 20px;}
 .photo-area .thumb div {text-align: center}
 /*详情*/
