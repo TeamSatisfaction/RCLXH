@@ -445,6 +445,27 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     form.on('select(select_equipment1)', function(data){
         loadFactor(data.value);
     });
+
+    /*在线监测*/
+    $(".company-online-monitor").find(".layui-btn-group").find(".layui-btn").click(function () {
+        var btn = $(this);
+        if(!btn.hasClass("active")){
+            btn.addClass("active").siblings().removeClass("active");
+        }
+        console.log(getActiveBtn($(".company-online-monitor").find(".layui-btn-group")[0]));
+    });
+    /*获取按钮组选中的值*/
+    var getActiveBtn = function (btngroup) {
+        var value;
+        $(btngroup).find(".layui-btn").each(function(){
+            if($(this).hasClass("active")){
+               value = $(this).text();
+            }
+        });
+        return value;
+    };
+
+
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,

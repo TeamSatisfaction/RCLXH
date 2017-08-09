@@ -9,6 +9,7 @@
     <link href="../../css/style.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
     <script src="../../js/lib/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../js/lib/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
     <script src="../../js/lib/wySilder.min.js" type="text/javascript"></script>
     <script>
         layui.link('../../css/style.css');
@@ -25,10 +26,11 @@
     <div class="layui-tab layui-layout-admin layui-tab-brief detail-form" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
             <li class="layui-this" lay-id="企业管理" >企业基本详情</li>
-            <li lay-id="设备管理">在线监测</li>
-            <li lay-id="联网管理">设备工况</li>
+            <li lay-id="在线监测">在线监测</li>
+            <li lay-id="设备工况">设备工况</li>
         </ul>
-        <div class="layui-tab-content">
+        <div class="layui-tab-content company-online-monitor">
+            <!--企业基本详情-->
             <div class="layui-tab-item layui-show">
                 <form class="layui-collapse layui-form" lay-filter="test" action="">
                     <div class="layui-colla-item">
@@ -307,9 +309,79 @@
                     </div>
                 </form>
             </div>
-            <div class="layui-tab-item">在线监测
+            <!--在线监测-->
+            <div class="layui-tab-item">
+                <div class="layui-btn-group">
+                    <div class="layui-btn layui-btn-primary active">实时监测数据</div>
+                    <div class="layui-btn layui-btn-primary">小时监测数据</div>
+                    <div class="layui-btn layui-btn-primary">日监测数据</div>
+                </div>
+                <form class="layui-form" lay-filter="test" action="">
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">开始时间：</label>
+                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
+                    </div>
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">截止时间：</label>
+                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
+                    </div>
+                    <div class="layui-btn layui-btn-normal" style="margin-top: -14px;">
+                        <i class="layui-icon">&#xe615;</i>
+                        <span>查询</span>
+                    </div>
+                </form>
+                <div class="com-content">
+                    <div id="com_chart"></div>
+                    <div id="com_fac"></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
-            <div class="layui-tab-item">设备工况
+            <!--设备工况-->
+            <div class="layui-tab-item company-equip-sit">
+                <form class="layui-form" lay-filter="test" action="" style="margin-top: 16px;">
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">开始时间：</label>
+                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
+                    </div>
+                    <div class="layui-form-item layui-inline">
+                        <label class="layui-form-label">截止时间：</label>
+                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
+                    </div>
+                    <div class="layui-btn layui-btn-normal" style="margin-top: -14px;">
+                        <i class="layui-icon">&#xe615;</i>
+                        <span>查询</span>
+                    </div>
+                </form>
+                <div class="ces-content">
+                    <table class="layui-table" id="ces_table">
+                        <colgroup>
+                            <col width="150">
+                            <col width="200">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>昵称</th>
+                            <th>加入时间</th>
+                            <th>签名</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>贤心</td>
+                            <td>2016-11-29</td>
+                            <td>人生就像是一场修行</td>
+                        </tr>
+                        <tr>
+                            <td>贤心</td>
+                            <td>2016-11-29</td>
+                            <td>人生就像是一场修行</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <div id="ces_pie"></div>
+                    <div style="clear: both"></div>
+                </div>
             </div>
         </div>
     </div>
