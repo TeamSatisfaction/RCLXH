@@ -11,8 +11,9 @@
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
-            equipmentMng : 'equipmentMng'
-        }).use('userMng')
+            equipmentMng : 'equipmentMng',
+            companyMng : 'companyMng'
+        }).use(['equipmentMng','companyMng'])
             .link('../../css/style.css'); //加载入口
     </script>
 </head>
