@@ -80,7 +80,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             moveOut: true,
             area : ['1000px','600px'],
             content : '../../pages/sysMng/addEquipmentView.html',
-            btn: ['提交', '关闭'],
+            btn: ['提交', '返回'],
             btnAlign: 'c',
             yes : function (index) {
                 layer.msg('提交成功！', {icon: 1});

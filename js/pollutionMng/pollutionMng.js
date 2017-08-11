@@ -48,7 +48,7 @@ layui.define(['layer', 'element','laypage'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal">详情</button></td>' +
+                            '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal" onclick="layui.pollutionMng.detailCompanyWin()">详情</button></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -71,10 +71,24 @@ layui.define(['layer', 'element','laypage'],function (exports){
             }
         })
     };
+    //企业详情
+    var detailCompanyWin = function () {
+        var index = layer.open({
+            title : '企业详情',
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/pollutionMng/pollutionDataView.html',
+            btn: [ '返回'],
+            btnAlign: 'c'
+        });
+        layer.full(index);
+    };
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
-        loadCompanyData : loadCompanyData
+        loadCompanyData : loadCompanyData,
+        detailCompanyWin : detailCompanyWin
     };
     exports('pollutionMng',obj)
 })
