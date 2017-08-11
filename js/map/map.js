@@ -144,9 +144,17 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 },
                 plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#000000'
+                    value: 6.9,
+                    dashStyle:'ShortDash',
+                    width: 3,
+                    color: 'red',
+                    label: {
+                        text: '报警值',
+                        align: 'center',
+                        style: {
+                            color: 'gray'
+                        }
+                    }
                 }]
             },
             legend: {

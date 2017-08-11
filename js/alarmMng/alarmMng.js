@@ -86,7 +86,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 pageSize : 16
             };
         $.ajax({
-            // url :'http://172.21.92.63:8092/v01/htwl/lxh/alrm/query',
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -206,6 +205,10 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     case "2":
                         result.status = '已处罚'
                         break;
+                }
+                if(result.status != 0){
+                    body.contents().find(".layui-btn").addClass('layui-btn-disabled');
+                    body.contents().find(".layui-btn").attr('disabled','disabled');
                 }
                 body.contents().find("#alarmType1").html(result.alarmType);
                 body.contents().find("#alarmLevel1").html(result.alarmLevel+'级');

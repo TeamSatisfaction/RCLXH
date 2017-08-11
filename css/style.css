@@ -266,7 +266,7 @@ tr .align-right{width:120px;text-align: right}
 #wqs .water_inner .layui-collapse { height: calc(100% - 240px); overflow-y: scroll; }
 
 #wqs_tab1_btn { width: 200px; display: block; margin: 0 auto;}
-#wqs_tab1_chart { width: 100%; background-color: #4CAF50; min-height: 300px; height: calc(100% - 150px) }
+#wqs_tab1_chart { width: 100%;  min-height: 300px; height: calc(100% - 150px) }
 
 
 /*企业信息-在线监测*/

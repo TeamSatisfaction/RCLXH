@@ -1,7 +1,8 @@
 layui.define(['layer', 'element','layedit','form'],function (exports){
     var $ = layui.jquery,
         form = layui.form(),
-        msTobody = $('#ms-result1');
+        element = layui.element(),
+        msTobody = $('#water_list');
     var urlConfig = sessionStorage.getItem("urlConfig");
     // var start = {
     //     istime: true
@@ -83,9 +84,17 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     text: 'mg/L'
                 },
                 plotLines: [{
-                    value: 0,
-                    width: 1,
-                    color: '#808080'
+                    value: 6.9,
+                    dashStyle:'ShortDash',
+                    width: 3,
+                    color: 'red',
+                    label: {
+                        text: '报警值',
+                        align: 'center',
+                        style: {
+                            color: 'gray'
+                        }
+                    }
                 }]
             },
             legend: {
@@ -99,7 +108,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 data: onlineData
             }]
         };
-        Highcharts.chart('container', option);
+        Highcharts.chart('wqs_tab1_chart', option);
     };
     //监测站list
     var loadMSData = function (curr,cn){
@@ -133,19 +142,29 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     pages = result.data.pages,
                     str = "",
                     nums = 1000; //每页出现的数据量
+                console.log(msData);
                 var render = function(msData, curr) {
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
-                            '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.name + '</td>' +
-                            '</tr>';
+                        // str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
+                        //     '<td>'+(index+1)+'</td>' +
+                        //     '<td>' + item.name + '</td>' +
+                        //     '</tr>';
+                        str = '<div class="layui-colla-item">' +
+                            '<h2 class="layui-colla-title list-title">' +
+                            ' <span>'+(index+1)+'</span>'+
+                            '<span>' + item.name + '</span></h2>' +
+                            '<div class="layui-colla-content"> ' +
+                            '<span>所属流域：xxxx流域<br>断面水质：Ⅲ类<br>地理位置：'+item.address+''+
+                            '</span></div>'+
+                            '</div>'
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 msTobody.html(render(msData, obj.curr));
+                element.init();
                 loadDau(msData[0].baseEnterpriseId,cn,msData[0].name);
                 loadChartsData(cn,msData[0].name);
             }
@@ -256,8 +275,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 $("#select_factor").empty();
                 if(row == null){
                     $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
-                    $("#container").empty();
-                    $("#container").html('<span>无相关监测因子</span>');
+                    $("#wqs_tab1_chart").empty();
+                    $("#wqs_tab1_chart").html('<span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
                         $("#select_factor").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
