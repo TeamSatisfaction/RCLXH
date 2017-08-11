@@ -58,13 +58,14 @@
 .side .layui-nav .layui-nav-item .layui-nav-child dd { background-color: rgb(104,159,242);  }
 .side .layui-nav .layui-nav-item .layui-nav-child dd a:hover{ color:white; background-color: rgba(244,249,252, 0.2) }
 .side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:rgba(244,249,252, 1); color: #999999; /*background-image: url("../img/index/choose.png"); */  }
+.side .layui-nav .layui-nav-item .layui-nav-child dd.layui-this a:hover{ color:#999999; background-color:rgba(244,249,252, 1); }
 /*左侧树二级菜单图标*/
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/系统管理-切图/企业管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/系统管理-切图/监测站管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/系统管理-切图/设备管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/系统管理-切图/联网管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/系统管理-切图/用户管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/系统管理-切图/角色管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/系统管理-切图/企业管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/系统管理-切图/监测站管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/系统管理-切图/设备管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/系统管理-切图/联网管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/系统管理-切图/用户管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/系统管理-切图/角色管理_1.png); }
 /*左侧树二级菜单选中图标*/
 .side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1).layui-this i { background-image: url(../img/系统管理-切图/企业管理.png); }
 .side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2).layui-this i { background-image: url(../img/系统管理-切图/监测站管理.png); }
