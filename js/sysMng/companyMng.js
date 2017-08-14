@@ -49,8 +49,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
                             '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">详情</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">修改</button></a>'+
                             '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')">规则</button></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.deleteCompany()">删除</button></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });

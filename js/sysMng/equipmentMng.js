@@ -50,6 +50,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             '<td>' + item.classicType + '</td>' +
                             '<td>' + item.usedDate + '</td>' +
                             '<td>' + item.equipmentType + '</td>' +
+                            '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">详情</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">修改</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">因子</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });

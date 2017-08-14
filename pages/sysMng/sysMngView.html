@@ -58,7 +58,7 @@
                             <col>
                             <col width="100">
                             <col width="120">
-                            <col width="150">
+                            <col width="200">
                         </colgroup>
                         <thead>
                         <tr>
@@ -67,7 +67,7 @@
                             <th>企业地址</th>
                             <th>联系人</th>
                             <th>联系人电话</th>
-                            <th>操作</th>
+                            <th style="text-align: center">操作</th>
                         </tr>
                         </thead>
                         <tbody id="company-result">
@@ -104,7 +104,7 @@
                             <col width="120">
                             <col width="120">
                             <col width="150">
-                            <!--<col width="100">-->
+                            <col width="150">
                         </colgroup>
                         <thead>
                         <tr>
@@ -115,7 +115,7 @@
                             <th>联系人电话</th>
                             <th>经度</th>
                             <th>纬度</th>
-                            <!--<th>操作</th>-->
+                            <th style="text-align: center">操作</th>
                         </tr>
                         </thead>
                         <tbody id="ms-result">
@@ -154,7 +154,7 @@
                             <col width="120">
                             <col width="120">
                             <col width="120">
-                            <!--<col width="100">-->
+                            <col width="195">
                         </colgroup>
                         <thead>
                         <tr>
@@ -167,7 +167,7 @@
                             <th>设备分类类型</th>
                             <th>投入使用时间</th>
                             <th>是否关键设备</th>
-                            <!--<th>操作</th>-->
+                            <th style="text-align: center">操作</th>
                         </tr>
                         </thead>
                         <tbody id="equipment-result">
@@ -189,6 +189,10 @@
                             <button class="layui-btn" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
+                            <div class="layui-input-inline" style="float: right">
+                                <input id="mnName" name="name"  autocomplete="off" placeholder="请输入数采仪名称" class="layui-input" type="text">
+                                <div class="search"></div>
+                            </div>
                         </div>
                         <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                             <colgroup>
@@ -198,7 +202,7 @@
                                 <col width="100">
                                 <col>
                                 <col>
-                                <col width="120">
+                                <col width="150">
                             </colgroup>
                             <thead>
                             <tr>
@@ -218,9 +222,6 @@
                             <div class="layui-input-inline" style="float: right">
                                 <div id="demo6"></div>
                             </div>
-                            <!--<button class="layui-btn  layui-btn-warm layui-btn-small" onclick="javascript:history.go(0);" style="position: fixed;left: 10px;bottom: 0">-->
-                                <!--<i class="layui-icon"></i> 刷新-->
-                            <!--</button>-->
                         </div>
                     </div>
                 </div>
@@ -246,7 +247,7 @@
                             <col>
                             <col>
                             <col>
-                            <!--<col width="100">-->
+                            <col width="100">
                         </colgroup>
                         <thead>
                         <tr>
@@ -257,7 +258,7 @@
                             <th>最后更新人</th>
                             <th>最后更新时间</th>
                             <th>状态</th>
-                            <!--<th>操作</th>-->
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody id="user-result">
@@ -284,13 +285,13 @@
                             <colgroup>
                                 <col width="60">
                                 <col>
-                                <!--<col width="100">-->
+                                <col width="100">
                             </colgroup>
                             <thead>
                             <tr>
                                 <th>序号</th>
                                 <th style="text-align: center">角色名称</th>
-                                <!--<th style="text-align: center">操作</th>-->
+                                <th style="text-align: center">操作</th>
                             </tr>
                             </thead>
                             <tbody id="role-result">
