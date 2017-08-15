@@ -1,9 +1,11 @@
 /*
 /设备管理
  */
-layui.define(['layer', 'element','laypage','form'],function (exports){
+layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
+        form = layui.form(),
+        laytpl = layui.laytpl,
         laypage = layui.laypage,
         eTobody = $('#equipment-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
@@ -93,11 +95,55 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         });
         layer.full(index);
     };
+
+    /*设备因子事件*/
+    var efCheckEvt = function(){
+        var leftForm = $(".ef-left").find('.ef-checklist'),
+            rightForm = $(".ef-right").find('.ef-checklist');
+
+        /*因子列表，需要修改就改这里*/
+        var factorArray = ['单台设备总电流', 'A相电流', 'B相电流', 'C相电流', '单台设备总电压', 'A相电压',
+            'B相电压', 'C相电压', '单台设备总功率因素', 'A相功率因素', 'B相功率因素', 'C相功率因素'];
+
+        /*template*/
+        var leftTpl = $("#leftTpl").html();
+        var rightTpl = $("#rightTpl").html();
+
+        /*左边form*/
+        laytpl(leftTpl).render(factorArray, function(html){
+            leftForm.html(html) ;
+            form.render();
+            /*事件*/
+            var inputBoxes = leftForm.find(".layui-form-item"),
+                inputs = inputBoxes.find("input");
+            inputBoxes.find(".layui-form-checkbox").on('click',function () {
+                var index = $(this).parents(".layui-form-item").index();
+                rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
+                /*当前选中的元素*/
+                var checkedArray = [];
+                inputs.each(function () {
+                    if($(this).parent().find(".layui-form-checkbox").hasClass("layui-form-checked"))
+                        checkedArray.push($(this).attr('title'))
+                });
+                console.log(checkedArray);
+            });
+        });
+
+        /*右边form*/
+        laytpl(rightTpl).render(factorArray, function(html){
+            rightForm.html(html) ;
+            form.render("select");
+        });
+    };
+
+
+
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
         loadEquipmentData : loadEquipmentData,
-        addEquipmentWin : addEquipmentWin
+        addEquipmentWin : addEquipmentWin,
+        efCheckEvt : efCheckEvt
     };
     exports('equipmentMng',obj)
 })
