@@ -26,9 +26,9 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td style="text-align: center">' + item.roleName + '</td>' +
-                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '<td style="text-align: center">' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.roleMng.roleMngWin()">编辑</button></a>&nbsp;&nbsp;' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -51,9 +51,46 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             }
         })
     };
+    //权限配置窗口
+    var roleMngWin = function () {
+        var index = layer.open({
+            title : '权限配置',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/roleMng.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+    };
+    // var checkboxTree = function () {
+    //     var zTreeObj;
+    //     // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+    //     var setting = {
+    //         check : {
+    //             enable: true, //显示复选框
+    //             chkStyle : "checkbox"
+    //         }
+    //     };
+    //     // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+    //     var zNodes = [
+    //         {name:"功能权限配置", open:true, children:[
+    //             {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"系统管理",open:true,children:[
+    //                 {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
+    //             ]}]}
+    //     ];
+    //     $(document).ready(function(){
+    //         zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+    //     });
+    // };
     var obj = {
-        loadRoleData : loadRoleData
+        loadRoleData : loadRoleData,
+        roleMngWin : roleMngWin
     };
     /*输出内容，注意顺序*/
     exports('roleMng',obj)
-})
+});

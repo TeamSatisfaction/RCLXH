@@ -131,9 +131,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.createUser+ '</td>' +
                             '<td>' + item.createTime + '</td>' +
                             '<td>' + item.status + '</td>' +
-                            // '<td><a href="#"><i class="layui-icon">&#xe63c;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe620;</i></a>' +
-                            // '&nbsp;&nbsp;<a href="#"><i class="layui-icon">&#xe640;</i></a></td>' +
+                            '<td style="text-align: center">' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">编辑</button></a>&nbsp;&nbsp;' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });
