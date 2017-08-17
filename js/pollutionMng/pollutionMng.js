@@ -1,10 +1,11 @@
 /*
 /污染源
  */
-layui.define(['layer', 'element','laypage'],function (exports){
+layui.define(['layer', 'element','laypage','form'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
         laypage = layui.laypage,
+        form = layui.form(),
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
     var access_token = sessionStorage.getItem("access_token");

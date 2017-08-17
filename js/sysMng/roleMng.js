@@ -15,7 +15,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var str = "";
@@ -27,7 +26,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                             '<td>'+(index+1)+'</td>' +
                             '<td style="text-align: center">' + item.roleName + '</td>' +
                             '<td style="text-align: center">' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.roleMng.roleMngWin()">编辑</button></a>&nbsp;&nbsp;' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.roleMng.roleMngWin('+item.roleId+')">编辑</button></a>&nbsp;&nbsp;' +
                             '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '</tr>';
                         arr.push(str);
@@ -52,15 +51,20 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         })
     };
     //权限配置窗口
-    var roleMngWin = function () {
+    var roleMngWin = function (id) {
         var index = layer.open({
             title : '权限配置',
             type : 2,
+            id : id,
             moveOut: true,
             area : ['1000px','600px'],
             content : '../../pages/sysMng/roleMng.html',
             btn: ['提交', '返回'],
             btnAlign: 'c',
+            success: function(layero, index){
+                var id = $('.layui-layer-content').attr('id');
+
+            },
             yes : function (index) {
                 layer.msg('提交成功！', {icon: 1});
                 layer.close(index);

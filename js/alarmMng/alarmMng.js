@@ -397,7 +397,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     };
     //角色select点击事件
     form.on('select(select_role)', function(data){
-        console.log(data.value);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/'+data.value+'',
             headers: {
