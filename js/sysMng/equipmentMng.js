@@ -54,7 +54,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                             '<td>' + item.equipmentType + '</td>' +
                             '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">详情</button></a>'+
                             '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">修改</button></a>'+
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">因子</button></a>'+
+                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.equipmentMng.equipmentFactorWin()">因子</button></a>'+
                             '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>'+
                             '</tr>';
                         arr.push(str);
@@ -78,7 +78,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             }
         })
     };
-
+    //新增设备窗口
     var addEquipmentWin = function () {
         var index = layer.open({
             title : '新增设备',
@@ -95,7 +95,23 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         });
         layer.full(index);
     };
-
+    //配置因子窗口
+    var equipmentFactorWin = function () {
+        var index = layer.open({
+            title : '关联因子',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/equipmentFactorView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+        layer.full(index);
+    }
     /*设备因子事件*/
     var efCheckEvt = function(){
         var leftForm = $(".ef-left").find('.ef-checklist'),
@@ -143,6 +159,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         loadPage : loadPage,
         loadEquipmentData : loadEquipmentData,
         addEquipmentWin : addEquipmentWin,
+        equipmentFactorWin : equipmentFactorWin,
         efCheckEvt : efCheckEvt
     };
     exports('equipmentMng',obj)

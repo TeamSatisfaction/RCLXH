@@ -132,7 +132,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.createTime + '</td>' +
                             '<td>' + item.status + '</td>' +
                             '<td style="text-align: center">' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">编辑</button></a>&nbsp;&nbsp;' +
+                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.userMng.userRoleMngWin()">编辑</button></a>&nbsp;&nbsp;' +
                             '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '</tr>';
                         arr.push(str);
@@ -156,11 +156,26 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
+    var userRoleMngWin = function () {
+        var index = layer.open({
+            title : '权限配置',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/userRoleMng.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+    };
     var obj = {
         loadPage : loadPage,
         addUserWin : addUserWin,
-        // closeAddWin : closeAddWin,
-        loadUserData : loadUserData
+        loadUserData : loadUserData,
+        userRoleMngWin : userRoleMngWin
     };
     /*输出内容，注意顺序*/
     exports('userMng',obj)
