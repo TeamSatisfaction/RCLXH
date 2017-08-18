@@ -4,7 +4,7 @@
 .header>.time {  color: #008cee; position: absolute; right: 200px; line-height: 60px}
 .header>.layui-nav { right: 0px; position: absolute; background-color: transparent ;}
 
-.logo { width: 200px; height: 65px;  background: url("../img/切图/logo.png") center no-repeat; cursor: pointer; border-bottom: 1px white solid; background-color: rgb(104,159,242) !important; }
+.logo { width: 200px; height: 65px;  background: url("../img/firework/logo.png") center no-repeat; cursor: pointer; border-bottom: 1px white solid; background-color: rgb(104,159,242) !important; }
 /*颜色*/
 /*.layui-bg-black, .layui-nav{ background-color: #544d4e}*/
 /*.layui-bg-black, .layui-nav{ background-image: url("../img/index/left.png")}*/
@@ -33,24 +33,24 @@
 .side .layui-nav  { background-color: transparent }
 .side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px!important;  margin:0 6px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
-.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/切图/首页1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/切图/首页.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/切图/污染，核能1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/切图/污染，核能.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/切图/报警1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/切图/报警.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/切图/设备监测1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/切图/设备监测.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/切图/统计1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/统计.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/统计.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7)>a i{  background-image: url(../img/切图/系统管理1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7).layui-this>a i{  background-image: url(../img/切图/系统管理.png);  }
-#con_mng{background-image: url(../img/切图/系统管理.png)}
-/*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/切图/tongji.png);  }*/
-/*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/切图/tongji_1.png);  }*/
-/*.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/切图/guanli-.png);  }*/
-/*.side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/切图/guanli_1.png);  }*/
+.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/firework/首页1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/firework/首页.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/firework/污染，核能1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/firework/污染，核能.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/firework/报警1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/firework/报警.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/firework/设备监测1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/firework/设备监测.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/firework/统计1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/统计.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/统计.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7)>a i{  background-image: url(../img/firework/系统管理1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7).layui-this>a i{  background-image: url(../img/firework/系统管理.png);  }
+#con_mng{background-image: url(../img/firework/系统管理.png)}
+/*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/firework/tongji.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/firework/tongji_1.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/firework/guanli-.png);  }*/
+/*.side .layui-nav .layui-nav-item:nth-child(7).layui-this a i{  background-image: url(../img/firework/guanli_1.png);  }*/
 
 .side-hider { height: 45px; text-align: center; background-color:  rgb(104,159,242) !important}
 .side-hider i{ line-height: 45px; font-size: 30px; color: white}
@@ -63,19 +63,19 @@
 .side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:rgba(244,249,252, 1); color: #999999; /*background-image: url("../img/index/choose.png"); */  }
 .side .layui-nav .layui-nav-item .layui-nav-child dd.layui-this a:hover{ color:#999999; background-color:rgba(244,249,252, 1); }
 /*左侧树二级菜单图标*/
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/系统管理-切图/企业管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/系统管理-切图/监测站管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/系统管理-切图/设备管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/系统管理-切图/联网管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/系统管理-切图/用户管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/系统管理-切图/角色管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/mng/企业管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/mng/监测站管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/mng/设备管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/mng/联网管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/mng/用户管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/mng/角色管理_1.png); }
 /*左侧树二级菜单选中图标*/
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1).layui-this i { background-image: url(../img/系统管理-切图/企业管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2).layui-this i { background-image: url(../img/系统管理-切图/监测站管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3).layui-this i { background-image: url(../img/系统管理-切图/设备管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4).layui-this i { background-image: url(../img/系统管理-切图/联网管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5).layui-this i { background-image: url(../img/系统管理-切图/用户管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6).layui-this i { background-image: url(../img/系统管理-切图/角色管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1).layui-this i { background-image: url(../img/mng/企业管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2).layui-this i { background-image: url(../img/mng/监测站管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3).layui-this i { background-image: url(../img/mng/设备管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4).layui-this i { background-image: url(../img/mng/联网管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5).layui-this i { background-image: url(../img/mng/用户管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6).layui-this i { background-image: url(../img/mng/角色管理.png); }
 
 
     /*.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}*/
@@ -225,11 +225,11 @@ tr .align-right{width:120px;text-align: right}
 
 #verify_image{ width: 170px; height: 36px; }
 
-.search{background-image:url(../img/切图/search.png);  position:absolute;  width:30px;  height:30px;  top:4px;  left:150px;  z-index:99;cursor:pointer}
+.search{background-image:url(../img/firework/search.png);  position:absolute;  width:30px;  height:30px;  top:4px;  left:150px;  z-index:99;cursor:pointer}
 
 .listTitle{ margin: 7px 0;font-size: 20px}
 
-.alarm-icon{background-image: url(../img/切图/baojing1.png)}
+.alarm-icon{background-image: url(../img/firework/baojing1.png)}
 
 /*水质自动站*/
 .waterBorder{height:100%;border-color:#e2e2e2;border-style:solid; border-width:1px;margin: 0; box-sizing: border-box}
@@ -316,23 +316,23 @@ tr .align-right{width:120px;text-align: right}
 .panel_box a{display:block; background-color:#f2f2f2; border-radius:5px; overflow:hidden; }
 .panel_icon{ width:40%; display: inline-block; padding:22px 0; background-color:#54ade8;float:left;}
 .panel_icon i{ font-size:3em; color:#fff; background-position: center; background-repeat: no-repeat; display: inline-block; width: 100%;}
-.panel_box .panel:nth-child(1) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
-.panel_box .panel:nth-child(2) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
-.panel_box .panel:nth-child(3) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
-.panel_box .panel:nth-child(4) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
+.panel_box .panel:nth-child(1) .panel_icon i{ background-image: url('../img/firework/总数.png'); }
+.panel_box .panel:nth-child(2) .panel_icon i{ background-image: url('../img/firework/关闭.png'); }
+.panel_box .panel:nth-child(3) .panel_icon i{ background-image: url('../img/firework/新增.png'); }
+.panel_box .panel:nth-child(4) .panel_icon i{ background-image: url('../img/firework/未处理.png'); }
 
 .panel a:hover .panel_icon i{ display:inline-block; transform:rotate(360deg); -webkit-transform:rotate(360deg); -moz-transform:rotate(360deg); -o-transform:rotate(360deg); -ms-transform:rotate(360deg);}
 .panel_word{ width:60%; display: inline-block; float:right; margin-top: 22px; }
 .panel_word span{ font-size:25px; display:block; height:30px; line-height:30px; }
 .panel_box a cite{ font-size:16px; display: block; font-style:normal; }
 
-.num-icon{background-image: url(../img/切图/总数.png)}
-.alarm-icon{background-image: url(../img/切图/baojing1.png)}
-.alarm-icon{background-image: url(../img/切图/baojing1.png)}
-.alarm-icon{background-image: url(../img/切图/baojing1.png)}
+.num-icon{background-image: url(../img/firework/总数.png)}
+.alarm-icon{background-image: url(../img/firework/baojing1.png)}
+.alarm-icon{background-image: url(../img/firework/baojing1.png)}
+.alarm-icon{background-image: url(../img/firework/baojing1.png)}
 
-.com-content #com_chart{ height: 100%; width: calc(100% - 620px); float: left;}
-.com-content #com_fac{ height: 100%; width: 600px; float: right;  border-left: 1px solid #ccc}
+.com-content #alarm_chart{ height: 100%; width: calc(100% - 620px); float: left;}
+.com-content #alarm_pie{ height: 100%; width: 600px; float: right;  border-left: 1px solid #ccc}
 .com-content #com_chart1{ height: calc(100% - 20px); width: calc(100% - 620px); float: left;}
 .com-content #com_fac1{ height: calc(100% - 20px); width: 600px; float: right;  border-left: 1px solid #ccc}
 
