@@ -23,59 +23,66 @@
     </script>
     <title>Title</title>
 </head>
-<body>
+<body id="alarm_data_view">
     <fieldset class="layui-elem-field">
         <legend>报警详情</legend>
-        <div>
-            <table class="layui-table layui-inline"  lay-skin="nob">
+        <div class="field-content">
+            <table class="layui-table layui-inline" lay-even>
+                <colgroup>
+                    <col width="10">
+                    <col>
+                    <col width="10">
+                    <col>
+                </colgroup>
                 <tbody>
                 <tr>
                     <td class="align-right">报警类型：</td>
                     <td id="alarmType1">通讯中断报警</td>
-                </tr>
-                <tr>
+                <!--</tr>-->
+                <!--<tr>-->
                     <td class="align-right">报警等级：</td>
                     <td id="alarmLevel1">3级</td>
                 </tr>
                 <tr>
                     <td class="align-right">报警时间：</td>
                     <td id="alarmTime1" >2017-07-06 16:24:00</td>
-                </tr>
-                <tr>
+                <!--</tr>-->
+                <!--<tr>-->
                     <td class="align-right">企业名称：</td>
                     <td id="enterpriseName1">重庆建设雅马哈摩托车有限公司</td>
                 </tr>
                 <tr>
                     <td class="align-right">行政区域：</td>
                     <td >荣昌区</td>
-                </tr>
-                <tr>
-                    <td class="align-right ">报警事件描述：</td>
-                    <td id="remark1">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
-                </tr>
-                <tr>
+                <!--</tr>-->
+                <!--<tr>-->
                     <td class="align-right">报警状态：</td>
                     <td id="status1"></td>
                 </tr>
+                <tr>
+                    <td class="align-right ">报警事件描述：</td>
+                    <td id="remark1" colspan="3">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
+                </tr>
                 </tbody>
             </table>
+            <div class="chart"></div>
         </div>
-        <div class="layui-footer" style="width: 100%;height:39px;left: 0;text-align: center">
-            <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.dealAlarmWin()">
+        <div class="layui-footer" style="">
+            <button class="layui-btn layui-btn-gray" onclick="layui.alarmMng.dealAlarmWin()">
                 处理
             </button>
             <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.closeAlarmWin()">
                 关闭
             </button>
-            <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.reportAlarmWin()">
+            <button class="layui-btn layui-btn-warm" onclick="layui.alarmMng.reportAlarmWin()">
                 上报
             </button>
         </div>
     </fieldset>
-    <fieldset class="layui-elem-field layui-field-title">
+    <fieldset class="layui-elem-field">
         <legend>报警轨迹</legend>
         <div class="layui-field-box">
-            <table class="layui-table" lay-even="" lay-skin="nob">
+            <table class="layui-table" lay-even="" lay-skin="">
                 <colgroup>
                     <col width="60">
                     <col width="200">

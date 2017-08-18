@@ -336,6 +336,15 @@ tr .align-right{width:120px;text-align: right}
 .com-content #com_chart1{ height: calc(100% - 20px); width: calc(100% - 620px); float: left;}
 .com-content #com_fac1{ height: calc(100% - 20px); width: 600px; float: right;  border-left: 1px solid #ccc}
 
+/*报警详情*/
+#alarm_data_view fieldset { margin: 10px; padding: 10px; box-sizing: border-box; }
+#alarm_data_view fieldset:nth-child(1) .field-content { position: relative; }
+#alarm_data_view fieldset:nth-child(1) .field-content table { width: 50%; }
+#alarm_data_view fieldset:nth-child(1) .field-content .chart { background-color: wheat; position: absolute; right: 10px; top: 10px; bottom: 10px; width: calc(50% - 20px) }
+#alarm_data_view fieldset:nth-child(1) .layui-footer { width: 100%;height:39px;left: 0;text-align: center }
+#alarm_data_view fieldset:nth-child(1) .layui-footer button { width: 150px; }
+.layui-btn-gray { background-color: rgb(221,221,221); color: black}
+
 /*.index_commend{position: fixed;bottom: 0;width: 100%;left:0;background-color:white;border:1px solid #d8e7fa}*/
 /*#ef .waterBorder{ float: left }*/
 /*#ef .waterBorder .layui-tab{ height: calc(100% - 40px); margin:0; }*/
