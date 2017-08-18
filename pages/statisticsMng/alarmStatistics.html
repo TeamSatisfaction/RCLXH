@@ -4,22 +4,26 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <!--<link href="../../css/iconfont.css" rel="stylesheet">-->
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/highcharts/highcharts.js"></script>
+    <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
     <script>
         layui.config({
-            base: '../../js/sysMng/' //你的模块目录
+            base: '../../js/statisticsMng/' //你的模块目录
         }).extend({
-            roleMng : 'roleMng'
-        }).use('roleMng')
+            alarmStatistics : 'alarmStatistics'
+        }).use('alarmStatistics',function () {
+            layui.alarmStatistics.loadPie();
+            layui.alarmStatistics.loadaCharts();
+        })
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body class="layui-layout-admin" style="margin: 20px 10px 0;height: calc(100% - 20px)">
     <div class="panel_box row">
         <div class="panel col">
-            <a href="javascript:;" data-url="pages/statisticsMng/alarmStatisticsList.html">
+            <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon">
                     <i class="layui-icon">&nbsp;</i>
                 </div>
@@ -30,7 +34,7 @@
             </a>
         </div>
         <div class="panel col">
-            <a href="javascript:;" data-url="page/user/message.html">
+            <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#FF5722;">
                     <i class="layui-icon" data-icon="">&nbsp;</i>
                 </div>
@@ -41,7 +45,7 @@
             </a>
         </div>
         <div class="panel col">
-            <a href="javascript:;" data-url="page/user/allUsers.html">
+            <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#009688;">
                     <i class="layui-icon" data-icon="">&nbsp;</i>
                 </div>
@@ -52,7 +56,7 @@
             </a>
         </div>
         <div class="panel col max_panel">
-            <a href="javascript:;" data-url="page/news/newsList.html">
+            <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#2F4056;">
                     <i class="layui-icon" data-icon="">&nbsp;</i>
                 </div>
@@ -64,8 +68,8 @@
         </div>
     </div>
     <div class="com-content" style="height: calc(100% - 120px)">
-        <div id="com_chart"></div>
-        <div id="com_fac"></div>
+        <div id="alarm_chart"></div>
+        <div id="alarm_pie"></div>
     </div>
 </body>
 </html>

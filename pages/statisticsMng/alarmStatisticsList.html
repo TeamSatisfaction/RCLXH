@@ -3,8 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/statisticsMng/' //你的模块目录
+        }).extend({
+            alarmStatistics : 'alarmStatistics'
+        }).use('alarmStatistics')
+                .link('../../css/style.css'); //加载入口
+    </script>
 </head>
 <body>
-
+    <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+        <div style="margin: 10px">
+            <div class="layui-form-item" style="margin: 5px 0;">
+                <div class="layui-input-inline" style="float: right">
+                    <input id="name" name="name"  autocomplete="off" placeholder="请输入企业名称" class="layui-input" type="text">
+                    <div class="search" onclick=""></div>
+                </div>
+            </div>
+            <table class="layui-table" lay-even="" lay-skin="row">
+                <colgroup>
+                    <col width="60">
+                    <col>
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="180">
+                    <col width="200">
+                </colgroup>
+                <thead>
+                <tr>
+                    <th>序号</th>
+                    <th>企业名称</th>
+                    <th>报警总数</th>
+                    <th>报警关闭总数</th>
+                    <th>本月新增数</th>
+                    <th>长期未处理数</th>
+                    <th>报警关闭率</th>
+                </tr>
+                </thead>
+                <tbody id="company-list">
+                </tbody>
+            </table>
+            <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+                <div class="layui-input-inline" style="float: right">
+                    <div id="demo1"></div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

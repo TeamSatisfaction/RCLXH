@@ -8,7 +8,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         upload = layui.upload(),
         form = layui.form(),
         aTobody = $('#alarm-result');
-        // tTobody = $('#trail-result');
     var access_token = sessionStorage.getItem("access_token");
     var urlConfig = sessionStorage.getItem("urlConfig");
     //当前时间
@@ -72,9 +71,20 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     // initTimeSelect();
 
     //报警列表
-    var loadAlarmData = function (curr) {
-        var alarmType = $('#alarmType').val(),
-            startTime = $('#startTime').val(),
+    var loadAlarmData = function (curr,alarmType) {
+        console.log(alarmType);
+        switch (alarmType){
+            case "在线监测报警":
+                alarmType = 'detection_alarm'
+                break;
+            case "设备工况报警":
+                alarmType = 'working_alarm'
+                break;
+            case "视频分析报警":
+                alarmType = 'video_alarm'
+                break;
+        }
+        var startTime = $('#startTime').val(),
             endTime = $('#endTime').val(),
             status = $('#status').val(),
             data = {
@@ -102,18 +112,15 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     var arr = []
                         , thisData = aData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        if(item.alarmType == 'detection_alarm'){
-                            item.alarmType = '在线监控报警'
-                        }
                         switch (item.alarmType){
                             case "detection_alarm":
-                                item.alarmType = '在线监控报警'
+                                item.alarmType = '在线监测报警'
                                 break;
                             case "video_alarm":
-                                item.alarmType = '视频报警'
+                                item.alarmType = '视频分析报警'
                                 break;
                             case "working_alarm":
-                                item.alarmType = '工况报警'
+                                item.alarmType = '设备工况报警'
                                 break;
                         }
                        switch (item.status){
@@ -134,7 +141,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             '<td>' + item.ruleName + '</td>' +
                             '<td>' + item.alarmType+ '</td>' +
                             '<td>' + item.status + '</td>' +
-                            '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin('+item.alarmId+')">详情</button></td>' +
+                            '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')">详情</button></td>' +
                             '</tr>';
                         arr.push(str);
                     });
@@ -159,6 +166,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     };
     //报警详情窗口
     var  alarmDetailsWin = function (e){
+        console.log(e);
         var index = layer.open({
             title : '报警详情',
             type : 2,
