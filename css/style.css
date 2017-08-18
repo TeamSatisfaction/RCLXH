@@ -41,8 +41,11 @@
 .side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/切图/报警.png);  }
 .side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/切图/设备监测1.png);  }
 .side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/切图/设备监测.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/切图/系统管理1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/系统管理.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/切图/统计1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/统计.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/切图/统计.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7)>a i{  background-image: url(../img/切图/系统管理1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7).layui-this>a i{  background-image: url(../img/切图/系统管理.png);  }
 #con_mng{background-image: url(../img/切图/系统管理.png)}
 /*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/切图/tongji.png);  }*/
 /*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/切图/tongji_1.png);  }*/
@@ -275,7 +278,7 @@ tr .align-right{width:120px;text-align: right}
 .company-online-monitor .layui-btn-group .layui-btn:hover{ color: #00a5dd; background-color: rgba(0,165,221,0.1)}
 .company-online-monitor .layui-btn-group .layui-btn.active{ color: #00a5dd; background-color: rgba(0,165,221,0.1)}
 .company-online-monitor .com-content,.ces-content{ width: calc(100% - 32px); padding: 16px;}
-.company-online-monitor .com-content #com_chart{ height: 600px; width: calc(100% - 420px); float: left; background-color: tan }
+.company-online-monitor .com-content #com_chart{ height: 600px; width: calc(100% - 420px); float: left;}
 .company-online-monitor .com-content #com_fac{ height: 600px; width: 400px; float: right; border-left: 1px solid #ccc}
 .company-online-monitor .ces-content #ces_table{ width: calc(100% - 470px); float: left; }
 .company-online-monitor .ces-content #ces_pie{ height: 450px; width: 450px; float: right; background-color: tan }
@@ -304,6 +307,31 @@ tr .align-right{width:120px;text-align: right}
 #ef .ef-right b { width: 160px; display: inline-block; text-align: right }
 #ef .required { font-size: 30px; margin-bottom: -20px; position:relative; top:6px; }
 
+
+/*统计分析*/
+.row,.col,.panel_word,.panel_icon{ box-sizing:border-box; -webkit-box-sizing:border-box; -moz-box-sizing:border-box; -o-box-sizing:border-box;}
+.row{ margin-left:-10px; overflow:hidden;}
+.col{ padding-left:10px;}
+.panel{float: left; text-align: center; width:25%; min-width:210px; margin-bottom: 10px;}
+.panel_box a{display:block; background-color:#f2f2f2; border-radius:5px; overflow:hidden; }
+.panel_icon{ width:40%; display: inline-block; padding:22px 0; background-color:#54ade8;float:left;}
+.panel_icon i{ font-size:3em; color:#fff;}
+.panel a:hover .panel_icon i{ display:inline-block; transform:rotate(360deg); -webkit-transform:rotate(360deg); -moz-transform:rotate(360deg); -o-transform:rotate(360deg); -ms-transform:rotate(360deg);}
+.panel_word{ width:60%; display: inline-block; float:right; margin-top: 22px; }
+.panel_word span{ font-size:25px; display:block; height:30px; line-height:30px; }
+.panel_box a cite{ font-size:16px; display: block; font-style:normal; }
+
+.num-icon{background-image: url(../img/切图/总数.png)}
+.alarm-icon{background-image: url(../img/切图/baojing1.png)}
+.alarm-icon{background-image: url(../img/切图/baojing1.png)}
+.alarm-icon{background-image: url(../img/切图/baojing1.png)}
+
+.com-content #com_chart{ height: 100%; width: calc(100% - 620px); float: left;}
+.com-content #com_fac{ height: 100%; width: 600px; float: right;  border-left: 1px solid #ccc}
+.com-content #com_chart1{ height: calc(100% - 20px); width: calc(100% - 620px); float: left;}
+.com-content #com_fac1{ height: calc(100% - 20px); width: 600px; float: right;  border-left: 1px solid #ccc}
+
+/*.index_commend{position: fixed;bottom: 0;width: 100%;left:0;background-color:white;border:1px solid #d8e7fa}*/
 /*#ef .waterBorder{ float: left }*/
 /*#ef .waterBorder .layui-tab{ height: calc(100% - 40px); margin:0; }*/
 /*#ef .waterBorder .layui-tab .layui-tab-content{ height: calc(100% - 60px); }*/
@@ -312,10 +340,6 @@ tr .align-right{width:120px;text-align: right}
 /*!*#wqs .waterBorder:nth-child(1) .water_inner{ overflow-y: scroll;  }*!*/
 /*!*#wqs .waterBorder:nth-child(1) .water_inner tbody{ overflow-y: scroll; height: calc(100% - 75px - 300px)  }*!*/
 /*#ef .waterBorder:nth-child(2){ width: calc(100% - 265px); margin-left: 5px; }*/
-
-
-
-
 
 /*img{*/
     /*border: 0;*/

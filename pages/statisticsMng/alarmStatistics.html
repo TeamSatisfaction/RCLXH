@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <!--<link href="../../css/iconfont.css" rel="stylesheet">-->
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            roleMng : 'roleMng'
+        }).use('roleMng')
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body class="layui-layout-admin" style="margin: 20px 10px 0;height: calc(100% - 20px)">
+    <div class="panel_box row">
+        <div class="panel col">
+            <a href="javascript:;" data-url="pages/statisticsMng/alarmStatisticsList.html">
+                <div class="panel_icon">
+                    <i class="layui-icon" data-icon=""></i>
+                </div>
+                <div class="panel_word newMessage">
+                    <span>5</span>
+                    <cite>报警总数</cite>
+                </div>
+            </a>
+        </div>
+        <div class="panel col">
+            <a href="javascript:;" data-url="page/user/message.html">
+                <div class="panel_icon" style="background-color:#FF5722;">
+                    <i class="layui-icon" data-icon=""></i>
+                </div>
+                <div class="panel_word userAll">
+                    <span>3</span>
+                    <cite>已关闭报警总数</cite>
+                </div>
+            </a>
+        </div>
+        <div class="panel col">
+            <a href="javascript:;" data-url="page/user/allUsers.html">
+                <div class="panel_icon" style="background-color:#009688;">
+                    <i class="layui-icon" data-icon=""></i>
+                </div>
+                <div class="panel_word userAll">
+                    <span>3</span>
+                    <cite>本月新增报警总数</cite>
+                </div>
+            </a>
+        </div>
+        <div class="panel col max_panel">
+            <a href="javascript:;" data-url="page/news/newsList.html">
+                <div class="panel_icon" style="background-color:#2F4056;">
+                    <i class="layui-icon" data-icon=""></i>
+                </div>
+                <div class="panel_word allNews">
+                    <span>30</span>
+                    <cite>长期未处理报警总数</cite>
+                </div>
+            </a>
+        </div>
+    </div>
+    <div class="com-content" style="height: calc(100% - 120px)">
+        <div id="com_chart"></div>
+        <div id="com_fac"></div>
+    </div>
+</body>
+</html>

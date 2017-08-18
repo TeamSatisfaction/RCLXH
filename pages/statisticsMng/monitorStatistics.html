@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" style="height: 100%">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            roleMng : 'roleMng'
+        }).use('roleMng')
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body style="margin:20px 10px 0;height: calc(100% - 20px)">
+    <div class="layui-layout-admin company-equip-sit" style="height: 100%">
+    <div class="com-content" style="height: 100%">
+        <div id="com_chart1">
+            <form class="layui-form" lay-filter="test" action="" style="margin-top: 16px;">
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">年份：</label>
+                    <div class="layui-input-inline">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option value="2017">2017</option>
+                            <option value="2016">2016</option>
+                            <option value="2015">2015</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item layui-inline">
+                    <label class="layui-form-label">类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="modules" lay-verify="required" lay-search="">
+                            <option value="2017">废水</option>
+                        </select>
+                    </div>
+                </div><div class="layui-form-item layui-inline">
+                <label class="layui-form-label">污染物：</label>
+                <div class="layui-input-inline">
+                    <select name="modules" lay-verify="required" lay-search="">
+                        <option value="2017">COD</option>
+                        <option value="2016">六价铬</option>
+                        <option value="2015">氨氮</option>
+                    </select>
+                </div>
+            </div>
+                <div class="layui-btn layui-btn-normal" style="margin-top: -14px;">
+                    <i class="layui-icon">&#xe615;</i>
+                    <span>查询</span>
+                </div>
+            </form>
+        </div>
+        <div id="com_fac1"></div>
+    </div>
+</div>
+</body>
+</html>
