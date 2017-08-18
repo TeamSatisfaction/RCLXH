@@ -315,7 +315,12 @@ tr .align-right{width:120px;text-align: right}
 .panel{float: left; text-align: center; width:25%; min-width:210px; margin-bottom: 10px;}
 .panel_box a{display:block; background-color:#f2f2f2; border-radius:5px; overflow:hidden; }
 .panel_icon{ width:40%; display: inline-block; padding:22px 0; background-color:#54ade8;float:left;}
-.panel_icon i{ font-size:3em; color:#fff;}
+.panel_icon i{ font-size:3em; color:#fff; background-position: center; background-repeat: no-repeat; display: inline-block; width: 100%;}
+.panel_box .panel:nth-child(1) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
+.panel_box .panel:nth-child(2) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
+.panel_box .panel:nth-child(3) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
+.panel_box .panel:nth-child(4) .panel_icon i{ background-image: url('../img/index/baojing_1.png'); }
+
 .panel a:hover .panel_icon i{ display:inline-block; transform:rotate(360deg); -webkit-transform:rotate(360deg); -moz-transform:rotate(360deg); -o-transform:rotate(360deg); -ms-transform:rotate(360deg);}
 .panel_word{ width:60%; display: inline-block; float:right; margin-top: 22px; }
 .panel_word span{ font-size:25px; display:block; height:30px; line-height:30px; }
