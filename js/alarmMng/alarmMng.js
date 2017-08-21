@@ -133,6 +133,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                            case "2":
                                item.status = '已处罚'
                                break;
+                           case "3":
+                               item.status = '已关闭'
+                               break;
                        }
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
@@ -166,7 +169,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     };
     //报警详情窗口
     var  alarmDetailsWin = function (e){
-        console.log(e);
         var index = layer.open({
             title : '报警详情',
             type : 2,
@@ -212,6 +214,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         break;
                     case "2":
                         result.status = '已处罚'
+                        break;
+                    case "3":
+                        result.status = '已关闭'
                         break;
                 }
                 if(result.status != 0){

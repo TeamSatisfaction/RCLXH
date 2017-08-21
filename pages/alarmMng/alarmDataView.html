@@ -26,12 +26,12 @@
 <body id="alarm_data_view">
     <fieldset class="layui-elem-field">
         <legend>报警详情</legend>
-        <div class="field-content">
-            <table class="layui-table layui-inline" lay-even>
+        <div class="field-content" style="margin: 0 10px">
+            <table class="layui-table" lay-even>
                 <colgroup>
-                    <col width="10">
+                    <col width="40">
                     <col>
-                    <col width="10">
+                    <col width="40">
                     <col>
                 </colgroup>
                 <tbody>
@@ -61,18 +61,18 @@
                 </tr>
                 <tr>
                     <td class="align-right ">报警事件描述：</td>
-                    <td id="remark1" colspan="3">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
+                    <td id="remark1" colspan="3">未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%未接收到数采仪上传的数据，通讯中断报警，本月企业在线率为:98.53%</td>
                 </tr>
                 </tbody>
             </table>
             <div class="chart"></div>
         </div>
-        <div class="layui-footer" style="">
-            <button class="layui-btn layui-btn-gray" onclick="layui.alarmMng.dealAlarmWin()">
-                处理
-            </button>
+        <div class="layui-footer" style="text-align: center">
             <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.closeAlarmWin()">
                 关闭
+            </button>
+            <button class="layui-btn layui-btn-gray" onclick="layui.alarmMng.dealAlarmWin()">
+                处理
             </button>
             <button class="layui-btn layui-btn-warm" onclick="layui.alarmMng.reportAlarmWin()">
                 上报

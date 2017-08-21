@@ -298,9 +298,24 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         console.log("2");
         loadFactor(data.value);
     });
+    //日报
+    var dailyWin = function () {
+        var win= layer.open({
+            type: 2
+            ,title: '日报'
+            ,content : '../../pages/waterQualitySite/dailyWin.html'
+            ,btn: ['返回']
+            ,btnAlign: 'c'
+            ,success : function (index, layero) {
+
+            }
+        });
+        layer.full(win);
+    }
     var obj = {
         loadMSData : loadMSData,
-        loadChartForSite : loadChartForSite
+        loadChartForSite : loadChartForSite,
+        dailyWin : dailyWin
     };
     /*输出内容，注意顺序*/
     exports('waterQualitySiteMng',obj)

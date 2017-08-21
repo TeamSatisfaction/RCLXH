@@ -16,7 +16,6 @@
         }).extend({
             waterQualitySiteMng : 'waterQualitySiteMng'
         }).use('waterQualitySiteMng',function () {
-//            layui.waterQualitySiteMng.chart();
             layui.waterQualitySiteMng.loadMSData("1",'实时监测数据');
         }); //加载入口
     </script>
@@ -34,16 +33,16 @@
             <div class="water_bot">
                 <h3>报表</h3>
                 <div class="water_bot_group">
-                    <div class="water_bot_item">
-                        <img src="../../img/index/wuranyuan_1.png">
+                    <div class="water_bot_item" onclick="layui.waterQualitySiteMng.dailyWin()">
+                        <img src="../../img/firework/日报.png">
                         <p>日报</p>
                     </div>
                     <div class="water_bot_item">
-                        <img src="../../img/index/wuranyuan_1.png">
+                        <img src="../../img/firework/周报.png">
                         <p>周报</p>
                     </div>
                     <div class="water_bot_item">
-                        <img src="../../img/index/wuranyuan_1.png">
+                        <img src="../../img/firework/月报.png">
                         <p>月报</p>
                     </div>
                 </div>
@@ -123,43 +122,8 @@
             </div>
         </div>
     </div>
-    <!--<div style="width: 19%;" class="layui-inline waterBorder">-->
-        <!--<div class="water_divider">报表</div>-->
-        <!--<div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">-->
-            <!--<ul class="layui-tab-title">-->
-                <!--<li class="layui-this" lay-id="日报" >日报</li>-->
-                <!--<li lay-id="月报">月报</li>-->
-                <!--<li lay-id="年报">年报</li>-->
-            <!--</ul>-->
-            <!--<div class="layui-tab-content">-->
-                <!--<div class="layui-tab-item layui-show" >-->
-                    <!--&lt;!&ndash;<table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 5px">&ndash;&gt;-->
-                        <!--&lt;!&ndash;<colgroup>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<col>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</colgroup>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<thead>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<tr>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>时间</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>在线率</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>废水排放量</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>废气排放量</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>电导率</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>关键设备运行时间</th>&ndash;&gt;-->
-                            <!--&lt;!&ndash;<th>能耗</th>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</tr>&ndash;&gt;-->
-                        <!--&lt;!&ndash;</thead>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<tbody id="report-result">&ndash;&gt;-->
-                        <!--&lt;!&ndash;</tbody>&ndash;&gt;-->
-                    <!--&lt;!&ndash;</table>&ndash;&gt;-->
-                <!--</div>-->
-            <!--</div>-->
-        <!--</div>-->
-    <!--</div>-->
+    <!--日报-->
+    <!--周报-->
+    <!--月报-->
 </body>
 </html>

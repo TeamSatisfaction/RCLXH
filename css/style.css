@@ -208,7 +208,7 @@ tr .align-right{width:120px;text-align: right}
 /*登陆页面*/
 #login_bg{ position: fixed; top: 0; bottom: 0; right: 0; left: 0;
     /*background-color: #61baf3*/
-    background-image: url('../img/login-bg.jpg'); background-repeat: no-repeat; background-size: cover;
+    background-image: url('../img/login.png'); background-repeat: no-repeat; background-size: cover;
 }
 #login_container{ background-color: rgba(0,0,0,0.3); text-align: center; display: none; padding: 16px;}
 #login_container h1{ line-height: 2em; font-size: 24px; padding: 0 20px; font-weight: bold; color: white; text-shadow: #5d5f62 0px 0px 2px; letter-spacing: 3px; }
@@ -339,11 +339,12 @@ tr .align-right{width:120px;text-align: right}
 /*报警详情*/
 #alarm_data_view fieldset { margin: 10px; padding: 10px; box-sizing: border-box; }
 #alarm_data_view fieldset:nth-child(1) .field-content { position: relative; }
-#alarm_data_view fieldset:nth-child(1) .field-content table { width: 50%; }
-#alarm_data_view fieldset:nth-child(1) .field-content .chart { background-color: wheat; position: absolute; right: 10px; top: 10px; bottom: 10px; width: calc(50% - 20px) }
+#alarm_data_view fieldset:nth-child(1) .field-content table { width: 60%; }
+#alarm_data_view fieldset:nth-child(1) .field-content table td{ height: 40px; }
+#alarm_data_view fieldset:nth-child(1) .field-content .chart { background-color: wheat; position: absolute; right: 10px; top: 0px; bottom: 0px; width: calc(40% - 20px) }
 #alarm_data_view fieldset:nth-child(1) .layui-footer { width: 100%;height:39px;left: 0;text-align: center }
 #alarm_data_view fieldset:nth-child(1) .layui-footer button { width: 150px; }
-.layui-btn-gray { background-color: rgb(221,221,221); color: black}
+/*.layui-btn-gray { background-color: rgb(221,221,221); color: black}*/
 
 /*.index_commend{position: fixed;bottom: 0;width: 100%;left:0;background-color:white;border:1px solid #d8e7fa}*/
 /*#ef .waterBorder{ float: left }*/
