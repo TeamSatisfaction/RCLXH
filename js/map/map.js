@@ -157,14 +157,17 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             //     text: Fname,
             //     x: 20
             // },
-            // xAxis: {
-            //     categories : []
-            //     ,labels : {
-            //         style : {
-            //             color: '#000000'
-            //         }
-            //     }
-            // },
+            xAxis: {
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%H:%M:%S'
+                },
+                labels : {
+                    formatter : function () {
+                        return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                    }
+                }
+            },
             tooltip: {
                 valueSuffix: 'mg/L'
             },
@@ -204,20 +207,16 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             }]
         };
         var chart = new Highcharts.chart('mapStats_Line', option);
-        var date = new Date();
-        var seperator2 = ":";
-        // var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-        // var newPoint = {
-        //     x: x,
-        //     y: data
-        // };
-        var newPoint = {
-            x: date.getSeconds(),
-            y: 62
-        };
+
         var i = 0;
         $('#button').click(function () {
-            console.log(newPoint);
+            var date = new Date();
+            var seperator2 = ":";
+            var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+            var newPoint = {
+                x: date,
+                y: 62
+            };
             // 第三个参数表示是否删除第一个点
             chart.series[0].addPoint(newPoint, true, false);
             i += 1;

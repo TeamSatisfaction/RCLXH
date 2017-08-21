@@ -17,8 +17,9 @@
             base: '../../js/' //你的模块目录
         }).extend({ //设定模块别名
             map : 'map/map',
+            utils : 'utils',
             alarmMng : 'alarmMng/alarmMng'
-        }).use(['map','alarmMng'], function () {
+        }).use(['map','alarmMng', 'utils'], function () {
             layui.map.loadCompanySelect();
             layui.map.loadMonthlydata();
 //            layui.map.loadChartForSite();
