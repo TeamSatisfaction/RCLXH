@@ -62,7 +62,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             type: 'post',
             data: field,
             success: function (result) {
-                console.log(result.data.list);
+                // console.log(result.data.list);
                 var list = result.data.list;
                 if(list != null){
                     for(var i in list){
@@ -75,7 +75,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
                             type = enterpriseRole;
                         addPoint(pt, type, true, {});
                     }
-                    console.log(graphicLayer)
+                    // console.log(graphicLayer)
                     map.addLayer(graphicLayer);
                 }
             }

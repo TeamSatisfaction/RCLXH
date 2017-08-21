@@ -2,7 +2,8 @@
  项目JS主入口
  以依赖Layui的layer和form模块为例
  **/
-sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8095');
+// sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8095');
+sessionStorage.setItem("urlConfig", 'http://192.168.30.238:8095');
 // sessionStorage.setItem("urlConfig", 'http://192.168.1.135:8095');
 layui.define(['layer', 'form', 'element'], function(exports){
     var $ = layui.jquery,
@@ -60,3 +61,4 @@ layui.define(['layer', 'form', 'element'], function(exports){
 
     exports('app', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });
+

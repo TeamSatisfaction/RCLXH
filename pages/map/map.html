@@ -6,11 +6,11 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <link rel="stylesheet" href="../../js/lib/arcgis/esri/css/esri.css">
-
     <script src="../../js/lib/arcgis/init.js"></script>
     <script src="../../js/lib/highcharts/highcharts.js"></script>
     <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
     <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/stomp.js"></script>
     <script>
         layui
         .config({
@@ -21,6 +21,7 @@
         }).use(['map','alarmMng'], function () {
             layui.map.loadCompanySelect();
             layui.map.loadMonthlydata();
+//            layui.map.loadChartForSite();
         }).link('../../css/style.css'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -51,7 +52,12 @@
                             </div>
                             <div class="layui-input-inline">
                                 <select name="ExitName" lay-verify="" lay-search id="d_select" lay-filter="d_select">
-                                    <option value="">--选择排口--</option>
+                                    <option value="">--选择数采仪--</option>
+                                </select>
+                            </div>
+                            <div class="layui-input-inline">
+                                <select name="EquipmentName" lay-verify="" lay-search id="e_select" lay-filter="e_select">
+                                    <option value="">--选择设备--</option>
                                 </select>
                             </div>
                             <div class="layui-input-inline">
@@ -67,10 +73,9 @@
                     </div>
                     <!--统计组件-->
                     <div>
-                        <div class="mapStats_statsTitle">重庆市荣昌区江特表面处理厂</div>
+                        <div class="mapStats_statsTitle"></div>
                         <div class="mapStats_statsStatus">
-                            <span>排口名称：后营门污水排放口</span>
-                            <span>排口状态：正常</span>
+                            <button id="button" class="autocompare">新增点</button>
                         </div>
                         <div class="mapStats_statsCharts" id="mapStats_Line"></div>
                     </div>

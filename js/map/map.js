@@ -102,32 +102,69 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         Highcharts.chart('mapStats_3dPie', option);
     }
     draw3dPie();
-
-    /*曲线图*/
-    function drawLine() {
-        var now = new Date(),
-            today = new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-            data = [];
-        for(var i = today.getTime(); i < now.getTime(); i += 300000){
-            var t = new Date(i);
-            data.push([Date.UTC(t.getFullYear(), t.getMonth(), t.getDate(), t.getHours(), t.getMinutes(), t.getSeconds()), Math.round(Math.random()*20)])
+    var loadChartForSite = function(code,Fname,Cname,mn){
+        var websocket = null;
+        //判断当前浏览器是否支持WebSocket
+        if('WebSocket' in window){
+            websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
         }
+        else{
+            alert('Not support websocket')
+        }
+        //连接发生错误的回调方法
+        websocket.onerror = function(){
+            setMessageInnerHTML("error");
+        };
+        //连接成功建立的回调方法
+        websocket.onopen = function(event){
+            setMessageInnerHTML("open");
+        }
+        //接收到消息的回调方法
+        websocket.onmessage = function(event){
+            setMessageInnerHTML(event.data);
+        }
+        //连接关闭的回调方法
+        websocket.onclose = function(){
+            setMessageInnerHTML("close");
+        }
+        //将消息显示在网页上
+        function setMessageInnerHTML(innerHTML){
+            var obj = JSON.parse(innerHTML);
+            if(obj.mn == mn){
+                var dataAreas = [],
+                    dataAreas = obj.dataAreas;
+                for(var i in dataAreas){
+                    if(dataAreas[i].xcode == code){
+                        // drawLine(Fname,Cname,dataAreas[i].xrtd);
+                    }
+                }
+            }
+        }
+    };
+    /*曲线图*/
+    function drawLine(Fname,Cname,data) {
+        $('.mapStats_statsTitle').html(Cname);
         var option = {
             chart: {
                 type: 'spline',
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
-                text: '化学需氧量(mg/L)'
+                // text: Fname
+                text: "1"
             },
-            xAxis: {
-                categories : ["15:47:03", "15:47:13", "15:47:23", "15:47:33", "15:47:43", "15:47:53", "15:48:03", "15:48:13", "15:48:23", "15:48:33", "15:48:44", "15:48:59"]
-                ,labels : {
-                    style : {
-                        color: '#000000'
-                    }
-                }
-            },
+            // subtitle: {
+            //     text: Fname,
+            //     x: 20
+            // },
+            // xAxis: {
+            //     categories : []
+            //     ,labels : {
+            //         style : {
+            //             color: '#000000'
+            //         }
+            //     }
+            // },
             tooltip: {
                 valueSuffix: 'mg/L'
             },
@@ -161,23 +198,43 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 enabled: false
             },
             series: [{
-                name: '化学需氧量',
-                data: [6.67, 6.51, 6.11, 6.79, 6.95, 6.39, 6.47, 6.59, 6.63, 6.79, 6.55, 6.95]
+                // name: Fname,
+                name: "1",
+                data: []
             }]
         };
-        Highcharts.chart('mapStats_Line', option);
+        var chart = new Highcharts.chart('mapStats_Line', option);
+        var date = new Date();
+        var seperator2 = ":";
+        // var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+        // var newPoint = {
+        //     x: x,
+        //     y: data
+        // };
+        var newPoint = {
+            x: date.getSeconds(),
+            y: 62
+        };
+        var i = 0;
+        $('#button').click(function () {
+            console.log(newPoint);
+            // 第三个参数表示是否删除第一个点
+            chart.series[0].addPoint(newPoint, true, false);
+            i += 1;
+        });
+        // chart.series[0].addPoint(newPoint,true,false);
     }
-    setInterval(function(){drawLine()}, 30000)
+    // setInterval(function(){drawLine()}, 30000)
     drawLine();
 
     /*新报警提示*/
-    function showNotification() {
-        $(".notification").slideDown();
-    }
-    function closeNotification() {
-        $(".notification").slideUp();
-    }
-    setInterval('layui.map.showNotification()', 1000);
+    // function showNotification() {
+    //     $(".notification").slideDown();
+    // }
+    // function closeNotification() {
+    //     $(".notification").slideUp();
+    // }
+    // setInterval('layui.map.showNotification()', 5000);
 
     //企业select
     function loadCompanySelect() {
@@ -195,10 +252,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type: 'post',
             data: field,
             success: function (result) {
-                console.log(result);
                 var list = result.data.list;
+                $("#c_select").empty();
                 if(list == null){
-                    $("#c_select").empty();
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");
                 }else {
                     for(var i in list){
@@ -206,16 +262,17 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
                 form.render('select');
+                loadDauSelect(list[0].baseEnterpriseId,list[0].name);
             }
         })
     };
-    //排口select
-    function loadDauSelect(id){
+    //根据企业查询数采仪
+    function loadDauSelect(Cid,Cname){
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             dauMap : {
-                epId : id
+                epId : Cid
             }
         };
         var field = JSON.stringify(data);
@@ -231,26 +288,64 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 var row = result.data.rows;
                 $("#d_select ").empty();
                 if(row == null){
-                    $("#d_select").append("<option value='' selected='selected'>无排口</option>");
+                    $("#d_select").append("<option value='' selected='selected'>无数采仪</option>");
+                    $("#e_select").empty();
+                    $("#e_select").append("<option value='' selected='selected'>无设备</option>");
                     $("#f_select").empty();
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
-                    $("#d_select").append("<option value='' selected='selected'>选择排口</option>");
+                    // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
                     for(var i in row){
                         $("#d_select").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
                     }
                 }
                 form.render('select');
+                loadEquipment(row[0].id,Cname,row[0].mn);
             }
         })
     };
-    //因子select
-    function loadFactorSelect(id) {
+    //根据数采仪查询设备
+    var loadEquipment = function (Did,Cname,mn) {
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            equipmentMap : {
+                dauId : Did
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                $("#e_select").empty();
+                if(row == null){
+                    $("#e_select").append("<option value='' selected='selected'>无设备</option>");
+                    $("#f_select").empty();
+                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in row){
+                        $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                    }
+                }
+                form.render('select');
+                loadFactorSelect(row[0].id,Cname,mn);
+            }
+        })
+    };
+    //根据设备查询因子select
+    function loadFactorSelect(Fid,Cname,mn) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             factorMap : {
-                equipmentId : '402880905cf30410015cf30933370015'
+                equipmentId : Fid
             }
         };
         var field = JSON.stringify(data);
@@ -269,12 +364,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
-                    $("#f_select").append("<option value='' selected='selected'>监测因子</option>");
+                    // $("#f_select").append("<option value='' selected='selected'>监测因子</option>");
                     for(var i in row){
                         $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
                 }
                 form.render('select');
+                loadChartForSite(row[0].factorCode,row[0].factorName,Cname,mn)
             }
         })
     }
@@ -284,9 +380,11 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     });
     //数采仪select change事件
     form.on('select(d_select)', function(data){
-        var id = '402880905cf30410015cf30933370015';
-        // loadFactorSelect(data.value);
-        loadFactorSelect(id);
+        loadEquipment(data.value);
+    });
+    //设备select change事件
+    form.on('select(e_select)', function(data){
+        loadFactorSelect(data.value);
     });
     //环境统计list
     function loadMonthlydata() {
@@ -314,7 +412,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 endDate = year+'-12-31 23:59:59'
                 break;
         }
-        console.log(currQuarter,beginDate,endDate);
         var data = {
             beginDate : beginDate,
             endDate : endDate
@@ -340,7 +437,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     result.e211M = 0;
                     result.e210L = 0;
                 }
-                console.log(result);
                 str = '<tr><td>六价铬</td><td></td><td>'+result.e207I+'</td></tr>' +
                     '<tr><td>COD</td><td></td><td>'+result.e202B+'</td></tr>' +
                     '<tr><td>氨氮</td><td></td><td>'+result.e203F+'</td></tr>' +
@@ -351,14 +447,16 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 m_tobody.html(str);
             }
         })
-    }
+    };
+
     //输出test接口
     exports('map', {
         btnClick : btnClick,
         loadPage: loadPage,
         close: close,
-        showNotification:showNotification,
-        closeNotification:closeNotification,
+        // showNotification:showNotification,
+        // closeNotification:closeNotification,
+        loadChartForSite : loadChartForSite,
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,
         loadFactorSelect : loadFactorSelect,
