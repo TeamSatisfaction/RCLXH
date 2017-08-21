@@ -144,7 +144,8 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             '<td>' + item.ruleName + '</td>' +
                             '<td>' + item.alarmType+ '</td>' +
                             '<td>' + item.status + '</td>' +
-                            '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')">详情</button></td>' +
+                            // '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')">详情</button></td>' +
+                            '<td style="text-align: center"><a href="#" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')" title="详情"><img src="../../img/mng/查看详情.png"></a></td>' +
                             '</tr>';
                         arr.push(str);
                     });

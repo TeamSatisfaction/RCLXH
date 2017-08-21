@@ -48,10 +48,12 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">详情</button></a>'+
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.detailCompanyWin()">修改</button></a>'+
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')">规则</button></a>' +
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.deleteCompany()">删除</button></a></td>'+
+                            '<td><a href="#" onclick="layui.companyMng.detailCompanyWin()" title="详情"><img src="../../img/mng/查看详情.png"></a>'+
+                            '&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.detailCompanyWin()" title="修改"><img src="../../img/mng/修改.png"></a>'+
+                            '&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')" title="报警规则"><img src="../../img/mng/修改.png"></a>'+
+                            '&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompany()" title="删除"><img src="../../img/mng/修改.png"></a>'+
+                            // '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')">规则</button></a>' +
+                            // '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.companyMng.deleteCompany()">删除</button></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
