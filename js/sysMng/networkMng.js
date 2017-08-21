@@ -50,9 +50,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.mn + '</td>' +
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.epName + '</td>' +
-                            '<td style="text-align: center">' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">设备管理</button></a>&nbsp;&nbsp;' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
+                            '<td style="text-align: center">'+
+                            '<a href="#" onclick="" title="配置设备"><img src="../../img/mng/配置.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });

@@ -50,9 +50,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.headPhone+ '</td>' +
                             '<td>' + item.lon + '</td>' +
                             '<td>' + item.lat + '</td>' +
-                            '<td><a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">详情</button></a>'+
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">修改</button></a>'+
-                            '&nbsp;&nbsp;<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>'+
+                            '<td style="text-align: center">'+
+                            '<a href="#" onclick="layui.MSMng.alterMSWin()" title="修改"><img src="../../img/mng/修改.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -123,6 +123,31 @@ layui.define(['layer','element','laypage','form'],function (exports){
         });
         return false;
     });
+    //修改
+    var alterMSWin = function () {
+        layer.open({
+            title : '修改监控站',
+            type : 2,
+            area : ['800px','500px'],
+            content : '../../pages/sysMng/addMsView.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            success: function(layero,index){
+                form.render();
+                //表单验证
+                // form.verify({
+                //     threshold : function (value) {
+                //         if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
+                //             return '只能输入1~24的整数';
+                //         }
+                //     }
+                // });
+            },
+            yes  : function (index,layero) {
+                layero.find("iframe").contents().find('#ms-save').click();
+            }
+        })
+    }
     //关闭窗口
     // var closeAddWin = function () {
     //     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
