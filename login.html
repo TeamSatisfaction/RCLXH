@@ -17,8 +17,8 @@
 </head>
 <body class="main_body">
     <div id="login_container">
-        <h1>荣昌区环保物联网在线监控平台</h1>
-        <h1>登陆</h1>
+        <!--<h1>荣昌区环保物联网在线监控平台</h1>-->
+        <!--<h1>登陆</h1>-->
         <form class="layui-form">
             <div class="layui-form-item">
                 <input autocomplete="off" placeholder="用户名"  class="layui-input" type="text" name="username" lay-verify="required">
@@ -29,10 +29,11 @@
             <div class="layui-form-item">
                 <input type="text" id="verify" name="verify" placeholder="验证码" maxlength="4" class="layui-input layui-input-inline" lay-verify="required">
                 <div id="verify_image" class="layui-inline"></div>
+                <a id="verify_change">(看不清，换一张)</a>
             </div>
             <div class="layui-footer">
-                <div class="layui-btn layui-btn-normal">
-                    注册
+                <div id="login_reset" class="layui-btn layui-btn-normal">
+                    重置
                 </div>
                 <div id="login_btn" class="layui-btn layui-btn-normal" lay-filter="formDemo">
                     登陆
@@ -40,7 +41,17 @@
             </div>
         </form>
     </div>
-    <div id="login_bg"></div>
+    <div id="login_bg">
+        <h1><img src="img/水.png">荣昌区物联网在线监控平台</h1>
+        <div class="login-footer">
+            <h3>
+                <a>客服QQ：2828365330</a>
+                <a>版权所有：荣昌区环境保护局</a>
+                <a>客服电话：023-88521036</a>
+            </h3>
+            <h3>建议使用Internet Explorer 8.0以上浏览器或360浏览器</h3>
+        </div>
+    </div>
 
 </body>
 </html>

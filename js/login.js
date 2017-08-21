@@ -35,13 +35,27 @@ layui.define(['layer', 'form', 'element'], function(exports){
         ,moveType: 1 //拖拽模式，0或者1
         ,success: function(layero){
             initVerify();
+            /*登陆*/
             $('#login_btn').click(function(){
                 if(verify()){
                     loginAction();
                 } else {
                     layer.msg('验证码输入有误');
                     verifyCode.refresh();
+                    $('#verify').val('');
                 }
+            });
+            /*重置*/
+            $('#login_reset').click(function () {
+                verifyCode.refresh();
+                $('input[name="username"]').val('');
+                $('input[name="password"]').val('');
+                $('#verify').val('');
+            });
+            /*看不清换一张*/
+            $('#verify_change').click(function () {
+                verifyCode.refresh();
+                $('#verify').val('');
             })
         }
     });
