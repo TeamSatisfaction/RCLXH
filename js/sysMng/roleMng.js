@@ -25,9 +25,12 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td style="text-align: center">' + item.roleName + '</td>' +
-                            '<td style="text-align: center">' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.roleMng.roleMngWin('+item.roleId+')">编辑</button></a>&nbsp;&nbsp;' +
-                            '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
+                            // '<td style="text-align: center">' +
+                            // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.roleMng.roleMngWin('+item.roleId+')">编辑</button></a>&nbsp;&nbsp;' +
+                            // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
+                            '<td style="text-align: center">'+
+                            '<a href="#" onclick="layui.roleMng.roleMngWin('+item.roleId+')" title="编辑"><img src="../../img/mng/配置.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
