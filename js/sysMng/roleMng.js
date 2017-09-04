@@ -63,12 +63,12 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             btn: ['提交', '返回'],
             btnAlign: 'c',
             success: function(layero, index){
-                tree();
                 var id = $('.layui-layer-content').attr('id'),
                 winFrame = layero.find("iframe")[0].contentWindow,
                 iLayui = winFrame.layui;
-                console.log(zTreeObj);
 
+                tree(winFrame);
+                loadRoleStore(id);
             },
             yes : function (index) {
                 layer.msg('提交成功！', {icon: 1});
@@ -76,8 +76,10 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             }
         });
     };
-    var tree = function () {
-        var zTreeObj;
+
+    var zTreeObj; //zTree对象
+
+    var tree = function (winFrame) {
         // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
         var setting = {
             check : {
@@ -92,15 +94,13 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
                 ]}]}
         ];
-        console.log($.fn);
-        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        zTreeObj = winFrame.jQuery.fn.zTree.init($("#treeDemo"), setting, zNodes);
     };
     // 加载权限
     var loadRoleStore = function (id) {
-        // var zTree = $.fn.zTree.getZTreeObj($("#treeDemo"));
-        // console.log(zTree);
+        console.log(zTreeObj);
     };
-    loadRoleStore();
+
     var obj = {
         loadRoleData : loadRoleData,
         roleMngWin : roleMngWin
