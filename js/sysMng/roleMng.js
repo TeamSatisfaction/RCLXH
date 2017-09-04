@@ -66,7 +66,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 var id = $('.layui-layer-content').attr('id'),
                 winFrame = layero.find("iframe")[0].contentWindow,
                 iLayui = winFrame.layui;
-
                 tree(winFrame);
                 loadRoleStore(id);
             },
@@ -76,9 +75,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             }
         });
     };
-
     var zTreeObj; //zTree对象
-
     var tree = function (winFrame) {
         // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
         var setting = {

@@ -208,7 +208,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             area : ['1200px','700px'],
             content : '../../pages/sysMng/companyDataView.html',
             btn: [ '返回'],
-            btnAlign: 'c'
+            btnAlign: 'c',
+            success: function(layero, index){
+                console.log(layero);
+            }
         });
         layer.full(index);
     };
