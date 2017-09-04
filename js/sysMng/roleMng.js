@@ -1,3 +1,4 @@
+
 layui.define(['layer','element','laypage','form'],function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
@@ -62,7 +63,11 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             btn: ['提交', '返回'],
             btnAlign: 'c',
             success: function(layero, index){
-                var id = $('.layui-layer-content').attr('id');
+                tree();
+                var id = $('.layui-layer-content').attr('id'),
+                winFrame = layero.find("iframe")[0].contentWindow,
+                iLayui = winFrame.layui;
+                console.log(zTreeObj);
 
             },
             yes : function (index) {
@@ -70,6 +75,25 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 layer.close(index);
             }
         });
+    };
+    var tree = function () {
+        var zTreeObj;
+        // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
+        var setting = {
+            check : {
+                enable: true, //显示复选框
+                chkStyle : "checkbox"
+            }
+        };
+        // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+        var zNodes = [
+            {name:"功能权限配置", open:true, children:[
+                {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"系统管理",open:true,children:[
+                    {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
+                ]}]}
+        ];
+        console.log($.fn);
+        zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
     };
     // 加载权限
     var loadRoleStore = function (id) {
@@ -84,22 +108,3 @@ layui.define(['layer','element','laypage','form'],function (exports) {
     /*输出内容，注意顺序*/
     exports('roleMng',obj)
 });
-var tree = function () {
-    var zTreeObj;
-    // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
-    var setting = {
-        check : {
-            enable: true, //显示复选框
-            chkStyle : "checkbox"
-        }
-    };
-    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
-    var zNodes = [
-        {name:"功能权限配置", open:true, children:[
-            {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"系统管理",open:true,children:[
-                {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
-            ]}]}
-    ];
-    zTreeObj = $.fn.zTree.init($("#treeDemo"), setting, zNodes);
-};
-tree();

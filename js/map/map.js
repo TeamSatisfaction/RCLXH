@@ -113,18 +113,19 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             initChart();
             needRefresh = false;
         }
-        Fname =  $("#f_select").text(),
-        Cname = $("#c_select").text(),
-        code = $("#f_select").val(),
+        Fname =  $("#f_select").find("option:selected").text(),
+        Cname = $("#c_select").find("option:selected").text(),
+        code = $("#f_select").val();
+        $('.mapStats_statsTitle').html(Cname);
         mn =  $("#d_option")[0].getAttribute('data-mn');
-        // $('.mapStats_statsTitle').html(Cname);
+        // console.log(mn);
     };
     var loadChartForSite = function(){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
-            // websocket = new WebSocket("ws://127.0.0.1:8095/websocket");
+            // websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
+            websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -148,7 +149,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            console.log(mn,code);
+            // console.log(mn,code);
             if(obj.mn == mn){
                 var dataAreas = [],
                     dataAreas = obj.dataAreas;
@@ -180,14 +181,10 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
             },
-            // tooltip : {
-            //     dateTimeLabelFormats: {
-            //         day: '%H:%M:%S'
-            //     },
-            //     formatter: function(){
-            //         return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-            //     }
-            // },
+            tooltip : {
+                xDateFormat: '%H:%M:%S',
+                shared: true
+            },
             yAxis: {
                 title: {
                     text: '',
@@ -199,20 +196,20 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     style : {
                         color: '#000000'
                     }
-                },
-                plotLines: [{
-                    value: 60,
-                    dashStyle:'ShortDash',
-                    width: 3,
-                    color: 'red',
-                    label: {
-                        text: '阈值',
-                        align: 'center',
-                        style: {
-                            color: 'gray'
-                        }
-                    }
-                }]
+                }
+                // ,plotLines: [{
+                //     value: 60,
+                //     dashStyle:'ShortDash',
+                //     width: 3,
+                //     color: 'red',
+                //     label: {
+                //         text: '阈值',
+                //         align: 'center',
+                //         style: {
+                //             color: 'gray'
+                //         }
+                //     }
+                // }]
             },
             legend: {
                 enabled: false
@@ -227,14 +224,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         };
         chart = new Highcharts.chart('mapStats_Line', option);
     }
-    initChart();
     /*曲线图*/
     function drawLine(data) {
         // if(!chart)
         var date = new Date();
         var seperator2 = ":";
-        var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-        console.log(date,data);
+        // var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+        // console.log(date,data);
         var newPoint = {
             x: date,
             y: data
@@ -317,6 +313,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     $("#e_select").append("<option value='' selected='selected'>无设备</option>");
                     $("#f_select").empty();
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                    code = '';
+                    Fname = '';
+                    mn = '';
                 }else{
                     // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
                     for(var i in row){
@@ -385,13 +384,11 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type: 'post',
             data: field,
             success: function (result){
-                // console.log(result);
                 var row = result.data.rows;
                 $("#f_select").empty();
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
-                    // $("#f_select").append("<option value='' selected='selected'>监测因子</option>");
                     for(var i in row){
                         $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
@@ -400,6 +397,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 code=row[0].factorCode;
                 Fname=row[0].factorName;
                 needRefresh = true;
+                initChart();
             }
         })
     }
@@ -413,7 +411,40 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     });
     //设备select change事件
     form.on('select(e_select)', function(data){
-        loadFactorSelect(data.value);
+        var Fid = data.value;
+        // loadFactorSelect(data.value);
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            factorMap : {
+                equipmentId : Fid
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                var row = result.data.rows;
+                $("#f_select").empty();
+                if(row == null){
+                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in row){
+                        $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+                    }
+                }
+                form.render('select');
+                code=row[0].factorCode;
+                Fname=row[0].factorName;
+                needRefresh = true;
+            }
+        })
     });
     //环境统计list
     function loadMonthlydata() {
