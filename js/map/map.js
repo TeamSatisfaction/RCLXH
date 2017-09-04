@@ -3,7 +3,13 @@
  */
 layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示：模块也可以依赖其它模块，如：layui.define('layer', callback);
     var $ = layui.jquery,
-        form = layui.form();
+        form = layui.form(),
+        chart,
+        needRefresh = true,
+        code,
+        Fname,
+        Cname,
+        mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
     layui.link('../../css/style.css');
     /*加载JS模块*/
@@ -102,11 +108,23 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         Highcharts.chart('mapStats_3dPie', option);
     }
     draw3dPie();
-    var loadChartForSite = function(code,Fname,Cname,mn){
+    var searchCharts = function () {
+        if(needRefresh || !chart){
+            initChart();
+            needRefresh = false;
+        }
+        Fname =  $("#f_select").text(),
+        Cname = $("#c_select").text(),
+        code = $("#f_select").val(),
+        mn =  $("#d_option")[0].getAttribute('data-mn');
+        // $('.mapStats_statsTitle').html(Cname);
+    };
+    var loadChartForSite = function(){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
+            // websocket = new WebSocket("ws://127.0.0.1:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -130,33 +148,27 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
+            console.log(mn,code);
             if(obj.mn == mn){
                 var dataAreas = [],
                     dataAreas = obj.dataAreas;
                 for(var i in dataAreas){
                     if(dataAreas[i].xcode == code){
-                        // drawLine(Fname,Cname,dataAreas[i].xrtd);
+                        drawLine(dataAreas[i].xrtd);
                     }
                 }
             }
         }
     };
-    /*曲线图*/
-    function drawLine(Fname,Cname,data) {
-        $('.mapStats_statsTitle').html(Cname);
+    function initChart(){
         var option = {
             chart: {
                 type: 'spline',
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
-                // text: Fname
-                text: "1"
+                text: Fname
             },
-            // subtitle: {
-            //     text: Fname,
-            //     x: 20
-            // },
             xAxis: {
                 type: 'datetime',
                 dateTimeLabelFormats: {
@@ -168,9 +180,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
             },
-            tooltip: {
-                valueSuffix: 'mg/L'
-            },
+            // tooltip : {
+            //     dateTimeLabelFormats: {
+            //         day: '%H:%M:%S'
+            //     },
+            //     formatter: function(){
+            //         return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+            //     }
+            // },
             yAxis: {
                 title: {
                     text: '',
@@ -184,12 +201,12 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 },
                 plotLines: [{
-                    value: 6.9,
+                    value: 60,
                     dashStyle:'ShortDash',
                     width: 3,
                     color: 'red',
                     label: {
-                        text: '报警值',
+                        text: '阈值',
                         align: 'center',
                         style: {
                             color: 'gray'
@@ -201,39 +218,45 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 enabled: false
             },
             series: [{
-                // name: Fname,
-                name: "1",
-                data: []
+                name: Fname,
+                data: [],
+                marker: {
+                    enabled: true
+                }
             }]
         };
-        var chart = new Highcharts.chart('mapStats_Line', option);
-
-        var i = 0;
-        $('#button').click(function () {
-            var date = new Date();
-            var seperator2 = ":";
-            var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-            var newPoint = {
-                x: date,
-                y: 62
-            };
-            // 第三个参数表示是否删除第一个点
-            chart.series[0].addPoint(newPoint, true, false);
-            i += 1;
-        });
-        // chart.series[0].addPoint(newPoint,true,false);
+        chart = new Highcharts.chart('mapStats_Line', option);
     }
-    // setInterval(function(){drawLine()}, 30000)
-    drawLine();
+    initChart();
+    /*曲线图*/
+    function drawLine(data) {
+        // if(!chart)
+        var date = new Date();
+        var seperator2 = ":";
+        var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+        console.log(date,data);
+        var newPoint = {
+            x: date,
+            y: data
+        };
+        // 第三个参数表示是否删除第一个点
+        var seriesData = chart.series[0].data;
+        if(seriesData.length < 12){
+            chart.series[0].addPoint(newPoint, true, false);
+        }else {
+            chart.series[0].addPoint(newPoint, true, true);
+        }
+    }
 
     /*新报警提示*/
-    // function showNotification() {
-    //     $(".notification").slideDown();
-    // }
-    // function closeNotification() {
-    //     $(".notification").slideUp();
-    // }
-    // setInterval('layui.map.showNotification()', 5000);
+    function showNotification() {
+        $(".notification").slideDown();
+        setTimeout('layui.map.closeNotification()', 5000)
+    }
+    function closeNotification() {
+        $(".notification").slideUp();
+    }
+    setInterval('layui.map.showNotification()', 10000);
 
     //企业select
     function loadCompanySelect() {
@@ -262,11 +285,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 }
                 form.render('select');
                 loadDauSelect(list[0].baseEnterpriseId,list[0].name);
+                Cname = list[0].name;
+                $('.mapStats_statsTitle').html(Cname);
             }
         })
     };
     //根据企业查询数采仪
-    function loadDauSelect(Cid,Cname){
+    function loadDauSelect(Cid){
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -295,16 +320,17 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 }else{
                     // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
                     for(var i in row){
-                        $("#d_select").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
+                        $("#d_select").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
                 }
                 form.render('select');
-                loadEquipment(row[0].id,Cname,row[0].mn);
+                loadEquipment(row[0].id,row[0].mn);
+                mn = row[0].mn;
             }
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (Did,Cname,mn) {
+    var loadEquipment = function (Did) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -333,13 +359,15 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
                 }
+                $('#e_select').find('option').eq(6).attr('selected', true)
+                // console.log($("#e_select")[6]);
                 form.render('select');
-                loadFactorSelect(row[0].id,Cname,mn);
+                loadFactorSelect(row[6].id);
             }
         })
     };
     //根据设备查询因子select
-    function loadFactorSelect(Fid,Cname,mn) {
+    function loadFactorSelect(Fid) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -369,7 +397,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
                 form.render('select');
-                loadChartForSite(row[0].factorCode,row[0].factorName,Cname,mn)
+                code=row[0].factorCode;
+                Fname=row[0].factorName;
+                needRefresh = true;
             }
         })
     }
@@ -453,8 +483,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         btnClick : btnClick,
         loadPage: loadPage,
         close: close,
-        // showNotification:showNotification,
-        // closeNotification:closeNotification,
+        showNotification:showNotification,
+        closeNotification:closeNotification,
+        searchCharts : searchCharts,
         loadChartForSite : loadChartForSite,
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,

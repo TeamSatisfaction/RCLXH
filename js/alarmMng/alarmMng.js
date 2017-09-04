@@ -220,7 +220,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         result.status = '已关闭'
                         break;
                 }
-                if(result.status != 0){
+                if(result.status != "未处理"){
                     body.contents().find(".layui-btn").addClass('layui-btn-disabled');
                     body.contents().find(".layui-btn").attr('disabled','disabled');
                 }
@@ -429,6 +429,38 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             }
         })
     });
+    var loadaCharts = function () {
+        var option = {
+            chart: {
+                type : 'line'
+            },
+            title: {
+                text: '实时监测数据'
+            },
+            xAxis: {
+                categories : ["22:34:01","22:34:11","22:34:21","22:34:31"]
+            },
+            tooltip: {
+                valueSuffix: 'mg/L'
+            },
+            yAxis: {
+                title: {
+                    text: 'mg/L'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'COD',
+                data: [6,6.5,6.7,5.2]
+            }]
+        };
+        Highcharts.chart('alarmChart', option);
+    };
     var obj = {
         loadPage : loadPage,
         loadAlarmData : loadAlarmData,
@@ -436,7 +468,8 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         loadAlarmDetails : loadAlarmDetails,
         reportAlarmWin : reportAlarmWin,
         closeAlarmWin : closeAlarmWin,
-        dealAlarmWin : dealAlarmWin
+        dealAlarmWin : dealAlarmWin,
+        loadaCharts : loadaCharts
     };
     exports('alarmMng',obj);
 })

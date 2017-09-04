@@ -22,7 +22,7 @@
         }).use(['map','alarmMng', 'utils'], function () {
             layui.map.loadCompanySelect();
             layui.map.loadMonthlydata();
-//            layui.map.loadChartForSite();
+            layui.map.loadChartForSite();
         }).link('../../css/style.css'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -66,7 +66,7 @@
                                     <option value="">--监测因子--</option>
                                 </select>
                             </div>
-                            <button class="layui-btn layui-btn-normal">
+                            <button class="layui-btn layui-btn-normal" onclick="layui.map.searchCharts()">
                                 <i class="layui-icon">&#xe615;</i>
                                 查询
                             </button>
@@ -75,9 +75,9 @@
                     <!--统计组件-->
                     <div>
                         <div class="mapStats_statsTitle"></div>
-                        <div class="mapStats_statsStatus">
-                            <button id="button" class="autocompare">新增点</button>
-                        </div>
+                        <!--<div class="mapStats_statsStatus">-->
+                            <!--<button id="button" class="autocompare">新增点</button>-->
+                        <!--</div>-->
                         <div class="mapStats_statsCharts" id="mapStats_Line"></div>
                     </div>
                     <!--告警组件-->
@@ -93,19 +93,19 @@
                         <div class="mapStats_alarmNews">
                             <ul>
                                 <li>
-                                    <span>2017-07-26 04:17:12</span>
-                                    <span>企业名称</span>
-                                    <span>规则名称</span>
+                                    <span>2017-08-22  08:22:00</span>
+                                    <span>水质自动站</span>
+                                    <span>COD持续超标3小时</span>
                                 </li>
                                 <li>
-                                    <span>2017-07-26 04:17:02</span>
-                                    <span>企业名称</span>
-                                    <span>规则名称</span>
+                                    <span>2017-08-22  09:10:08</span>
+                                    <span>重庆昌元化工集团有限公司</span>
+                                    <span>提升泵1号设备停运时长达到24小时</span>
                                 </li>
                                 <li>
-                                    <span>2017-07-26 03:52:40</span>
-                                    <span>企业名称</span>
-                                    <span>规则名称</span>
+                                    <span>2017-08-22 10:30:17</span>
+                                    <span>重庆长江装备器材有限公司</span>
+                                    <span>生化池正在爆气</span>
                                 </li>
                             </ul>
                         </div>

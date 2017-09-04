@@ -86,11 +86,100 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         });
         layer.full(index);
     };
+    /*3D饼图*/
+    var draw3dPie = function() {
+        var option = {
+            chart: {
+                type: 'pie',
+                options3d: {
+                    enabled: true,
+                    alpha: 60,
+                    beta: 0
+                },
+                backgroundColor: 'rgba(0,0,0,0)'
+            },
+            credits: {enabled: false},
+            title: {text: '设备能耗统计'},
+            tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
+            plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    depth: 20,
+                    dataLabels: {
+                        enabled: true,
+                        format: '{point.name}'
+                    }
+                }
+            },
+            series: [{
+                type: 'pie',
+                name: '设备能耗占比',
+                data: [
+                    ['混排废水提升泵',   45.0],
+                    ['含镍废水提升泵',   26.8],
+                    ['含铬废水提升泵',   26.8],
+                    ['综合废水提升泵',   8.5],
+                    ['前处理废水提升泵',   6.2],
+                    ['生化鼓风机',   0.7]
+                ]
+            }]
+        };
+        Highcharts.chart('ces_pie1', option);
+    };
+    //监测详情曲线图
+    var loadaCharts = function () {
+        var option = {
+            chart: {
+                type : 'line'
+            },
+            title: {
+                text: '实时监测数据'
+            },
+            xAxis: {
+                categories : ["22:34:01","22:34:11","22:34:21","22:34:31"]
+            },
+            tooltip: {
+                valueSuffix: 'mg/L'
+            },
+            yAxis: {
+                title: {
+                    text: 'mg/L'
+                }
+                // plotLines: [{
+                //     value: 6.9,
+                //     dashStyle:'ShortDash',
+                //     width: 3,
+                //     color: 'red',
+                //     label: {
+                //         text: '报警值',
+                //         align: 'center',
+                //         style: {
+                //             color: 'gray'
+                //         }
+                //     }
+                // }]
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'COD',
+                data: [6,6.5,6.7,5.2]
+            }]
+        };
+        Highcharts.chart('com_chart1', option);
+    };
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
         loadCompanyData : loadCompanyData,
-        detailCompanyWin : detailCompanyWin
+        detailCompanyWin : detailCompanyWin,
+        draw3dPie :  draw3dPie,
+        loadaCharts : loadaCharts
     };
     exports('pollutionMng',obj)
 })

@@ -465,8 +465,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         });
         return value;
     };
-
-
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,

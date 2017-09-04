@@ -51,7 +51,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.epName + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="" title="配置设备"><img src="../../img/mng/配置.png"></a>'+
+                            '<a href="#" onclick="layui.networkMng.alterEquipmentWin()" title="配置设备"><img src="../../img/mng/配置.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
                             '</tr>';
                         arr.push(str);
@@ -148,13 +148,66 @@ layui.define(['layer','element','laypage','form'],function (exports){
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
     };
-
+    //新增设备窗口
+    var addEquipmentWin = function () {
+        var index = layer.open({
+            title : '新增设备',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/addEquipmentView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+        layer.full(index);
+    };
+    //编辑设备窗口
+    var alterEquipmentWin = function () {
+        var index = layer.open({
+            title : '编辑设备信息',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/bindEquipmentView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+        layer.full(index);
+    };
+    //配置因子窗口
+    var equipmentFactorWin = function () {
+        var index = layer.open({
+            title : '关联因子',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/equipmentFactorView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index) {
+                layer.msg('提交成功！', {icon: 1});
+                layer.close(index);
+            }
+        });
+        layer.full(index);
+    }
     var obj = {
         loadPage : loadPage,
         loadNetWorkData : loadNetWorkData,
         addNetworkWin : addNetworkWin,
         closeAddWin : closeAddWin,
-        loadCompanySelect : loadCompanySelect
+        loadCompanySelect : loadCompanySelect,
+        addEquipmentWin : addEquipmentWin,
+        alterEquipmentWin : alterEquipmentWin,
+        equipmentFactorWin : equipmentFactorWin
     };
     /*输出内容，注意顺序*/
     exports('networkMng',obj)

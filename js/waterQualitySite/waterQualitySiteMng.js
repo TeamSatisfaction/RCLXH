@@ -2,83 +2,108 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     var $ = layui.jquery,
         form = layui.form(),
         element = layui.element(),
-        msTobody = $('#water_list');
+        msTobody = $('#water_list'),
+        chart,
+        needRefresh = true,
+        code,
+        Fname,
+        Cname,
+        mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
-    // var start = {
-    //     istime: true
-    //     ,format: 'YYYY-MM-DD hh:mm:ss'
-    //     ,issure: true
-    // };
-    // var end = {
-    //     istime: true
-    //     ,format: 'YYYY-MM-DD hh:mm:ss'
-    //     ,issure: true
-    // };
-    // document.getElementById('startTime1').onclick = function(){
-    //     start.elem = this;
-    //     laydate(start);
-    // };
-    // document.getElementById('endTime1').onclick = function(){
-    //     end.elem = this;
-    //     laydate(end);
-    // };
-    // $('#startTime1').val(laydate.now(0, "YYYY/MM/DD 00:00:00"));
-    // $('#endTime1').val(laydate.now(0, "YYYY/MM/DD hh:mm:ss"));
     //监测详情数据
-    var loadChartsData = function (cn,name,Eid) {
-        console.log(cn);
-        // var Eid = sessionStorage.getItem("companyId");
-        // var name = sessionStorage.getItem("companyName");
-        // var cn = '2011',
-            // enterpriseId = id,
-            // factor = $('#select_factor').val(),
-            // beginDate =  $('#startTime1').val(),
-            // endDate = $('#endTime1').val();
-        var enterpriseId = '402880935cf2264b015d064a7c180024',
-            factor = 'ez63a01',
-            text = $("#select_factor").find("option:selected").text(),
-            beginDate =  '2017-05-12 00:00:00',
-            endDate = '2017-05-12 23:59:59';
-        var data = {
-            enterpriseId : enterpriseId,
-            factor : factor,
-            beginDate : beginDate,
-            endDate : endDate,
-            cn : cn
+    var loadChartsData = function () {
+        var websocket = null;
+        //判断当前浏览器是否支持WebSocket
+        if('WebSocket' in window){
+            websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
+            // websocket = new WebSocket("ws://127.0.0.1:8095/websocket");
+        }
+        else{
+            alert('Not support websocket')
+        }
+        //连接发生错误的回调方法
+        websocket.onerror = function(){
+            setMessageInnerHTML("error");
         };
-        $.ajax({
-            url : ''+urlConfig+'/v01/htwl/lxh/online',
-            type : 'get',
-            data : data,
-            headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            success : function (result){
-                console.log(result);
-                if(result.onlineTime){
-                    var onlineTime = result.onlineTime.slice(-13,-1),
-                        onlineData = result.onlineData.data[0].online.slice(-13,-1);
-                    loadaCharts(onlineTime,onlineData,name,text)
+        //连接成功建立的回调方法
+        websocket.onopen = function(event){
+            setMessageInnerHTML("open");
+        }
+        //接收到消息的回调方法
+        websocket.onmessage = function(event){
+            setMessageInnerHTML(event.data);
+        }
+        //连接关闭的回调方法
+        websocket.onclose = function(){
+            setMessageInnerHTML("close");
+        }
+        //将消息显示在网页上
+        function setMessageInnerHTML(innerHTML){
+            var obj = JSON.parse(innerHTML);
+            console.log(mn,code);
+            if(obj.mn == mn){
+                var dataAreas = [],
+                    dataAreas = obj.dataAreas;
+                for(var i in dataAreas){
+                    if(dataAreas[i].xcode == code){
+                        drawLine(dataAreas[i].xrtd);
+                    }
                 }
-                // var factorCode = result.onlineData.data[0].factorCode,
             }
-        })
+        }
+    };
+    function drawLine(data) {
+        console.log(Fname,Cname)
+        var date = new Date();
+        var seperator2 = ":";
+        var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
+        console.log(date,data);
+        var newPoint = {
+            x: date,
+            y: data
+        };
+        // 第三个参数表示是否删除第一个点
+        var seriesData = chart.series[0].data;
+        if(seriesData.length < 12){
+            chart.series[0].addPoint(newPoint, true, false);
+        }else {
+            chart.series[0].addPoint(newPoint, true, true);
+        }
+    }
+    var searchCharts = function () {
+        if(needRefresh || !chart){
+            loadaCharts();
+            needRefresh = false;
+        }
+        Fname =  $("#select_factor").text(),
+        code = $("#select_factor").val(),
+        mn =  $("#d_option")[0].getAttribute('data-mn');
+        console.log(mn)
     };
     //监测详情曲线图
-    var loadaCharts = function (onlineTime,onlineData,name,text) {
+    var loadaCharts = function () {
+        console.log(Fname,Cname)
         var option = {
             chart: {
                 type : 'line'
             },
             title: {
-                text: name
+                text: Cname
             },
             xAxis: {
-                categories : onlineTime
+                type: 'datetime',
+                dateTimeLabelFormats: {
+                    day: '%H:%M:%S'
+                },
+                labels : {
+                    formatter : function () {
+                        return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                    }
+                }
             },
-            tooltip: {
-                valueSuffix: 'mg/L'
-            },
+            // tooltip: {
+            //     valueSuffix: 'mg/L'
+            // },
             yAxis: {
                 title: {
                     text: 'mg/L'
@@ -104,8 +129,77 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 borderWidth: 0
             },
             series: [{
-                name: text,
-                data: onlineData
+                name: Fname,
+                data: [],
+                marker: {
+                    enabled: true
+                }
+            }]
+        };
+        chart = new Highcharts.chart('wqs_tab1_chart', option);
+    };
+    //小时charts
+    var loadaSCharts = function () {
+        var option = {
+            chart: {
+                type : 'line'
+            },
+            title: {
+                text: '濑溪河流域水质自动监测站'
+            },
+            xAxis: {
+                categories : ["12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00"]
+            },
+            tooltip: {
+                valueSuffix: 'mg/L'
+            },
+            yAxis: {
+                title: {
+                    text: 'mg/L'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'COD',
+                data: [512,476,525,523,485,498]
+            }]
+        };
+        Highcharts.chart('wqs_tab1_chart', option);
+    };
+    //日charts
+    var loadaRCharts = function () {
+        var option = {
+            chart: {
+                type : 'line'
+            },
+            title: {
+                text: '濑溪河流域水质自动监测站'
+            },
+            xAxis: {
+                categories : ["2017-08-17","2017-08-18","2017-08-19","2017-08-20","2017-08-21","2017-08-22"]
+            },
+            tooltip: {
+                valueSuffix: 'mg/L'
+            },
+            yAxis: {
+                title: {
+                    text: 'mg/L'
+                }
+            },
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle',
+                borderWidth: 0
+            },
+            series: [{
+                name: 'COD',
+                data: [4235,4352,4245,4485,4652,4253,4152]
             }]
         };
         Highcharts.chart('wqs_tab1_chart', option);
@@ -147,12 +241,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
-                        // str = '<tr data-id = "'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
-                        //     '<td>'+(index+1)+'</td>' +
-                        //     '<td>' + item.name + '</td>' +
-                        //     '</tr>';
                         str = '<div class="layui-colla-item">' +
-                            '<h2 class="layui-colla-title list-title">' +
+                            '<h2 class="layui-colla-title list-title" data-id="'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
                             ' <span>'+(index+1)+'</span>'+
                             '<span>' + item.name + '</span></h2>' +
                             '<div class="layui-colla-content"> ' +
@@ -166,18 +256,19 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 msTobody.html(render(msData, obj.curr));
                 element.init();
                 loadDau(msData[0].baseEnterpriseId,cn,msData[0].name);
-                loadChartsData(cn,msData[0].name);
+                Cname = msData[0].name;
+                // loadChartsData(cn,msData[0].name);
             }
         })
     };
     var loadChartForSite = function (e,cn) {
-        console.log(cn);
-        var Eid = $(e).attr('data-id'),
-            name = $(e).attr('data-name');
-        loadDau(Eid,cn,name);
+        var Eid = $(e).attr('data-id');
+        Cname = $(e).attr('data-name');
+        loadDau(Eid,cn);
+        searchCharts();
     };
     //根据企业查询数采仪
-    var loadDau = function (Eid,cn,name) {
+    var loadDau = function (Eid,cn) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -207,16 +298,17 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     $("#container").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
-                        $("#select_dauId").append("<option value="+row[i].id+">"+row[i].aname+"</option>");
+                        $("#select_dauId").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
-                    loadEquipment(row[0].id,cn,name,Eid);
+                    loadEquipment(row[0].id,cn,Eid);
+                    mn = row[0].mn;
                 }
                 form.render('select');
             }
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (id,cn,name,Eid) {
+    var loadEquipment = function (id,cn,Eid) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -246,14 +338,14 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     for(var i in row){
                         $("#select_equipment").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
-                    loadFactor(row[0].id,cn,name,Eid);
+                    loadFactor(row[0].id,cn,Eid);
                 }
                 form.render('select');
             }
         })
     };
     //根据设备查询因子
-    var loadFactor = function (id,cn,name,Eid) {
+    var loadFactor = function (id,cn,Eid) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -283,19 +375,21 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     }
                 }
                 form.render('select');
+                code=row[0].factorCode;
+                Fname=row[0].factorName;
+                needRefresh = true;
                 // var text = $("#select_factor").find("option:selected").text();
-                loadChartsData(cn,name,Eid);
+                // loadChartsData(cn,name,Eid);
+                loadaCharts();
             }
         })
     };
     //数采仪select change事件
     form.on('select(select_dauId)', function(data){
-        console.log("1");
         loadEquipment(data.value);
     });
     //设备select change事件
     form.on('select(select_equipment)', function(data){
-        console.log("2");
         loadFactor(data.value);
     });
     //日报
@@ -313,9 +407,14 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         layer.full(win);
     }
     var obj = {
+        loadChartsData : loadChartsData,
+        searchCharts : searchCharts,
+        loadaCharts : loadaCharts,
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite,
-        dailyWin : dailyWin
+        dailyWin : dailyWin,
+        loadaSCharts : loadaSCharts,
+        loadaRCharts : loadaRCharts
     };
     /*输出内容，注意顺序*/
     exports('waterQualitySiteMng',obj)
