@@ -64,10 +64,9 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             btnAlign: 'c',
             success: function(layero, index){
                 var id = $('.layui-layer-content').attr('id'),
-                winFrame = layero.find("iframe")[0].contentWindow,
-                iLayui = winFrame.layui;
-                tree(winFrame);
-                loadRoleStore(id);
+                winFrame = layero.find("iframe")[0].contentWindow;
+                // iLayui = winFrame.layui;
+                tree(id,winFrame);
             },
             yes : function (index) {
                 layer.msg('提交成功！', {icon: 1});
@@ -76,7 +75,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         });
     };
     var zTreeObj; //zTree对象
-    var tree = function (winFrame) {
+    var tree = function (id,winFrame) {
         // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
         var setting = {
             check : {
@@ -87,17 +86,26 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
         var zNodes = [
             {name:"功能权限配置", open:true, children:[
-                {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"系统管理",open:true,children:[
+                {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"统计分析",open:true,children:[
+                    {name:"报警统计"},{name:"监测统计"}
+                ]},{name:"系统管理",open:true,children:[
                     {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
                 ]}]}
         ];
-        zTreeObj = winFrame.jQuery.fn.zTree.init($("#treeDemo"), setting, zNodes);
+        var treeDemo = winFrame.document.getElementById("treeDemo");
+        zTreeObj = winFrame.jQuery.fn.zTree.init($(treeDemo), setting, zNodes);
+        loadRoleStore(id,winFrame);
     };
     // 加载权限
-    var loadRoleStore = function (id) {
-        console.log(zTreeObj);
+    var loadRoleStore = function (id,winFrame) {
+        console.log(id);
+        var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+        // var treeObj = winFrame.jQuery.fn.zTree;
+        var nodes = treeObj.getNodes();
+        for (var i=0, l=nodes.length; i < l; i++) {
+            treeObj.checkNode(nodes[i], true, true);
+        }
     };
-
     var obj = {
         loadRoleData : loadRoleData,
         roleMngWin : roleMngWin

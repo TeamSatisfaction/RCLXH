@@ -8,6 +8,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         needRefresh = true,
         code,
         Fname,
+        Cid,
         Cname,
         mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
@@ -108,6 +109,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         Highcharts.chart('mapStats_3dPie', option);
     }
     draw3dPie();
+    //折线图查询
     var searchCharts = function () {
         if(needRefresh || !chart){
             initChart();
@@ -120,6 +122,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         mn =  $("#d_option")[0].getAttribute('data-mn');
         // console.log(mn);
     };
+    //请求实时数据
     var loadChartForSite = function(){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
@@ -161,82 +164,198 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             }
         }
     };
-    function initChart(){
-        var option = {
-            chart: {
-                type: 'spline',
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            title: {
-                text: Fname
-            },
-            xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    day: '%H:%M:%S'
-                },
-                labels : {
-                    formatter : function () {
-                        return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-                    }
-                }
-            },
-            tooltip : {
-                xDateFormat: '%H:%M:%S',
-                shared: true
-            },
-            yAxis: {
-                title: {
-                    text: '',
-                    style : {
-                        color: '#000000'
-                    }
-                },
-                labels : {
-                    style : {
-                        color: '#000000'
-                    }
-                }
-                // ,plotLines: [{
-                //     value: 60,
-                //     dashStyle:'ShortDash',
-                //     width: 3,
-                //     color: 'red',
-                //     label: {
-                //         text: '阈值',
-                //         align: 'center',
-                //         style: {
-                //             color: 'gray'
-                //         }
-                //     }
-                // }]
-            },
-            legend: {
-                enabled: false
-            },
-            series: [{
-                name: Fname,
-                data: [],
-                marker: {
-                    enabled: true
-                }
-            }]
-        };
-        chart = new Highcharts.chart('mapStats_Line', option);
+    //转换时间格式
+    function changeTime(date) {
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1,
+            strDate = date.getDate(),
+            hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        if (hours >= 0 && hours <= 9) {
+            hours = "0" + hours;
+        }
+        if (minutes >= 0 && minutes <= 9) {
+            minutes = "0" + minutes;
+        }
+        if (seconds >= 0 && seconds <= 9) {
+            seconds = "0" + seconds;
+        }
+        var time = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + hours + seperator2 + minutes
+            + seperator2 + seconds;
+        return time;
     }
-    /*曲线图*/
+    function initChart(){
+        var date = new Date();//当前时间
+        var interTimes = 5*60*1000;
+        interTimes=parseInt(interTimes);
+        var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
+        var beginDate = changeTime(date1);
+        var endDate = changeTime(date);
+        var data = {
+            beginDate : beginDate,
+            endDate : endDate,
+            enterpriseId  : Cid,
+            factor : code,
+            cn : 2011
+        };
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/online',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            data: data,
+            success: function (result) {
+                var time = result.onlineTime,
+                    onlineData = result.onlineData.data[0].online;
+                console.log(time);
+                console.log(onlineData);
+                var option = {
+                    chart: {
+                        type: 'spline',
+                        backgroundColor: 'rgba(0,0,0,0)'
+                    },
+                    title: {
+                        text: Fname
+                    },
+                    xAxis: {
+                        type: 'datetime',
+                        dateTimeLabelFormats: {
+                            day: '%H:%M:%S'
+                        },
+                        labels : {
+                            formatter : function () {
+                                return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                            }
+                        },
+                        categories : time
+                    },
+                    yAxis: {
+                        title: {
+                            text: '',
+                            style : {
+                                color: '#000000'
+                            }
+                        },
+                        labels : {
+                            style : {
+                                color: '#000000'
+                            }
+                        }
+                        // ,plotLines: [{
+                        //     value: 60,
+                        //     dashStyle:'ShortDash',
+                        //     width: 3,
+                        //     color: 'red',
+                        //     label: {
+                        //         text: '阈值',
+                        //         align: 'center',
+                        //         style: {
+                        //             color: 'gray'
+                        //         }
+                        //     }
+                        // }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: Fname,
+                        data: onlineData,
+                        marker: {
+                            enabled: true
+                        }
+                    }]
+                };
+                chart = new Highcharts.chart('mapStats_Line', option);
+            }
+        })
+        // var option = {
+        //     chart: {
+        //         type: 'spline',
+        //         backgroundColor: 'rgba(0,0,0,0)'
+        //     },
+        //     title: {
+        //         text: Fname
+        //     },
+        //     xAxis: {
+        //         type: 'datetime',
+        //         dateTimeLabelFormats: {
+        //             day: '%H:%M:%S'
+        //         },
+        //         labels : {
+        //             formatter : function () {
+        //                 return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+        //             }
+        //         },
+        //         categories : x
+        //     },
+        //     tooltip : {
+        //         xDateFormat: '%H:%M:%S',
+        //         shared: true
+        //     },
+        //     yAxis: {
+        //         title: {
+        //             text: '',
+        //             style : {
+        //                 color: '#000000'
+        //             }
+        //         },
+        //         labels : {
+        //             style : {
+        //                 color: '#000000'
+        //             }
+        //         }
+        //         // ,plotLines: [{
+        //         //     value: 60,
+        //         //     dashStyle:'ShortDash',
+        //         //     width: 3,
+        //         //     color: 'red',
+        //         //     label: {
+        //         //         text: '阈值',
+        //         //         align: 'center',
+        //         //         style: {
+        //         //             color: 'gray'
+        //         //         }
+        //         //     }
+        //         // }]
+        //     },
+        //     legend: {
+        //         enabled: false
+        //     },
+        //     series: [{
+        //         name: Fname,
+        //         data: y,
+        //         marker: {
+        //             enabled: true
+        //         }
+        //     }]
+        // };
+        // chart = new Highcharts.chart('mapStats_Line', option);
+    }
+    /*曲线图-添加实时点位*/
     function drawLine(data) {
         // if(!chart)
         var date = new Date();
-        var seperator2 = ":";
-        // var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-        // console.log(date,data);
+        var time = changeTime(date);
         var newPoint = {
-            x: date,
+            x: time,
             y: data
         };
+        console.log(newPoint);
         // 第三个参数表示是否删除第一个点
         var seriesData = chart.series[0].data;
+        console.log(seriesData);
         if(seriesData.length < 12){
             chart.series[0].addPoint(newPoint, true, false);
         }else {
@@ -282,6 +401,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 form.render('select');
                 loadDauSelect(list[0].baseEnterpriseId,list[0].name);
                 Cname = list[0].name;
+                Cid = list[0].baseEnterpriseId;
                 $('.mapStats_statsTitle').html(Cname);
             }
         })
