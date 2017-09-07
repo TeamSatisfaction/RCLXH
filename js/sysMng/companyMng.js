@@ -298,11 +298,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     }
                 });
                 form.on('submit(save)', function(data){
-                    console.log(data.field);
                     data.field.id = id;
-                    console.log(data.field);
                     var field = JSON.stringify(data.field);
-                    console.log(field);
                     $.ajax({
                         url :''+urlConfig+'/v01/htwl/lxh/alrm/rule/add',
                         headers : {

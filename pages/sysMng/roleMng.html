@@ -16,8 +16,9 @@
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             roleMng : 'roleMng'
-        }).use('roleMng')
-                .link('../../css/style.css'); //加载入口
+        }).use('roleMng',function () {
+
+        }).link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body style="width:100%;height: 100%; overflow: auto;">

@@ -24,13 +24,13 @@ layui.define(['layer','element','laypage','form'],function (exports){
             success: function(layero,index){
                 form.render();
                 //表单验证
-                // form.verify({
-                //     threshold : function (value) {
-                //         if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
-                //             return '只能输入1~24的整数';
-                //         }
-                //     }
-                // });
+                form.verify({
+                    threshold : function (value) {
+                        if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
+                            return '只能输入1~24的整数';
+                        }
+                    }
+                });
             },
             yes  : function (index,layero) {
                 layero.find("iframe").contents().find('#user-save').click();
@@ -38,29 +38,29 @@ layui.define(['layer','element','laypage','form'],function (exports){
         })
     };
     //form表单提交
-    form.on('submit(user-save)',function (data) {
-        var field = JSON.stringify(data.field);
-        $.ajax({
-            url :''+urlConfig+'/v01/htwl/lxh/user',
-            headers : {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            dataType : 'json',
-            type : 'post',
-            data : field,
-            success : function (result){
-                if(result.message == ''){
-                    layer.msg('提交成功！', {icon: 1});
-                    //$(parent).find("#index_frame").location.reload();
-                    parent.location.reload(); // 父页面刷新
-                }else {
-                    layer.msg(result.message, {icon: 2});
-                }
-            }
-        });
-        return false;
-    });
+    // form.on('submit(user-save)',function (data) {
+    //     var field = JSON.stringify(data.field);
+    //     $.ajax({
+    //         url :''+urlConfig+'/v01/htwl/lxh/user',
+    //         headers : {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         dataType : 'json',
+    //         type : 'post',
+    //         data : field,
+    //         success : function (result){
+    //             if(result.message == ''){
+    //                 layer.msg('提交成功！', {icon: 1});
+    //                 //$(parent).find("#index_frame").location.reload();
+    //                 parent.location.reload(); // 父页面刷新
+    //             }else {
+    //                 layer.msg(result.resultdesc, {icon: 2});
+    //             }
+    //         }
+    //     });
+    //     return false;
+    // });
     //关闭窗口
     // var closeAddWin = function () {
     //     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -114,7 +114,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
             type : 'post',
             data : field,
             success : function (result){
-                console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var uData = result.data.rows,
@@ -160,6 +159,16 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
+    //验证密码
+    var passwordJudge = function () {
+        var password = $('#password').val(),
+            password2 =  $('#password2').val();
+        if(password2){
+            if(password2 != password){
+                layer.msg('两次密码不一致！', {icon: 2});
+            }
+        }
+    }
     var userRoleMngWin = function () {
         var index = layer.open({
             title : '权限配置',
@@ -179,6 +188,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         loadPage : loadPage,
         addUserWin : addUserWin,
         loadUserData : loadUserData,
+        passwordJudge : passwordJudge,
         userRoleMngWin : userRoleMngWin
     };
     /*输出内容，注意顺序*/

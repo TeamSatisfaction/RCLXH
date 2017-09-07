@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>title</title>
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            roleMng : 'roleMng'
+        }).use('roleMng')
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body>
+    <div class="layui-layout-admin layui-tab-brief add-form" lay-filter="docDemoTabBrief" id="addRole">
+        <!--表单-->
+        <div class="layui-layout-admin" style="text-align: center;margin-top: 30px;margin-bottom: 10px">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">角色名称：</label>
+                        <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="roleName" id="roleName" lay-verify="required">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">描述：</label>
+                        <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="description" id="description" lay-verify="required">
+                    </div>
+                </div>
+                <button class="layui-btn layui-btn-normal" lay-submit lay-filter="role-save" id="role-save" style="display: none">
+                    <i class="layui-icon">&#xe605;</i>提交
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

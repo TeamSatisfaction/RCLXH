@@ -38,28 +38,28 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">联系电话：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="tel" lay-filter="phone" name="phone" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="tel" lay-filter="phone" name="phone" lay-verify="required||phone">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">密码：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="password" name="password" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="password" name="password" lay-verify="required" id="password">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">确认密码：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="password" name="password2" lay-verify="required||password2">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="password" name="password2" lay-verify="required" id="password2" onchange="layui.userMng.passwordJudge()">
                     <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">邮箱：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-filter="mail" name="email" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-filter="mail" name="email" lay-verify="required||email">
                     <span class="required">*</span>
                 </div>
             </div>

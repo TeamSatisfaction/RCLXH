@@ -277,7 +277,7 @@
                 <div class="layui-tab-item" id="role_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn" style="margin-left: 0">
+                            <button class="layui-btn" style="margin-left: 0" onclick="layui.roleMng.addRoleWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                         </div>
@@ -285,12 +285,14 @@
                             <colgroup>
                                 <col width="60">
                                 <col>
+                                <col>
                                 <col width="120">
                             </colgroup>
                             <thead>
                             <tr>
                                 <th>序号</th>
                                 <th style="text-align: center">角色名称</th>
+                                <th style="text-align: center">描述</th>
                                 <th style="text-align: center">操作</th>
                             </tr>
                             </thead>
