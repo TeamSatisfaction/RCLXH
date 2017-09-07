@@ -7,6 +7,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         needRefresh = true,
         code,
         Fname,
+        Cid,
         Cname,
         mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
@@ -15,8 +16,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
-            // websocket = new WebSocket("ws://127.0.0.1:8095/websocket");
+            // websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
+            websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -40,7 +41,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            console.log(mn,code);
             if(obj.mn == mn){
                 var dataAreas = [],
                     dataAreas = obj.dataAreas;
@@ -52,16 +52,42 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             }
         }
     };
-    function drawLine(data) {
-        console.log(Fname,Cname)
-        var date = new Date();
+    //转换时间格式
+    function changeTime(date) {
+        var seperator1 = "-";
         var seperator2 = ":";
-        var x =date.getHours() + seperator2 + date.getMinutes() + seperator2 + date.getSeconds();
-        console.log(date,data);
-        var newPoint = {
-            x: date,
-            y: data
-        };
+        var month = date.getMonth() + 1,
+            strDate = date.getDate(),
+            hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        if (hours >= 0 && hours <= 9) {
+            hours = "0" + hours;
+        }
+        if (minutes >= 0 && minutes <= 9) {
+            minutes = "0" + minutes;
+        }
+        if (seconds >= 0 && seconds <= 9) {
+            seconds = "0" + seconds;
+        }
+        var time = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + hours + seperator2 + minutes
+            + seperator2 + seconds;
+        return time;
+    }
+    /*曲线图-添加实时点位*/
+    function drawLine(data) {
+        var date = new Date();
+        var time = changeTime(date);
+        var newPoint = [
+            time, data
+        ];
         // 第三个参数表示是否删除第一个点
         var seriesData = chart.series[0].data;
         if(seriesData.length < 12){
@@ -70,74 +96,119 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             chart.series[0].addPoint(newPoint, true, true);
         }
     }
-    var searchCharts = function () {
-        if(needRefresh || !chart){
-            loadaCharts();
-            needRefresh = false;
-        }
-        Fname =  $("#select_factor").text(),
-        code = $("#select_factor").val(),
-        mn =  $("#d_option")[0].getAttribute('data-mn');
-        console.log(mn)
-    };
-    //监测详情曲线图
-    var loadaCharts = function () {
-        console.log(Fname,Cname)
-        var option = {
-            chart: {
-                type : 'line'
-            },
-            title: {
-                text: Cname
-            },
-            xAxis: {
-                type: 'datetime',
-                dateTimeLabelFormats: {
-                    day: '%H:%M:%S'
-                },
-                labels : {
-                    formatter : function () {
-                        return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-                    }
-                }
-            },
-            // tooltip: {
-            //     valueSuffix: 'mg/L'
-            // },
-            yAxis: {
-                title: {
-                    text: 'mg/L'
-                },
-                plotLines: [{
-                    value: 6.9,
-                    dashStyle:'ShortDash',
-                    width: 3,
-                    color: 'red',
-                    label: {
-                        text: '报警值',
-                        align: 'center',
-                        style: {
-                            color: 'gray'
-                        }
-                    }
-                }]
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: Fname,
-                data: [],
-                marker: {
-                    enabled: true
-                }
-            }]
+    // var searchCharts = function () {
+    //     if(needRefresh || !chart){
+    //         loadaCharts();
+    //         needRefresh = false;
+    //     }
+    //     Fname =  $("#select_factor").find("option:selected").text(),
+    //     // Cname = $("#c_select").find("option:selected").text(),
+    //     // Fname =  $("#select_factor").text(),
+    //     code = $("#select_factor").val(),
+    //     mn =  $("#d_option")[0].getAttribute('data-mn');
+    //     console.log(mn,Fname)
+    // };
+    //加载曲线图
+    var loadaCharts = function(){
+        var date = new Date();//当前时间
+        var interTimes = 5*60*1000;
+        interTimes=parseInt(interTimes);
+        var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
+        var beginDate = changeTime(date1);
+        var endDate = changeTime(date);
+        var data = {
+            beginDate : beginDate,
+            endDate : endDate,
+            enterpriseId  : Cid,
+            factor : code,
+            cn : 2011
         };
-        chart = new Highcharts.chart('wqs_tab1_chart', option);
-    };
+        console.log(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/online',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            data: data,
+            success: function (result) {
+                var arr = [],
+                    i;
+                if(result.onlineTime){
+                    var time = result.onlineTime,
+                        onlineData = result.onlineData.data[0].online;
+                    for(i=0;i<time.length;i++){
+                        arr.push([
+                            time[i],
+                            onlineData[i]
+                        ])
+                    }
+                }
+                // console.log(Fname);
+                var option = {
+                    chart: {
+                        type: 'spline',
+                        backgroundColor: 'rgba(0,0,0,0)'
+                    },
+                    title: {
+                        text: Fname
+                    },
+                    credits : {
+                        enabled: false
+                    },
+                    xAxis: {
+                        type: 'category',
+                        dateTimeLabelFormats: {
+                            day: '%H:%M:%S'
+                        },
+                        labels : {
+                            formatter : function () {
+                                return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                            }
+                        }
+                    },
+                    yAxis: {
+                        title: {
+                            text: '',
+                            style : {
+                                color: '#000000'
+                            }
+                        },
+                        labels : {
+                            style : {
+                                color: '#000000'
+                            }
+                        }
+                        // ,plotLines: [{
+                        //     value: 60,
+                        //     dashStyle:'ShortDash',
+                        //     width: 3,
+                        //     color: 'red',
+                        //     label: {
+                        //         text: '阈值',
+                        //         align: 'center',
+                        //         style: {
+                        //             color: 'gray'
+                        //         }
+                        //     }
+                        // }]
+                    },
+                    legend: {
+                        enabled: false
+                    },
+                    series: [{
+                        name: Fname,
+                        data: arr,
+                        marker: {
+                            enabled: true
+                        }
+                    }]
+                };
+                chart = new Highcharts.chart('wqs_tab1_chart', option);
+            }
+        })
+    }
     //小时charts
     var loadaSCharts = function () {
         var option = {
@@ -218,7 +289,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 break;
         }
         var data = {
-            // enterpriseRole : 'monitoringStation_enterprise',//监测站
+            enterpriseRole : 'monitoringStation_enterprise',//监测站
             pageNum : curr||1,
             pageSize : 1000
         };
@@ -255,25 +326,28 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 };
                 msTobody.html(render(msData, obj.curr));
                 element.init();
-                loadDau(msData[0].baseEnterpriseId,cn,msData[0].name);
+                Cid = msData[0].baseEnterpriseId;
                 Cname = msData[0].name;
-                // loadChartsData(cn,msData[0].name);
+                loadDau(cn);
+                $('.wqs_tab1_statsTitle').html(Cname);
             }
         })
     };
     var loadChartForSite = function (e,cn) {
-        var Eid = $(e).attr('data-id');
+        Cid = $(e).attr('data-id');
+        console.log(Cid);
         Cname = $(e).attr('data-name');
-        loadDau(Eid,cn);
-        searchCharts();
+        $('.wqs_tab1_statsTitle').html(Cname);
+        Fname='无监测因子';
+        loadDau(cn);
     };
     //根据企业查询数采仪
-    var loadDau = function (Eid,cn) {
+    var loadDau = function (cn) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             dauMap : {
-                epId : Eid
+                epId : Cid
             }
         };
         var field = JSON.stringify(data);
@@ -288,6 +362,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             success: function (result){
                 var row = result.data.rows;
                 $("#select_dauId ").empty();
+                console.log(row)
                 if(row == null){
                     $("#select_dauId").append("<option value='' selected='selected'>无采集仪</option>");
                     $("#select_equipment").empty();
@@ -298,9 +373,10 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     $("#container").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
+                        console.log(row[i].aname);
                         $("#select_dauId").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
-                    loadEquipment(row[0].id,cn,Eid);
+                    loadEquipment(row[0].id,cn);
                     mn = row[0].mn;
                 }
                 form.render('select');
@@ -308,12 +384,12 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (id,cn,Eid) {
+    var loadEquipment = function (Did,cn) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
             equipmentMap : {
-                dauId : id
+                dauId : Did
             }
         };
         var field = JSON.stringify(data);
@@ -338,14 +414,14 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     for(var i in row){
                         $("#select_equipment").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
-                    loadFactor(row[0].id,cn,Eid);
+                    loadFactor(row[0].id,cn);
                 }
                 form.render('select');
             }
         })
     };
     //根据设备查询因子
-    var loadFactor = function (id,cn,Eid) {
+    var loadFactor = function (id,cn) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -378,9 +454,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 code=row[0].factorCode;
                 Fname=row[0].factorName;
                 needRefresh = true;
-                // var text = $("#select_factor").find("option:selected").text();
-                // loadChartsData(cn,name,Eid);
-                loadaCharts();
+                console.log(Fname);
+                loadaCharts(cn);
             }
         })
     };
@@ -408,7 +483,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     }
     var obj = {
         loadChartsData : loadChartsData,
-        searchCharts : searchCharts,
+        // searchCharts : searchCharts,
         loadaCharts : loadaCharts,
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite,

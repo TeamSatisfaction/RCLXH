@@ -110,18 +110,20 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     }
     draw3dPie();
     //折线图查询
-    var searchCharts = function () {
-        if(needRefresh || !chart){
-            initChart();
-            needRefresh = false;
-        }
-        Fname =  $("#f_select").find("option:selected").text(),
-        Cname = $("#c_select").find("option:selected").text(),
-        code = $("#f_select").val();
-        $('.mapStats_statsTitle').html(Cname);
-        mn =  $("#d_option")[0].getAttribute('data-mn');
-        // console.log(mn);
-    };
+    // var searchCharts = function () {
+    //     if(needRefresh || !chart){
+    //         initChart();
+    //         needRefresh = false;
+    //     }
+    //     Fname =  $("#f_select").find("option:selected").text(),
+    //     Cname = $("#c_select").find("option:selected").text(),
+    //     code = $("#f_select").val();
+    //     console.log(Fname);
+    //     $('.mapStats_statsTitle').html(Cname);
+    //     if(Fname != '无监测因子'){
+    //         mn =  $("#d_option")[0].getAttribute('data-mn');
+    //     }
+    // };
     //请求实时数据
     var loadChartForSite = function(){
         var websocket = null;
@@ -152,7 +154,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            // console.log(mn,code);
+            console.log(obj);
+            console.log(mn,code);
             if(obj.mn == mn){
                 var dataAreas = [],
                     dataAreas = obj.dataAreas;
@@ -193,6 +196,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             + seperator2 + seconds;
         return time;
     }
+    //加载曲线图
     function initChart(){
         var date = new Date();//当前时间
         var interTimes = 5*60*1000;
@@ -200,6 +204,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
         var beginDate = changeTime(date1);
         var endDate = changeTime(date);
+        console.log(Cid);
         var data = {
             beginDate : beginDate,
             endDate : endDate,
@@ -216,10 +221,19 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type: 'get',
             data: data,
             success: function (result) {
-                var time = result.onlineTime,
-                    onlineData = result.onlineData.data[0].online;
-                console.log(time);
-                console.log(onlineData);
+                var arr = [],
+                    i;
+                if(result.onlineTime){
+                    var time = result.onlineTime,
+                        onlineData = result.onlineData.data[0].online;
+                    for(i=0;i<time.length;i++){
+                        arr.push([
+                            time[i],
+                            onlineData[i]
+                        ])
+                    }
+                }
+                // console.log(Fname);
                 var option = {
                     chart: {
                         type: 'spline',
@@ -228,8 +242,11 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     title: {
                         text: Fname
                     },
+                    credits : {
+                        enabled: false
+                    },
                     xAxis: {
-                        type: 'datetime',
+                        type: 'category',
                         dateTimeLabelFormats: {
                             day: '%H:%M:%S'
                         },
@@ -237,8 +254,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                             formatter : function () {
                                 return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
                             }
-                        },
-                        categories : time
+                        }
+                        // categories : time
                     },
                     yAxis: {
                         title: {
@@ -271,7 +288,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     },
                     series: [{
                         name: Fname,
-                        data: onlineData,
+                        data: arr,
                         marker: {
                             enabled: true
                         }
@@ -345,17 +362,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     }
     /*曲线图-添加实时点位*/
     function drawLine(data) {
-        // if(!chart)
         var date = new Date();
         var time = changeTime(date);
-        var newPoint = {
-            x: time,
-            y: data
-        };
-        console.log(newPoint);
+        var newPoint = [
+            time, data
+        ];
         // 第三个参数表示是否删除第一个点
         var seriesData = chart.series[0].data;
-        console.log(seriesData);
         if(seriesData.length < 12){
             chart.series[0].addPoint(newPoint, true, false);
         }else {
@@ -408,6 +421,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     };
     //根据企业查询数采仪
     function loadDauSelect(Cid){
+        Cname = $("#c_select").find("option:selected").text();
+        $('.mapStats_statsTitle').html(Cname);
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -434,17 +449,18 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     $("#f_select").empty();
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                     code = '';
-                    Fname = '';
+                    Fname = '无监测因子';
                     mn = '';
+                    initChart();
                 }else{
                     // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
                     for(var i in row){
                         $("#d_select").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
+                    mn = row[0].mn;
+                    loadEquipment(row[0].id,mn);
                 }
                 form.render('select');
-                loadEquipment(row[0].id,row[0].mn);
-                mn = row[0].mn;
             }
         })
     };
@@ -505,6 +521,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             data: field,
             success: function (result){
                 var row = result.data.rows;
+                // console.log(row);
                 $("#f_select").empty();
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
@@ -523,7 +540,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     }
     //企业select change事件
     form.on('select(c_select)', function(data){
-        loadDauSelect(data.value);
+        Cid = data.value;
+        loadDauSelect(Cid);
     });
     //数采仪select change事件
     form.on('select(d_select)', function(data){
@@ -533,14 +551,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     form.on('select(e_select)', function(data){
         var Fid = data.value;
         // loadFactorSelect(data.value);
-        var data = {
+        var data1 = {
             pageNumber : 1,
             pageSize : 1000,
             factorMap : {
                 equipmentId : Fid
             }
         };
-        var field = JSON.stringify(data);
+        var field = JSON.stringify(data1);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
             headers: {
@@ -554,15 +572,17 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 $("#f_select").empty();
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                    Fname = '无监测因子';
                 }else{
                     for(var i in row){
                         $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
+                    code=row[0].factorCode;
+                    Fname=row[0].factorName;
                 }
                 form.render('select');
-                code=row[0].factorCode;
-                Fname=row[0].factorName;
                 needRefresh = true;
+                initChart();
             }
         })
     });
@@ -636,7 +656,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         close: close,
         showNotification:showNotification,
         closeNotification:closeNotification,
-        searchCharts : searchCharts,
+        // searchCharts : searchCharts,
         loadChartForSite : loadChartForSite,
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,

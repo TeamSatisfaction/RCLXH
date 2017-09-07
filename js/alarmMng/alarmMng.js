@@ -195,6 +195,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             },
             type : 'get',
             success : function (result){
+                console.log(result)
                 switch (result.alarmType){
                     case "detection_alarm":
                         result.alarmType = '在线监控报警'
