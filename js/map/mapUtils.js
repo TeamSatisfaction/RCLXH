@@ -38,14 +38,13 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         // map.addLayer(graphicLayer);
 
     };
-
-    var addRandomPoint = function (){
-        var lat = lat0 + Math.random()-0.5,
-            lgt = lgt0 + Math.random()-0.5,
-            pt = new esri.geometry.Point(lat, lgt, new esri.SpatialReference(4326)),
-            type = Math.random()>0.5?"factory":"monistation";
-        addPoint(pt, type, true, {});
-    };
+    // var addRandomPoint = function (){
+    //     var lat = lat0 + Math.random()-0.5,
+    //         lgt = lgt0 + Math.random()-0.5,
+    //         pt = new esri.geometry.Point(lat, lgt, new esri.SpatialReference(4326)),
+    //         type = Math.random()>0.5?"factory":"monistation";
+    //     addPoint(pt, type, true, {});
+    // };
     //请求企业信息
     function loadCompanydata () {
         var data = {
@@ -64,7 +63,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             success: function (result) {
                 // console.log(result.data.list);
                 var list = result.data.list;
-                if(list != null){
+                console.log(list);
+                if(list){
                     for(var i in list){
                         var lon = list[i].lon,
                             lat = list[i].lat,
@@ -92,6 +92,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     };
     /*infoWindow*/
     var infoWin = function(e) {
+        console.log(e);
         var attr = e.graphic.attributes,
             point = e.graphic.geometry,
             symbolUrl = e.graphic.symbol.url,
@@ -132,7 +133,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         map:map,
         addPoint: addPoint,
         clearMap:clearMap,
-        addRandomPoint:addRandomPoint, //添加随机点位，测试用
+        // addRandomPoint:addRandomPoint, //添加随机点位，测试用
         loadCompanydata : loadCompanydata
     };
     //输出test接口

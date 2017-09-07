@@ -154,8 +154,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            console.log(obj);
-            console.log(mn,code);
             if(obj.mn == mn){
                 var dataAreas = [],
                     dataAreas = obj.dataAreas;
@@ -204,7 +202,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
         var beginDate = changeTime(date1);
         var endDate = changeTime(date);
-        console.log(Cid);
         var data = {
             beginDate : beginDate,
             endDate : endDate,

@@ -238,6 +238,7 @@ tr .align-right{width:120px;text-align: right}
 #login_bg .login-footer h3{ color: white; margin: 10px 0; }
 #login_bg .login-footer h3 a{ color: white; margin: 0 100px; }
 
+.help-Icon{margin-top: 70px;margin-left: 300px}
 
 .search{background-image:url(../img/firework/search.png);  position:absolute;  width:30px;  height:30px;  top:4px;  left:150px;  z-index:99;cursor:pointer}
 
