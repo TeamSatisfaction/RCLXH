@@ -15,7 +15,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         center: center_point,
         slider: false,
         logo: false,
-        zoom: 13,//地图大小级别
+        zoom: 11,//地图大小级别
         minZoom: 0,//地图缩放的小级别
         maxZoom: 16//地图缩放的最大级别
     });
@@ -23,10 +23,11 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     var graphicLayer = new esri.layers.GraphicsLayer({id: 'point_layer'});         //点位图层
 
     map.addLayer(basemap);
-
+    map.addLayer(graphicLayer);
     /*添加点位*/
     var addPoint = function (point, type, isAlt, attr) {
         var symbolUrl;
+        console.log(type);
         if(type === "production_enterprise"){
             symbolUrl = "../../img/index/qiye.png"
         }else if (type === "monistation"){
@@ -34,6 +35,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         }
         var symbol = new esri.symbol.PictureMarkerSymbol(symbolUrl, 20, 25);		//标记
         var graphic = new esri.Graphic(point, symbol, attr);
+        console.log(attr);
         graphicLayer.add(graphic);
         // map.addLayer(graphicLayer);
 
@@ -73,10 +75,10 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
                             enterpriseRole = list[i].enterpriseRole;
                         var pt = new esri.geometry.Point(lon, lat, new esri.SpatialReference({wkid:4326})),
                             type = enterpriseRole;
-                        addPoint(pt, type, true, {});
+                        addPoint(pt, type, true, list[i]);
                     }
                     // console.log(graphicLayer)
-                    map.addLayer(graphicLayer);
+                    // map.addLayer(graphicLayer);
                 }
             }
         })
@@ -92,21 +94,21 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     };
     /*infoWindow*/
     var infoWin = function(e) {
-        console.log(e);
         var attr = e.graphic.attributes,
             point = e.graphic.geometry,
             symbolUrl = e.graphic.symbol.url,
             contentHtml = "",
             titleHtml = "";
+        // console.log(e.graphic);
         if (symbolUrl.indexOf("qiye") != -1) {
-            titleHtml = "重庆永荣矿务局总医院";
-            contentHtml += "<p>企业名称：<span>重庆永荣矿务局总医院</span></p>"
-                +"<p>企业地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
+            titleHtml = attr.name;
+            contentHtml += "<p>企业名称：<span>"+attr.name+"</span></p>"
+                +"<p>企业地址：<span>"+attr.address+"</span></p>"
                 +"<p>行业类别：<span>医药制造业</span></p>"
                 +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         } else if (symbolUrl.indexOf("dianmian") != -1) {
-            titleHtml = "水质自动监测站";
-            contentHtml += "<p>名称：<span>水质自动监测站</span></p>"
+            titleHtml = attr.name;
+            contentHtml += "<p>名称：<span>"+attr.name+"</span></p>"
                 +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
                 +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         }
@@ -126,6 +128,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             map.centerAt(point);
         });
         graphicLayer.on("mouse-over", function (e) {
+            // console.log(graphicLayer);
+            console.log(e);
             infoWin(e);
         });
     });

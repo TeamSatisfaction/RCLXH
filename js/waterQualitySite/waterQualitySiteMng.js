@@ -41,14 +41,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            if(obj.mn == mn){
-                var dataAreas = [],
-                    dataAreas = obj.dataAreas;
-                for(var i in dataAreas){
-                    if(dataAreas[i].xcode == code){
-                        drawLine(dataAreas[i].xrtd);
-                    }
-                }
+            if(obj.mn == mn&&obj.xcode == code){
+                drawLine(obj.xrtd);
             }
         }
     };

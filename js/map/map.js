@@ -26,7 +26,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     });
 
     function pageInit() {
-        layui.mapUtils.addPoint( new esri.geometry.Point(105.5779702660,29.4048578414, new esri.SpatialReference(4326)), "monistation", false, "123")
+        // layui.mapUtils.addPoint( new esri.geometry.Point(105.5779702660,29.4048578414, new esri.SpatialReference(4326)), "monistation", false, "123")
     }
 
     function btnClick() {
@@ -131,6 +131,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
             websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -154,14 +155,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            if(obj.mn == mn){
-                var dataAreas = [],
-                    dataAreas = obj.dataAreas;
-                for(var i in dataAreas){
-                    if(dataAreas[i].xcode == code){
-                        drawLine(dataAreas[i].xrtd);
-                    }
-                }
+            if(obj.mn == mn&&obj.xcode == code){
+                drawLine(obj.xrtd);
             }
         }
     };
@@ -634,13 +629,13 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     result.e211M = 0;
                     result.e210L = 0;
                 }
-                str = '<tr><td>六价铬</td><td></td><td>'+result.e207I+'</td></tr>' +
-                    '<tr><td>COD</td><td></td><td>'+result.e202B+'</td></tr>' +
-                    '<tr><td>氨氮</td><td></td><td>'+result.e203F+'</td></tr>' +
-                    '<tr><td>总镍</td><td></td><td>'+result.e208J+'</td></tr>' +
-                    '<tr><td>PH</td><td></td><td>'+result.e206C+'</td></tr>' +
-                    '<tr><td>高锰酸盐</td><td></td><td>'+result.e211M+'</td></tr>' +
-                    '<tr><td>水温</td><td></td><td>'+result.e210L+'</td></tr>';
+                str = '<tr><td>六价铬</td><td>mg/L</td><td>'+result.e207I+'</td></tr>' +
+                    '<tr><td>COD</td><td>mg/L</td><td>'+result.e202B+'</td></tr>' +
+                    '<tr><td>氨氮</td><td>mg/L</td><td>'+result.e203F+'</td></tr>' +
+                    '<tr><td>总镍</td><td>mg/L</td><td>'+result.e208J+'</td></tr>' +
+                    '<tr><td>PH</td><td>PH</td><td>'+result.e206C+'</td></tr>' +
+                    '<tr><td>高锰酸盐</td><td>mg/L</td><td>'+result.e211M+'</td></tr>' +
+                    '<tr><td>水温</td><td>℃</td><td>'+result.e210L+'</td></tr>';
                 m_tobody.html(str);
             }
         })

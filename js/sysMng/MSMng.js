@@ -115,7 +115,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 if(result.resultdesc == '成功'){
                     layer.msg('提交成功！', {icon: 1});
                     parent.location.reload(); // 父页面刷新
-                    closeAddWin();
+                    layer.close(index);
                 }else {
                     layer.msg('提交失败！', {icon: 2});
                 }

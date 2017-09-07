@@ -3,7 +3,7 @@
  以依赖Layui的layer和form模块为例
  **/
 sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8095');
-// sessionStorage.setItem("urlConfig", 'http://192.168.30.238:8095');
+// sessionStorage.setItem("urlConfig", 'http://172.16.1.102:8095');
 // sessionStorage.setItem("urlConfig", 'http://192.168.1.135:8095');
 layui.define(['layer', 'form', 'element'], function(exports){
     var $ = layui.jquery,

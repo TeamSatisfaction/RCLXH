@@ -24,13 +24,13 @@ layui.define(['layer','element','laypage','form'],function (exports){
             success: function(layero,index){
                 form.render();
                 //表单验证
-                form.verify({
-                    threshold : function (value) {
-                        if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
-                            return '只能输入1~24的整数';
-                        }
-                    }
-                });
+                // form.verify({
+                //     threshold : function (value) {
+                //         if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
+                //             return '只能输入1~24的整数';
+                //         }
+                //     }
+                // });
             },
             yes  : function (index,layero) {
                 layero.find("iframe").contents().find('#user-save').click();
@@ -38,29 +38,29 @@ layui.define(['layer','element','laypage','form'],function (exports){
         })
     };
     //form表单提交
-    // form.on('submit(user-save)',function (data) {
-    //     var field = JSON.stringify(data.field);
-    //     $.ajax({
-    //         url :''+urlConfig+'/v01/htwl/lxh/user',
-    //         headers : {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         dataType : 'json',
-    //         type : 'post',
-    //         data : field,
-    //         success : function (result){
-    //             if(result.message == ''){
-    //                 layer.msg('提交成功！', {icon: 1});
-    //                 //$(parent).find("#index_frame").location.reload();
-    //                 parent.location.reload(); // 父页面刷新
-    //             }else {
-    //                 layer.msg(result.resultdesc, {icon: 2});
-    //             }
-    //         }
-    //     });
-    //     return false;
-    // });
+    form.on('submit(user-save)',function (data) {
+        var field = JSON.stringify(data.field);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/user',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            dataType : 'json',
+            type : 'post',
+            data : field,
+            success : function (result){
+                if(result.message == ''){
+                    layer.msg('提交成功！', {icon: 1});
+                    //$(parent).find("#index_frame").location.reload();
+                    parent.location.reload(); // 父页面刷新
+                }else {
+                    layer.msg(result.resultdesc, {icon: 2});
+                }
+            }
+        });
+        return false;
+    });
     //关闭窗口
     // var closeAddWin = function () {
     //     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
@@ -134,7 +134,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.userMng.userRoleMngWin()">编辑</button></a>&nbsp;&nbsp;' +
                             // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.userMng.userRoleMngWin()" title="编辑"><img src="../../img/mng/配置.png"></a>'+
+                            '<a href="#" onclick="layui.userMng.userRoleMngWin()" title="权限配置"><img src="../../img/mng/配置.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
                             '</tr>';
                             '</tr>';
