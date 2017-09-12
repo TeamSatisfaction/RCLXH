@@ -79,6 +79,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     }]
                 };
                 var companyDataDiv = $(".company-online-monitor").find(".layui-tab-item").eq(0);
+
                 companyDataDiv.find("input[name='qymc']").val(data.企业名称);
                 companyDataDiv.find("input[name='frdb']").val(data.法人代表);
                 companyDataDiv.find("input[name='qyfzr']").val(data.企业负责人);
