@@ -24,12 +24,11 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         });
         layer.full(index);
     };
-    //获取企业基本信息
+    // 获取企业基本信息
     var loadData = function (id,body) {
         $.ajax({
             url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
             headers: {
-                // 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             type: 'get',
@@ -41,6 +40,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
     //根据企业查询数采仪
     var loadDau = function (Cid,body) {
+        // console.log(Cid);
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -60,20 +60,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             success: function (result){
                 var row = result.data.rows;
                 body.find("#select_dau").empty();
-                // if(row == null){
-                //     body.find("#select_dau").append("<option value='' selected='selected'>无采集仪</option>");
-                //     body.find("#select_equip").empty();
-                //     body.find("#select_equip").append("<option value='' selected='selected'>无设备</option>");
-                //     body.find("#select_fac").empty();
-                //     body.find("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
-                //     body.find("#select_fac").empty();
-                //     body.find("#select_fac").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
-                // }else{
-                //     for(var i in row){
-                //         // $("#select_d").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
-                //         body.find("#select_dau").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
-                //     }
-                // }
+                if(row == null){
+                    body.find("#select_dau").append("<option value='' selected='selected'>无采集仪</option>");
+                    body.find("#select_equip").empty();
+                    body.find("#select_equip").append("<option value='' selected='selected'>无设备</option>");
+                    body.find("#select_fac").empty();
+                    body.find("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
+                    body.find("#select_fac").empty();
+                    body.find("#select_fac").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
+                }else{
+                    for(var i in row){
+                        body.find("#select_dau")[0].append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+                    }
+                }
+                console.log(body.find("#select_dau")[0]);
                 form.render('select');
             }
         })

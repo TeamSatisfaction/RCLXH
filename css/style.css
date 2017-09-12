@@ -33,20 +33,20 @@
 .side .layui-nav  { background-color: transparent }
 .side .layui-nav .layui-nav-item a i{ display: inline-block;  width: 20px;  height: 24px;  margin-bottom: -6px!important;  margin:0 6px;
     background-size: contain;  background-repeat: no-repeat;  background-position: center;  }
-.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/firework/首页1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/firework/首页.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/firework/污染，核能1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/firework/污染，核能.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/firework/报警1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/firework/报警.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/firework/设备监测1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/firework/设备监测.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/firework/统计1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/统计.png);  }
-.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/统计.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7)>a i{  background-image: url(../img/firework/系统管理1.png);  }
-.side .layui-nav .layui-nav-item:nth-child(7).layui-this>a i{  background-image: url(../img/firework/系统管理.png);  }
-#con_mng{background-image: url(../img/firework/系统管理.png)}
+.side .layui-nav .layui-nav-item:nth-child(2) a i{  background-image: url(../img/firework/home1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(2).layui-this a i{  background-image: url(../img/firework/home.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3) a i{  background-image: url(../img/firework/Pollution1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(3).layui-this a i{  background-image: url(../img/firework/Pollution.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4) a i{  background-image: url(../img/firework/alarm1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(4).layui-this a i{  background-image: url(../img/firework/alarm.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5) a i{  background-image: url(../img/firework/equipment1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(5).layui-this a i{  background-image: url(../img/firework/equipment.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6)>a i{  background-image: url(../img/firework/Statistics1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/Statistics.png);  }
+/*.side .layui-nav .layui-nav-item:nth-child(6).layui-this>a i{  background-image: url(../img/firework/Statistics.png);  }*/
+.side .layui-nav .layui-nav-item:nth-child(7)>a i{  background-image: url(../img/firework/sysMng1.png);  }
+.side .layui-nav .layui-nav-item:nth-child(7).layui-this>a i{  background-image: url(../img/firework/sysMng.png);  }
+#con_mng{background-image: url(../img/firework/sysMng.png)}
 /*.side .layui-nav .layui-nav-item:nth-child(6) a i{  background-image: url(../img/firework/tongji.png);  }*/
 /*.side .layui-nav .layui-nav-item:nth-child(6).layui-this a i{  background-image: url(../img/firework/tongji_1.png);  }*/
 /*.side .layui-nav .layui-nav-item:nth-child(7) a i{  background-image: url(../img/firework/guanli-.png);  }*/

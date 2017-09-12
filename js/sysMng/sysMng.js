@@ -10,7 +10,7 @@ layui.define(['layer', 'element'],function (exports) {
 
     var getTab = function () {
         console.log('1');
-        layui.companyMng.loadCompanyData();
+        // layui.companyMng.loadCompanyData();
         var tabIndex = layui.utils.getArg("token");
         element.tabChange('sysmng', tabIndex.toString());
         $('#index_frame', parent.document).show();
