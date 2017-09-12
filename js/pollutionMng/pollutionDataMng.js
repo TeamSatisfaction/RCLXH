@@ -1,31 +1,32 @@
-layui.define(['layer', 'element','laypage','form'],function (exports){
+layui.define(['layer', 'element','form'],function (exports){
     var $ = layui.jquery,
         layer = layui.layer,
         form = layui.form();
         // cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
-    //企业详情
-    var detailCompanyWin = function (id) {
-        var index = layer.open({
-            title : '企业详情',
-            id : id,
-            type : 2,
-            moveOut: true,
-            area : ['1200px','700px'],
-            content : '../../pages/pollutionMng/pollutionDataView.html',
-            btn: [ '返回'],
-            btnAlign: 'c',
-            success : function (layero, index) {
-                var body = layer.getChildFrame('body', index);
-                var id = $('.layui-layer-content').attr('id');
-                loadData(id,body);
-                // loadAlarmRuleDetails(id,body,'1');
-            }
-        });
-        layer.full(index);
-    };
+    // //企业详情
+    // var detailCompanyWin = function (id) {
+    //     var index = layer.open({
+    //         title : '企业详情',
+    //         id : id,
+    //         type : 2,
+    //         moveOut: true,
+    //         area : ['1200px','700px'],
+    //         content : '../../pages/pollutionMng/pollutionDataView.html',
+    //         btn: [ '返回'],
+    //         btnAlign: 'c',
+    //         success : function (layero, index) {
+    //             var body = layer.getChildFrame('body', index);
+    //             var id = $('.layui-layer-content').attr('id');
+    //             loadData(id,body);
+    //             // loadAlarmRuleDetails(id,body,'1');
+    //         }
+    //     });
+    //     layer.full(index);
+    // };
     // 获取企业基本信息
-    var loadData = function (id,body) {
+    var loadData = function (){
+        var id = sessionStorage.getItem("CidConfig");
         $.ajax({
             url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
             headers: {
@@ -36,7 +37,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 var data = result.data;
             }
         });
-        loadDau(id,body);
+        loadDau(id);
     };
     //根据企业查询数采仪
     var loadDau = function (Cid,body) {
@@ -59,22 +60,24 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             data: field,
             success: function (result){
                 var row = result.data.rows;
-                body.find("#select_dau").empty();
+                $("#select_dau").empty();
+                // body.find("#select_dau").empty();
                 if(row == null){
-                    body.find("#select_dau").append("<option value='' selected='selected'>无采集仪</option>");
-                    body.find("#select_equip").empty();
-                    body.find("#select_equip").append("<option value='' selected='selected'>无设备</option>");
-                    body.find("#select_fac").empty();
-                    body.find("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
-                    body.find("#select_fac").empty();
-                    body.find("#select_fac").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
+                    $("#select_dau").append("<option value='' selected='selected'>无采集仪</option>");
+                    // body.find("#select_equip").empty();
+                    // body.find("#select_equip").append("<option value='' selected='selected'>无设备</option>");
+                    // body.find("#select_fac").empty();
+                    // body.find("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
+                    // body.find("#select_fac").empty();
+                    // body.find("#select_fac").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
                 }else{
                     for(var i in row){
-                        body.find("#select_dau")[0].append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+                        // body.find("#select_dau").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+                        $("#select_dau").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
                 }
-                console.log(body.find("#select_dau")[0]);
-                form.render('select');
+                console.log($("#select_dau"));
+                form.render("select","select_dau");
             }
         })
     };
@@ -121,7 +124,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
     /*输出内容，注意顺序*/
     var obj = {
-        detailCompanyWin : detailCompanyWin,
+        // detailCompanyWin : detailCompanyWin,
+        loadData : loadData,
         draw3dPie : draw3dPie
     };
     exports('pollutionDataMng',obj)
