@@ -20,7 +20,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
             data = {
                 name : site,
                 pageNum : curr||1,
-                pageSize : 16
+                pageSize : 16,
+                enterpriseRole : 'monitoringStation_enterprise',
+                areaCode : '500000-500153'
             };
         var field = JSON.stringify(data);
         $.ajax({

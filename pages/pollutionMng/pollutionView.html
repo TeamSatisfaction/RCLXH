@@ -11,8 +11,9 @@
         layui.config({
             base: '../../js/' //你的模块目录
         }).extend({
-            pollutionMng : 'pollutionMng/pollutionMng'
-        }).use(['pollutionMng'],function () {
+            pollutionMng : 'pollutionMng/pollutionMng',
+            pollutionDataMng : 'pollutionMng/pollutionDataMng'
+        }).use(['pollutionMng','pollutionDataMng'],function () {
             layui.pollutionMng.loadCompanyData();
         }); //加载入口
     </script>

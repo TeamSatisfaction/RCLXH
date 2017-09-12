@@ -27,7 +27,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     /*添加点位*/
     var addPoint = function (point, type, isAlt, attr) {
         var symbolUrl;
-        console.log(type);
+        // console.log(type);
         if(type === "production_enterprise"){
             symbolUrl = "../../img/index/qiye.png"
         }else if (type === "monistation"){
@@ -65,7 +65,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             success: function (result) {
                 // console.log(result.data.list);
                 var list = result.data.list;
-                console.log(list);
+                // console.log(list);
                 if(list){
                     for(var i in list){
                         var lon = list[i].lon,
@@ -110,7 +110,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             titleHtml = attr.name;
             contentHtml += "<p>名称：<span>"+attr.name+"</span></p>"
                 +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
-                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
+                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>0个</a></p>";
         }
         map.infoWindow.setTitle(titleHtml)
         map.infoWindow.setContent(contentHtml);

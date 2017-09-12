@@ -129,9 +129,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            // websocket = new WebSocket("ws://192.168.30.238:8095/websocket");
+            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
             websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
-            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -155,8 +155,15 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
+            // console.log(obj);
             if(obj.mn == mn&&obj.xcode == code){
-                drawLine(obj.xrtd);
+                if(code == "ez52Z01"){
+                    console.log(obj)
+                    drawLine(obj.xcum);
+                }else {
+                    console.log(obj)
+                    drawLine(obj.xrtd);
+                }
             }
         }
     };
@@ -382,7 +389,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     function loadCompanySelect() {
         var data = {
             pageNum : 1,
-            pageSize : 1000
+            pageSize : 1000,
+            enterpriseRole : '',
+            areaCode : '500000-500153'
         };
         var field = JSON.stringify(data);
         $.ajax({

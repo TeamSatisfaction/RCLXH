@@ -13,13 +13,16 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
+    var Tname = "实时监测数据";
     //加载污染源列表
     var loadCompanyData = function (curr) {
         var name = $('#name').val(),
             data = {
                 name : name,
                 pageNum : curr||1,
-                pageSize : 16
+                pageSize : 16,
+                enterpriseRole : 'production_enterprise',
+                areaCode : '500000-500153'
                 // areaId : 500153
             };
         var field = JSON.stringify(data);
@@ -50,7 +53,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
                             // '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal" onclick="layui.pollutionMng.detailCompanyWin()">详情</button></td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionMng.detailCompanyWin()" title="详情"><img src="../../img/mng/查看详情.png"></a></td>'
+                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionDataMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/查看详情.png"></a></td>'
                             '</tr>';
                         arr.push(str);
                     });
@@ -73,60 +76,83 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             }
         })
     };
-    //企业详情
-    var detailCompanyWin = function () {
-        var index = layer.open({
-            title : '企业详情',
-            type : 2,
-            moveOut: true,
-            area : ['1200px','700px'],
-            content : '../../pages/pollutionMng/pollutionDataView.html',
-            btn: [ '返回'],
-            btnAlign: 'c'
-        });
-        layer.full(index);
-    };
-    /*3D饼图*/
-    var draw3dPie = function() {
-        var option = {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 60,
-                    beta: 0
-                },
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            credits: {enabled: false},
-            title: {text: '设备能耗统计'},
-            tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 20,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: '设备能耗占比',
-                data: [
-                    ['混排废水提升泵',   45.0],
-                    ['含镍废水提升泵',   26.8],
-                    ['含铬废水提升泵',   26.8],
-                    ['综合废水提升泵',   8.5],
-                    ['前处理废水提升泵',   6.2],
-                    ['生化鼓风机',   0.7]
-                ]
-            }]
-        };
-        Highcharts.chart('ces_pie1', option);
-    };
+    // //根据数采仪查询设备
+    // var loadEquipment = function (Did) {
+    //     var data = {
+    //         pageNumber : 1,
+    //         pageSize : 1000,
+    //         equipmentMap : {
+    //             dauId : Did
+    //         }
+    //     };
+    //     var field = JSON.stringify(data);
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
+    //         headers: {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'post',
+    //         data: field,
+    //         success: function (result){
+    //             var row = result.data.rows;
+    //             $("#select_e").empty();
+    //             if(row == null){
+    //                 $("#select_e").append("<option value='' selected='selected'>无设备</option>");
+    //                 $("#select_f").empty();
+    //                 $("#select_f").append("<option value='' selected='selected'>无监测因子</option>");
+    //                 $("#com_chart1").empty();
+    //                 $("#com_chart1").html('<span>无相关监测因子</span>');
+    //             }else{
+    //                 for(var i in row){
+    //                     $("#select_e").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+    //                 }
+    //                 loadFactor(row[0].id);
+    //             }
+    //             form.render('select');
+    //         }
+    //     })
+    // };
+    // //根据设备查询因子
+    // var loadFactor = function (id,cn) {
+    //     var data = {
+    //         pageNumber : 1,
+    //         pageSize : 1000,
+    //         factorMap : {
+    //             equipmentId : id
+    //         }
+    //     };
+    //     var field = JSON.stringify(data);
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+    //         headers: {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'post',
+    //         data: field,
+    //         success: function (result){
+    //             var row = result.data.rows;
+    //             $("#select_f").empty();
+    //             if(row == null){
+    //                 $("#select_f").append("<option value='' selected='selected'>无监测因子</option>");
+    //                 $("#com_chart1").empty();
+    //                 $("#com_chart1").html('<span>无相关监测因子</span>');
+    //             }else{
+    //                 for(var i in row){
+    //                     $("#select_f").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+    //                 }
+    //             }
+    //             form.render('select');
+    //             code=row[0].factorCode;
+    //             Fname=row[0].factorName;
+    //             needRefresh = true;
+    //             console.log(Fname);
+    //             // loadaCharts();
+    //             // loadaCharts(cn);
+    //         }
+    //     })
+    // };
     //监测详情曲线图
     var loadaCharts = function () {
         var option = {
@@ -134,7 +160,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 type : 'line'
             },
             title: {
-                text: '实时监测数据'
+                text: Tname
             },
             xAxis: {
                 categories : ["22:34:01","22:34:11","22:34:21","22:34:31"]
@@ -173,13 +199,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         };
         Highcharts.chart('com_chart1', option);
     };
-    /*输出内容，注意顺序*/
-    var obj = {
-        loadPage : loadPage,
-        loadCompanyData : loadCompanyData,
-        detailCompanyWin : detailCompanyWin,
-        draw3dPie :  draw3dPie,
-        loadaCharts : loadaCharts
+    var changeChart = function (e) {
+        Tname = e;
+        console.log(e);
+        loadaCharts();
     };
-    exports('pollutionMng',obj)
+    // loadaCharts();
+        /*输出内容，注意顺序*/
+        var obj = {
+            loadPage : loadPage,
+            loadCompanyData : loadCompanyData,
+            // detailCompanyWin : detailCompanyWin,
+            // draw3dPie :  draw3dPie,
+            // loadaCharts : loadaCharts,
+            // changeChart : changeChart
+        };
+        exports('pollutionMng',obj)
 })

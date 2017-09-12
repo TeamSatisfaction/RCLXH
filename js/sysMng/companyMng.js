@@ -18,9 +18,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             data = {
                 name : name,
                 pageNum : curr||1,
-                pageSize : 16
-                // enterpriseRole : 'production_enterprise',
-                // areaCode : '500000-500153'
+                pageSize : 16,
+                enterpriseRole : 'production_enterprise',
+                areaCode : '500000-500153'
             };
         var field = JSON.stringify(data);
         $.ajax({
@@ -333,119 +333,119 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
     };
-    //根据企业查询数采仪
-    var loadDau = function (id) {
-        var data = {
-            pageNumber : 1,
-            pageSize : 1000,
-            dauMap : {
-                // epId : id
-                epId : '402880955cede873015cee1e28ae0089'
-            }
-        };
-        var field = JSON.stringify(data);
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'post',
-            data: field,
-            success: function (result){
-                var row = result.data.rows;
-                $("#select_dauId1").empty();
-                if(row == null){
-                    $("#select_dauId1").append("<option value='' selected='selected'>无采集仪</option>");
-                    $("#select_equipment1").empty();
-                    $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
-                    $("#select_factor1").empty();
-                    $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
-                }else{
-                    for(var i in row){
-                        $("#select_dauId1").append("<option value='' selected='selected'>--请选择--</option>");
-                        $("#select_dauId1").append("<option row-key="+row[i]+" value="+row[i].id+">"+row[i].aname+"</option>");
-                    }
-                }
-                form.render('select');
-            }
-        })
-    };
-    // 根据数采仪查询设备
-    var loadEquipment = function (id) {
-        var data = {
-            pageNumber : 1,
-            pageSize : 1000,
-            equipmentMap : {
-                dauId : id
-            }
-        };
-        var field = JSON.stringify(data);
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'post',
-            data: field,
-            success: function (result){
-                var row = result.data.rows;
-                $("#select_equipment1").empty();
-                if(row == null){
-                    $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
-                    $("#select_factor").empty();
-                    $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
-                }else{
-                    for(var i in row){
-                        $("#select_equipment1").append("<option value='' selected='selected'>--请选择--</option>");
-                        $("#select_equipment1").append("<option row-key="+row[i].classicType+" value="+row[i].id+">"+row[i].equipmentName+"</option>");
-                    }
-                }
-                form.render('select');
-            }
-        })
-    };
-    //根据设备查询因子
-    var loadFactor = function (id) {
-        var data = {
-            pageNumber : 1,
-            pageSize : 1000,
-            factorMap : {
-                equipmentId : id
-            }
-        };
-        var field = JSON.stringify(data);
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'post',
-            data: field,
-            success: function (result){
-                var row = result.data.rows;
-                if(row == null){
-                    $("#select_factor1").empty();
-                    $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
-                }else{
-                    for(var i in row){
-                        $("#select_factor1").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
-                    }
-                }
-                form.render('select');
-            }
-        })
-    };
-    //数采仪select change事件
-    form.on('select(select_dauId1)', function(data){
-        loadEquipment(data.value);
-    });
-    //设备select change事件
-    form.on('select(select_equipment1)', function(data){
-        loadFactor(data.value);
-    });
+    // //根据企业查询数采仪
+    // var loadDau = function (id) {
+    //     var data = {
+    //         pageNumber : 1,
+    //         pageSize : 1000,
+    //         dauMap : {
+    //             // epId : id
+    //             epId : '402880955cede873015cee1e28ae0089'
+    //         }
+    //     };
+    //     var field = JSON.stringify(data);
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
+    //         headers: {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'post',
+    //         data: field,
+    //         success: function (result){
+    //             var row = result.data.rows;
+    //             $("#select_dauId1").empty();
+    //             if(row == null){
+    //                 $("#select_dauId1").append("<option value='' selected='selected'>无采集仪</option>");
+    //                 $("#select_equipment1").empty();
+    //                 $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
+    //                 $("#select_factor1").empty();
+    //                 $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
+    //             }else{
+    //                 for(var i in row){
+    //                     $("#select_dauId1").append("<option value='' selected='selected'>--请选择--</option>");
+    //                     $("#select_dauId1").append("<option row-key="+row[i]+" value="+row[i].id+">"+row[i].aname+"</option>");
+    //                 }
+    //             }
+    //             form.render('select');
+    //         }
+    //     })
+    // };
+    // // 根据数采仪查询设备
+    // var loadEquipment = function (id) {
+    //     var data = {
+    //         pageNumber : 1,
+    //         pageSize : 1000,
+    //         equipmentMap : {
+    //             dauId : id
+    //         }
+    //     };
+    //     var field = JSON.stringify(data);
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
+    //         headers: {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'post',
+    //         data: field,
+    //         success: function (result){
+    //             var row = result.data.rows;
+    //             $("#select_equipment1").empty();
+    //             if(row == null){
+    //                 $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
+    //                 $("#select_factor").empty();
+    //                 $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
+    //             }else{
+    //                 for(var i in row){
+    //                     $("#select_equipment1").append("<option value='' selected='selected'>--请选择--</option>");
+    //                     $("#select_equipment1").append("<option row-key="+row[i].classicType+" value="+row[i].id+">"+row[i].equipmentName+"</option>");
+    //                 }
+    //             }
+    //             form.render('select');
+    //         }
+    //     })
+    // };
+    // //根据设备查询因子
+    // var loadFactor = function (id) {
+    //     var data = {
+    //         pageNumber : 1,
+    //         pageSize : 1000,
+    //         factorMap : {
+    //             equipmentId : id
+    //         }
+    //     };
+    //     var field = JSON.stringify(data);
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+    //         headers: {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'post',
+    //         data: field,
+    //         success: function (result){
+    //             var row = result.data.rows;
+    //             if(row == null){
+    //                 $("#select_factor1").empty();
+    //                 $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
+    //             }else{
+    //                 for(var i in row){
+    //                     $("#select_factor1").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+    //                 }
+    //             }
+    //             form.render('select');
+    //         }
+    //     })
+    // };
+    // //数采仪select change事件
+    // form.on('select(select_dauId1)', function(data){
+    //     loadEquipment(data.value);
+    // });
+    // //设备select change事件
+    // form.on('select(select_equipment1)', function(data){
+    //     loadFactor(data.value);
+    // });
 
     /*在线监测*/
     $(".company-online-monitor").find(".layui-btn-group").find(".layui-btn").click(function () {

@@ -18,16 +18,16 @@
         layui.config({
             base: '../../js/pollutionMng/' //你的模块目录
         }).extend({
-            sysMng : 'pollutionMng'
-        }).use('pollutionMng', function () {
+            pollutionDataMng : 'pollutionDataMng'
+        }).use('pollutionDataMng', function () {
             layui.jquery(".detail-form").find("input").attr("readonly", true);
-            layui.pollutionMng. draw3dPie();
-            layui.pollutionMng. loadaCharts();
+            layui.pollutionDataMng.draw3dPie();
+//            layui.pollutionMng. loadaCharts();
         }); //加载入口
     </script>
 </head>
 <body>
-    <div class="layui-tab layui-layout-admin layui-tab-brief detail-form" lay-filter="docDemoTabBrief">
+    <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief">
         <ul class="layui-tab-title">
             <li class="layui-this" lay-id="企业管理" >企业基本详情</li>
             <li lay-id="在线监测">在线监测</li>
@@ -36,7 +36,7 @@
         <div class="layui-tab-content company-online-monitor">
             <!--企业基本详情-->
             <div class="layui-tab-item layui-show">
-                <form class="layui-collapse layui-form" lay-filter="test" action="">
+                <form class="layui-collapse layui-form detail-form" lay-filter="test" action="">
                     <div class="layui-colla-item">
                         <h2 class="layui-colla-title">企业基本信息</h2>
                         <div class="layui-colla-content layui-show" style="text-align: left;position:relative">
@@ -314,11 +314,11 @@
             <!--在线监测-->
             <div class="layui-tab-item">
                 <div class="layui-btn-group">
-                    <div class="layui-btn layui-btn-primary">实时监测数据</div>
-                    <div class="layui-btn layui-btn-primary">小时监测数据</div>
-                    <div class="layui-btn layui-btn-primary">日监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">实时监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">小时监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">日监测数据</div>
                 </div>
-                <form class="layui-form" lay-filter="test" action="">
+                <form class="layui-form" lay-filter="test" action="" style="display: none">
                     <div class="layui-form-item layui-inline">
                         <label class="layui-form-label">开始时间：</label>
                         <input class="layui-input-inline layui-input" onclick="WdatePicker()">
@@ -336,24 +336,33 @@
                     <div id="com_chart1"></div>
                     <div id="com_fac">
                         <form class="layui-form" action="" style="margin-left: 80px">
-                            <div style="font-size: 20px">选择因子</div>
-                            <div class="layui-form-item">
-                                <div style="margin: 5px 0">
-                                    <input type="radio" name="text" value="COD" title="COD" checked="">
+                            <div style="margin: 10px 0">
+                                <label class="layui-form-label">数采仪：</label>
+                                <div class="layui-input-block">
+                                    <select lay-verify="" lay-search id="select_dau" lay-filter="select_dau">
+                                        <option value="">无数采仪</option>
+                                    </select>
                                 </div>
-                                <div style="margin: 5px 0">
-                                    <input type="radio" name="text" value="氨氮" title="氨氮">
+                            </div>
+                            <div style="margin: 10px 0">
+                                <label class="layui-form-label">设备：</label>
+                                <div class="layui-input-block">
+                                    <select lay-verify="" lay-search id="select_equip" lay-filter="select_equip">
+                                        <option value="">无设备</option>
+                                    </select>
                                 </div>
-                                <div style="margin: 5px 0">
-                                    <input type="radio" name="text" value="PH" title="PH">
-                                </div>
-                                <div style="margin: 5px 0">
-                                    <input type="radio" name="text" value="二氧化硫" title="二氧化硫">
+                            </div>
+                            <div style="margin: 10px 0">
+                                <label class="layui-form-label">监测因子：</label>
+                                <div class="layui-input-block">
+                                    <select lay-verify="" lay-search id="select_fac">
+                                        <option value="">无监测因子</option>
+                                    </select>
                                 </div>
                             </div>
                         </form>
                     </div>
-                    <div style="clear: both"></div>
+                    <!--<div style="clear: both"></div>-->
                 </div>
             </div>
             <!--设备工况-->
