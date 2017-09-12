@@ -18,6 +18,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             success : function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var id = $('.layui-layer-content').attr('id');
+                // loadData(id,body);
                 // loadAlarmRuleDetails(id,body,'1');
             }
         });
@@ -27,14 +28,14 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     var loadData = function () {
         var id = $(window.parent).find('.layui-layer-content').attr('id');
 
-        // $.ajax({
-        //     url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
-        //     headers: {
-        //         // 'Content-type': 'application/json;charset=UTF-8',
-        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-        //     },
-        //     type: 'get',
-        //     success: function (result) {
+        $.ajax({
+            url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
+            headers: {
+                // 'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
                 // var data = result.data;
                 var data = {
                     "企业名称":"重庆江特表面处理有限公司",
@@ -135,7 +136,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                         "<td>"+data.排污许可证信息.排口列表[i].排放去向+"</td>"+
                         "<td>"+data.排污许可证信息.排口列表[i].年排放总量+"</td>"+
                         "<td> <i class='layui-icon' style='font-size: 20px;' onclick='layui.companyMng.lookPk("+data.排污许可证信息.排口列表[i].OBJECTID+");'>&#xe60a;</i></td>"+
-                    "</tr>"
+                        "</tr>"
                 }
                 companyDataDiv.find("#pdv_pk").find(".layui-tab-item").eq(2).find("tbody").html(pklist);
                 //企业处理工艺
@@ -158,11 +159,13 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     photos: 'img'
                     ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
                 });
-        //     }
-        // });
+            }
+        });
         loadDau(id);
     };
     //根据企业查询数采仪
+    // var loadDau = function (Cid,body) {
+        // console.log(Cid);
     var loadDau = function (Cid) {
         var data = {
             pageNumber : 1,
@@ -244,9 +247,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
     /*输出内容，注意顺序*/
     var obj = {
-        detailCompanyWin : detailCompanyWin,
-        draw3dPie : draw3dPie,
-        loadData :  loadData
+        // detailCompanyWin : detailCompanyWin,
+        loadData : loadData,
+        draw3dPie : draw3dPie
     };
     exports('pollutionDataMng',obj)
 })

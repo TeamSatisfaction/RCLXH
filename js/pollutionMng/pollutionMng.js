@@ -52,8 +52,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            // '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal" onclick="layui.pollutionMng.detailCompanyWin()">详情</button></td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionDataMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a></td>'
+                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a></td>'
                             '</tr>';
                         arr.push(str);
                     });
@@ -75,6 +74,25 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 })
             }
         })
+    };
+    //企业详情
+    var detailCompanyWin = function (id) {
+        var index = layer.open({
+            title : '企业详情',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/pollutionMng/pollutionDataView.html',
+            btn: [ '返回'],
+            btnAlign: 'c',
+            success : function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                sessionStorage.setItem("CidConfig",id);
+            }
+        });
+        layer.full(index);
     };
     // //根据数采仪查询设备
     // var loadEquipment = function (Did) {
@@ -209,7 +227,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         var obj = {
             loadPage : loadPage,
             loadCompanyData : loadCompanyData,
-            // detailCompanyWin : detailCompanyWin,
+            detailCompanyWin : detailCompanyWin,
             // draw3dPie :  draw3dPie,
             // loadaCharts : loadaCharts,
             // changeChart : changeChart
