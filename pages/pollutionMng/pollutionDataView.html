@@ -21,7 +21,17 @@
             pollutionDataMng : 'pollutionDataMng'
         }).use('pollutionDataMng', function () {
             layui.jquery(".detail-form").find("input").attr("readonly", true);
+            layui.pollutionDataMng.loadData();
             layui.pollutionDataMng.draw3dPie();
+            $(".js-silder").silder({
+                auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                speed: 20,//轮播图运动速度
+                sideCtrl: true,//是否需要侧边控制按钮
+                bottomCtrl: true,//是否需要底部控制按钮
+                defaultView: 0,//默认显示的索引
+                interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+            });
 //            layui.pollutionMng. loadaCharts();
         }); //加载入口
     </script>
@@ -43,15 +53,7 @@
                             <div class="js-silder detail-form-right">
                                 <div class="silder-scroll">
                                     <div class="silder-main">
-                                        <div class="silder-main-img">
-                                            <img src="../../img/data/001.png" alt="">
-                                        </div>
-                                        <div class="silder-main-img">
-                                            <img src="../../img/data/002.png" alt="" style="width: 600px;height: 400px">
-                                        </div>
-                                        <!--<div class="silder-main-img">-->
-                                        <!--<img src="../../img/1-1.jpg" alt="">-->
-                                        <!--</div>-->
+
                                     </div>
                                 </div>
                             </div>
@@ -59,87 +61,87 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">企业名称：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="site" value="重庆江特表面处理有限公司">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="qymc">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">法人代表：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="徐开贵">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="frdb">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">企业负责人：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="朱洪刚">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="qyfzr">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">负责人电话：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="13983201027">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="fzrdh">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">组织机构代码：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="500226000006773">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="zzjgdm">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">管控级别：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="区控">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="gkjb">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">联系人：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="朱洪刚">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lxr">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">联系人电话：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="13983201027">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lxrdh">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">建设状态：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jszt">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">运行状态：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="正常运行">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="yxzt">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">设计处理量(吨/天)：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="2000">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="shejicll">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">实际处理量(吨/天)：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="4600">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="shijicll">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">行业类别：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="污水处理厂">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="hylb">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">建设目标：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jsmb">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">经度：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jd">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">纬度：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="wd">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline" style="width: calc(90% + 20px);">
                                         <label class="layui-form-label">地址：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="重庆市荣昌区板桥工业园">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="dz">
                                     </div>
                                 </div>
                             </div>
@@ -152,41 +154,41 @@
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">许可证类型：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzlx">
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">许可证性质：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzxz">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">许可证编号：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="渝（荣）环排证【2016】0134号">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzbh">
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">许可证状态：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" value="正常">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzzt">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">起始时间：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="起始时间" value="2016-09-20">
+                                    <input class="layui-input layui-input-inline" placeholder="起始时间" name="xkzqssj">
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">截至时间：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="截至时间" value="2019-09-19">
+                                    <input class="layui-input layui-input-inline" placeholder="截至时间" name="xkzjzsj">
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-inline">
                                     <label class="layui-form-label">发证日期：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="发证日期" onclick="layui.laydate({elem: this})">
+                                    <input class="layui-input layui-input-inline" placeholder="发证日期" name="xkzfzrq">
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">办理人：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzblr">
                                 </div>
                             </div>
                             <!--<div class="layui-form-item">-->
@@ -204,30 +206,14 @@
                                             <li>副本</li>
                                             <li>排口列表</li>
                                         </ul>
-                                        <div class="layui-tab-content">
+                                        <div class="layui-tab-content" id="pdv_pk">
                                             <!--正本-->
                                             <div class="layui-tab-item layui-show" >
-                                                <div class="thumbs">
-                                                    <div class="thumb">
-                                                        <div class="thumb">
-                                                            <img src="../../img/data/003.png" style="width: 600px;height: 500px">
-                                                            <input name="file" class="layui-upload-file" type="file"
-                                                                   accept="image/gif,image/jpeg,image/jpg,image/png">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <img src="../../img/data/003.png" style="">
                                             </div>
                                             <!--副本-->
                                             <div class="layui-tab-item">
-                                                <div class="thumbs">
-                                                    <div class="thumb">
-                                                        <div class="thumb">
-                                                            <img src="../../img/data/004.png" class="imgmax" style="width: 600px;height: 500px">
-                                                            <input name="file" class="layui-upload-file" type="file"
-                                                                   accept="image/gif,image/jpeg,image/jpg,image/png">
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <img src="../../img/data/004.png" style="">
                                             </div>
                                             <!--排口-->
                                             <div class="layui-tab-item">
@@ -256,27 +242,6 @@
                                                     </tr>
                                                     </thead>
                                                     <tbody>
-                                                    <tr>
-                                                        <td>10124441</td>
-                                                        <td>22240004</td>
-                                                        <td>XXXX外排口</td>
-                                                        <td>连续稳定</td>
-                                                        <td>濑溪河</td>
-                                                        <td>1014吨</td>
-                                                        <td>
-                                                            <i class="layui-icon" style="font-size: 20px;" onclick="layui.companyMng.lookPk();">&#xe60a;</i>
-                                                        </td>
-                                                    </tr><tr>
-                                                        <td>10124442</td>
-                                                        <td>22240005</td>
-                                                        <td>XXXX外排口</td>
-                                                        <td>连续稳定</td>
-                                                        <td>濑溪河</td>
-                                                        <td>800吨</td>
-                                                        <td>
-                                                            <i class="layui-icon" style="font-size: 20px;" onclick="layui.companyMng.lookPk();">&#xe60a;</i>
-                                                        </td>
-                                                    </tr>
                                                     </tbody>
                                                 </table>
 
@@ -293,12 +258,6 @@
                             <!--照片-->
                             <div class="photo-area clgy_photos">
                                 <div class="thumbs">
-                                    <div class="thumb">
-                                        <img src="../../img/data/005.png" style="width: 600px;height: 500px">
-                                        <input name="file" class="layui-upload-file" type="file"
-                                               accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.clgyImgSelect(this);">
-                                        <div>工艺流程图</div>
-                                    </div>
                                     <!--<div class="thumb">-->
                                         <!--<img src="../../img/map/monistation.png">-->
                                         <!--<input name="file" class="layui-upload-file" type="file"-->
@@ -487,18 +446,5 @@
     </div>
 </form>
 
-    <script>
-        $(function (){
-            $(".js-silder").silder({
-                auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-                speed: 20,//轮播图运动速度
-                sideCtrl: true,//是否需要侧边控制按钮
-                bottomCtrl: true,//是否需要底部控制按钮
-                defaultView: 0,//默认显示的索引
-                interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-                activeClass: "active",//小的控制按钮激活的样式，不包括作用两边，默认active
-            });
-        });
-    </script>
 </body>
 </html>
