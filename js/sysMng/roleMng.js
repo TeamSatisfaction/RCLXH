@@ -29,8 +29,8 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                             '<td style="text-align: center">' + item.roleName + '</td>' +
                             '<td style="text-align: center">' + item.description + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.roleMng.roleMngWin(\''+item.roleId+'\')" title="编辑"><img src="../../img/mng/配置.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.roleMng.deleteRole(\''+item.roleId+'\')" title="删除"><img src="../../img/mng/删除.png"></a>'+
+                            '<a href="#" onclick="layui.roleMng.roleMngWin(\''+item.roleId+'\')" title="编辑"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.roleMng.deleteRole(\''+item.roleId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });

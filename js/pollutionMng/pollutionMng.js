@@ -53,7 +53,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
                             // '<td style="text-align: center"><button class="layui-btn layui-btn-mini layui-btn-normal" onclick="layui.pollutionMng.detailCompanyWin()">详情</button></td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionDataMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/查看详情.png"></a></td>'
+                            '<td style="text-align: center"><a href="#" onclick="layui.pollutionDataMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a></td>'
                             '</tr>';
                         arr.push(str);
                     });

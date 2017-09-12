@@ -48,10 +48,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin()" title="详情"><img src="../../img/mng/查看详情.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.detailCompanyWin()" title="修改"><img src="../../img/mng/修改.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')" title="报警规则"><img src="../../img/mng/配置.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompany()" title="删除"><img src="../../img/mng/删除.png"></a>'+
+                            '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin()" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.detailCompanyWin()" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')" title="报警规则"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompany()" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });

@@ -63,19 +63,19 @@
 .side .layui-nav .layui-nav-item .layui-nav-child .layui-this a{ background-color:rgba(244,249,252, 1); color: #999999; /*background-image: url("../img/index/choose.png"); */  }
 .side .layui-nav .layui-nav-item .layui-nav-child dd.layui-this a:hover{ color:#999999; background-color:rgba(244,249,252, 1); }
 /*左侧树二级菜单图标*/
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/mng/企业管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/mng/监测站管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/mng/设备管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/mng/联网管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/mng/用户管理_1.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/mng/角色管理_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1) i { background-image: url(../img/mng/C_Mng_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2) i { background-image: url(../img/mng/mnMng_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3) i { background-image: url(../img/mng/equipmentMng_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4) i { background-image: url(../img/mng/networkMng_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5) i { background-image: url(../img/mng/userMng_1.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6) i { background-image: url(../img/mng/roleMng_1.png); }
 /*左侧树二级菜单选中图标*/
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1).layui-this i { background-image: url(../img/mng/企业管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2).layui-this i { background-image: url(../img/mng/监测站管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3).layui-this i { background-image: url(../img/mng/设备管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4).layui-this i { background-image: url(../img/mng/联网管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5).layui-this i { background-image: url(../img/mng/用户管理.png); }
-.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6).layui-this i { background-image: url(../img/mng/角色管理.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(1).layui-this i { background-image: url(../img/mng/C_Mng.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(2).layui-this i { background-image: url(../img/mng/mnMng.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(3).layui-this i { background-image: url(../img/mng/equipmentMng.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(4).layui-this i { background-image: url(../img/mng/networkMng.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(5).layui-this i { background-image: url(../img/mng/userMng.png); }
+.side .layui-nav .layui-nav-item .layui-nav-child>dd:nth-child(6).layui-this i { background-image: url(../img/mng/roleMng.png); }
 
 
     /*.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}*/

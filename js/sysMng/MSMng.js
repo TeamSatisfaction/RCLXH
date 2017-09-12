@@ -53,8 +53,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.lon + '</td>' +
                             '<td>' + item.lat + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.MSMng.alterMSWin()" title="修改"><img src="../../img/mng/修改.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
+                            '<a href="#" onclick="layui.MSMng.alterMSWin()" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });

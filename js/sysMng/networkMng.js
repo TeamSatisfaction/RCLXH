@@ -51,8 +51,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.epName + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.networkMng.alterEquipmentWin()" title="配置设备"><img src="../../img/mng/配置.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/删除.png"></a>'+
+                            '<a href="#" onclick="layui.networkMng.alterEquipmentWin()" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
