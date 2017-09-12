@@ -4,38 +4,19 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         form = layui.form();
         // cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
-    //企业详情
-    var detailCompanyWin = function (id) {
-        var index = layer.open({
-            title : '企业详情',
-            id : id,
-            type : 2,
-            moveOut: true,
-            area : ['1200px','700px'],
-            content : '../../pages/pollutionMng/pollutionDataView.html',
-            btn: [ '返回'],
-            btnAlign: 'c',
-            success : function (layero, index) {
-                var body = layer.getChildFrame('body', index);
-                var id = $('.layui-layer-content').attr('id');
-                // loadData(id,body);
-                // loadAlarmRuleDetails(id,body,'1');
-            }
-        });
-        layer.full(index);
-    };
+
     //获取企业基本信息
     var loadData = function () {
-        var id = $(window.parent).find('.layui-layer-content').attr('id');
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');
 
-        $.ajax({
-            url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
-            headers: {
-                // 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'get',
-            success: function (result) {
+        // $.ajax({
+        //     url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
+        //     headers: {
+        //         // 'Content-type': 'application/json;charset=UTF-8',
+        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        //     },
+        //     type: 'get',
+        //     success: function (result) {
                 // var data = result.data;
                 var data = {
                     "企业名称":"重庆江特表面处理有限公司",
@@ -142,7 +123,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 //企业处理工艺
                 var clgylist = "";
                 for(var i in data.企业处理工艺){
-                    clgylist += "<div class='thumb' style=''> " +
+                    clgylist += "<div class='thumb lay-img' style=''> " +
                         "<img src='"+ data.企业处理工艺[i].url +"' " +
                         "style=''> " +
                         "<div>"+ data.企业处理工艺[i].name +"</div> </div>"
@@ -151,16 +132,26 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 //企业照片
                 var qyPhotos = "";
                 for(var i in data.qyphoto){
-                    qyPhotos += "<div class='silder-main-img'> <img src='"+ data.qyphoto[i].url +"' style='width: 600px;height: 400px'> </div>"
+                    qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ data.qyphoto[i].url +"' style='width: 600px;height: 400px'> </div>"
                 }
                 companyDataDiv.find(".silder-main").html(qyPhotos);
                 //图片点击
                 layer.photos({
-                    photos: 'img'
+                    photos: '.lay-img'
                     ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
                 });
-            }
-        });
+
+                $(".js-silder").silder({
+                    auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                    speed: 20,//轮播图运动速度
+                    sideCtrl: true,//是否需要侧边控制按钮
+                    bottomCtrl: true,//是否需要底部控制按钮
+                    defaultView: 0,//默认显示的索引
+                    interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                    activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                });
+        //     }
+        // });
         loadDau(id);
     };
     //根据企业查询数采仪
@@ -174,35 +165,33 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 epId : Cid
             }
         };
+        console.log(Cid)
         var field = JSON.stringify(data);
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'post',
-            data: field,
-            success: function (result){
-                var row = result.data.rows;
+        // $.ajax({
+        //     url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
+        //     headers: {
+        //         'Content-type': 'application/json;charset=UTF-8',
+        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        //     },
+        //     type: 'post',
+        //     data: field,
+        //     success: function (result){
+        //         var row = result.data.rows;
                     $("#select_dau").empty();
-                if(!row){
+                // if(!row){
                     $("#select_dau").append("<option value='无采集仪' selected='selected'>无采集仪</option>");
-                    $("#select_equip").empty();
-                    $("#select_equip").append("<option value='无采集仪' selected='selected'>无设备</option>");
-                    $("#select_fac").empty();
-                    $("#select_fac").append("<option value='无采集仪' selected='selected'>无监测因子</option>");
-                    $("#select_fac").empty();
-                    $("#select_fac").html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
-                }else{
-                    for(var i in row){
-                        // $("#select_d").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
-                        $("#select_dau").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
-                    }
-                }
+                    $("#select_equip").empty().append("<option value='无采集仪' selected='selected'>无设备</option>");
+                    $("#select_fac").empty().append("<option value='无采集仪' selected='selected'>无监测因子</option>");
+                    $("#com_chart1").empty().html('<h1 style="text-align: center">'+name+'</h1><span>无相关监测因子</span>');
+                // }else{
+                //     for(var i in row){
+                //         // $("#select_d").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+                //         $("#select_dau").append("<option id='d_option1' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+                //     }
+                // }
                 form.render('select');
-            }
-        })
+        //     }
+        // })
     };
     /*3D饼图*/
     var draw3dPie = function() {
@@ -247,7 +236,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
     /*输出内容，注意顺序*/
     var obj = {
-        // detailCompanyWin : detailCompanyWin,
         loadData : loadData,
         draw3dPie : draw3dPie
     };
