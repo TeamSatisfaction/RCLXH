@@ -215,10 +215,44 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             url : '../../data/roleData.json',
             type : 'get',
             success: function (result){
-                console.log(result);
+                var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+                var nodes = treeObj.getNodes();
+                // // var children1 = nodes.children;
+                //     console.log(nodes);
+                // // for (var i=0; i < nodes.length; i++) {
+                // //     treeObj.checkNode(nodes[i], true, true);
+                // // }
+                // console.log(getCheckedArr(result[0],[]) );
+                var checkedArr = getCheckedArr(result[0],[]);
+                checkTree(nodes, checkedArr, treeObj );
             }
         })
     };
+    //已选中的项(最下层)
+    function getCheckedArr(jsonObject, array) {
+        var name;
+        if(!jsonObject.menuList){
+            name = jsonObject.menuName;
+            array.push(name);
+        }else{
+            for(var i in jsonObject.menuList){
+                getCheckedArr(jsonObject.menuList[i], array)
+            }
+        }
+        return array;
+    }
+    //打钩
+    function checkTree(nodes, checkedArr, treeObj ){
+        for(var i in nodes){
+            if($.inArray(nodes[i].name, checkedArr)!=-1){
+                treeObj.checkNode(nodes[i], true, true);
+            }
+            if(nodes[i].children && nodes[i].children.length>0){
+                checkTree(nodes[i].children, checkedArr, treeObj)
+            }
+        }
+    }
+
     var obj = {
         loadRoleData : loadRoleData,
         addRoleWin : addRoleWin,
