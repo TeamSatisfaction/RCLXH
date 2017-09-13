@@ -50,18 +50,21 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         //     }
         // })
     };
-
-    //导航栏点击
-    // element.on('nav(left_menu)', function(elem){
-    //     console.log(elem.text()); //得到当前点击的DOM对象
-    //     var company_tab = $('#company_tab');
-    //     console.log(company_tab);
-    // });
-
+    /*菜单管理*/
+    var menuMng = function () {
+        var li = $('.side').find('li'),
+            dd = $('.side').find('dd');
+        // console.log(li);
+        // console.log(dd);
+        for(var i in li){
+            // li[i].setAttribute("style","display:none");
+        }
+    }
     /*输出内容，注意顺序*/
     var obj = {
         init : init,
-        loadPage : loadPage
+        loadPage : loadPage,
+        menuMng : menuMng
     };
     //输出test接口
     exports('index', obj);

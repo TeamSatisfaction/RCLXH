@@ -35,7 +35,6 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         }
         var symbol = new esri.symbol.PictureMarkerSymbol(symbolUrl, 20, 25);		//标记
         var graphic = new esri.Graphic(point, symbol, attr);
-        console.log(attr);
         graphicLayer.add(graphic);
         // map.addLayer(graphicLayer);
 

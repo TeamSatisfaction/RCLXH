@@ -4,7 +4,7 @@
  **/
 // sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8095');
 sessionStorage.setItem("urlConfig", 'http://172.16.1.10:8095');
-// sessionStorage.setItem("urlConfig", 'http://113.204.228.66:8099');
+// sessionStorage.setItem("urlConfig", 'http://192.168.1.127:8095');
 layui.define(['layer', 'form', 'element'], function(exports){
     var $ = layui.jquery,
         layer = layui.layer,
@@ -25,6 +25,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         'utils'
     ], function () {
         layui.index.init();
+        layui.index.menuMng();
     });
 
     /*导航栏方法*/

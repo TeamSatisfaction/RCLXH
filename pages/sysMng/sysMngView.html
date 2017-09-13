@@ -22,6 +22,7 @@
             networkMng : 'sysMng/networkMng'
         }).use(['utils', 'sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
             layui.sysMng.getTab();
+            layui.roleMng.roleMngWin();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -246,7 +247,6 @@
                             <col>
                             <col>
                             <col>
-                            <col>
                             <col width="120">
                         </colgroup>
                         <thead>
@@ -255,8 +255,7 @@
                             <!--<th>登录账号</th>-->
                             <th>用户姓名</th>
                             <th>联系电话</th>
-                            <th>最后更新人</th>
-                            <th>最后更新时间</th>
+                            <th>身份证号码</th>
                             <th>状态</th>
                             <th style="text-align: center">操作</th>
                         </tr>

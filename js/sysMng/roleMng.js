@@ -16,7 +16,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var str = "";
@@ -132,13 +132,41 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             btnAlign: 'c',
             success: function(layero, index){
                 var id = $('.layui-layer-content').attr('id'),
-                winFrame = layero.find("iframe")[0].contentWindow;
-                // iLayui = winFrame.layui;
+                    winFrame = layero.find("iframe")[0].contentWindow;
                 tree(id,winFrame);
             },
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            yes : function (index,layero) {
+                var id = $('.layui-layer-content').attr('id'),
+                    winFrame = layero.find("iframe")[0].contentWindow;
+                var treeDemo = winFrame.document.getElementById("treeDemo");
+                var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+                var Nodes = treeObj.getCheckedNodes(true);
+                var arry = [{menuId:"0",roleId : id}];
+                for(var i in Nodes){
+                    var tId = Nodes[i].tId;
+                    var menuId=tId.split("_")[1];
+                    var data = {
+                        menuId:menuId,
+                        roleId : id
+                    };
+                    arry.push(data);
+                }
+                 console.log(arry);
+                var field = JSON.stringify(arry);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/role/menu',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    dataType : 'json',
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        layer.msg('提交成功！', {icon: 1});
+                        console.log(result);
+                    }
+                })
             }
         });
     };
@@ -166,24 +194,30 @@ layui.define(['layer','element','laypage','form'],function (exports) {
     };
     // 加载权限
     var loadRoleStore = function (id,winFrame) {
-        console.log(id);
+        // $.ajax({
+        //     url: ''+urlConfig+'/v01/htwl/lxh/role/menu/'+id+'',
+        //     headers: {
+        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        //     },
+        //     type: 'get',
+        //     success: function (result) {
+        //         console.log(result);
+        //         var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+        //         var nodes = treeObj.getNodes();
+        //         console.log(nodes);
+        //         // var children1 = nodes.children;
+        //         for (var i=0; i < nodes.length; i++) {
+        //             treeObj.checkNode(nodes[i], true, true);
+        //         }
+        //     }
+        // });
         $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/user/menu/'+id+'',
-            headers: {
-                // 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'get',
-            success: function (result) {
+            url : '../../data/roleData.json',
+            type : 'get',
+            success: function (result){
                 console.log(result);
             }
         })
-        var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
-        // var treeObj = winFrame.jQuery.fn.zTree;
-        var nodes = treeObj.getNodes();
-        for (var i=0, l=nodes.length; i < l; i++) {
-            treeObj.checkNode(nodes[i], true, true);
-        }
     };
     var obj = {
         loadRoleData : loadRoleData,

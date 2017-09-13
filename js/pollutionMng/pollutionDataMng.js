@@ -8,7 +8,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     //获取企业基本信息
     var loadData = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');
-
         $.ajax({
             url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+id+'',
             headers: {
@@ -156,8 +155,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         loadDau(id);
     };
     //根据企业查询数采仪
-    // var loadDau = function (Cid,body) {
-        // console.log(Cid);
     var loadDau = function (Cid) {
         var data = {
             pageNumber : 1,
@@ -166,7 +163,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 epId : Cid
             }
         };
-        console.log(Cid)
         var field = JSON.stringify(data);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',

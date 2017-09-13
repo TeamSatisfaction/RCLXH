@@ -89,7 +89,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             success : function (layero, index) {
                 var body = layer.getChildFrame('body', index);
                 var id = $('.layui-layer-content').attr('id');
-                sessionStorage.setItem("CidConfig",id);
+                // sessionStorage.setItem("CidConfig",id);
             }
         });
         layer.full(index);
@@ -217,20 +217,11 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         };
         Highcharts.chart('com_chart1', option);
     };
-    var changeChart = function (e) {
-        Tname = e;
-        console.log(e);
-        loadaCharts();
-    };
-    // loadaCharts();
         /*输出内容，注意顺序*/
         var obj = {
             loadPage : loadPage,
             loadCompanyData : loadCompanyData,
-            detailCompanyWin : detailCompanyWin,
-            // draw3dPie :  draw3dPie,
-            // loadaCharts : loadaCharts,
-            // changeChart : changeChart
+            detailCompanyWin : detailCompanyWin
         };
         exports('pollutionMng',obj)
 })

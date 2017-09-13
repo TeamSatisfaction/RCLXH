@@ -420,9 +420,12 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             type: 'get',
             success: function (result){
                 console.log(result);
-                if(result != null){
-                    $("#select_user").empty();
-                    for(var i in result){
+                $("#select_user").empty();
+                for(var i=0;i<=result.length;i++){
+                    if(result.length = 0){
+                        $("#select_user").append("<option value='' selected='selected'>无用户</option>");
+                    }else{
+                        console.log(result[i].userId);
                         $("#select_user").append("<option value="+result[i].userId+">"+result[i].userName+"</option>");
                     }
                 }

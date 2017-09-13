@@ -17,7 +17,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         layer.open({
             title : '新增用户',
             type : 2,
-            area : ['850px','700px'],
+            area : ['850px','750px'],
             content : '../../pages/sysMng/addUserView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',
@@ -39,7 +39,11 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //form表单提交
     form.on('submit(user-save)',function (data) {
+        data.field.orgId = "lxh_user";
+        data.field.isDel = "0";
+        data.field.status = "1";
         var field = JSON.stringify(data.field);
+        console.log(field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/user',
             headers : {
@@ -50,48 +54,18 @@ layui.define(['layer','element','laypage','form'],function (exports){
             type : 'post',
             data : field,
             success : function (result){
-                if(result.message == ''){
+                var  frameindex= parent.layer.getFrameIndex(window.name);
+                if(result.code == '1000'){
                     layer.msg('提交成功！', {icon: 1});
-                    //$(parent).find("#index_frame").location.reload();
+                    parent.layer.close(frameindex);
                     parent.location.reload(); // 父页面刷新
-                }else {
+                }else if(result.resultcode == '501'){
                     layer.msg(result.resultdesc, {icon: 2});
                 }
             }
         });
         return false;
     });
-    //关闭窗口
-    // var closeAddWin = function () {
-    //     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-    //     parent.layer.close(index); //再执行关闭
-    // };
-    //form表单提交
-    // form.on('submit(formDemo)', function(data){
-    //     var field = JSON.stringify(data.field);
-    //     $.ajax({
-    //         url :''+urlConfig+'/v01/htwl/lxh/user',
-    //         headers : {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         dataType : 'json',
-    //         type : 'post',
-    //         data : field,
-    //         success : function (result){
-    //             if(result.message == ''){
-    //                 //closeAddWin();
-    //                 layer.msg('提交成功！', {icon: 1});
-    //                 //$(parent).find("#index_frame").location.reload();
-    //                 parent.location.reload(); // 父页面刷新
-    //                 closeAddWin();
-    //             }else {
-    //                 layer.msg(result.message, {icon: 2});
-    //             }
-    //         }
-    //     });
-    //     return false;
-    // });
     //加载用户列表
     var loadUserData = function (curr) {
         var name = $('#uName').val(),
@@ -100,7 +74,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 pageSize : 16,
                 epMap : {
                     realName : name,
-                    epId : '2c9180875bd26a21015bd75bbcc80040'
+                    orgId : 'lxh_user'
                 }
             };
         var field = JSON.stringify(data);
@@ -127,12 +101,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.realName + '</td>' +
                             '<td>' + item.phone + '</td>' +
-                            '<td>' + item.createUser+ '</td>' +
-                            '<td>' + item.createTime + '</td>' +
+                            '<td>' + item.idCard+ '</td>' +
                             '<td>' + item.status + '</td>' +
-                            // '<td style="text-align: center">' +
-                            // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.userMng.userRoleMngWin()">编辑</button></a>&nbsp;&nbsp;' +
-                            // '<a href="#"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini">删除</button></a></td>' +
                             '<td style="text-align: center">'+
                             '<a href="#" onclick="layui.userMng.userRoleMngWin()" title="权限配置"><img src="../../img/mng/configure.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
@@ -168,7 +138,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 layer.msg('两次密码不一致！', {icon: 2});
             }
         }
-    }
+    };
     var userRoleMngWin = function () {
         var index = layer.open({
             title : '权限配置',

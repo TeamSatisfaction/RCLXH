@@ -129,7 +129,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
             websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
         }
@@ -409,7 +409,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");
                 }else {
                     for(var i in list){
-                        $("#c_select").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                        if(list[i].name != '荣昌区环保局'){
+                            $("#c_select").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                        }
                     }
                 }
                 form.render('select');
@@ -538,7 +540,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 initChart();
             }
         })
-    }
+    };
     //企业select change事件
     form.on('select(c_select)', function(data){
         Cid = data.value;
