@@ -30,13 +30,11 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         /*加载首页*/
         loadPage('pages/map/map.html');
 
-        $(".side-hider").click(function () {
-            $(this).toggleClass("off");
-            $(this).hasClass("off")?hideSidebar():showSidebar();
-        })
     };
     
     var loadPage = function (url) {
+        if(url=="undefined") return;
+
         if(url.indexOf('sysMngView')!=-1){
             $("#index_frame").hide()
         }else{
@@ -52,8 +50,119 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     };
     /*菜单管理*/
     var menuMng = function () {
+        $.ajax({
+            url: 'data/roleData.json',
+            type: 'post',
+            success: function(msg){
+                var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
+                            '<a href="#"> ' +
+                                    '<i class="layui-icon">&#xe60f;</i> ' +
+                            '</a> ' +
+                        '</li> ' +
+                        '<li class="layui-nav-item layui-this menu-home"> ' +                   //首页
+                            '<a href="#" onclick="layui.index.loadPage(\'pages/map/map.html\')">' +
+                                '<i class="layui-icon"></i> ' +
+                                '<cite style="padding:10px">首页</cite> ' +
+                            '</a> ' +
+                        '</li>',
+                    data = msg[0].menuList;
 
+                if(data.length>0){
+                    for(var i in data){
+                        var d = getDataByName(data[i].menuName);
+                        //第一级
+                        str += '<li class="layui-nav-item '+ d.class +'"> ' +
+                                    '<a href="#" onclick="layui.index.loadPage(\''+ d.url +'\')"> ' +
+                                        '<i class="layui-icon"></i> ' +
+                                        '<cite style="padding: 10px">'+ data[i].menuName +'</cite> ' +
+                                    '</a> ';
+                        //第二级
+                        if(data[i].menuList && data[i].menuList.length>0){
+                            str += '<dl class="layui-nav-child">';
+
+                            for(var j in data[i].menuList){
+                                var d1 = getDataByName(data[i].menuList[j].menuName);
+
+                                str += '<dd style="margin-left: 10px" class="'+d1.class+'">' +
+                                            '<a href="#" onclick="layui.index.loadPage(\''+d1.url+'\')">' +
+                                                '<i class="layui-icon"></i>' +
+                                                '<cite style="margin-left: 10px">'+ data[i].menuList[j].menuName +'</cite> ' +
+                                            '</a>' +
+                                        '</dd>'
+                            }
+                            str += '</dl>'
+                        }
+                        str += '</li>'
+                    }
+
+                    $("#left_menu").html(str);  //写入页面
+                    element.init();             //重新初始化element
+
+                    $(".side-hider").click(function () {
+                        $(this).toggleClass("off");
+                        $(this).hasClass("off")?hideSidebar():showSidebar();
+                    })
+                }
+            }
+        })
+    };
+
+    var getDataByName = function(name){
+        var menuData = {
+            "污染源": {
+                "url": "pages/pollutionMng/pollutionView.html",
+                "class": "menu-pollution"
+            },
+            "报警管理": {
+                "url": "pages/alarmMng/alarmMng.html",
+                "class": "menu-alarm"
+            },
+            "水质自动监测站": {
+                "url": "pages/waterQualitySite/waterQualitySiteView.html",
+                "class": "menu-equipment"
+            },
+            "统计分析": {
+                "class": "menu-statistics"
+            },
+            "系统管理": {
+                "class": "menu-sysmng"
+            },
+            "报警统计": {
+                "url": "pages/statisticsMng/alarmStatistics.html",
+                "class": "equipmentmng"
+            },
+            "监测统计": {
+                "url": "pages/statisticsMng/monitorStatistics.html",
+                "class": "mnmng"
+            },
+            "企业管理": {
+                "url": "pages/sysMng/sysMngView.html?token=0",
+                "class": "cmng"
+            },
+            "监测站管理": {
+                "url": "pages/sysMng/sysMngView.html?token=1",
+                "class": "mnmng"
+            },
+            "设备管理": {
+                "url": "pages/sysMng/sysMngView.html?token=2",
+                "class": "equipmentmng"
+            },
+            "联网管理": {
+                "url": "pages/sysMng/sysMngView.html?token=3",
+                "class": "networkmng"
+            },
+            "用户管理": {
+                "url": "pages/sysMng/sysMngView.html?token=4",
+                "class": "usermng"
+            },
+            "角色管理": {
+                "url": "pages/sysMng/sysMngView.html?token=5",
+                "class": "rolemng"
+            }
+        };
+        return menuData[name];
     }
+
     /*输出内容，注意顺序*/
     var obj = {
         init : init,

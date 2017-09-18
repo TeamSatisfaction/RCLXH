@@ -48,70 +48,8 @@
         </div>
         <!--左侧菜单-->
         <div class="layui-bg-black layui-side side">
-            <ul class="layui-nav layui-nav-tree" lay-filter="left_menu">
-                <li class="side-hider" style="border-bottom:1px solid #fff">
-                    <a href="#">
-                        <i class="layui-icon">&#xe60f;</i>
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-this">
-                    <a href="#" onclick="layui.index.loadPage('pages/map/map.html')">
-                        <i class="layui-icon"></i>
-                        <!--<i class="layui-icon" style="top:3px;font-size: 20px;position: relative ">&#xe609;</i>-->
-                        <cite style="padding:10px">首页</cite>
-                    </a>
-                </li>
-                <li class="layui-nav-item">
-                    <!--<a href="#">-->
-                    <a href="#" onclick="layui.index.loadPage('pages/pollutionMng/pollutionView.html')">
-                        <i class="layui-icon"></i>
-                        <!--<i class="layui-icon" style="top:3px;font-size: 20px;position: relative ">&#xe628;</i>-->
-                        <cite style="padding: 10px">污染源</cite>
-                    </a>
-                </li>
-                <li class="layui-nav-item">
-                    <a href="#" onclick="layui.index.loadPage('pages/alarmMng/alarmMng.html')">
-                        <i class="layui-icon"></i>
-                        <!--<i class="layui-icon" style="top:3px;font-size: 20px;position: relative ">&#xe688;</i>-->
-                        <cite style="padding: 10px">报警管理</cite>
-                    </a>
-                </li>
-                <!--<li class="layui-nav-item">-->
-                    <!--<a href="#" onclick="layui.index.loadPage('pages/pollutantManage.html')">-->
-                        <!--<i class="layui-icon"></i>-->
-                        <!--<cite style="padding: 10px">无人机数据管理</cite>-->
-                    <!--</a>-->
-                <!--</li>-->
-                <li class="layui-nav-item">
-                    <a href="#" onclick="layui.index.loadPage('pages/waterQualitySite/waterQualitySiteView.html')">
-                        <i class="layui-icon"></i>
-                        <cite style="padding: 10px">水质自动监测站</cite>
-                    </a>
-                </li>
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a href="#">
-                        <i class="layui-icon"></i>
-                        <cite style="padding: 10px">统计分析</cite>
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd style="margin-left: 10px"><i class="layui-icon"></i><a href="#" onclick="layui.index.loadPage('pages/statisticsMng/alarmStatistics.html')"><i class="layui-icon"></i><cite style="margin-left: 10px">报警统计</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/statisticsMng/monitorStatistics.html')"><i class="layui-icon"></i><cite style="margin-left: 10px">监测统计</cite></a></dd>
-                    </dl>
-                </li>
-                <li class="layui-nav-item layui-nav-itemed">
-                    <a href="#">
-                        <i class="layui-icon"></i>
-                        <cite style="padding: 10px">系统管理</cite>
-                    </a>
-                    <dl class="layui-nav-child">
-                        <dd style="margin-left: 10px"><i class="layui-icon" id="con_mng"></i><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=0')"><i class="layui-icon"></i><cite style="margin-left: 10px">企业管理</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=1')"><i class="layui-icon"></i><cite style="margin-left: 10px">监测站管理</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=2')"><i class="layui-icon"></i><cite style="margin-left: 10px">设备管理</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=3')"><i class="layui-icon"></i><cite style="margin-left: 10px">联网管理</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=4')"><i class="layui-icon"></i><cite style="margin-left: 10px">用户管理</cite></a></dd>
-                        <dd style="margin-left: 10px"><a href="#" onclick="layui.index.loadPage('pages/sysMng/sysMngView.html?token=5')"><i class="layui-icon"></i><cite style="margin-left: 10px">角色管理</cite></a></dd>
-                    </dl>
-                </li>
+            <ul class="layui-nav layui-nav-tree" lay-filter="left_menu" id="left_menu">
+
             </ul>
         </div>
         <!--主内容区-->
