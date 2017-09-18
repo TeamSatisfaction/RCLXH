@@ -174,13 +174,13 @@
 
 /*照片部分*/
 .photo-area { width: 90%;margin: auto;border: 1px }
-.photo-area .thumb{ width: 100px; height: 100px; display: inline-block; margin-right: 8px; border: 1px solid #aaa; position: relative }
-.photo-area .thumb img{ width: 100px; height: 100px; }
+.photo-area .thumb{ width: 200px; height: 200px; display: inline-block; margin-right: 8px; border: 1px solid #aaa; position: relative }
+.photo-area .thumb img{ width: 200px; height: 200px; }
 .photo-area .thumb i{  position: absolute; right: 0px; top: 0px; color: red; font-size: 20px; cursor: pointer; }
 .photo-area .thumbs{  margin-bottom: 16px; }
 .photo-area .thumb-input { border: dashed 1px #bbbbbb; display: inline-block }
-.photo-area .thumb-input .layui-upload-file { position: absolute; width: 100px; height: 100px; opacity: 0; top: 0;}
-.photo-area .thumb-input img { height: 60px;  width:60px; margin: 20px;}
+.photo-area .thumb-input .layui-upload-file { position: absolute; width: 200px; height: 200px; opacity: 0; top: 0;}
+.photo-area .thumb-input img { height: 160px;  width:160px; margin: 20px;}
 .photo-area .thumb div {text-align: center}
 /*详情*/
 tr .align-right{width:120px;text-align: right}

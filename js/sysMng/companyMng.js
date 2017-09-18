@@ -6,6 +6,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         layer = layui.layer,
         laypage = layui.laypage,
         form = layui.form(),
+        // upload = layui.upload,
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
     var loadPage = function(url){
@@ -91,7 +92,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         thumb.after(thisContent);
         getImgSelection(input);
     };
-
     /*移除选择的图片*/
     var imgDelete = function (i) {
         var thumb = $(i).parent(".thumb");
@@ -135,15 +135,39 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     var getImgSelection = function (input) {
         var thumbs = $(input).parents(".photo-area").find(".thumbs"),
             urls = [],
-            formData = new FormData();
+            formData = new FormData(),
+            name = thumbs.find("input")[0].name,
+            str = '';
+        console.log(name);
         /*遍历*/
         $(thumbs).find('.thumb').each(function () {
             formData.append($(this).index().toString(), $(this).find("input")[0].files[0]);
             urls.push($(this).find("input").val());
         });
-        console.log(urls);
         /*formData打印不出来的，需要有接口才能测试*/
-        console.log(formData);
+        $.ajax({
+            url : 'http://39.108.112.173:9001/v01/htwl/file/upload',
+            type: 'POST',           //必须是post
+            data: formData,         //参数为formData
+            contentType: false,  	//必要
+            processData: false,  	//必要，防止ajax处理文件流
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            success : function (result){
+                var data = result.data;
+                for(var i = 0;i<data.length;i++){
+                    console.log(data.length);
+                    if(data.length == 1){
+                        str = data[i].uri
+                    }else{
+                        str += data[i].uri+ ",";
+                    }
+                }
+               $('.layui-form-item').find("input[name='attach']").val(str);
+                console.log(str)
+            }
+        })
     };
     //新增企业信息
     var addCompanyWin = function () {
@@ -233,11 +257,65 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 var body = layer.getChildFrame('body', index);
                 var id = $('.layui-layer-content').attr('id');
                 loadCompanyData(id,body);
+                loadLicenseData(id,body);
+                loadPortData(id,body);
             }
         });
         layer.full(win);
     };
-    //载入企业基本信息
+    //编辑许可证信息
+    form.on('submit(Licence-save)',function (data) {
+        var id = $('.layui-form-item').find("input[name='id']").val();//许可证id
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        data.field.enterpriseId = Cid;
+        var field = JSON.stringify(data.field);
+        if(id == ""){
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
+                headers : {
+                    'Content-type': 'application/json;charset=UTF-8',
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                dataType : 'json',
+                type : 'post',
+                data : field,
+                success : function (result){
+                    console.log(result);
+                    // var  frameindex= parent.layer.getFrameIndex(window.name);
+                    if(result.code == '1000'){
+                        // parent.layer.close(frameindex);
+                        // parent.location.reload(); // 父页面刷新
+                        layer.msg('提交成功！', {icon: 1});
+                    }else{
+                        layer.msg(result.message, {icon: 2});
+                    }
+                }
+            })
+        }else{
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
+                headers : {
+                    'Content-type': 'application/json;charset=UTF-8',
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                dataType : 'json',
+                type : 'put',
+                data : field,
+                success : function (result){
+                    console.log(result);
+                    // var  frameindex= parent.layer.getFrameIndex(window.name);
+                    if(result.code == '1000'){
+                        // parent.layer.close(frameindex);
+                        // parent.location.reload(); // 父页面刷新
+                        layer.msg('提交成功！', {icon: 1});
+                    }else{
+                        layer.msg(result.message, {icon: 2});
+                    }
+                }
+            })
+        }
+    });
+    //请求企业基本信息
     var loadCompanyData = function(id,body){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
@@ -272,8 +350,60 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         this.setAttribute("selected","selected");
                     }
                 });
-                // console.log(document.getElementById(id));
-                // document.getElementById(id).render('select');
+            }
+        })
+    };
+    //请求许可证基本信息
+    var loadLicenseData = function (id,body) {
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/license/'+id+'',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                var data = result.data[0];
+                if(data){
+                    body.contents().find("input[name='licenseCode']").val(data.licenseCode);
+                    body.contents().find("input[name='beginDate']").val(data.beginDate);
+                    body.contents().find("input[name='endDate']").val(data.endDate);
+                    body.contents().find("input[name='maxiMum']").val(data.maxiMum);
+                    body.contents().find("input[name='gross']").val(data.gross);
+                    body.contents().find("input[name='licenceType']").val(data.licenceType);
+                    body.contents().find("input[name='id']").val(data.id);
+                }
+            }
+        })
+    };
+    var loadPortData = function (id,body) {
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                var render = function(result) {
+                    var arr = [],
+                        str = '';
+                    layui.each(result, function(index, item){
+                        str = '<tr>' +
+                            '<td>' + item.pageNumber + '</td>' +
+                            '<td>' + item.dischargePortCode + '</td>' +
+                            '<td>' + item.dischargePortName + '</td>' +
+                            '<td>' + item.mode + '</td>' +
+                            '<td>' + item.whereabouts + '</td>' +
+                            '<td>' + item.emissionAmount + '</td>' +
+                            '<td style="text-align: center">'+
+                            '<a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
+                            '</tr>';
+                        arr.push(str);
+                    });
+                    return arr.join('');
+                };
+                console.log(body.contents().find("#dis-port-list"));
+                body.contents().find("#dis-port-list").html(render(result));
             }
         })
     };
@@ -290,9 +420,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             ,content: pk_win
             ,btnAlign: 'c'
             ,btn: ['提交', '返回'] //只是为了演示
-            ,yes: function(){
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            ,yes: function(index,layero){
+                // layero.find("iframe").contents().find('#company-save').click();
+                console.log($("#pk-save"))
+                $("#pk-save").click();
             }
             ,zIndex: layer.zIndex //重点1
             ,success: function(layero){
@@ -300,6 +431,23 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             }
         })
     };
+    form.on('submit(pk-save)',function (data) {
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        data.field.refid = Cid;
+        var field = JSON.stringify(data.field);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'post',
+            data : field,
+            success : function (result){
+                console.log(result);
+            }
+        })
+    });
     /*查看排口信息*/
     var lookPk = function () {
         var pk_win =  $('#pk_window');
