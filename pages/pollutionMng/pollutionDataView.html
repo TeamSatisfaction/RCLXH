@@ -15,10 +15,11 @@
     <script>
         layui.link('../../css/style.css');
         layui.config({
-            base: '../../js/pollutionMng/' //你的模块目录
+            base: '../../js/' //你的模块目录
         }).extend({
-            pollutionDataMng : 'pollutionDataMng'
-        }).use('pollutionDataMng', function () {
+            pollutionDataMng : 'pollutionMng/pollutionDataMng',
+            utils : 'utils'
+        }).use(['pollutionDataMng','utils'], function () {
             $(function(){
                 layui.jquery(".detail-form").find("input").attr("readonly", true);
                 layui.pollutionDataMng.loadData();
@@ -289,7 +290,10 @@
                     </div>
                 </form>
                 <div class="com-content">
-                    <div id="com_chart1"></div>
+                    <div id="com_chart1">
+                        <div class="chart_title" style="font-size: 20px; font-weight: bold; text-align: center">实时监测数据</div>
+                        <div id="com_chart2"></div>
+                    </div>
                     <div id="com_fac">
                         <form class="layui-form" action="" style="margin-left: 80px">
                             <div style="margin: 10px 0">

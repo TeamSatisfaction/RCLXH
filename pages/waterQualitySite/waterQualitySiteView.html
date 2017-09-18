@@ -57,10 +57,10 @@
         <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
             <ul class="layui-tab-title" id="getType">
                 <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
-                <!--<li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>-->
-                <!--<li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>-->
-                <li  onclick="layui.waterQualitySiteMng.loadaSCharts();">小时监测数据</li>
-                <li  onclick="layui.waterQualitySiteMng.loadaRCharts();">日监测数据</li>
+                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
+                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
+                <!--<li  onclick="layui.waterQualitySiteMng.loadaSCharts();">小时监测数据</li>-->
+                <!--<li  onclick="layui.waterQualitySiteMng.loadaRCharts();">日监测数据</li>-->
             </ul>
             <div class="layui-tab-content">
                 <!--实时监测数据-->
@@ -99,15 +99,6 @@
                                     </select>
                                 </div>
                             </div>
-                            <!--<div class="layui-form-item layui-inline">-->
-                                <!--<label class="layui-form-label">报警时间：</label>-->
-                                <!--<input class="layui-input-inline layui-input" onclick="WdatePicker()" style="margin-right: 5px;margin-left: 20px">-->
-                                <!--<input class="layui-input-inline layui-input" onclick="WdatePicker()">-->
-                            <!--</div>-->
-                            <!--<div class="layui-form-item layui-inline">-->
-                                <!--<label class="layui-form-label">截止时间：</label>-->
-                                <!--<input class="layui-input-inline layui-input" onclick="WdatePicker()">-->
-                            <!--</div>-->
                             <div class="layui-inline">
                                 <label class="layui-form-label" style="padding-top: 3px;">对比模式：</label>
                                 <div class="layui-input-block">
@@ -116,14 +107,11 @@
                                     <input type="radio" name="mode" value="同比" title="同比">
                                 </div>
                             </div>
-                            <!--<div class="layui-btn layui-btn-normal" id="wqs_tab1_btn" onclick="layui.waterQualitySiteMng.searchCharts()">-->
-                                <!--<i class="layui-icon">&#xe615;</i>-->
-                                <!--查询-->
-                            <!--</div>-->
                         </div>
                     </div>
                     <div class="wqs_tab1_statsTitle"></div>
                     <div id="wqs_tab1_chart"></div>
+                    <div><a id="wqs_tab1_details" href="#" onclick="layui.waterQualitySiteMng.detailsWin()"><img src="../../img/firework/click.png">查看详情</a></div>
                 </div>
             </div>
         </div>

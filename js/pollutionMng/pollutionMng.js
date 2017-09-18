@@ -35,7 +35,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             type : 'post',
             data : field,
             success : function (result) {
-                console.log(result);
+                // console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var cData = result.data.list,
@@ -94,134 +94,11 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         });
         layer.full(index);
     };
-    // //根据数采仪查询设备
-    // var loadEquipment = function (Did) {
-    //     var data = {
-    //         pageNumber : 1,
-    //         pageSize : 1000,
-    //         equipmentMap : {
-    //             dauId : Did
-    //         }
-    //     };
-    //     var field = JSON.stringify(data);
-    //     $.ajax({
-    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
-    //         headers: {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'post',
-    //         data: field,
-    //         success: function (result){
-    //             var row = result.data.rows;
-    //             $("#select_e").empty();
-    //             if(row == null){
-    //                 $("#select_e").append("<option value='' selected='selected'>无设备</option>");
-    //                 $("#select_f").empty();
-    //                 $("#select_f").append("<option value='' selected='selected'>无监测因子</option>");
-    //                 $("#com_chart1").empty();
-    //                 $("#com_chart1").html('<span>无相关监测因子</span>');
-    //             }else{
-    //                 for(var i in row){
-    //                     $("#select_e").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
-    //                 }
-    //                 loadFactor(row[0].id);
-    //             }
-    //             form.render('select');
-    //         }
-    //     })
-    // };
-    // //根据设备查询因子
-    // var loadFactor = function (id,cn) {
-    //     var data = {
-    //         pageNumber : 1,
-    //         pageSize : 1000,
-    //         factorMap : {
-    //             equipmentId : id
-    //         }
-    //     };
-    //     var field = JSON.stringify(data);
-    //     $.ajax({
-    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
-    //         headers: {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'post',
-    //         data: field,
-    //         success: function (result){
-    //             var row = result.data.rows;
-    //             $("#select_f").empty();
-    //             if(row == null){
-    //                 $("#select_f").append("<option value='' selected='selected'>无监测因子</option>");
-    //                 $("#com_chart1").empty();
-    //                 $("#com_chart1").html('<span>无相关监测因子</span>');
-    //             }else{
-    //                 for(var i in row){
-    //                     $("#select_f").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
-    //                 }
-    //             }
-    //             form.render('select');
-    //             code=row[0].factorCode;
-    //             Fname=row[0].factorName;
-    //             needRefresh = true;
-    //             console.log(Fname);
-    //             // loadaCharts();
-    //             // loadaCharts(cn);
-    //         }
-    //     })
-    // };
-    //监测详情曲线图
-    var loadaCharts = function () {
-        var option = {
-            chart: {
-                type : 'line'
-            },
-            title: {
-                text: Tname
-            },
-            xAxis: {
-                categories : ["22:34:01","22:34:11","22:34:21","22:34:31"]
-            },
-            tooltip: {
-                valueSuffix: 'mg/L'
-            },
-            yAxis: {
-                title: {
-                    text: 'mg/L'
-                }
-                // plotLines: [{
-                //     value: 6.9,
-                //     dashStyle:'ShortDash',
-                //     width: 3,
-                //     color: 'red',
-                //     label: {
-                //         text: '报警值',
-                //         align: 'center',
-                //         style: {
-                //             color: 'gray'
-                //         }
-                //     }
-                // }]
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: 'COD',
-                data: [6,6.5,6.7,5.2]
-            }]
-        };
-        Highcharts.chart('com_chart1', option);
+    /*输出内容，注意顺序*/
+    var obj = {
+        loadPage : loadPage,
+        loadCompanyData : loadCompanyData,
+        detailCompanyWin : detailCompanyWin
     };
-        /*输出内容，注意顺序*/
-        var obj = {
-            loadPage : loadPage,
-            loadCompanyData : loadCompanyData,
-            detailCompanyWin : detailCompanyWin
-        };
-        exports('pollutionMng',obj)
+    exports('pollutionMng',obj)
 })

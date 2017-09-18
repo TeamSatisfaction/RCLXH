@@ -27,11 +27,11 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     /*添加点位*/
     var addPoint = function (point, type, isAlt, attr) {
         var symbolUrl;
-        // console.log(type);
+        console.log(attr);
         if(type === "production_enterprise"){
             symbolUrl = "../../img/index/qiye.png"
-        }else if (type === "monistation"){
-            symbolUrl = "../../img/index/dianmian.png"
+        }else if (type === "monitoringStation_enterprise"){
+            symbolUrl = "../../img/index/mn.png"
         }
         var symbol = new esri.symbol.PictureMarkerSymbol(symbolUrl, 20, 25);		//标记
         var graphic = new esri.Graphic(point, symbol, attr);
@@ -62,15 +62,14 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             type: 'post',
             data: field,
             success: function (result) {
-                // console.log(result.data.list);
                 var list = result.data.list;
-                // console.log(list);
+                console.log(list);
                 if(list){
                     for(var i in list){
                         var lon = list[i].lon,
                             lat = list[i].lat,
-                            name = list[i].name,
-                            address = list[i].address,
+                            // name = list[i].name,
+                            // address = list[i].address,
                             enterpriseRole = list[i].enterpriseRole;
                         var pt = new esri.geometry.Point(lon, lat, new esri.SpatialReference({wkid:4326})),
                             type = enterpriseRole;
@@ -105,7 +104,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
                 +"<p>企业地址：<span>"+attr.address+"</span></p>"
                 +"<p>行业类别：<span>医药制造业</span></p>"
                 +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
-        } else if (symbolUrl.indexOf("dianmian") != -1) {
+        } else if (symbolUrl.indexOf("mn") != -1) {
             titleHtml = attr.name;
             contentHtml += "<p>名称：<span>"+attr.name+"</span></p>"
                 +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
@@ -120,15 +119,13 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     dojo.ready( function () {
         // map.addLayer(basemap);
         /*点位点击事件*/
-        dojo.connect(map, "onClick", function (evt) {
-            //得到当前点位信息
-            var point = evt.graphic.geometry,
-                attr = evt.graphic.attributes;
-            map.centerAt(point);
-        });
+        // dojo.connect(map, "onClick", function (evt) {
+        //     //得到当前点位信息
+        //     var point = evt.graphic.geometry,
+        //         attr = evt.graphic.attributes;
+        //     map.centerAt(point);
+        // });
         graphicLayer.on("mouse-over", function (e) {
-            // console.log(graphicLayer);
-            console.log(e);
             infoWin(e);
         });
     });

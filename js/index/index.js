@@ -52,13 +52,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     };
     /*菜单管理*/
     var menuMng = function () {
-        var li = $('.side').find('li'),
-            dd = $('.side').find('dd');
-        // console.log(li);
-        // console.log(dd);
-        for(var i in li){
-            // li[i].setAttribute("style","display:none");
-        }
+
     }
     /*输出内容，注意顺序*/
     var obj = {

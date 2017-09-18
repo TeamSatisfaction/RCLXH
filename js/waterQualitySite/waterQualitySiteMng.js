@@ -83,29 +83,30 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             time, data
         ];
         // 第三个参数表示是否删除第一个点
-        var seriesData = chart.series[0].data;
-        if(seriesData.length < 12){
-            chart.series[0].addPoint(newPoint, true, false);
-        }else {
-            chart.series[0].addPoint(newPoint, true, true);
+        if(chart){
+            var seriesData = chart.series[0].data;
+            if(seriesData.length < 12){
+                chart.series[0].addPoint(newPoint, true, false);
+            }else {
+                chart.series[0].addPoint(newPoint, true, true);
+            }
         }
     }
-    // var searchCharts = function () {
-    //     if(needRefresh || !chart){
-    //         loadaCharts();
-    //         needRefresh = false;
-    //     }
-    //     Fname =  $("#select_factor").find("option:selected").text(),
-    //     // Cname = $("#c_select").find("option:selected").text(),
-    //     // Fname =  $("#select_factor").text(),
-    //     code = $("#select_factor").val(),
-    //     mn =  $("#d_option")[0].getAttribute('data-mn');
-    //     console.log(mn,Fname)
-    // };
     //加载曲线图
-    var loadaCharts = function(){
-        var date = new Date();//当前时间
-        var interTimes = 5*60*1000;
+    var loadaCharts = function(cn){
+        var date = new Date(),//当前时间
+            interTimes;
+        switch (cn){
+            case "2011" :
+                interTimes = 5*60*1000;
+                break;
+            case "2061" :
+                interTimes = 10*60*60*1000;
+                break;
+            case "2041" :
+                interTimes = 10*24*60*60*1000;
+                break;
+        };
         interTimes=parseInt(interTimes);
         var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
         var beginDate = changeTime(date1);
@@ -115,7 +116,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             endDate : endDate,
             enterpriseId  : Cid,
             factor : code,
-            cn : 2011
+            cn : cn
         };
         console.log(data);
         $.ajax({
@@ -129,146 +130,201 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             success: function (result) {
                 var arr = [],
                     i;
-                if(result.onlineTime){
-                    var time = result.onlineTime,
-                        onlineData = result.onlineData.data[0].online;
-                    for(i=0;i<time.length;i++){
-                        arr.push([
-                            time[i],
-                            onlineData[i]
-                        ])
+                    if(cn == '2011'){
+                    console.log("1");
+                    if(result.onlineTime){
+                        var time = result.onlineTime,
+                            onlineData = result.onlineData.data[0].online;
+                        for(i=0;i<time.length;i++){
+                            arr.push([
+                                time[i],
+                                onlineData[i]
+                            ])
+                        }
                     }
-                }
-                // console.log(Fname);
-                var option = {
-                    chart: {
-                        type: 'spline',
-                        backgroundColor: 'rgba(0,0,0,0)'
-                    },
-                    title: {
-                        text: Fname
-                    },
-                    credits : {
-                        enabled: false
-                    },
-                    xAxis: {
-                        type: 'category',
-                        dateTimeLabelFormats: {
-                            day: '%H:%M:%S'
+                    var option = {
+                        chart: {
+                            type: 'spline',
+                            backgroundColor: 'rgba(0,0,0,0)'
                         },
-                        labels : {
-                            formatter : function () {
-                                return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-                            }
-                        }
-                    },
-                    yAxis: {
                         title: {
-                            text: '',
-                            style : {
-                                color: '#000000'
+                            text: Fname
+                        },
+                        credits : {
+                            enabled: false
+                        },
+                        xAxis: {
+                            type: 'category',
+                            dateTimeLabelFormats: {
+                                day: '%H:%M:%S'
+                            },
+                            labels : {
+                                formatter : function () {
+                                    return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                                }
                             }
                         },
-                        labels : {
-                            style : {
-                                color: '#000000'
+                        yAxis: {
+                            title: {
+                                text: '',
+                                style : {
+                                    color: '#000000'
+                                }
+                            },
+                            labels : {
+                                style : {
+                                    color: '#000000'
+                                }
                             }
-                        }
-                        // ,plotLines: [{
-                        //     value: 60,
-                        //     dashStyle:'ShortDash',
-                        //     width: 3,
-                        //     color: 'red',
-                        //     label: {
-                        //         text: '阈值',
-                        //         align: 'center',
-                        //         style: {
-                        //             color: 'gray'
-                        //         }
-                        //     }
-                        // }]
-                    },
-                    legend: {
-                        enabled: false
-                    },
-                    series: [{
-                        name: Fname,
-                        data: arr,
-                        marker: {
-                            enabled: true
-                        }
-                    }]
-                };
-                chart = new Highcharts.chart('wqs_tab1_chart', option);
+                            // ,plotLines: [{
+                            //     value: 60,
+                            //     dashStyle:'ShortDash',
+                            //     width: 3,
+                            //     color: 'red',
+                            //     label: {
+                            //         text: '阈值',
+                            //         align: 'center',
+                            //         style: {
+                            //             color: 'gray'
+                            //         }
+                            //     }
+                            // }]
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: Fname,
+                            data: arr,
+                            marker: {
+                                enabled: true
+                            }
+                        }]
+                    };
+                    chart = new Highcharts.chart('wqs_tab1_chart', option);
+                }else{
+                    var data = result.onlineData.data[0].online;
+                    console.log("2");
+                    console.log(result);
+                    var option = {
+                        chart: {
+                            type: 'spline',
+                            backgroundColor: 'rgba(0,0,0,0)'
+                        },
+                        title: {
+                            text: Fname
+                        },
+                        credits : {
+                            enabled: false
+                        },
+                        xAxis: {
+                            categories : result.onlineTime
+                        },
+                        yAxis: {
+                            title: {
+                                text: '',
+                                style : {
+                                    color: '#000000'
+                                }
+                            },
+                            labels : {
+                                style : {
+                                    color: '#000000'
+                                }
+                            }
+                            // ,plotLines: [{
+                            //     value: 60,
+                            //     dashStyle:'ShortDash',
+                            //     width: 3,
+                            //     color: 'red',
+                            //     label: {
+                            //         text: '阈值',
+                            //         align: 'center',
+                            //         style: {
+                            //             color: 'gray'
+                            //         }
+                            //     }
+                            // }]
+                        },
+                        legend: {
+                            enabled: false
+                        },
+                        series: [{
+                            name: Fname,
+                            data: data
+                        }]
+                    };
+                    Highcharts.chart('wqs_tab1_chart', option);
+                }
             }
         })
-    }
-    //小时charts
-    var loadaSCharts = function () {
-        var option = {
-            chart: {
-                type : 'line'
-            },
-            title: {
-                text: '濑溪河流域水质自动监测站'
-            },
-            xAxis: {
-                categories : ["12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00"]
-            },
-            tooltip: {
-                valueSuffix: 'mg/L'
-            },
-            yAxis: {
-                title: {
-                    text: 'mg/L'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: 'COD',
-                data: [512,476,525,523,485,498]
-            }]
-        };
-        Highcharts.chart('wqs_tab1_chart', option);
     };
-    //日charts
-    var loadaRCharts = function () {
-        var option = {
-            chart: {
-                type : 'line'
-            },
-            title: {
-                text: '濑溪河流域水质自动监测站'
-            },
-            xAxis: {
-                categories : ["2017-08-17","2017-08-18","2017-08-19","2017-08-20","2017-08-21","2017-08-22"]
-            },
-            tooltip: {
-                valueSuffix: 'mg/L'
-            },
-            yAxis: {
-                title: {
-                    text: 'mg/L'
-                }
-            },
-            legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
-            },
-            series: [{
-                name: 'COD',
-                data: [4235,4352,4245,4485,4652,4253,4152]
-            }]
-        };
-        Highcharts.chart('wqs_tab1_chart', option);
-    };
+    // //小时charts
+    // var loadaSCharts = function () {
+    //     var option = {
+    //         chart: {
+    //             type : 'line'
+    //         },
+    //         title: {
+    //             text: '濑溪河流域水质自动监测站'
+    //         },
+    //         xAxis: {
+    //             categories : ["12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00"]
+    //         },
+    //         tooltip: {
+    //             valueSuffix: 'mg/L'
+    //         },
+    //         yAxis: {
+    //             title: {
+    //                 text: 'mg/L'
+    //             }
+    //         },
+    //         legend: {
+    //             layout: 'vertical',
+    //             align: 'right',
+    //             verticalAlign: 'middle',
+    //             borderWidth: 0
+    //         },
+    //         series: [{
+    //             name: 'COD',
+    //             data: [512,476,525,523,485,498]
+    //         }]
+    //     };
+    //     Highcharts.chart('wqs_tab1_chart', option);
+    // };
+    // //日charts
+    // var loadaRCharts = function () {
+    //     var option = {
+    //         chart: {
+    //             type : 'line'
+    //         },
+    //         title: {
+    //             text: '濑溪河流域水质自动监测站'
+    //         },
+    //         xAxis: {
+    //             categories : ["2017-08-17","2017-08-18","2017-08-19","2017-08-20","2017-08-21","2017-08-22"]
+    //         },
+    //         tooltip: {
+    //             valueSuffix: 'mg/L'
+    //         },
+    //         yAxis: {
+    //             title: {
+    //                 text: 'mg/L'
+    //             }
+    //         },
+    //         legend: {
+    //             layout: 'vertical',
+    //             align: 'right',
+    //             verticalAlign: 'middle',
+    //             borderWidth: 0
+    //         },
+    //         series: [{
+    //             name: 'COD',
+    //             data: [4235,4352,4245,4485,4652,4253,4152]
+    //         }]
+    //     };
+    //     Highcharts.chart('wqs_tab1_chart', option);
+    // };
     //监测站list
     var loadMSData = function (curr,cn){
         switch (cn){
@@ -474,7 +530,21 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             }
         });
         layer.full(win);
-    }
+    };
+    //详情
+    var detailsWin = function () {
+        var win= layer.open({
+            type: 2
+            ,title: '详情'
+            ,content : '../../pages/publicMng/factorDetails.html'
+            ,btn: ['返回']
+            ,btnAlign: 'c'
+            ,success : function (index, layero) {
+
+            }
+        });
+        layer.full(win);
+    };
     var obj = {
         loadChartsData : loadChartsData,
         // searchCharts : searchCharts,
@@ -482,8 +552,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite,
         dailyWin : dailyWin,
-        loadaSCharts : loadaSCharts,
-        loadaRCharts : loadaRCharts
+        detailsWin : detailsWin
     };
     /*输出内容，注意顺序*/
     exports('waterQualitySiteMng',obj)

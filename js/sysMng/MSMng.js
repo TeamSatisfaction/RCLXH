@@ -81,7 +81,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         layer.open({
             title : '新增监控站',
             type : 2,
-            area : ['800px','500px'],
+            area : ['800px','550px'],
             content : '../../pages/sysMng/addMsView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',

@@ -9,13 +9,12 @@ layui.define(['layer', 'element'],function (exports) {
     };
 
     var getTab = function () {
-        console.log('1');
         // layui.companyMng.loadCompanyData();
         var tabIndex = layui.utils.getArg("token");
         element.tabChange('sysmng', tabIndex.toString());
         $('#index_frame', parent.document).show();
         switch (tabIndex){
-            case '0':layui.companyMng.loadCompanyData();break;
+            case '0':layui.companyMng.loadCompanyList();break;
             case '1':layui.MSMng.loadMSData();break;
             case '2':layui.equipmentMng.loadEquipmentData();break;
             case '3':layui.networkMng.loadNetWorkData();break;

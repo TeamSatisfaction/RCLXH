@@ -43,7 +43,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
         data.field.isDel = "0";
         data.field.status = "1";
         var field = JSON.stringify(data.field);
-        console.log(field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/user',
             headers : {
@@ -104,9 +103,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.idCard+ '</td>' +
                             '<td>' + item.status + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.userMng.userRoleMngWin()" title="权限配置"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
-                            '</tr>';
+                            '<a href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="权限配置"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="初始化密码"><img src="../../img/mng/password.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -139,27 +137,109 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         }
     };
-    var userRoleMngWin = function () {
+    var userRoleMngWin = function (id) {
         var index = layer.open({
             title : '权限配置',
+            id : id,
             type : 2,
             moveOut: true,
             area : ['1000px','600px'],
             content : '../../pages/sysMng/userRoleMng.html',
-            btn: ['提交', '返回'],
+            btn: ['关闭'],
             btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            success : function (layero, index) {
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                //用户角色列表
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/user/query/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'get',
+                    success : function (result) {
+                        var roleList = result.roleList;
+                        var str = '';
+                        $.ajax({
+                            url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
+                            headers : {
+                                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                            },
+                            type : 'get',
+                            success : function (result) {
+                                if(roleList){
+                                    console.log(roleList,result);
+                                    var tempArray1 = [];//临时数组1
+                                    var tempArray2 = [];//临时数组2
+                                    for(var i=0;i<roleList.length;i++){
+                                        tempArray1[roleList[i].roleId]=true;//将数array2 中的元素值作为tempArray1 中的键，值为true；
+                                    }
+                                    for(var i=0;i<result.length;i++){
+                                        if(!tempArray1[result[i].roleId]){
+                                            tempArray2.push(result[i]);//过滤array1 中与array2 相同的元素；
+                                        }
+                                    }
+                                    console.log(tempArray2);
+                                }else {
+                                    var render = function(result) {
+                                        var arr = [];
+                                        layui.each(result, function(index, item){
+                                            str = '<tr>' +
+                                                '<td>' + item.roleName + '</td>' +
+                                                '<td style="text-align: center">'+
+                                                '<a href="#" onclick="layui.userMng.userAddRole(\''+item.roleId+'\',\''+id+'\')" title="角色添加"><img src="../../img/mng/add.png"></a></td>'+
+                                                '</tr>';
+                                            arr.push(str);
+                                        });
+                                        return arr.join('');
+                                    };
+                                    body.contents().find("#noRole_list").html(render(result));
+                                }
+                            }
+                        });
+                        if(roleList){
+
+                        }
+                    }
+                });
             }
         });
     };
+    // 用户配置角色
+    var userAddRole = function (roleId,userId) {
+        console.log(roleId,userId);
+        var data = {
+            roleId : roleId,
+            userId : userId
+        };
+        var field = JSON.stringify(data);
+        layer.msg('是否分配该角色', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url: '' + urlConfig + '/v01/htwl/lxh/user/role',
+                    headers: {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type: 'post',
+                    data : field,
+                    success: function (result) {
+                        console.log(result);
+                    }
+                })
+            }
+        })
+    }
     var obj = {
         loadPage : loadPage,
         addUserWin : addUserWin,
         loadUserData : loadUserData,
         passwordJudge : passwordJudge,
-        userRoleMngWin : userRoleMngWin
+        userRoleMngWin : userRoleMngWin,
+        userAddRole : userAddRole
     };
     /*输出内容，注意顺序*/
     exports('userMng',obj)

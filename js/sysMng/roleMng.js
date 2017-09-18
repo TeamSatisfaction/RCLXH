@@ -11,7 +11,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
-                // 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             type: 'get',
@@ -194,39 +193,38 @@ layui.define(['layer','element','laypage','form'],function (exports) {
     };
     // 加载权限
     var loadRoleStore = function (id,winFrame) {
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/role/menu/'+id+'',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+                console.log(result);
+                if(result.length > 0) {
+                    var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+                    var nodes = treeObj.getNodes();
+                    var checkedArr = getCheckedArr(result[0], []);
+                    checkTree(nodes, checkedArr, treeObj);
+                }
+            }
+        });
         // $.ajax({
-        //     url: ''+urlConfig+'/v01/htwl/lxh/role/menu/'+id+'',
-        //     headers: {
-        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-        //     },
-        //     type: 'get',
-        //     success: function (result) {
-        //         console.log(result);
+        //     url : '../../data/roleData.json',
+        //     type : 'get',
+        //     success: function (result){
         //         var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
         //         var nodes = treeObj.getNodes();
-        //         console.log(nodes);
-        //         // var children1 = nodes.children;
-        //         for (var i=0; i < nodes.length; i++) {
-        //             treeObj.checkNode(nodes[i], true, true);
-        //         }
+        //         // // var children1 = nodes.children;
+        //         //     console.log(nodes);
+        //         // // for (var i=0; i < nodes.length; i++) {
+        //         // //     treeObj.checkNode(nodes[i], true, true);
+        //         // // }
+        //         // console.log(getCheckedArr(result[0],[]) );
+        //         var checkedArr = getCheckedArr(result[0],[]);
+        //         checkTree(nodes, checkedArr, treeObj );
         //     }
-        // });
-        $.ajax({
-            url : '../../data/roleData.json',
-            type : 'get',
-            success: function (result){
-                var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
-                var nodes = treeObj.getNodes();
-                // // var children1 = nodes.children;
-                //     console.log(nodes);
-                // // for (var i=0; i < nodes.length; i++) {
-                // //     treeObj.checkNode(nodes[i], true, true);
-                // // }
-                // console.log(getCheckedArr(result[0],[]) );
-                var checkedArr = getCheckedArr(result[0],[]);
-                checkTree(nodes, checkedArr, treeObj );
-            }
-        })
+        // })
     };
     //已选中的项(最下层)
     function getCheckedArr(jsonObject, array) {

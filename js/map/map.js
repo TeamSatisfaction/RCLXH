@@ -109,29 +109,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         Highcharts.chart('mapStats_3dPie', option);
     }
     draw3dPie();
-    //折线图查询
-    // var searchCharts = function () {
-    //     if(needRefresh || !chart){
-    //         initChart();
-    //         needRefresh = false;
-    //     }
-    //     Fname =  $("#f_select").find("option:selected").text(),
-    //     Cname = $("#c_select").find("option:selected").text(),
-    //     code = $("#f_select").val();
-    //     console.log(Fname);
-    //     $('.mapStats_statsTitle').html(Cname);
-    //     if(Fname != '无监测因子'){
-    //         mn =  $("#d_option")[0].getAttribute('data-mn');
-    //     }
-    // };
     //请求实时数据
     var loadChartForSite = function(){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
-            websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
+            websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -211,6 +196,37 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             factor : code,
             cn : 2011
         };
+        var unit;
+        console.log(Fname);
+        switch (Fname){
+            case "COD" :
+                unit = "mg/L";
+                break;
+            case "总磷" :
+                unit = "mg/L";
+                break;
+            case "高锰酸盐" :
+                unit = "mg/L";
+                break;
+            case "氨氮" :
+                unit = "mg/L";
+                break;
+            case "生物毒性" :
+                unit = "%";
+                break;
+            case "温度" :
+                unit = "℃";
+                break;
+            case "浊度" :
+                unit = "FNU";
+                break;
+            case "电导率" :
+                unit = "us/cm";
+                break;
+            case "溶解氧" :
+                unit = "mg/L";
+                break;
+        };
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
@@ -258,7 +274,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     },
                     yAxis: {
                         title: {
-                            text: '',
+                            text: unit,
                             style : {
                                 color: '#000000'
                             }
@@ -281,6 +297,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         //         }
                         //     }
                         // }]
+                    },
+                    tooltip: {
+                        valueSuffix: unit
                     },
                     legend: {
                         enabled: false
@@ -404,6 +423,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             data: field,
             success: function (result) {
                 var list = result.data.list;
+                console.log(result);
                 $("#c_select").empty();
                 if(list == null){
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");

@@ -13,7 +13,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         $(parent).find("#index_frame").attr("src", url);
     };
     //加载企业列表
-    var loadCompanyData = function (curr) {
+    var loadCompanyList = function (curr) {
         var name = $('#name').val(),
             data = {
                 name : name,
@@ -48,10 +48,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             '<td>' + item.address + '</td>' +
                             '<td>' + item.head+ '</td>' +
                             '<td>' + item.headPhone + '</td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin()" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.detailCompanyWin()" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alterCompanyWin(\''+item.baseEnterpriseId+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')" title="报警规则"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompany()" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompanyData(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -145,6 +145,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         /*formData打印不出来的，需要有接口才能测试*/
         console.log(formData);
     };
+    //新增企业信息
     var addCompanyWin = function () {
         var win = layer.open({
             title : '新增企业',
@@ -152,14 +153,129 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             moveOut: true,
             area : ['1200px','700px'],
             content : '../../pages/sysMng/addCompanyView.html',
-            btn: ['提交', '关闭'],
+            btn: ['提交', '返回'],
             btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            yes : function (index,layero) {
+                layero.find("iframe").contents().find('#company-save').click();
             }
         });
         layer.full(win);
+    };
+    //form表单提交
+    form.on('submit(company-save)',function (data) {
+        data.field.areaCode = "500000-500153";
+        data.field.buildStatus = "123";
+        data.field.expectDate = "123";
+        data.field.orgCode = "production_enterprise";
+        var field = JSON.stringify(data.field);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            dataType : 'json',
+            type : 'post',
+            data : field,
+            success : function (result){
+                console.log(result);
+                var  frameindex= parent.layer.getFrameIndex(window.name);
+                if(result.code == '1000'){
+                    parent.layer.close(frameindex);
+                    parent.location.reload(); // 父页面刷新
+                    layer.msg('提交成功！', {icon: 1});
+                    // parent.layer.msg('提交成功', { icon: 1, shade: 0.4, time: 1000 });
+                }else{
+                    layer.msg(result.message, {icon: 2});
+                }
+            }
+        });
+        return false;
+    });
+    //删除企业信息
+    var deleteCompanyData = function (id) {
+        layer.msg('是否确定删除该企业', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.code == '1000'){
+                            layer.close(index);
+                            location.reload(); // 页面刷新
+                            layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 });
+                        }else {
+                            layer.msg(result.resultdesc, {icon: 2});
+                        }
+                    }
+                })
+            }
+        });
+    }
+    // 编辑企业信息
+    var alterCompanyWin = function (id) {
+        var win = layer.open({
+            title : '编辑企业信息',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/sysMng/alterCompanyView.html',
+            btn: [ '返回'],
+            btnAlign: 'c',
+            success: function(layero,index){
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                loadCompanyData(id,body);
+            }
+        });
+        layer.full(win);
+    };
+    //载入企业基本信息
+    var loadCompanyData = function(id,body){
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                var data = result.data;
+                switch (data.controlLevel){
+                    case "area_control":
+                        data.controlLevel = '区(县)控'
+                        break;
+                }
+                body.contents().find("input[name='name']").val(data.name);
+                body.contents().find("input[name='legalRepresentative']").val(data.legalRepresentative);
+                body.contents().find("input[name='head']").val(data.head);
+                body.contents().find("input[name='headPhone']").val(data.headPhone);
+                body.contents().find("input[name='orgCode']").val(data.orgCode);
+                body.contents().find("input[name='controlLevel']").val(data.controlLevel);
+                body.contents().find("input[name='envHead']").val(data.envHead);
+                body.contents().find("input[name='envHeadPhone']").val(data.envHeadPhone);
+                body.contents().find("input[name='processing']").val(data.processing);
+                body.contents().find("input[name='riverBasin']").val(data.riverBasin);
+                body.contents().find("input[name='lon']").val(data.lon);
+                body.contents().find("input[name='lat']").val(data.lat);
+                body.contents().find("input[name='address']").val(data.address);
+                console.log(body.contents().find("select[name='controlLevel']"));
+                body.contents().find("select[name='controlLevel']").children("option").each(function(){
+                    if (this.text == data.controlLevel) {
+                        console.log(this);
+                        this.setAttribute("selected","selected");
+                    }
+                });
+                // console.log(document.getElementById(id));
+                // document.getElementById(id).render('select');
+            }
+        })
     };
     /*新增排口*/
     var addPk = function () {
@@ -173,7 +289,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             ,shade: 0.3
             ,content: pk_win
             ,btnAlign: 'c'
-            ,btn: ['提交', '关闭'] //只是为了演示
+            ,btn: ['提交', '返回'] //只是为了演示
             ,yes: function(){
                 layer.msg('提交成功！', {icon: 1});
                 layer.close(index);
@@ -200,9 +316,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         })
     };
     //企业详情
-    var detailCompanyWin = function () {
+    var detailCompanyWin = function (id) {
         var index = layer.open({
             title : '企业详情',
+            id : id,
             type : 2,
             moveOut: true,
             area : ['1200px','700px'],
@@ -210,7 +327,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             btn: [ '返回'],
             btnAlign: 'c',
             success: function(layero, index){
-                console.log(layero);
+                var body = layer.getChildFrame('body', index);
+                var id = $('.layui-layer-content').attr('id');
+                loadCompanyData(id,body);
             }
         });
         layer.full(index);
@@ -314,7 +433,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             if(result.code == '2'){
                                 layer.msg('提交成功！', {icon: 1});
                                 parent.location.reload(); // 父页面刷新
-                                closeAddWin();
+                                closeWin();
                             }else {
                                 layer.msg('提交失败！', {icon: 2});
                             }
@@ -329,124 +448,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         });
     };
     //关闭窗口
-    var closeAddWin = function () {
+    var closeWin = function () {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
     };
-    // //根据企业查询数采仪
-    // var loadDau = function (id) {
-    //     var data = {
-    //         pageNumber : 1,
-    //         pageSize : 1000,
-    //         dauMap : {
-    //             // epId : id
-    //             epId : '402880955cede873015cee1e28ae0089'
-    //         }
-    //     };
-    //     var field = JSON.stringify(data);
-    //     $.ajax({
-    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
-    //         headers: {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'post',
-    //         data: field,
-    //         success: function (result){
-    //             var row = result.data.rows;
-    //             $("#select_dauId1").empty();
-    //             if(row == null){
-    //                 $("#select_dauId1").append("<option value='' selected='selected'>无采集仪</option>");
-    //                 $("#select_equipment1").empty();
-    //                 $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
-    //                 $("#select_factor1").empty();
-    //                 $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
-    //             }else{
-    //                 for(var i in row){
-    //                     $("#select_dauId1").append("<option value='' selected='selected'>--请选择--</option>");
-    //                     $("#select_dauId1").append("<option row-key="+row[i]+" value="+row[i].id+">"+row[i].aname+"</option>");
-    //                 }
-    //             }
-    //             form.render('select');
-    //         }
-    //     })
-    // };
-    // // 根据数采仪查询设备
-    // var loadEquipment = function (id) {
-    //     var data = {
-    //         pageNumber : 1,
-    //         pageSize : 1000,
-    //         equipmentMap : {
-    //             dauId : id
-    //         }
-    //     };
-    //     var field = JSON.stringify(data);
-    //     $.ajax({
-    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
-    //         headers: {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'post',
-    //         data: field,
-    //         success: function (result){
-    //             var row = result.data.rows;
-    //             $("#select_equipment1").empty();
-    //             if(row == null){
-    //                 $("#select_equipment1").append("<option value='' selected='selected'>无设备</option>");
-    //                 $("#select_factor").empty();
-    //                 $("#select_factor").append("<option value='' selected='selected'>无监测因子</option>");
-    //             }else{
-    //                 for(var i in row){
-    //                     $("#select_equipment1").append("<option value='' selected='selected'>--请选择--</option>");
-    //                     $("#select_equipment1").append("<option row-key="+row[i].classicType+" value="+row[i].id+">"+row[i].equipmentName+"</option>");
-    //                 }
-    //             }
-    //             form.render('select');
-    //         }
-    //     })
-    // };
-    // //根据设备查询因子
-    // var loadFactor = function (id) {
-    //     var data = {
-    //         pageNumber : 1,
-    //         pageSize : 1000,
-    //         factorMap : {
-    //             equipmentId : id
-    //         }
-    //     };
-    //     var field = JSON.stringify(data);
-    //     $.ajax({
-    //         url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
-    //         headers: {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'post',
-    //         data: field,
-    //         success: function (result){
-    //             var row = result.data.rows;
-    //             if(row == null){
-    //                 $("#select_factor1").empty();
-    //                 $("#select_factor1").append("<option value='' selected='selected'>无监测因子</option>");
-    //             }else{
-    //                 for(var i in row){
-    //                     $("#select_factor1").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
-    //                 }
-    //             }
-    //             form.render('select');
-    //         }
-    //     })
-    // };
-    // //数采仪select change事件
-    // form.on('select(select_dauId1)', function(data){
-    //     loadEquipment(data.value);
-    // });
-    // //设备select change事件
-    // form.on('select(select_equipment1)', function(data){
-    //     loadFactor(data.value);
-    // });
-
     /*在线监测*/
     $(".company-online-monitor").find(".layui-btn-group").find(".layui-btn").click(function () {
         var btn = $(this);
@@ -468,17 +473,21 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     /*输出内容，注意顺序*/
     var obj = {
         loadPage : loadPage,
-        loadCompanyData : loadCompanyData,
+        loadCompanyList : loadCompanyList,
         imgSelect: imgSelect,
         imgDelete: imgDelete,
         addCompanyWin : addCompanyWin,
+        deleteCompanyData : deleteCompanyData,
+        alterCompanyWin : alterCompanyWin,
+        loadCompanyData : loadCompanyData,
         addPk : addPk,
         lookPk : lookPk,
         clgyImgSelect : clgyImgSelect,
         detailCompanyWin : detailCompanyWin,
         alarmRuleList : alarmRuleList,
         loadAlarmRuleDetails : loadAlarmRuleDetails,
-        addAlarmRuleWin : addAlarmRuleWin
+        addAlarmRuleWin : addAlarmRuleWin,
+        closeWin : closeWin
     };
     exports('companyMng',obj)
 })
