@@ -375,6 +375,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             }
         })
     };
+    //请求排口信息
     var loadPortData = function (id,body) {
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
@@ -402,7 +403,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     });
                     return arr.join('');
                 };
-                console.log(body.contents().find("#dis-port-list"));
                 body.contents().find("#dis-port-list").html(render(result));
             }
         })
@@ -463,6 +463,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             ,btn: ['关闭'] //只是为了演示
         })
     };
+    /*删除排口*/
     //企业详情
     var detailCompanyWin = function (id) {
         var index = layer.open({

@@ -53,6 +53,17 @@
         "createTime": "2017-09-13 14:50:47",
         "menuList": [
           {
+            "menuId": 6,
+            "parentId": "5",
+            "roleId": null,
+            "menuName": "报警统计",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:13:37",
+            "createTime": "2017-09-13 14:55:50",
+            "menuList": null
+          },
+          {
             "menuId": 7,
             "parentId": "5",
             "roleId": null,
@@ -76,6 +87,28 @@
         "createTime": "2017-09-13 14:54:57",
         "menuList": [
           {
+            "menuId": 9,
+            "parentId": "8",
+            "roleId": null,
+            "menuName": "企业管理",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:14:18",
+            "createTime": "2017-09-13 14:54:44",
+            "menuList": null
+          },
+          {
+            "menuId": 10,
+            "parentId": "8",
+            "roleId": null,
+            "menuName": "监测站管理",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:14:18",
+            "createTime": "2017-09-13 14:54:44",
+            "menuList": null
+          },
+          {
             "menuId": 11,
             "parentId": "8",
             "roleId": null,
@@ -91,6 +124,26 @@
             "parentId": "8",
             "roleId": null,
             "menuName": "联网管理",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:14:26",
+            "createTime": "2017-09-13 14:54:45",
+            "menuList": null
+          },{
+            "menuId": 13,
+            "parentId": "8",
+            "roleId": null,
+            "menuName": "用户管理",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:14:26",
+            "createTime": "2017-09-13 14:54:45",
+            "menuList": null
+          },{
+            "menuId": 14,
+            "parentId": "8",
+            "roleId": null,
+            "menuName": "角色管理",
             "menuIcon": null,
             "url": null,
             "lastModifyTime": "2017-09-13 11:14:26",

@@ -71,7 +71,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
                     for(var i in data){
                         var d = getDataByName(data[i].menuName);
                         //第一级
-                        str += '<li class="layui-nav-item '+ d.class +'"> ' +
+                        str += '<li class="layui-nav-item '+ d.class +' layui-nav-itemed"> ' +
                                     '<a href="#" onclick="layui.index.loadPage(\''+ d.url +'\')"> ' +
                                         '<i class="layui-icon"></i> ' +
                                         '<cite style="padding: 10px">'+ data[i].menuName +'</cite> ' +
