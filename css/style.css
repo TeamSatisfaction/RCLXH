@@ -164,7 +164,7 @@
 .add-form .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px; }
 .add-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
 .add-form .layui-form .layui-form-item .layui-form-label { width: 100px; }
-.add-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }
+.add-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 200px); }
 /*详情*/
 .detail-form .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px; }
 .detail-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 300px;}
@@ -195,8 +195,8 @@ tr .align-right{width:120px;text-align: right}
 #pk_window .photo-area {width: auto; margin-left: 140px;}
 
 /*新增设备*/
-#addEquipment .layui-form-label{ width: 170px; text-align: right}
-#addEquipment .layui-inline input{ width: 230px;}
+#addEquipment .layui-form-label{ width: 170px}
+/*#addEquipment .layui-inline input{ width: 250px;}*/
 #addEquipment .photo-area .thumbs{ padding-left: 100px; text-align: left}
 #addEquipment .photo-area .thumbs input{ left:0;}
 

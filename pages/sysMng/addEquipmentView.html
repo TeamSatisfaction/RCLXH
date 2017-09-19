@@ -7,116 +7,180 @@
     <title>title</title>
     <link href="../../layUi/css/layui.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
     <script>
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             equipmentMng : 'equipmentMng',
-            companyMng : 'companyMng'
-        }).use(['equipmentMng','companyMng'])
+            companyMng : 'companyMng',
+            sysMng : 'networkMng'
+        }).use(['equipmentMng','companyMng','networkMng'])
             .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body>
-<div class="layui-layout-admin layui-tab-brief add-form" lay-filter="docDemoTabBrief" id="addEquipment">
+<div class="layui-layout-admin add-form" lay-filter="addEquipment" id="addEquipment">
     <!--表单
     新增页面可添加字段包含：
-    设备名称、设备编码、
-    生产厂家、设备型号、
-    额定功率单位(kw)、7.5kw以上设备绝缘等级、
-    监测类型、是否关键设备、
-    设备类型、设备分类类型、
-    出厂日期、投入使用时间、
-    质保单位、质保单位联系电话、
-    维护单位、维护单位联系电话
-    企业附件（设备附件，至少上传3张）
+    equipmentName 	String
+    设备名称(必填)
+    equipmentCode 	String
+    设备编号（必填）
+    equipmentType 	String
+    设备类型（关键设备、。。。）
+    productor 	String
+    生产厂家
+    equipmentNo 	String
+    设备型号
+    ratedPower 	String
+    额定功率
+    insulationLevel 	String
+    绝缘等级
+    detectionType 	String
+    监测类型
+    classicType 	String
+    设备分类
+    productDate 	String
+    出厂日期（yyyy-MM-dd）
+    usedDate 	String
+    投入使用日期
+    warrantyUnit 	String
+    质保单位
+    warrantyUnitPhone 	String
+    质保单位电话
+    maintainUnit 	String
+    维护单位
+    maintainUnitPhone 	String
+    维护单位电话
+    positionAddr 	String
+    设备位置
+    attachment 	String
+    附件
+    eaOrEb 	String
+    仪器或仪表
     -->
-    <div class="layui-layout-admin" style="text-align: center;margin-top: 10px">
+    <div class="layui-layout-admin" style="text-align: center;">
         <form class="layui-form" action="">
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备名称：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="equipmentName" lay-verify="required">
+                    <span class="required">*</span>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">设备编码：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="equipmentCode" lay-verify="required">
+                    <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">生产厂家：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="productor" lay-verify="">
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">设备型号：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="equipmentNo" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">额定功率单位(kw)：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <label class="layui-form-label">额定功率(单位kw)：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="ratedPower" lay-verify="">
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">7.5kw以上设备绝缘等级：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="insulationLevel" lay-verify="required">-->
+                    <div class="layui-input-inline">
+                        <select name="insulationLevel" lay-verify="required" lay-search="">
+                            <option value="A级">A级</option>
+                            <option value="B级">B级</option>
+                            <option value="C级">C级</option>
+                            <option value="E级">E级</option>
+                            <option value="F级">F级</option>
+                            <option value="H级">H级</option>
+                            <option value="N级">N级</option>
+                            <option value="R级">R级</option>
+                        </select>
+                    </div>
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">监测类型：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <!--<input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="detectionType" lay-verify="required">-->
+                    <div class="layui-input-inline">
+                        <select name="detectionType" lay-verify="required" lay-search="">
+                            <option value="废气">废气</option>
+                            <option value="废水">废水</option>
+                            <option value="噪声">噪声</option>
+                            <option value="其他">其他</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">是否关键设备：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">-->
+                    <div class="layui-input-inline">
+                        <select name="detectionType" lay-verify="required" lay-search="">
+                            <option value="是">是</option>
+                            <option value="否">否</option>
+                        </select>
+                    </div>
                 </div>
+
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">设备类型：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <!--<input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="equipmentType" lay-verify="required">-->
+                    <div class="layui-input-inline">
+                        <select name="detectionType" lay-verify="required" lay-search="">
+                            <option value="动力设备">动力设备</option>
+                            <option value="仪器仪表">仪器仪表</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">设备分类类型：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="classicType" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">出厂日期：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="productDate" lay-verify="">
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">投入使用时间：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="usedDate" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">质保单位：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="warrantyUnit" lay-verify="">
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">质保单位联系电话：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="warrantyUnitPhone" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">维护单位：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="maintainUnit" lay-verify="">
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">维护单位联系电话：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="" lay-verify="required">
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="maintainUnitPhone" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <!--照片-->
                 <div class="layui-inline">
-                    <label class="layui-form-label">设备附件（至少三张）：</label>
+                    <label class="layui-form-label">设备附件：</label>
                 </div>
                 <div class="layui-inline"></div>
                 <div class="photo-area">
@@ -129,6 +193,15 @@
                     </div>
                 </div>
             </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">数采仪id：</label>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="dauId" lay-verify="">
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="equipment-save" id="equipment-save" style="display: none">
+                <i class="layui-icon">&#xe605;</i>提交
+            </button>
         </form>
         <!--按钮-->
     </div>

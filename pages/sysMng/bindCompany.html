@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            sysMng : 'networkMng'
+        }).use('networkMng', function () {
+            layui.networkMng.loadCompanySelect();
+        }); //加载入口
+    </script>
+</head>
+<body>
+    <div class="layui-layout-admin layui-tab-brief add-form" lay-filter="docDemoTabBrief" id="addNetwork">
+        <!--监控点名称、MN号、排污口名称（自动带入添加企业时添加的排口名称）、IP、密码、安装位置-->
+        <div class="layui-layout-admin" style="text-align: center;margin-top: 10px">
+            <form class="layui-form" action="">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">企业名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="epId" lay-verify="required" lay-search="" id="c_select1" lay-filter="c_select1">
+                                <option value="">--请选择企业--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">排口名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="dauId" lay-verify="required" lay-search="" id="d_select1">
+                                <option value="">--请先选择企业--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <!--<button class="layui-btn layui-btn-normal" lay-submit lay-filter="C_PK_save" style="display: none" id="C_PK_save">-->
+                    <!--<i class="layui-icon">&#xe605;</i>提交-->
+                <!--</button>-->
+            </form>
+            <!--按钮-->
+        </div>
+    </div>
+</body>
+</html>

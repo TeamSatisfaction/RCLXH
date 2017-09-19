@@ -21,13 +21,13 @@
     <div class="layui-layout-admin" style="margin: 10px">
         <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
             <div class="layui-form-item" style="margin: 5px 0;">
-                <button class="layui-btn" style="margin-left: 0" onclick="">
+                <button class="layui-btn" style="margin-left: 0" onclick="layui.networkMng.addEquipmentWin()">
                     <i class="layui-icon">&#xe608;</i>新增
                 </button>
-                <div class="layui-input-inline" style="float: right">
-                    <input id="equipmentName" name="name"  autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
-                    <div class="search" onclick="layui.equipmentMng.loadEquipmentData()"></div>
-                </div>
+                <!--<div class="layui-input-inline" style="float: right">-->
+                    <!--<input id="equipmentName" name="name"  autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">-->
+                    <!--<div class="search" onclick="layui.networkMng.loadEquipmentData()"></div>-->
+                <!--</div>-->
             </div>
         </div>
         <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
@@ -41,7 +41,7 @@
                 <col width="120">
                 <col width="120">
                 <col width="120">
-                <col width="150">
+                <col width="190">
             </colgroup>
             <thead>
             <tr>
@@ -56,22 +56,8 @@
                 <th>是否关键设备</th>
                 <th style="text-align: center">操作</th>
             </tr>
-            <tr>
-                <th>序号</th>
-                <th>01</th>
-                <th>集水池提升泵</th>
-                <th>GRB-60</th>
-                <th>格兰富</th>
-                <th>污水泵</th>
-                <th>动力设备</th>
-                <th></th>
-                <th>否</th>
-                <th style="text-align: center"><a href="#" onclick="" title="编辑"><img src="../../img/mng/修改.png"></a>
-                &nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>
-                &nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.equipmentFactorWin" title="监测因子"><img src="../../img/mng/configure.png"></a></th>
-            </tr>
             </thead>
-            <tbody id="equipment-result">
+            <tbody id="equipment-results">
             </tbody>
         </table>
         <div class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">

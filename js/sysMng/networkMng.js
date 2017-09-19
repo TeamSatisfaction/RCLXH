@@ -49,10 +49,12 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.ip + '</td>' +
                             '<td>' + item.mn + '</td>' +
                             '<td>' + item.address + '</td>' +
-                            '<td>' + item.epName + '</td>' +
+                            '<td>' + item.dischargePortName + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.networkMng.alterEquipmentWin()" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '<a href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.bindCompanyWin(\''+item.id+'\')" title="绑定企业"><img src="../../img/mng/company.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.deleteNetWork(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -75,6 +77,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
+    //新增数采仪
     var addNetworkWin = function () {
         var index = layer.open({
             title : '新增联网信息',
@@ -87,11 +90,11 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 layero.find("iframe").contents().find('#netWork-save').click();
             }
         });
-        layer.full(index);
+        // layer.full(index);
     };
     form.on('submit(netWork_save)', function(data){
+        data.field.epId = '';
         var field = JSON.stringify(data.field);
-        console.log(field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
             headers : {
@@ -104,16 +107,70 @@ layui.define(['layer','element','laypage','form'],function (exports){
             success : function (result){
                 console.log(result);
                 if(result.code == '1000'){
-                    layer.msg('提交成功！', {icon: 1});
-                    parent.location.reload(); // 父页面刷新
-                    closeAddWin();
+                    layer.msg('提交成功！', {icon: 1,time:2000},function () {
+                        parent.location.reload(); // 父页面刷新
+                        closeWin();
+                    });
                 }else {
-                    layer.msg('提交失败！', {icon: 2});
+                    layer.msg('提交失败！', {icon: 2,time:2000});
                 }
             }
         });
         return false;
     });
+    //修改数采仪
+    var alterNetworkWin = function (id) {
+        var index = layer.open({
+            title : '修改联网信息',
+            type : 2,
+            area : ['800px','500px'],
+            content : '../../pages/sysMng/addNetworkView.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            yes  : function (index,layero) {
+                layero.find("iframe").contents().find('#netWork-save').click();
+            },
+            success : function (layero,index) {
+                var body = layer.getChildFrame('body',index);
+                // var password = body.contents().find('')
+            }
+        });
+        // layer.full(index);
+    };
+    //绑定企业排口win
+    var bindCompanyWin = function (id) {
+        var index = layer.open({
+            title : '绑定企业排口',
+            type : 2,
+            area : ['600px','350px'],
+            content : '../../pages/sysMng/bindCompany.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            yes  : function (index,layero) {
+                var body = layer.getChildFrame('body',index),
+                    refid = body.contents().find("select[name='dauId']").val();
+                    epId = body.contents().find("select[name='epId']").val();
+                var data = {
+                    id : id,
+                    epId : epId,
+                    refid : refid
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
+                    headers: {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type: 'put',
+                    data: field,
+                    success: function (result) {
+                        console.log(result)
+                    }
+                })
+            }
+        });
+    };
     //加载企业select
     function loadCompanySelect() {
         var data = {
@@ -136,15 +193,71 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     $("#c_select1").append("<option value='' selected='selected'>无企业</option>");
                 }else {
                     for(var i in list){
-                        $("#c_select1").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                        if(list[i].name != '荣昌区环保局'){
+                            $("#c_select1").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                        }
                     }
                 }
                 form.render('select');
             }
         })
     };
+    //加载排口select
+    function loadPKSelect(id) {
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                // result.dischargePortName
+                $("#d_select1").empty();
+                if(result.length>0){
+                    for(var i in result){
+                        $("#d_select1").append("<option value="+result[i].id+">"+result[i].dischargePortName+"</option>");
+                    }
+                }else{
+                    $("#d_select1").empty();
+                    $("#d_select1").append("<option value='' selected='selected'>无排口</option>");
+                }
+                form.render('select');
+            }
+        })
+    };
+    //企业select change事件
+    form.on('select(c_select1)', function(data){
+        Cid = data.value;
+        loadPKSelect(Cid);
+    });
+    //删除数采仪
+    var deleteNetWork = function (id) {
+        layer.msg('是否确定删除该数采仪', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.code == '1000'){
+                            layer.msg('删除成功！', {icon: 1,time:1000}, function() {
+                                location.reload()
+                            });
+                        }else{
+                            layer.msg('删除失败！', {icon: 2});
+                        }
+                    }
+                })
+            }
+        })
+    }
     //关闭窗口
-    var closeAddWin = function () {
+    var closeWin = function () {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
     };
@@ -166,22 +279,139 @@ layui.define(['layer','element','laypage','form'],function (exports){
         layer.full(index);
     };
     //编辑设备窗口
-    var alterEquipmentWin = function () {
+    var alterEquipmentWin = function (id) {
         var index = layer.open({
             title : '编辑设备信息',
+            id : id,
             type : 2,
             moveOut: true,
             area : ['1000px','600px'],
             content : '../../pages/sysMng/bindEquipmentView.html',
-            btn: ['提交', '返回'],
+            btn: ['返回'],
             btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            success : function (layero,index) {
+                var body = layer.getChildFrame('body', index);
+                loadEquipmentData(id,body,"1");
             }
         });
         layer.full(index);
     };
+    //载入设备
+    var loadEquipmentData = function (id,body,curr) {
+        var eTobody = body.contents().find('#equipment-results');
+        var data = {
+                // pageNumber : 1,
+                pageNumber : curr||1,
+                pageSize : 16,
+                equipmentMap : {
+                    dauId : id
+                }
+            };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'post',
+            data : field,
+            success : function (result) {
+                console.log(result);
+                var nums = 16; //每页出现的数据量
+                //模拟渲染
+                var eData = result.data.rows,
+                    pages = result.data.totalPage,
+                    str = "";
+                var render = function(eData, curr) {
+                    var arr = []
+                        , thisData = eData.concat().splice(curr * nums - nums, nums);
+                    layui.each(thisData, function(index, item){
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>' + item.equipmentCode + '</td>' +
+                            '<td>' + item.equipmentName + '</td>' +
+                            '<td>' + item.equipmentNo+ '</td>' +
+                            '<td>' + item.productor + '</td>' +
+                            '<td>' + item.classicType + '</td>' +
+                            '<td>' + item.classicType + '</td>' +
+                            '<td>' + item.usedDate + '</td>' +
+                            '<td>' + item.equipmentType + '</td>' +
+                            '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '</tr>';
+                        arr.push(str);
+                    });
+                    return arr.join('');
+                };
+                eTobody.html(render(eData, obj.curr));
+                //调用分页
+                laypage({
+                    cont: 'demo3',
+                    skin: '#00a5dd',
+                    pages : pages,
+                    curr: curr || 1, //当前页,
+                    skip: true,
+                    jump: function(obj,first){
+                        if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
+                            loadEquipmentData(id,body,obj.curr);
+                        }
+                    }
+                })
+            }
+        })
+    };
+    //新增设备窗口
+    var addEquipmentWin = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');
+        var index = layer.open({
+            title : '新增设备',
+            type : 2,
+            moveOut: true,
+            area : ['1000px','700px'],
+            content : '../../pages/sysMng/addEquipmentView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index,layero) {
+                layero.find("iframe").contents().find('#equipment-save').click();
+            },
+            success : function (layero,index) {
+                var body = layer.getChildFrame('body',index);
+                body.contents().find("input[name='dauId']").val(id);
+            }
+        });
+    };
+    form.on('submit(equipment-save)', function(data){
+        var field = JSON.stringify(data.field);
+        console.log(field);
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            dataType : 'json',
+            type : 'post',
+            data : field,
+            success : function (result){
+                console.log(result);
+                if(result.code == '1000'){
+                    layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                        parent.layer.close(index); //再执行关闭
+                        parent.location.reload();
+                    });
+                }else {
+                    layer.msg('提交失败！', {icon: 2,time:1000});
+                }
+            }
+        });
+        return false;
+    });
+    //修改设备窗口
+
     //配置因子窗口
     var equipmentFactorWin = function () {
         var index = layer.open({
@@ -203,10 +433,15 @@ layui.define(['layer','element','laypage','form'],function (exports){
         loadPage : loadPage,
         loadNetWorkData : loadNetWorkData,
         addNetworkWin : addNetworkWin,
-        closeAddWin : closeAddWin,
+        deleteNetWork : deleteNetWork,
+        // closeAddWin : closeAddWin,
+        alterNetworkWin : alterNetworkWin,
+        bindCompanyWin : bindCompanyWin,
         loadCompanySelect : loadCompanySelect,
         addEquipmentWin : addEquipmentWin,
         alterEquipmentWin : alterEquipmentWin,
+        loadEquipmentData : loadEquipmentData,
+        addEquipmentWin : addEquipmentWin,
         equipmentFactorWin : equipmentFactorWin
     };
     /*输出内容，注意顺序*/

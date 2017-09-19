@@ -13,7 +13,7 @@
         }).extend({
             networkMng : 'networkMng'
         }).use('networkMng',function(){
-            layui.networkMng.loadCompanySelect();
+//            layui.networkMng.loadCompanySelect();
         })
             .link('../../css/style.css'); //加载入口
     </script>
@@ -55,17 +55,6 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">安装位置：</label>
                     <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="address" lay-verify="required">
-                    <span class="required">*</span>
-                </div>
-            </div>
-            <div class="layui-form-item">
-                <div class="layui-inline">
-                    <label class="layui-form-label">绑定企业名称：</label>
-                    <div class="layui-input-inline">
-                        <select name="epId" lay-verify="required" lay-search="" id="c_select1">
-                            <option value="">--请选择--</option>
-                        </select>
-                    </div>
                     <span class="required">*</span>
                 </div>
             </div>

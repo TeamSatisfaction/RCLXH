@@ -280,8 +280,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 type : 'post',
                 data : field,
                 success : function (result){
-                    console.log(result);
-                    // var  frameindex= parent.layer.getFrameIndex(window.name);
                     if(result.code == '1000'){
                         // parent.layer.close(frameindex);
                         // parent.location.reload(); // 父页面刷新
@@ -302,8 +300,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 type : 'put',
                 data : field,
                 success : function (result){
-                    console.log(result);
-                    // var  frameindex= parent.layer.getFrameIndex(window.name);
                     if(result.code == '1000'){
                         // parent.layer.close(frameindex);
                         // parent.location.reload(); // 父页面刷新
@@ -346,7 +342,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 console.log(body.contents().find("select[name='controlLevel']"));
                 body.contents().find("select[name='controlLevel']").children("option").each(function(){
                     if (this.text == data.controlLevel) {
-                        console.log(this);
                         this.setAttribute("selected","selected");
                     }
                 });
@@ -396,8 +391,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             '<td>' + item.whereabouts + '</td>' +
                             '<td>' + item.emissionAmount + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
+                            // '<a href="#" onclick="layui.companyMng.lookPk(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '<a href="#" onclick="layui.companyMng.deletePK(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -422,13 +417,12 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             ,btn: ['提交', '返回'] //只是为了演示
             ,yes: function(index,layero){
                 // layero.find("iframe").contents().find('#company-save').click();
-                console.log($("#pk-save"))
                 $("#pk-save").click();
             }
             ,zIndex: layer.zIndex //重点1
-            ,success: function(layero){
-                layer.setTop(layero); //重点2
-            }
+            // ,success: function(layero){
+            //     layer.setTop(layero); //重点2
+            // }
         })
     };
     form.on('submit(pk-save)',function (data) {
@@ -445,25 +439,58 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             data : field,
             success : function (result){
                 console.log(result);
+                layer.msg('新增成功！', {icon: 1,time:1000}, function() {
+                    var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                    parent.layer.close(index); //再执行关闭
+                    parent.location.reload();
+                });
             }
         })
     });
     /*查看排口信息*/
-    var lookPk = function () {
-        var pk_win =  $('#pk_window');
-        pk_win.find('input').attr('disabled', 'disabled');
-        pk_win.find('.thumb-input').hide();
-        layer.open({
-            type: 1
-            ,title: '查看排口'
-            ,area: ['800px']
-            ,shade: 0.3
-            ,content: pk_win
-            ,btnAlign: 'c'
-            ,btn: ['关闭'] //只是为了演示
-        })
-    };
+    // var lookPk = function (id) {
+    //     var pk_win =  $('#pk_window');
+    //     pk_win.find('input').attr('disabled', 'disabled');
+    //     pk_win.find('.thumb-input').hide();
+    //     layer.open({
+    //         type: 1
+    //         ,title: '查看排口'
+    //         ,area: ['800px']
+    //         ,shade: 0.3
+    //         ,content: pk_win
+    //         ,btnAlign: 'c'
+    //         ,btn: ['关闭']
+    //         ,success: function(layero,index){
+    //             loadPKData(id);
+    //         }
+    //     })
+    // };
     /*删除排口*/
+    var deletePK = function (id) {
+        layer.msg('是否确定删除该排口', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.resultcode == '2'){
+                            layer.msg('删除成功！', {icon: 1,time:2000}, function() {
+                                location.reload()
+                            });
+                        }else{
+                            layer.msg('删除失败！', {icon: 2});
+                        }
+                    }
+                })
+            }
+        })
+    }
     //企业详情
     var detailCompanyWin = function (id) {
         var index = layer.open({
@@ -630,7 +657,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         alterCompanyWin : alterCompanyWin,
         loadCompanyData : loadCompanyData,
         addPk : addPk,
-        lookPk : lookPk,
+        // lookPk : lookPk,
+        deletePK : deletePK,
         clgyImgSelect : clgyImgSelect,
         detailCompanyWin : detailCompanyWin,
         alarmRuleList : alarmRuleList,
