@@ -22,6 +22,7 @@
             networkMng : 'sysMng/networkMng'
         }).use(['utils', 'sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
             layui.sysMng.getTab();
+            layui.equipmentMng.loadMnSelect();
 //            layui.roleMng.roleMngWin();
         }); //加载入口
     </script>
@@ -133,16 +134,18 @@
                 </div>
                 <!--设备管理-->
                 <div class="layui-tab-item" id="eq_tab">
-                    <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
-                        <div class="layui-form-item" style="margin: 5px 0;">
-                            <button class="layui-btn" style="margin-left: 0" onclick="layui.equipmentMng.addEquipmentWin()">
+                    <div class="layui-form" lay-filter="" style="margin-bottom: 5px">
+                        <!--<div class="layui-form-item layui-inline">-->
+                            <label class="layui-form-label">数采仪：</label>
+                            <div class="layui-input-inline">
+                                <select name="dau" lay-verify="required" lay-search="" id="dau" lay-filter="dau-select">
+                                    <option value="">--请先选择数采仪--</option>
+                                </select>
+                            </div>
+                            <button class="layui-btn"  onclick="layui.equipmentMng.addEquipmentWin()" style="margin-left: 5px">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
-                            <div class="layui-input-inline" style="float: right">
-                                <input id="equipmentName" name="name"  autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">
-                                <div class="search" onclick="layui.equipmentMng.loadEquipmentData()"></div>
-                            </div>
-                        </div>
+                        <!--</div>-->
                     </div>
                     <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
                         <colgroup>
@@ -178,9 +181,6 @@
                         <div class="layui-input-inline" style="float: right">
                             <div id="demo3"></div>
                         </div>
-                        <!--<button class="layui-btn  layui-btn-warm layui-btn-small" onclick="javascript:history.go(0);" style="position: fixed;left: 10px;bottom: 0">-->
-                            <!--<i class="layui-icon"></i> 刷新-->
-                        <!--</button>-->
                     </div>
                 </div>
                 <!--联网管理-->

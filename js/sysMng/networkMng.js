@@ -16,12 +16,12 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //载入联网列表
     var loadNetWorkData = function (curr) {
-        // var address = $('#epAddress').val(),
+        var address = $('#mnName').val(),
             data = {
                 pageNumber : curr||1,
                 pageSize : 16,
                 dauMap : {
-                    // address : address
+                    address : address
                 }
             };
         var field = JSON.stringify(data);
@@ -428,7 +428,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         });
         layer.full(index);
-    }
+    };
+
     var obj = {
         loadPage : loadPage,
         loadNetWorkData : loadNetWorkData,

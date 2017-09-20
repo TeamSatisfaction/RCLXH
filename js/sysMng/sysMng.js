@@ -1,6 +1,7 @@
-layui.define(['layer', 'element'],function (exports) {
+layui.define(['layer', 'element','form'],function (exports) {
     var $ = layui.jquery,
         layer = layui.layer,
+        form = layui.form();
         element = layui.element();
     //页面跳转
     var loadPage = function(url,p){

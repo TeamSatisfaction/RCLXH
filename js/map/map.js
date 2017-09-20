@@ -544,7 +544,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             data: field,
             success: function (result){
                 var row = result.data.rows;
-                // console.log(row);
                 $("#f_select").empty();
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");

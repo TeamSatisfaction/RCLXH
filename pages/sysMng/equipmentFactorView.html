@@ -17,14 +17,15 @@
         }).extend({
             equipmentMng : 'equipmentMng'
         }).use('equipmentMng', function () {
-            layui.equipmentMng.efCheckEvt();
+            layui.equipmentMng.loadAllFactorData();
+            layui.equipmentMng.loadFactorData();
         }); //加载入口
     </script>
     <!--TPL-->
     <script id="leftTpl" type="text/html">
         {{#  layui.each(d, function(index, item){ }}
             <div class="layui-form-item">
-                <input type="checkbox" title="{{ item }}" lay-skin="primary" checked>
+                <input type="checkbox" title="{{ item }}" lay-skin="primary">
             </div>
         {{#  }); }}
     </script>
@@ -54,14 +55,14 @@
 <body style="height: 100%;">
 <div id="ef" class="layui-layout-admin" lay-filter="docDemoTabBrief">
     <!--左边块-->
-    <div class="ef-left">
+    <div class="ef-left" style="overflow:auto">
         <div class="ef-title"><span>监测因子关联</span> <sub>(请勾选监测因子)</sub></div>
         <form class="ef-checklist layui-form">
 
         </form>
     </div>
     <!--右边块-->
-    <div class="ef-right">
+    <div class="ef-right" style="overflow:auto">
         <div class="ef-title"><span>监测因子编号</span> <sub>(<span class="required">*</span>为必填项)</sub></div>
         <form class="ef-checklist layui-form">
 
