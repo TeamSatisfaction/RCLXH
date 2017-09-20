@@ -569,60 +569,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             }
         })
     };
-    //新增规则
-    var addAlarmRuleWin = function () {
-        var id = sessionStorage.getItem("company_id");
-        var rule_form =  $('#rule_form');
-        layer.open({
-            title : '新增报警规则',
-            type : 1,
-            id : id,
-            moveOut: true,
-            area : ['1000px','700px'],
-            content : rule_form,
-            btn: [ '提交','返回'],
-            btnAlign: 'c',
-            success: function(layero,index){
-                loadDau(id);
-                form.render();
-                form.verify({
-                    threshold : function (value) {
-                        if(!new RegExp("^(([1-9])|(1[0-9])|(2[0-4]))$").test(value)){
-                            return '只能输入1~24的整数';
-                        }
-                    }
-                });
-                form.on('submit(save)', function(data){
-                    data.field.id = id;
-                    var field = JSON.stringify(data.field);
-                    $.ajax({
-                        url :''+urlConfig+'/v01/htwl/lxh/alrm/rule/add',
-                        headers : {
-                            'Content-type': 'application/json;charset=UTF-8',
-                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                        },
-                        dataType : 'json',
-                        type : 'post',
-                        data : field,
-                        success : function (result){
-                            console.log(result);
-                            if(result.code == '2'){
-                                layer.msg('提交成功！', {icon: 1});
-                                parent.location.reload(); // 父页面刷新
-                                closeWin();
-                            }else {
-                                layer.msg('提交失败！', {icon: 2});
-                            }
-                        }
-                    });
-                    return false;
-                });
-            },
-            yes  : function (index,layero) {
-                layero.find('.icon-save').click();
-            }
-        });
-    };
     //关闭窗口
     var closeWin = function () {
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引

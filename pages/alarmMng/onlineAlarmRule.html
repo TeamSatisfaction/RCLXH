@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/' //你的模块目录
+        }).extend({
+            companyMng :  'sysMng/companyMng',
+        }).use('companyMng',function () {
+//            layui.companyMng.loadAlarmRuleDetails();
+        }); //加载入口
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin add-form">
+    <form class="layui-form layui-collapse" action="" style="display: none;" id="rule_form">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">基本信息</h2>
+            <div class="layui-colla-content layui-show" style="text-align: center">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">规则名称：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="ruleName">
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">监测类型：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="required" lay-search="">
+                                <option value="">--请选择--</option>
+                                <option value="废水">废水</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">数采仪名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="equipment_key" lay-verify="required" lay-search="" id="select_dauId1" lay-filter="select_dauId1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="sensor_equipment_key" lay-verify="required" lay-search="" id="select_equipment1" lay-filter="select_equipment1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">仪器仪表名称：</label>
+                        <div class="layui-input-inline">
+                            <select name="sensor_equipment_key" lay-verify="required" lay-search="" id="select_equipment1" lay-filter="select_equipment1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">监测因子：</label>
+                        <div class="layui-input-inline">
+                            <select name="sensor_key" lay-verify="required" lay-search="" id="select_factor1">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">瞬时浓度：</label>
+                        <div class="layui-input-inline">
+                            <select name="conditions" lay-verify="required" lay-search="">
+                                <option value="">--请选择--</option>
+                                <option value="le">大于等于</option>
+                                <option value="gt">小于等于</option>
+                                <option value="eq">等于</option>
+                                <option value="lt">大于</option>
+                                <option value="ne">小于</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">阈值：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="sensorVal">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">上报规则</h2>
+            <div class="layui-colla-content layui-show" style="text-align: center">
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警：</label>
+                        <div class="layui-input-inline">
+                            <select name="oneLevelKey"  lay-search="">
+                                <option value="">--请选择--</option>
+                                <option value="service_level">企业方</option>
+                                <option value="enterprise_level">服务方</option>
+                                <option value="regulatory_level">监管方</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报警时间(h)：</label>
+                        <input name="oneLevelTime" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="threshold" placeholder="只能填写1-24的整数">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警：</label>
+                        <div class="layui-input-inline">
+                            <select name="twoLevelKey"  lay-search="">
+                                <option value="">--请选择--</option>
+                                <option value="service_level">企业方</option>
+                                <option value="enterprise_level">服务方</option>
+                                <option value="regulatory_level">监管方</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报警时间(h)：</label>
+                        <input name="twoLevelTime" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="threshold" placeholder="只能填写1-24的整数">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警：</label>
+                        <div class="layui-input-inline">
+                            <select name="threeLevelKey"  lay-search="">
+                                <option value="">--请选择--</option>
+                                <option value="service_level">企业方</option>
+                                <option value="enterprise_level">服务方</option>
+                                <option value="regulatory_level">监管方</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报警时间(h)：</label>
+                        <input name="threeLevelTime" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="threshold" placeholder="只能填写1-24的整数">
+                    </div>
+                </div>
+                <div>
+                    <button class="layui-btn layui-btn-small icon-save" lay-submit lay-filter="save" style="display: none;"></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>
