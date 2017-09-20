@@ -214,49 +214,58 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             }
         })
     };
-    /*设备因子事件*/
-    var efCheckEvt = function(factorArray){
+
+    var leftFormEvent = function(){
+
         var leftForm = $(".ef-left").find('.ef-checklist'),
-            rightForm = $(".ef-right").find('.ef-checklist');
+            rightForm = $(".ef-right").find('.ef-checklist'),
+            rightTpl = $("#rightTpl").html(),
+            inputBoxes = leftForm.find(".layui-form-item"),
+            inputs = inputBoxes.find("input");
 
-        /*因子列表，需要修改就改这里*/
-        // var factorArray = ['单台设备总电流', 'A相电流', 'B相电流', 'C相电流', '单台设备总电压', 'A相电压',
-        //     'B相电压', 'C相电压', '单台设备总功率因素', 'A相功率因素', 'B相功率因素', 'C相功率因素'];
-
-        /*template*/
-        var leftTpl = $("#leftTpl").html();
-        var rightTpl = $("#rightTpl").html();
-
-        /*左边form*/
-        laytpl(leftTpl).render(factorArray, function(html){
-            leftForm.html(html) ;
-            form.render();
-            /*事件*/
-            var inputBoxes = leftForm.find(".layui-form-item"),
-                inputs = inputBoxes.find("input");
-            inputBoxes.find(".layui-form-checkbox").on('click',function () {
-                var index = $(this).parents(".layui-form-item").index();
-                rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
-                /*当前选中的元素*/
-                var checkedArray = [];
-                inputs.each(function () {
-                    if($(this).parent().find(".layui-form-checkbox").hasClass("layui-form-checked"))
-                        checkedArray.push($(this).attr('title'))
-                });
-                console.log(checkedArray);
-                /*右边form*/
-                laytpl(rightTpl).render(checkedArray, function(html){
-                    rightForm.html(html) ;
-                    form.render("select");
-                });
+        inputBoxes.find(".layui-form-checkbox").on('click',function () {
+            var index = $(this).parents(".layui-form-item").index();
+            // rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
+            /*右边form*/
+            laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
+                rightForm.html(html) ;
+                form.render("select");
             });
         });
         /*右边form*/
-        // laytpl(rightTpl).render(checkedArray, function(html){
-        //     rightForm.html(html) ;
-        //     form.render("select");
-        // });
+        laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
+            rightForm.html(html) ;
+            form.render("select");
+        });
     };
+
+    /*当前选中的元素*/
+    var getCheckedArray = function(inputs){
+        var checkedArray = [];
+        inputs.each(function () {
+            if($(this).siblings(".layui-form-checkbox").hasClass("layui-form-checked")){
+                checkedArray.push($(this).attr('title'))
+            }
+        });
+        return checkedArray;
+    };
+
+    /*设备因子事件*/
+    var efCheckEvt = function(factorArray){
+        /*因子列表，需要修改就改这里*/
+        var factorArray = ['单台设备总电流', 'A相电流', 'B相电流', 'C相电流', '单台设备总电压', 'A相电压',
+            'B相电压', 'C相电压', '单台设备总功率因素', 'A相功率因素', 'B相功率因素', 'C相功率因素'];
+
+        /*template*/
+        var leftTpl = $("#leftTpl").html();
+
+        /*左边form*/
+        laytpl(leftTpl).render(factorArray, function(html){
+            $(".ef-left").find('.ef-checklist').html(html) ;
+            form.render();
+        });
+    };
+
     //请求已有的因子
     var loadFactorData =function(){
         var type = $(window.parent.document).find('.layui-layer-content').attr('id'),
@@ -294,11 +303,17 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 for(var i in row){
                     checkedArray.push(row[i].factorName)
                 }
-                console.log(checkedArray)
                 var leftForm = $(".ef-left").find('.ef-checklist'),
                     inputBoxes = leftForm.find(".layui-form-item"),
                     inputs = inputBoxes.find("input");
-                console.log(inputs)
+
+                inputs.each(function(){
+                    if($.inArray($(this).attr("title"), checkedArray)!=-1){
+                        $(this).attr("checked", "checked");
+                    }
+                });
+                form.render('checkbox');
+                leftFormEvent();
             }
         })
     };
