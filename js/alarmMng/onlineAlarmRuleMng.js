@@ -7,28 +7,588 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
+    //报警规则select
+    form.on('select(alarmRule)', function(data){
+        loadAlarmRuleList();
+    });
+    //加载报警规则列表
+    var loadAlarmRuleList = function (curr) {
+        var ruleTobody = $("#rule-result"),
+            type = $('#alarmRule').val(),
+            text = $('#alarmRule').find("option:selected").text(),
+            id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            url = '',
+            col = '',
+            head = '';
+        var data = {
+            epId : id,
+            pageNo : curr||1,
+            pageSize : 16
+        };
+        if(type == 'online_alarm_rule'||type == 'poly_online_alarm_rule'){
+            console.log(1);
+            col  = '<col width="60">'+
+                '<col width="350">'+
+                '<col>'+
+                '<col width="100">'+
+                '<col width="120">'+
+                '<col width="100">';
+            head = '<tr>'+
+                '<th>序号</th>'+
+                '<th>规则名称</th>'+
+                '<th>仪表名称</th>'+
+                '<th>设备类型</th>'+
+                '<th>监测因子</th>'+
+                '<th style="text-align: center">操作</th>'+
+                '</tr>';
+            $("#rule-col").html(col);
+            $("#rule-head").html(head);
+            if(type == 'online_alarm_rule'){
+                url = 'http://172.16.1.102:9702/v02/htwl/alarm/rule/online'
+            }else if(type == 'poly_online_alarm_rule'){
+                url = 'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online'
+            }
+            $.ajax({
+                url :url,
+                type : 'get',
+                data : data,
+                success : function (result){
+                    var list = result.list,
+                        str = "",
+                        nums = 16; //每页出现的数据量
+                    var render = function(list, curr){
+                        var arr = []
+                            , thisData = list.concat().splice(curr * nums - nums, nums);
+                        layui.each(thisData, function(index, item) {
+                            str = '<tr>' +
+                                '<td>'+(index+1)+'</td>' +
+                                '<td>' + text + '</td>' +
+                                '<td>' + item.fourthLayerEncodingName + '</td>' +
+                                '<td>' + item.firstLayerEncodingName + '</td>' +
+                                '<td>' + item.thirdLayerEncodingName+ '</td>' +
+                                '<td style="text-align: center">' +
+                                // '<a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>' +
+                                '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
+                                '</tr>';
+                            arr.push(str);
+                        })
+                        return arr.join('');
+                    }
+                    ruleTobody.html(render(list, obj.curr));
+                }
+            })
+        }else if(type == 'licence_alarm_rule'){
+            col  = '<col width="60">'+
+                '<col width="100">'+
+                '<col width="100">'+
+                '<col>'+
+                '<col width="100">';
+            head = '<tr>'+
+                '<th>序号</th>'+
+                '<th>规则类型</th>'+
+                '<th>是否删除</th>'+
+                '<th>报警规则描述</th>'+
+                '<th style="text-align: center">操作</th>'+
+                '</tr>';
+            $("#rule-col").html(col);
+            $("#rule-head").html(head);
+            url = 'http://172.16.1.102:9702/v02/htwl/alarm/rule/license';
+            $.ajax({
+                url :url,
+                type : 'get',
+                data : data,
+                success : function (result){
+                    console.log(result);
+                    var list = result.list,
+                        str = "",
+                        nums = 16; //每页出现的数据量
+                    var render = function(list, curr){
+                        var arr = []
+                            , thisData = list.concat().splice(curr * nums - nums, nums);
+                        layui.each(thisData, function(index, item) {
+                            str = '<tr>' +
+                                '<td>'+(index+1)+'</td>' +
+                                '<td>' + text + '</td>' +
+                                '<td></td>' +
+                                '<td></td>' +
+                                // '<td>' + item.firstLayerEncodingName + '</td>' +
+                                '<td style="text-align: center">' +
+                                '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
+                                '</tr>';
+                            arr.push(str);
+                        })
+                        return arr.join('');
+                    }
+                    ruleTobody.html(render(list, obj.curr));
+                }
+            })
+        }
+    };
     //新增规则
     var addAlarmRuleWin = function () {
+        var type = $('#alarmRule').val(),
+            id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        if(type == 'online_alarm_rule'){
+            layer.open({
+                title :'新增在线报警规则',
+                id : id,
+                type : 2,
+                moveOut: true,
+                area : ['1000px','600px'],
+                content : '../../pages/alarmMng/onlineAlarmRule.html',
+                btn: [ '提交','返回'],
+                btnAlign: 'c',
+                yes  : function (index,layero) {
+                    var body = layer.getChildFrame('body',index),
+                        first_layer_encoding_name = body.contents().find("select[name='first_layer_encoding_name']").find("option:selected").text(),
+                        first_layer_encoding_type = body.contents().find("select[name='first_layer_encoding_name']").val(),
+                        second_layer_encoding_name = body.contents().find("select[name='second_layer_encoding_name']").find("option:selected").text(),
+                        second_layer_encoding_type = body.contents().find("select[name='second_layer_encoding_name']").val(),
+                        third_layer_encoding_name = body.contents().find("select[name='third_layer_encoding_name']").find("option:selected").text(),
+                        third_layer_encoding_type = body.contents().find("select[name='third_layer_encoding_name']").val(),
+                        fourth_layer_encoding_name = body.contents().find("select[name='fourth_layer_encoding_name']").find("option:selected").text(),
+                        fourth_layer_encoding_type = body.contents().find("select[name='fourth_layer_encoding_name']").val(),
+                        one_conditions_name = body.contents().find("select[name='one_conditions_name']").find("option:selected").text(),
+                        one_condition_key = body.contents().find("select[name='one_conditions_name']").val(),
+                        one_threshold = body.contents().find("input[name='one_threshold']").val(),
+                        two_conditions_name = body.contents().find("select[name='two_conditions_name']").find("option:selected").text(),
+                        two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
+                        two_threshold = body.contents().find("input[name='two_threshold']").val(),
+                        is_contain = body.contents().find("select[name='is_contain']").val();
+                    var data = {
+                        epId : id,
+                        firstLayerEncodingName : first_layer_encoding_name,
+                        firstLayerEncodingType : first_layer_encoding_type,
+                        secondLayerEncodingName : second_layer_encoding_name,
+                        secondLayerEncodingType : second_layer_encoding_type,
+                        thirdLayerEncodingName : third_layer_encoding_name,
+                        thirdLayerEncodingType : third_layer_encoding_type,
+                        fourthLayerEncodingName : fourth_layer_encoding_name,
+                        fourthLayerEncodingType : fourth_layer_encoding_type,
+                        oneConditionsName : one_conditions_name,
+                        oneConditionKey : one_condition_key,
+                        oneThreshold : one_threshold,
+                        twoConditionsName : two_conditions_name,
+                        twoConditionKey : two_conditions_key,
+                        twoThreshold : two_threshold,
+                        isContain : is_contain
+                    };
+                    $.ajax({
+                        url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online',
+                        headers : {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type : 'post',
+                        data : data,
+                        success : function (result){
+                            if(result.code == '1000'){
+                                layer.msg('新增成功！', {icon: 1,time:1000}, function() {
+                                    layer.close(1); //再执行关闭
+                                    loadAlarmRuleList();
+                                });
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == 'poly_online_alarm_rule'){
+            layer.open({
+                title :'新增聚合在线报警规则',
+                id : id,
+                type : 2,
+                moveOut: true,
+                area : ['1000px','600px'],
+                content : '../../pages/alarmMng/polyOnlineAlarmRule.html',
+                btn: [ '提交','返回'],
+                btnAlign: 'c',
+                yes  : function (index,layero) {
+                    var body = layer.getChildFrame('body',index),
+                        first_layer_encoding_name = body.contents().find("select[name='first_layer_encoding_name']").find("option:selected").text(),
+                        first_layer_encoding_type = body.contents().find("select[name='first_layer_encoding_name']").val(),
+                        second_layer_encoding_name = body.contents().find("select[name='second_layer_encoding_name']").find("option:selected").text(),
+                        second_layer_encoding_type = body.contents().find("select[name='second_layer_encoding_name']").val(),
+                        third_layer_encoding_name = body.contents().find("select[name='third_layer_encoding_name']").find("option:selected").text(),
+                        third_layer_encoding_type = body.contents().find("select[name='third_layer_encoding_name']").val(),
+                        fourth_layer_encoding_name = body.contents().find("select[name='fourth_layer_encoding_name']").find("option:selected").text(),
+                        fourth_layer_encoding_type = body.contents().find("select[name='fourth_layer_encoding_name']").val(),
 
-        layer.open({
-            title : '新增报警规则',
-            type : 2,
-            // id : id,
-            moveOut: true,
-            area : ['1000px','700px'],
-            content : '../../pages/alarmMng/onlineAlarmRule.html',
-            btn: [ '提交','返回'],
-            btnAlign: 'c',
-            success: function(layero,index){
-
+                        start_time = body.contents().find("input[name='start_time']").val(),
+                        end_time = body.contents().find("input[name='end_time']").val(),
+                        conditions_name = body.contents().find("select[name='conditions_name']").find("option:selected").text(),
+                        condition_key = body.contents().find("select[name='conditions_name']").val(),
+                        aggregation_name = body.contents().find("select[name='aggregation_name']").find("option:selected").text(),
+                        aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
+                        calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
+                        calculation_value = body.contents().find("input[name='calculation_value']").val();
+                    var data = {
+                        epId : id,
+                        firstLayerEncodingName : first_layer_encoding_name,
+                        firstLayerEncodingType : first_layer_encoding_type,
+                        secondLayerEncodingName : second_layer_encoding_name,
+                        secondLayerEncodingType : second_layer_encoding_type,
+                        thirdLayerEncodingName : third_layer_encoding_name,
+                        thirdLayerEncodingType : third_layer_encoding_type,
+                        fourthLayerEncodingName : fourth_layer_encoding_name,
+                        fourthLayerEncodingType : fourth_layer_encoding_type,
+                        startTime : start_time,
+                        endTime : end_time,
+                        aggregationName : aggregation_name,
+                        aggregationValue : aggregation_value,
+                        calculationName : calculation_name,
+                        calculationValue : calculation_value,
+                        conditionsName : conditions_name,
+                        conditionKey : condition_key
+                    };
+                    $.ajax({
+                        url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online',
+                        headers : {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type : 'post',
+                        data : data,
+                        success : function (result){
+                            if(result.code == '1000'){
+                                layer.msg('新增成功！', {icon: 1,time:1000}, function() {
+                                    layer.close(1); //再执行关闭
+                                    loadAlarmRuleList();
+                                    // location.reload();
+                                });
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
+                }
+            })
+        }
+    };
+    //设备select
+    var loadEquipmentSelect = function () {
+        $.ajax({
+            url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/all/equipment',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
-            yes  : function (index,layero) {
-                layero.find('.icon-save').click();
+            type: 'get',
+            success: function (result) {
+                var data = result.data;
+                if(data == null){
+                    // $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in data){
+                        $("#fourth_layer_encoding_name").append("<option value="+data[i].dicKey+">"+data[i].dicName+"</option>");
+                    }
+                }
+                form.render('select');
+                loadAlarmRuleDetails();
+            }
+        })
+    };
+    //因子select
+    var loadFactorSelect = function () {
+        $.ajax({
+            url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/all/factor',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+                var data = result.data;
+                if(data == null){
+                    // $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in data){
+                        $("#third_layer_encoding_name").append("<option value="+data[i].dicKey+">"+data[i].dicName+"</option>");
+                    }
+                }
+                form.render('select');
+                loadAlarmRuleDetails();
+            }
+        })
+    };
+    //修改规则
+    var alterAlarmRuleWin = function (id) {
+        var type = $('#alarmRule').val();
+        if(type ==  'online_alarm_rule') {
+            layer.open({
+                title: '修改在线报警规则',
+                type: 2,
+                id: id,
+                moveOut: true,
+                area: ['1000px', '600px'],
+                content: '../../pages/alarmMng/onlineAlarmRule.html',
+                btn: ['提交', '返回'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var body = layer.getChildFrame('body', index),
+                        first_layer_encoding_name = body.contents().find("select[name='first_layer_encoding_name']").find("option:selected").text(),
+                        first_layer_encoding_type = body.contents().find("select[name='first_layer_encoding_name']").val(),
+                        second_layer_encoding_name = body.contents().find("select[name='second_layer_encoding_name']").find("option:selected").text(),
+                        second_layer_encoding_type = body.contents().find("select[name='second_layer_encoding_name']").val(),
+                        third_layer_encoding_name = body.contents().find("select[name='third_layer_encoding_name']").find("option:selected").text(),
+                        third_layer_encoding_type = body.contents().find("select[name='third_layer_encoding_name']").val(),
+                        fourth_layer_encoding_name = body.contents().find("select[name='fourth_layer_encoding_name']").find("option:selected").text(),
+                        fourth_layer_encoding_type = body.contents().find("select[name='fourth_layer_encoding_name']").val(),
+                        one_conditions_name = body.contents().find("select[name='one_conditions_name']").find("option:selected").text(),
+                        one_condition_key = body.contents().find("select[name='one_conditions_name']").val(),
+                        one_threshold = body.contents().find("input[name='one_threshold']").val(),
+                        two_conditions_name = body.contents().find("select[name='two_conditions_name']").find("option:selected").text(),
+                        two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
+                        two_threshold = body.contents().find("input[name='two_threshold']").val(),
+                        is_contain = body.contents().find("select[name='is_contain']").val();
+                    var data = {
+                        id: id,
+                        firstLayerEncodingName: first_layer_encoding_name,
+                        firstLayerEncodingType: first_layer_encoding_type,
+                        secondLayerEncodingName: second_layer_encoding_name,
+                        secondLayerEncodingType: second_layer_encoding_type,
+                        thirdLayerEncodingName: third_layer_encoding_name,
+                        thirdLayerEncodingType: third_layer_encoding_type,
+                        fourthLayerEncodingName: fourth_layer_encoding_name,
+                        fourthLayerEncodingType: fourth_layer_encoding_type,
+                        oneConditionsName: one_conditions_name,
+                        oneConditionKey: one_condition_key,
+                        oneThreshold: one_threshold,
+                        twoConditionsName: two_conditions_name,
+                        twoConditionKey: two_conditions_key,
+                        twoThreshold: two_threshold,
+                        isContain: is_contain
+                    };
+                    $.ajax({
+                        url: 'http://172.16.1.102:9702/v02/htwl/alarm/rule/online',
+                        headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type: 'put',
+                        data: data,
+                        success: function (result) {
+                            if (result.code == '1000') {
+                                layer.msg('修改成功！', {icon: 1, time: 1000}, function () {
+                                    layer.close(index); //再执行关闭
+                                    loadAlarmRuleList();
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2, time: 1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == 'poly_online_alarm_rule'){
+            layer.open({
+                title: '修改聚合在线报警规则',
+                type: 2,
+                id: id,
+                moveOut: true,
+                area: ['1000px', '600px'],
+                content: '../../pages/alarmMng/polyOnlineAlarmRule.html',
+                btn: ['提交', '返回'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var body = layer.getChildFrame('body',index),
+                        first_layer_encoding_name = body.contents().find("select[name='first_layer_encoding_name']").find("option:selected").text(),
+                        first_layer_encoding_type = body.contents().find("select[name='first_layer_encoding_name']").val(),
+                        second_layer_encoding_name = body.contents().find("select[name='second_layer_encoding_name']").find("option:selected").text(),
+                        second_layer_encoding_type = body.contents().find("select[name='second_layer_encoding_name']").val(),
+                        third_layer_encoding_name = body.contents().find("select[name='third_layer_encoding_name']").find("option:selected").text(),
+                        third_layer_encoding_type = body.contents().find("select[name='third_layer_encoding_name']").val(),
+                        fourth_layer_encoding_name = body.contents().find("select[name='fourth_layer_encoding_name']").find("option:selected").text(),
+                        fourth_layer_encoding_type = body.contents().find("select[name='fourth_layer_encoding_name']").val(),
+
+                        start_time = body.contents().find("input[name='start_time']").val(),
+                        end_time = body.contents().find("input[name='end_time']").val(),
+                        conditions_name = body.contents().find("select[name='conditions_name']").find("option:selected").text(),
+                        condition_key = body.contents().find("select[name='conditions_name']").val(),
+                        aggregation_name = body.contents().find("select[name='aggregation_name']").find("option:selected").text(),
+                        aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
+                        calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
+                        calculation_value = body.contents().find("input[name='calculation_value']").val();
+                    var data = {
+                        id : id,
+                        firstLayerEncodingName : first_layer_encoding_name,
+                        firstLayerEncodingType : first_layer_encoding_type,
+                        secondLayerEncodingName : second_layer_encoding_name,
+                        secondLayerEncodingType : second_layer_encoding_type,
+                        thirdLayerEncodingName : third_layer_encoding_name,
+                        thirdLayerEncodingType : third_layer_encoding_type,
+                        fourthLayerEncodingName : fourth_layer_encoding_name,
+                        fourthLayerEncodingType : fourth_layer_encoding_type,
+                        startTime : start_time,
+                        endTime : end_time,
+                        aggregationName : aggregation_name,
+                        aggregationValue : aggregation_value,
+                        calculationName : calculation_name,
+                        calculationValue : calculation_value,
+                        conditionsName : conditions_name,
+                        conditionKey : condition_key
+                    };
+                    $.ajax({
+                        url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online',
+                        headers : {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type : 'put',
+                        data : data,
+                        success : function (result){
+                            if(result.code == '1000'){
+                                layer.msg('修改成功！', {icon: 1,time:1000}, function() {
+                                    layer.close(index); //再执行关闭
+                                    loadAlarmRuleList();
+                                    // location.reload();
+                                });
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
+                }
+            })
+        }
+    };
+    //编辑载入规则详情
+    var loadAlarmRuleDetails = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//规则id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
+        if(title == '修改在线报警规则'){
+            $.ajax({
+                url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online/'+id+'',
+                type: 'get',
+                success: function (result) {
+                    $('#first_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.firstLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#second_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.secondLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#fourth_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.fourthLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#third_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.thirdLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#one_conditions_name').children("option").each(function(){
+                        if (this.text == result.oneConditionsName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#two_conditions_name').children("option").each(function(){
+                        if (this.text == result.twoConditionsName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#is_contain').children("option").each(function(){
+                        if (this.value == result.isContain) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#one_threshold').val(result.oneThreshold);
+                    $('#two_threshold').val(result.twoThreshold);
+                    form.render('select');
+                }
+            })
+        }else if(title == '修改聚合在线报警规则'){
+            $.ajax({
+                url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online/'+id+'',
+                type: 'get',
+                success : function (result) {
+                    console.log(result);
+                    $('#first_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.firstLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#second_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.secondLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#fourth_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.fourthLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#third_layer_encoding_name').children("option").each(function(){
+                        if (this.text == result.thirdLayerEncodingName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+
+                    $('#start_time').val(result.startTime);
+                    $('#end_time').val(result.endTime);
+                    $('#conditions_name').children("option").each(function(){
+                        if (this.text == result.conditionsName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#aggregation_name').children("option").each(function(){
+                        if (this.text == result.aggregationName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#calculation_name').children("option").each(function(){
+                        if (this.text == result.calculationName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('#calculation_value').val(result.calculationValue);
+                    form.render('select');
+                }
+            })
+        }
+    };
+    //删除规则
+    var deleteAlarmRule = function (id) {
+        layer.msg('是否确定删除该规则', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online/'+id+'',
+                    type : 'delete',
+                    success : function (result){
+                        console.log(result)
+                        layer.msg('删除成功！', {icon: 1,time:1000}, function() {
+                            // layer.close(2); //再执行关闭
+                            loadAlarmRuleList();
+                        });
+                    }
+                })
+            },
+            error: function(result) {
+                // var message = result.responseJSON.errors[0].defaultMessage;
+                layer.msg('删除失败！', {icon: 2,time:2000});
             }
         });
     };
     var obj = {
-        addAlarmRuleWin : addAlarmRuleWin
+        loadAlarmRuleList : loadAlarmRuleList,
+        addAlarmRuleWin : addAlarmRuleWin,
+        loadEquipmentSelect : loadEquipmentSelect,
+        loadFactorSelect : loadFactorSelect,
+        alterAlarmRuleWin : alterAlarmRuleWin,
+        loadAlarmRuleDetails : loadAlarmRuleDetails,
+        deleteAlarmRule : deleteAlarmRule
     };
     exports('onlineAlarmRuleMng',obj)
 })

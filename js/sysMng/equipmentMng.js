@@ -43,6 +43,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                         var arr = []
                             , thisData = eData.concat().splice(curr * nums - nums, nums);
                         layui.each(thisData, function (index, item) {
+                            // console.log(thisData);
                             var type = item.eaOrEb;
                             if(type == "EA"){
                                 type = 'power_equipment'
@@ -253,8 +254,8 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
     /*设备因子事件*/
     var efCheckEvt = function(factorArray){
         /*因子列表，需要修改就改这里*/
-        var factorArray = ['单台设备总电流', 'A相电流', 'B相电流', 'C相电流', '单台设备总电压', 'A相电压',
-            'B相电压', 'C相电压', '单台设备总功率因素', 'A相功率因素', 'B相功率因素', 'C相功率因素'];
+        // var factorArray = ['单台设备总电流', 'A相电流', 'B相电流', 'C相电流', '单台设备总电压', 'A相电压',
+        //     'B相电压', 'C相电压', '单台设备总功率因素', 'A相功率因素', 'B相功率因素', 'C相功率因素'];
 
         /*template*/
         var leftTpl = $("#leftTpl").html();
@@ -287,19 +288,19 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             type : 'post',
             data : field,
             success : function (result){
-                // var row = result.data.rows;
+                var row = result.data.rows;
                 var checkedArray = []; //选中的元素
                 // console.log(row);
-                var row = [
-                    {
-                        "factorName": "A相电流",
-                        "factorCode": "ez61a01",
-                        "factorTypeDic": {
-                            "baseDicId": "cc9475f3325a4e0081f89f5a2ef226d6",
-                            "dicName": "工艺过程"
-                        }
-                    }
-                ];
+                // var row = [
+                //     {
+                //         "factorName": "A相电流",
+                //         "factorCode": "ez61a01",
+                //         "factorTypeDic": {
+                //             "baseDicId": "cc9475f3325a4e0081f89f5a2ef226d6",
+                //             "dicName": "工艺过程"
+                //         }
+                //     }
+                // ];
                 for(var i in row){
                     checkedArray.push(row[i].factorName)
                 }

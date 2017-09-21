@@ -107,7 +107,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             success : function (result){
                 console.log(result);
                 if(result.code == '1000'){
-                    layer.msg('提交成功！', {icon: 1,time:2000},function () {
+                    layer.msg('提交成功！', {icon: 1,time:1000},function () {
                         parent.location.reload(); // 父页面刷新
                         closeWin();
                     });
@@ -122,6 +122,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
     var alterNetworkWin = function (id) {
         var index = layer.open({
             title : '修改联网信息',
+            id : id,
             type : 2,
             area : ['800px','500px'],
             content : '../../pages/sysMng/addNetworkView.html',
@@ -137,6 +138,30 @@ layui.define(['layer','element','laypage','form'],function (exports){
         });
         // layer.full(index);
     };
+    //载入数采仪详情
+    var loadNetworkDetails = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//规则id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
+        if(title == '修改联网信息'){
+            $.ajax({
+                url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/'+id+'',
+                headers: {
+                    Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                type: 'get',
+                success: function (result) {
+                    var data = result.data;
+                    if(data){
+                        $('.layui-form-item').find("input[name='aname']").val(data.aname);
+                        $('.layui-form-item').find("input[name='mn']").val(data.mn);
+                        $('.layui-form-item').find("input[name='ip']").val(data.ip);
+                        $('.layui-form-item').find("input[name='password']").val(data.password);
+                        $('.layui-form-item').find("input[name='address']").val(data.address);
+                    }
+                }
+            })
+        }
+    }
     //绑定企业排口win
     var bindCompanyWin = function (id) {
         var index = layer.open({
@@ -437,6 +462,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         deleteNetWork : deleteNetWork,
         // closeAddWin : closeAddWin,
         alterNetworkWin : alterNetworkWin,
+        loadNetworkDetails : loadNetworkDetails,
         bindCompanyWin : bindCompanyWin,
         loadCompanySelect : loadCompanySelect,
         addEquipmentWin : addEquipmentWin,

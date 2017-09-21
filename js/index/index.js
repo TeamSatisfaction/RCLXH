@@ -52,7 +52,8 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     var menuMng = function () {
         $.ajax({
             url: 'data/roleData.json',
-            type: 'post',
+            dataType : 'json',
+            type: 'get',
             success: function(msg){
                 var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
                             '<a href="#"> ' +

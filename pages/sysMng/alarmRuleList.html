@@ -12,7 +12,9 @@
             base: '../../js/' //你的模块目录
         }).extend({
             companyMng :  'sysMng/companyMng',
-        }).use('companyMng',function () {
+            onlineAlarmRuleMng : 'alarmMng/onlineAlarmRuleMng'
+        }).use(['companyMng','onlineAlarmRuleMng'],function () {
+            layui.onlineAlarmRuleMng.loadAlarmRuleList()
 //            layui.companyMng.loadAlarmRuleDetails();
         }); //加载入口
     </script>
@@ -29,42 +31,36 @@
                 <!--</div>-->
                 <label class="layui-form-label">规则名称：</label>
                 <div class="layui-input-inline">
-                    <select name="factor" lay-verify="" lay-search id="select_factor">
+                    <select name="alarmRule" lay-verify="" lay-search id="alarmRule" lay-filter="alarmRule">
                         <option value="online_alarm_rule">在线报警规则</option>
+                        <option value="poly_online_alarm_rule">聚合在线报警规则</option>
+                        <option value="licence_alarm_rule">许可证报警规则</option>
                     </select>
                 </div>
-                <button class="layui-btn" onclick="" style="margin-left: 10px" onclick="layui.companyMng.addAlarmRuleWin()">
+                <button class="layui-btn"  style="margin-left: 10px" onclick="layui.onlineAlarmRuleMng.addAlarmRuleWin()">
                     <i class="layui-icon">&#xe608;</i>新增
                 </button>
             </div>
         </div>
-        <!--<div class="layui-form-item" style="margin: 5px 0;">-->
-            <!--<button class="layui-btn layui-btn-small" style="margin-left: 0" onclick="layui.companyMng.addAlarmRuleWin()">-->
-                <!--<i class="layui-icon">&#xe608;</i>新增-->
-            <!--</button>-->
-            <!--<button class="layui-btn layui-btn-small layui-btn-warm" onclick="javascript:history.go(0);" style="float: right">-->
-                <!--<i class="layui-icon"></i> 刷新-->
-            <!--</button>-->
-        <!--</div>-->
         <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
-            <colgroup>
-                <col width="60">
-                <col width="350">
-                <col>
-                <col width="100">
-                <col width="120">
-                <col width="80">
-            </colgroup>
-            <thead>
-            <tr>
-                <th>序号</th>
-                <th>规则名称</th>
-                <th>仪表名称</th>
-                <th>设备类型</th>
-                <th>监测因子</th>
-                <th style="text-align: center">操作</th>
-            </tr>
-            </thead>
+                <colgroup id="rule-col">
+                    <!--<col width="60">-->
+                    <!--<col width="350">-->
+                    <!--<col>-->
+                    <!--<col width="100">-->
+                    <!--<col width="120">-->
+                    <!--<col width="100">-->
+                </colgroup>
+                <thead id="rule-head">
+                <!--<tr>-->
+                    <!--<th>序号</th>-->
+                    <!--<th>规则名称</th>-->
+                    <!--<th>仪表名称</th>-->
+                    <!--<th>设备类型</th>-->
+                    <!--<th>监测因子</th>-->
+                    <!--<th style="text-align: center">操作</th>-->
+                <!--</tr>-->
+                </thead>
             <tbody id="rule-result">
             </tbody>
         </table>
