@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script>
+        layui.config({
+            base: '../../js/statisticsMng/' //你的模块目录
+        }).extend({
+            monitorStatistics : 'monitorStatistics'
+        }).use('monitorStatistics',function () {
+            layui.monitorStatistics.loadDailyList()
+        })
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+    <div style="margin: 10px">
+        <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+            <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                <label class="layui-form-label">企业名称：</label>
+                <input  class="layui-input  layui-input-inline"  name="">
+            </div>
+            <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                <label class="layui-form-label">日期：</label>
+                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="">
+            </div>
+            <div class="layui-btn layui-btn-normal">
+                <i class="layui-icon">&#xe615;</i>
+                查询
+            </div>
+            <div class="layui-btn">
+                <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
+                导出
+            </div>
+        </form>
+        <table class="layui-table" lay-even="" lay-skin="row">
+            <colgroup>
+                <col width="60">
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+                <col>
+            </colgroup>
+            <thead>
+            <tr>
+                <th rowspan="2">序号</th>
+                <th rowspan="2">企业名称</th>
+                <th rowspan="2">监测日期</th>
+                <th rowspan="2">废水流量(吨)</th>
+                <th colspan="2">氨氮(mg/L)</th>
+                <th colspan="2">COD(mg/L)</th>
+                <th colspan="2">高锰酸盐(mg/L)</th>
+                <th colspan="2">总镍(mg/L)</th>
+                <th colspan="2">化学需氧量(mg/L)</th>
+            </tr>
+            <tr>
+                <th>标准限值</th>
+                <th>日均值</th>
+                <th>标准限值</th>
+                <th>日均值</th>
+                <th>标准限值</th>
+                <th>日均值</th>
+                <th>标准限值</th>
+                <th>日均值</th>
+                <th>标准限值</th>
+                <th>日均值</th>
+            </tr>
+            </thead>
+            <tbody id="fsrbb-list">
+                <tr>
+                    <td>1</td>
+                    <td>重庆华森制药股份有限公司</td>
+                    <td>2017-9-25</td>
+                    <td>5262</td>
+                    <td>>20</td>
+                    <td>0.14</td>
+                    <td>>1.0</td>
+                    <td>0.11</td>
+                    <td>>0.2</td>
+                    <td>0.11</td>
+                    <td>>0.2</td>
+                    <td>7.72</td>
+                    <td>>6,<9</td>
+                    <td>8.37</td>
+                </tr>
+            </tbody>
+        </table>
+        <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+            <div class="layui-input-inline" style="float: right">
+                <div id="demo1"></div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

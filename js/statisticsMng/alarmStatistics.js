@@ -114,11 +114,42 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         })
         layer.full(index);
     };
+    var loadAlarmlist = function () {
+        var curr = 1,
+            nums = 16,
+            str = '';
+        $.ajax({
+            url: '../../data/baojing.json',
+            dataType : 'json',
+            type: 'get',
+            success: function(data){
+                var render = function(data, curr) {
+                    var arr = []
+                        , thisData = data.concat().splice(curr * nums - nums, nums);
+                    layui.each(data, function(index, item){
+                        str = '<tr>' +
+                            '<td>'+(index+1)+'</td>' +
+                            '<td>' + item.name + '</td>' +
+                            '<td>' + item.zs + '</td>' +
+                            '<td>' + item.gb+ '</td>' +
+                            '<td>' + item.xz + '</td>'+
+                            '<td>' + item.dd + '</td>'+
+                            '<td>' + item.gbl + '</td>'+
+                        '</tr>';
+                        arr.push(str);
+                    });
+                    return arr.join('');
+                };
+                $('#bj-list').html(render(data, obj.curr));
+            }
+        })
+    };
     var obj = {
         loadPage : loadPage,
         loadaCharts : loadaCharts,
         loadPie : loadPie,
-        alarmListWin : alarmListWin
+        alarmListWin : alarmListWin,
+        loadAlarmlist : loadAlarmlist
     };
     /*输出内容，注意顺序*/
     exports('alarmStatistics',obj)

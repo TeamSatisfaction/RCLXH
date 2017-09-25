@@ -14,54 +14,203 @@
         }).extend({
             monitorStatistics : 'monitorStatistics'
         }).use('monitorStatistics',function () {
-            layui.monitorStatistics.loadaCharts();
-            layui.monitorStatistics.loadPie()
+//            layui.monitorStatistics.loadaCharts();
+//            layui.monitorStatistics.loadPie()
         })
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body style="margin:20px 10px 0;height: calc(100% - 20px)">
-    <div class="layui-layout-admin company-equip-sit" style="height: 100%">
-    <div class="com-content" style="height: 100%">
-        <div id="com_chart1">
-            <form class="layui-form" lay-filter="test" action="" style="margin-top: 16px;">
-                <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">年份：</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="2017">2017</option>
-                            <option value="2016">2016</option>
-                            <option value="2015">2015</option>
-                        </select>
+    <div class="layui-layout-admin" style="height: 100%">
+        <div class="layui-tab layui-tab-brief" lay-filter="">
+            <ul class="layui-tab-title">
+                <li class="layui-this">废水日均值报表</li>
+                <li>废水月报</li>
+                <li>废水年报</li>
+                <li>超标统计</li>
+            </ul>
+            <div class="layui-tab-content" style="height: 100px;">
+                <div class="layui-tab-item layui-show">
+                    <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+                        <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                            <label class="layui-form-label">企业名称：</label>
+                            <input  class="layui-input  layui-input-inline"  name="">
+                        </div>
+                        <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                            <label class="layui-form-label">日期：</label>
+                            <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="">
+                        </div>
+                        <div class="layui-btn layui-btn-normal">
+                            <i class="layui-icon">&#xe615;</i>
+                            查询
+                        </div>
+                        <div class="layui-btn">
+                            <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
+                            导出
+                        </div>
+                    </form>
+                    <table class="layui-table" lay-even="" lay-skin="row">
+                        <colgroup>
+                            <col width="60">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th rowspan="2">序号</th>
+                            <th rowspan="2">企业名称</th>
+                            <th rowspan="2">监测日期</th>
+                            <th rowspan="2">废水流量(吨)</th>
+                            <th colspan="2">氨氮(mg/L)</th>
+                            <th colspan="2">COD(mg/L)</th>
+                            <th colspan="2">高锰酸盐(mg/L)</th>
+                            <th colspan="2">总镍(mg/L)</th>
+                            <th colspan="2">化学需氧量(mg/L)</th>
+                            <th colspan="2">氨氮(mg/L)</th>
+                            <th colspan="2">总磷(mg/L)</th>
+                            <th colspan="2">总镍(mg/L)</th>
+                        </tr>
+                        <tr>
+                            <th>标准限值</th>
+                            <th>日均值</th>
+                            <th>标准限值</th>
+                            <th>日均值</th>
+                            <th>月排放浓度(kg)</th>
+                            <th>标准值(mg/L)</th>
+                            <th>实测值</th>
+                            <th>标准值</th>
+                            <th>实测值</th>
+                            <th>标准值</th>
+                            <th>实测值</th>
+                            <th>标准值</th>
+                            <th>实测值</th>
+                            <th>标准值</th>
+                            <th>实测值</th>
+                            <th>标准值</th>
+                        </tr>
+                        </thead>
+                        <tbody id="company-list">
+                        </tbody>
+                    </table>
+                    <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+                        <div class="layui-input-inline" style="float: right">
+                            <div id="demo1"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">类型：</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="2017">废水</option>
-                        </select>
+                <div class="layui-tab-item">
+                    <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+                        <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                            <label class="layui-form-label">日期：</label>
+                            <input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy-MM'})" name="">
+                        </div>
+                        <div class="layui-btn layui-btn-normal">
+                            <i class="layui-icon">&#xe615;</i>
+                            查询
+                        </div>
+                        <div class="layui-btn">
+                            <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
+                            导出
+                        </div>
+                    </form>
+                    <table class="layui-table" lay-even="" lay-skin="row">
+                        <colgroup>
+                            <col width="60">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>日期</th>
+                            <th>排放量</th>
+                            <th>氨氮</th>
+                            <th>COD</th>
+                            <th>高锰酸盐</th>
+                            <th>PH</th>
+                            <th>总磷</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                    <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+                        <div class="layui-input-inline" style="float: right">
+                            <div></div>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-form-item layui-inline">
-                    <label class="layui-form-label">污染物：</label>
-                    <div class="layui-input-inline">
-                        <select name="modules" lay-verify="required" lay-search="">
-                            <option value="2017">COD</option>
-                            <option value="2016">六价铬</option>
-                            <option value="2015">氨氮</option>
-                        </select>
+                <div class="layui-tab-item">
+                    <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+                        <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                            <label class="layui-form-label">日期：</label>
+                            <input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy'})" name="">
+                        </div>
+                        <div class="layui-btn layui-btn-normal">
+                            <i class="layui-icon">&#xe615;</i>
+                            查询
+                        </div>
+                        <div class="layui-btn">
+                            <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
+                            导出
+                        </div>
+                    </form>
+                    <table class="layui-table" lay-even="" lay-skin="row">
+                        <colgroup>
+                            <col width="60">
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th rowspan="2">序号</th>
+                            <th rowspan="2">月份</th>
+                            <th rowspan="2">废水流量(吨)</th>
+                            <th colspan="2">氨氮</th>
+                            <th colspan="2">COD</th>
+                            <th colspan="2">高锰酸盐</th>
+                            <th colspan="2">生物毒性</th>
+                        </tr>
+                        <tr>
+                            <th>月排放浓度(kg)</th>
+                            <th>月均浓度(mg/L)</th>
+                            <th>月排放浓度(kg)</th>
+                            <th>月均浓度(mg/L)</th>
+                            <th>月排放浓度(kg)</th>
+                            <th>月均浓度(mg/L)</th>
+                            <th>月排放浓度(kg)</th>
+                            <th>月均浓度(mg/L)</th>
+                        </tr>
+                        </thead>
+                        <tbody id="">
+                        </tbody>
+                    </table>
+                    <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
+                        <div class="layui-input-inline" style="float: right">
+                            <div id=""></div>
+                        </div>
                     </div>
                 </div>
-                <div class="layui-btn layui-btn-normal" style="margin-top: -14px;">
-                    <i class="layui-icon">&#xe615;</i>
-                    <span>查询</span>
-                </div>
-            </form>
-            <div id="monitor_chart" onclick="layui.monitorStatistics.monitorListWin()" style="margin-top: 50px;"></div>
+                <div class="layui-tab-item">内容4</div>
+            </div>
         </div>
-        <div id="com_fac1" onclick="layui.monitorStatistics.monitorListYearWin()"></div>
-    </div>
 </div>
 </body>
 </html>

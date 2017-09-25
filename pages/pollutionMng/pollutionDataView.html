@@ -202,7 +202,7 @@
                                         <ul class="layui-tab-title">
                                             <li class="layui-this">正本</li>
                                             <li>副本</li>
-                                            <li>排口列表</li>
+                                            <!--<li>排口列表</li>-->
                                         </ul>
                                         <div class="layui-tab-content" id="pdv_pk">
                                             <!--正本-->
@@ -214,58 +214,41 @@
                                                 <img src="../../img/data/004.png" style="width: 600px;height: 500px">
                                             </div>
                                             <!--排口-->
-                                            <div class="layui-tab-item">
-                                                <!--<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">-->
-                                                    <!--<i class="layui-icon">&#xe608;</i>新增-->
-                                                <!--</div>-->
-                                                <table class="layui-table " lay-skin="row" style="margin-top: 4px;">
-                                                    <colgroup>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                        <col>
-                                                    </colgroup>
-                                                    <thead>
-                                                    <tr>
-                                                        <th>排口附页编号</th>
-                                                        <th>排污口编码</th>
-                                                        <th>排污口名称</th>
-                                                        <th>排放方式</th>
-                                                        <th>排放去向</th>
-                                                        <th>年排放总量</th>
-                                                        <th>操作</th>
-                                                    </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                    </tbody>
-                                                </table>
-
-                                            </div>
+                                            <!--<div class="layui-tab-item">-->
+                                                <!--&lt;!&ndash;<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">&ndash;&gt;-->
+                                                    <!--&lt;!&ndash;<i class="layui-icon">&#xe608;</i>新增&ndash;&gt;-->
+                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                                <!--<table class="layui-table " lay-skin="row" style="margin-top: 4px;">-->
+                                                    <!--<colgroup>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                        <!--<col>-->
+                                                    <!--</colgroup>-->
+                                                    <!--<thead>-->
+                                                    <!--<tr>-->
+                                                        <!--<th>排口附页编号</th>-->
+                                                        <!--<th>排污口编码</th>-->
+                                                        <!--<th>排污口名称</th>-->
+                                                        <!--<th>排放方式</th>-->
+                                                        <!--<th>排放去向</th>-->
+                                                        <!--<th>年排放总量</th>-->
+                                                        <!--<th>操作</th>-->
+                                                    <!--</tr>-->
+                                                    <!--</thead>-->
+                                                    <!--<tbody>-->
+                                                    <!--</tbody>-->
+                                                <!--</table>-->
+                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!--<div class="layui-colla-item">-->
-                        <!--<h2 class="layui-colla-title">企业处理工艺</h2>-->
-                        <!--<div class="layui-colla-content layui-show">-->
-                            <!--&lt;!&ndash;照片&ndash;&gt;-->
-                            <!--<div class="photo-area clgy_photos">-->
-                                <!--<div class="thumbs">-->
-                                    <!--&lt;!&ndash;<div class="thumb">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<img src="../../img/map/monistation.png">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<input name="file" class="layui-upload-file" type="file"&ndash;&gt;-->
-                                               <!--&lt;!&ndash;accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.clgyImgSelect(this);">&ndash;&gt;-->
-                                        <!--&lt;!&ndash;<div>工艺2</div>&ndash;&gt;-->
-                                    <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                <!--</div>-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
                 </form>
             </div>
             <!--在线监测-->
@@ -326,78 +309,43 @@
                 </div>
             </div>
             <!--设备工况-->
-            <div class="layui-tab-item company-equip-sit">
-                <form class="layui-form" lay-filter="test" action="" style="margin-top: 16px;">
-                    <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">开始时间：</label>
-                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
-                    </div>
-                    <div class="layui-form-item layui-inline">
-                        <label class="layui-form-label">截止时间：</label>
-                        <input class="layui-input-inline layui-input" onclick="WdatePicker()">
-                    </div>
-                    <div class="layui-btn layui-btn-normal" style="margin-top: -14px;">
-                        <i class="layui-icon">&#xe615;</i>
-                        <span>查询</span>
-                    </div>
-                </form>
-                <div class="ces-content">
-                    <table class="layui-table" id="ces_table">
-                        <colgroup>
-                            <col width="150">
-                            <col width="200">
-                            <col>
-                        </colgroup>
-                        <thead>
-                        <tr>
-                            <th>设备名称</th>
-                            <th>当前运行状态</th>
-                            <th>故障次数</th>
-                            <th>设备运行时间(h)</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td>混排废水提升泵</td>
-                            <td>异常</td>
-                            <td>2</td>
-                            <td>10</td>
-                        </tr>
-                        <tr>
-                            <td>含镍废水提升泵</td>
-                            <td>正常</td>
-                            <td>0</td>
-                            <td>100</td>
-                        </tr>
-                        <tr>
-                            <td>含铬废水提升泵</td>
-                            <td>正常</td>
-                            <td>3</td>
-                            <td>27</td>
-                        </tr>
-                        <tr>
-                            <td>综合废水提升泵</td>
-                            <td>正常</td>
-                            <td>1</td>
-                            <td>36</td>
-                        </tr>
-                        <tr>
-                            <td>前处理废水提升泵</td>
-                            <td>正常</td>
-                            <td>2</td>
-                            <td>8</td>
-                        </tr>
-                        <tr>
-                            <td>生化鼓风机</td>
-                            <td>正常</td>
-                            <td>0</td>
-                            <td>86</td>
-                        </tr>
-                        </tbody>
-                    </table>
-                    <div id="ces_pie1" style="margin-top: 10px"></div>
-                    <div style="clear: both"></div>
+            <div class="layui-tab-item company-equip-sit" style="text-align: center">
+                <img src="../../img/data/gongkuang1.jpg" style="width: 1600px;height: 800px;" >
+                <div style=" position:absolute;top:155px;left: 710px;;color: red">
+                    <p>流量：30</p>
+                    <p>开关量：30</p>
+                    <p>电流：30</p>
+                    <p>电压：30</p>
                 </div>
+                <fieldset class="layui-elem-field layui-field-title">
+                    <legend>设备列表</legend>
+                    <div class="layui-field-box">
+                        <table class="layui-table" lay-even="" lay-skin="row">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>设备名称</th>
+                                <th>设备运行时间(h)</th>
+                                <th>能耗(°)</th>
+                                <th>当前运行时间</th>
+                            </tr>
+                            </thead>
+                            <tbody id="list1">
+                            <tr>
+                                <td>聚铁加药泵</td>
+                                <td>1253</td>
+                                <td>52</td>
+                                <td>正常运行</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
             </div>
         </div>
     </div>

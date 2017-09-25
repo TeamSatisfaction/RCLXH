@@ -67,7 +67,40 @@
             "menuId": 7,
             "parentId": "5",
             "roleId": null,
-            "menuName": "监测统计",
+            "menuName": "废水日均报表",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:13:37",
+            "createTime": "2017-09-13 14:55:50",
+            "menuList": null
+          },
+          {
+            "menuId": 8,
+            "parentId": "5",
+            "roleId": null,
+            "menuName": "废水月报",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:13:37",
+            "createTime": "2017-09-13 14:55:50",
+            "menuList": null
+          },
+          {
+            "menuId": 9,
+            "parentId": "5",
+            "roleId": null,
+            "menuName": "废水年报",
+            "menuIcon": null,
+            "url": null,
+            "lastModifyTime": "2017-09-13 11:13:37",
+            "createTime": "2017-09-13 14:55:50",
+            "menuList": null
+          },
+          {
+            "menuId": 10,
+            "parentId": "5",
+            "roleId": null,
+            "menuName": "超标统计",
             "menuIcon": null,
             "url": null,
             "lastModifyTime": "2017-09-13 11:13:37",
@@ -77,7 +110,7 @@
         ]
       },
       {
-        "menuId": 8,
+        "menuId": 11,
         "parentId": "1",
         "roleId": null,
         "menuName": "系统管理",
@@ -87,8 +120,8 @@
         "createTime": "2017-09-13 14:54:57",
         "menuList": [
           {
-            "menuId": 9,
-            "parentId": "8",
+            "menuId": 12,
+            "parentId": "11",
             "roleId": null,
             "menuName": "企业管理",
             "menuIcon": null,
@@ -98,8 +131,8 @@
             "menuList": null
           },
           {
-            "menuId": 10,
-            "parentId": "8",
+            "menuId": 13,
+            "parentId": "11",
             "roleId": null,
             "menuName": "监测站管理",
             "menuIcon": null,
@@ -109,8 +142,8 @@
             "menuList": null
           },
           {
-            "menuId": 11,
-            "parentId": "8",
+            "menuId": 14,
+            "parentId": "11",
             "roleId": null,
             "menuName": "设备管理",
             "menuIcon": null,
@@ -120,8 +153,8 @@
             "menuList": null
           },
           {
-            "menuId": 12,
-            "parentId": "8",
+            "menuId": 15,
+            "parentId": "11",
             "roleId": null,
             "menuName": "联网管理",
             "menuIcon": null,
@@ -130,8 +163,8 @@
             "createTime": "2017-09-13 14:54:45",
             "menuList": null
           },{
-            "menuId": 13,
-            "parentId": "8",
+            "menuId": 16,
+            "parentId": "11",
             "roleId": null,
             "menuName": "用户管理",
             "menuIcon": null,
@@ -140,8 +173,8 @@
             "createTime": "2017-09-13 14:54:45",
             "menuList": null
           },{
-            "menuId": 14,
-            "parentId": "8",
+            "menuId": 17,
+            "parentId": "11",
             "roleId": null,
             "menuName": "角色管理",
             "menuIcon": null,

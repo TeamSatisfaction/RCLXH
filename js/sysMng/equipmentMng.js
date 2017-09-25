@@ -39,37 +39,40 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     var eData = result.data.rows,
                         pages = result.data.totalPage,
                         str = "";
-                    var render = function (eData, curr) {
-                        var arr = []
-                            , thisData = eData.concat().splice(curr * nums - nums, nums);
-                        layui.each(thisData, function (index, item) {
-                            // console.log(thisData);
-                            var type = item.eaOrEb;
-                            if(type == "EA"){
-                                type = 'power_equipment'
-                            }else{
-                                type = 'instrument_sensor'
-                            }
-                            str = '<tr>' +
-                                '<td>' + (index + 1) + '</td>' +
-                                '<td>' + item.equipmentCode + '</td>' +
-                                '<td>' + item.equipmentName + '</td>' +
-                                '<td>' + item.equipmentNo + '</td>' +
-                                '<td>' + item.productor + '</td>' +
-                                '<td>' + item.classicType + '</td>' +
-                                '<td>' + item.classicType + '</td>' +
-                                '<td>' + item.usedDate + '</td>' +
-                                '<td>' + item.equipmentType + '</td>' +
-                                '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.equipmentFactorWin(\''+type+'\',\''+item.id+'\')" title="配置因子"><img src="../../img/mng/configure.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>' +
-                                '</tr>';
-                            arr.push(str);
-                        });
-                        return arr.join('');
-                    };
-                    eTobody.html(render(eData, obj.curr));
+                    if(eData != null){
+                        var render = function (eData, curr) {
+                            var arr = []
+                                , thisData = eData.concat().splice(curr * nums - nums, nums);
+                            layui.each(thisData, function (index, item) {
+                                var type = item.eaOrEb;
+                                if(type == "EA"){
+                                    type = 'power_equipment'
+                                }else{
+                                    type = 'instrument_sensor'
+                                }
+                                str = '<tr>' +
+                                    '<td>' + (index + 1) + '</td>' +
+                                    '<td>' + item.equipmentCode + '</td>' +
+                                    '<td>' + item.equipmentName + '</td>' +
+                                    '<td>' + item.equipmentNo + '</td>' +
+                                    '<td>' + item.productor + '</td>' +
+                                    '<td>' + item.classicType + '</td>' +
+                                    '<td>' + item.classicType + '</td>' +
+                                    '<td>' + item.usedDate + '</td>' +
+                                    '<td>' + item.equipmentType + '</td>' +
+                                    '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>' +
+                                    '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>' +
+                                    '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.equipmentFactorWin(\''+type+'\',\''+item.id+'\')" title="配置因子"><img src="../../img/mng/configure.png"></a>' +
+                                    '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>' +
+                                    '</tr>';
+                                arr.push(str);
+                            });
+                            return arr.join('');
+                        };
+                        eTobody.html(render(eData, obj.curr));
+                    }else{
+                        eTobody.html(str);
+                    }
                     //调用分页
                     laypage({
                         cont: 'demo3',
@@ -201,7 +204,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         var type = $(window.parent.document).find('.layui-layer-content').attr('id'),
             i = type.split(',');
         $.ajax({
-            url :'http://39.108.112.173:9002/v01/htwl/dic/parent/'+i[0]+'',
+            url :'http://39.108.112.173:9002/v03/htwl/dic/parent/'+i[0]+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },

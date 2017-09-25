@@ -11,7 +11,9 @@
             base: '../../js/statisticsMng/' //你的模块目录
         }).extend({
             alarmStatistics : 'alarmStatistics'
-        }).use('alarmStatistics')
+        }).use('alarmStatistics',function () {
+            layui.alarmStatistics.loadAlarmlist();
+        })
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
@@ -45,7 +47,7 @@
                     <th>报警关闭率</th>
                 </tr>
                 </thead>
-                <tbody id="company-list">
+                <tbody id="bj-list">
                 </tbody>
             </table>
             <div  class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">

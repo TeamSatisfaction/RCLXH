@@ -9,7 +9,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         Fname,
         Cid,
         Cname,
-        mn;
+        mn,
+        cn;
     var urlConfig = sessionStorage.getItem("urlConfig");
     //监测详情数据
     var loadChartsData = function () {
@@ -93,22 +94,22 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         }
     }
     //加载曲线图
-    var loadaCharts = function(cn){
+    var loadaCharts = function(){
         var date = new Date(),//当前时间
             interTimes;
         switch (cn){
             case "2011" :
-                interTimes = 5*60*1000;
+                interTimes = 5*60*1000;//5min
                 break;
             case "2061" :
-                interTimes = 10*60*60*1000;
+                interTimes = 10*60*60*1000;//10h
                 break;
             case "2041" :
-                interTimes = 10*24*60*60*1000;
+                interTimes = 10*24*60*60*1000;//10d
                 break;
         };
         interTimes=parseInt(interTimes);
-        var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
+        var date1 = new Date(Date.parse(date)-interTimes);
         var beginDate = changeTime(date1);
         var endDate = changeTime(date);
         var data = {
@@ -118,7 +119,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             factor : code,
             cn : cn
         };
-        console.log(data);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
@@ -131,7 +131,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 var arr = [],
                     i;
                     if(cn == '2011'){
-                    console.log("1");
                     if(result.onlineTime){
                         var time = result.onlineTime,
                             onlineData = result.onlineData.data[0].online;
@@ -203,58 +202,59 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     };
                     chart = new Highcharts.chart('wqs_tab1_chart', option);
                 }else{
-                    var data = result.onlineData.data[0].online;
-                    console.log("2");
                     console.log(result);
-                    var option = {
-                        chart: {
-                            type: 'spline',
-                            backgroundColor: 'rgba(0,0,0,0)'
-                        },
-                        title: {
-                            text: Fname
-                        },
-                        credits : {
-                            enabled: false
-                        },
-                        xAxis: {
-                            categories : result.onlineTime
-                        },
-                        yAxis: {
-                            title: {
-                                text: '',
-                                style : {
-                                    color: '#000000'
-                                }
+                    if(result.onlineData.data[0].online){
+                        var data = result.onlineData.data[0].online;
+                        var option = {
+                            chart: {
+                                type: 'spline',
+                                backgroundColor: 'rgba(0,0,0,0)'
                             },
-                            labels : {
-                                style : {
-                                    color: '#000000'
+                            title: {
+                                text: Fname
+                            },
+                            credits : {
+                                enabled: false
+                            },
+                            xAxis: {
+                                categories : result.onlineTime
+                            },
+                            yAxis: {
+                                title: {
+                                    text: '',
+                                    style : {
+                                        color: '#000000'
+                                    }
+                                },
+                                labels : {
+                                    style : {
+                                        color: '#000000'
+                                    }
                                 }
-                            }
-                            // ,plotLines: [{
-                            //     value: 60,
-                            //     dashStyle:'ShortDash',
-                            //     width: 3,
-                            //     color: 'red',
-                            //     label: {
-                            //         text: '阈值',
-                            //         align: 'center',
-                            //         style: {
-                            //             color: 'gray'
-                            //         }
-                            //     }
-                            // }]
-                        },
-                        legend: {
-                            enabled: false
-                        },
-                        series: [{
-                            name: Fname,
-                            data: data
-                        }]
-                    };
-                    Highcharts.chart('wqs_tab1_chart', option);
+                                // ,plotLines: [{
+                                //     value: 60,
+                                //     dashStyle:'ShortDash',
+                                //     width: 3,
+                                //     color: 'red',
+                                //     label: {
+                                //         text: '阈值',
+                                //         align: 'center',
+                                //         style: {
+                                //             color: 'gray'
+                                //         }
+                                //     }
+                                // }]
+                            },
+                            legend: {
+                                enabled: false
+                            },
+                            series: [{
+                                name: Fname,
+                                data: data
+                            }]
+                        };
+                        Highcharts.chart('wqs_tab1_chart', option);
+                    }
                 }
             }
         })
@@ -326,18 +326,19 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     //     Highcharts.chart('wqs_tab1_chart', option);
     // };
     //监测站list
-    var loadMSData = function (curr,cn){
-        switch (cn){
+    var loadMSData = function (curr,title){
+        switch (title){
             case "实时监测数据":
-                cn = '2011'
+                title = '2011'
                 break;
             case "小时监测数据":
-                cn = '2061'
+                title = '2061'
                 break;
             case "日监测数据":
-                cn = '2041'
+                title = '2041'
                 break;
         }
+        cn = title;
         var data = {
             enterpriseRole : 'monitoringStation_enterprise',//监测站
             pageNum : curr||1,
@@ -357,7 +358,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     pages = result.data.pages,
                     str = "",
                     nums = 1000; //每页出现的数据量
-                console.log(msData);
                 var render = function(msData, curr) {
                     var arr = []
                         , thisData = msData.concat().splice(curr * nums - nums, nums);
@@ -378,21 +378,21 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 element.init();
                 Cid = msData[0].baseEnterpriseId;
                 Cname = msData[0].name;
-                loadDau(cn);
+                loadDau();
                 $('.wqs_tab1_statsTitle').html(Cname);
             }
         })
     };
-    var loadChartForSite = function (e,cn) {
+    var loadChartForSite = function (e) {
         Cid = $(e).attr('data-id');
         console.log(Cid);
         Cname = $(e).attr('data-name');
         $('.wqs_tab1_statsTitle').html(Cname);
         Fname='无监测因子';
-        loadDau(cn);
+        loadDau();
     };
     //根据企业查询数采仪
-    var loadDau = function (cn) {
+    var loadDau = function () {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -426,7 +426,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                         console.log(row[i].aname);
                         $("#select_dauId").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
                     }
-                    loadEquipment(row[0].id,cn);
+                    loadEquipment(row[0].id);
                     mn = row[0].mn;
                 }
                 form.render('select');
@@ -434,7 +434,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         })
     };
     //根据数采仪查询设备
-    var loadEquipment = function (Did,cn) {
+    var loadEquipment = function (Did) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -464,14 +464,14 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     for(var i in row){
                         $("#select_equipment").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
-                    loadFactor(row[0].id,cn);
+                    loadFactor(row[0].id);
                 }
                 form.render('select');
             }
         })
     };
     //根据设备查询因子
-    var loadFactor = function (id,cn) {
+    var loadFactor = function (id) {
         var data = {
             pageNumber : 1,
             pageSize : 1000,
@@ -499,13 +499,12 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     for(var i in row){
                         $("#select_factor").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
+                    code=row[0].factorCode;
+                    Fname=row[0].factorName;
+                    loadaCharts();
                 }
                 form.render('select');
-                code=row[0].factorCode;
-                Fname=row[0].factorName;
                 needRefresh = true;
-                console.log(Fname);
-                loadaCharts(cn);
             }
         })
     };
@@ -539,11 +538,21 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             ,content : '../../pages/publicMng/factorDetails.html'
             ,btn: ['返回']
             ,btnAlign: 'c'
-            ,success : function (index, layero) {
-
-            }
+            // ,success : function (index, layero) {
+            //
+            // }
         });
         layer.full(win);
+    };
+    var loadfactordetailss = function () {
+        $.ajax({
+            url: '../../data/fsrsj.json',
+            dataType : 'json',
+            type: 'get',
+            success: function(data){
+                console.log(data)
+            }
+        })
     };
     var obj = {
         loadChartsData : loadChartsData,
@@ -552,7 +561,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite,
         dailyWin : dailyWin,
-        detailsWin : detailsWin
+        detailsWin : detailsWin,
+        loadfactordetailss : loadfactordetailss
     };
     /*输出内容，注意顺序*/
     exports('waterQualitySiteMng',obj)

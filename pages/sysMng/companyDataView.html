@@ -193,7 +193,7 @@
                                     <ul class="layui-tab-title">
                                         <li class="layui-this">正本</li>
                                         <li>副本</li>
-                                        <li>排口列表</li>
+                                        <!--<li>排口列表</li>-->
                                     </ul>
                                     <div class="layui-tab-content">
                                         <!--正本-->
@@ -220,63 +220,69 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <!--排口-->
-                                        <div class="layui-tab-item">
-                                            <!--<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">-->
-                                            <!--<i class="layui-icon">&#xe608;</i>新增-->
-                                            <!--</div>-->
-                                            <table class="layui-table " lay-skin="row" style="margin-top: 4px;">
-                                                <colgroup>
-                                                    <col>
-                                                    <col>
-                                                    <col>
-                                                    <col>
-                                                    <col>
-                                                    <col>
-                                                    <col>
-                                                </colgroup>
-                                                <thead>
-                                                <tr>
-                                                    <th>排口附页编号</th>
-                                                    <th>排污口编码</th>
-                                                    <th>排污口名称</th>
-                                                    <th>排放方式</th>
-                                                    <th>排放去向</th>
-                                                    <th>年排放总量</th>
-                                                    <th>操作</th>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                <tr>
-                                                    <td>10124441</td>
-                                                    <td>22240004</td>
-                                                    <td>XXXX外排口</td>
-                                                    <td>连续稳定</td>
-                                                    <td>濑溪河</td>
-                                                    <td>1014吨</td>
-                                                    <td>
-                                                        <i class="layui-icon" style="font-size: 20px;" onclick="layui.companyMng.lookPk();">&#xe60a;</i>
-                                                        <i class="layui-icon" style="font-size: 20px;">&#x1006;</i>
-                                                    </td>
-                                                </tr><tr>
-                                                    <td>10124441</td>
-                                                    <td>22240004</td>
-                                                    <td>XXXX外排口</td>
-                                                    <td>连续稳定</td>
-                                                    <td>濑溪河</td>
-                                                    <td>1014吨</td>
-                                                    <td>
-                                                        <i class="layui-icon" style="font-size: 20px;" onclick="layui.companyMng.lookPk();">&#xe60a;</i>
-                                                        <i class="layui-icon" style="font-size: 20px;">&#x1006;</i>
-                                                    </td>
-                                                </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
+                                        <!--&lt;!&ndash;排口&ndash;&gt;-->
+                                        <!--<div class="layui-tab-item">-->
+                                            <!--&lt;!&ndash;<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">&ndash;&gt;-->
+                                            <!--&lt;!&ndash;<i class="layui-icon">&#xe608;</i>新增&ndash;&gt;-->
+                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+                                            <!--<table class="layui-table " lay-skin="row" style="margin-top: 4px;">-->
+                                                <!--<colgroup>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                    <!--<col>-->
+                                                <!--</colgroup>-->
+                                                <!--<thead>-->
+                                                <!--<tr>-->
+                                                    <!--<th>排口附页编号</th>-->
+                                                    <!--<th>排污口编码</th>-->
+                                                    <!--<th>排污口名称</th>-->
+                                                    <!--<th>排放方式</th>-->
+                                                    <!--<th>排放去向</th>-->
+                                                    <!--<th>年排放总量</th>-->
+                                                    <!--<th>操作</th>-->
+                                                <!--</tr>-->
+                                                <!--</thead>-->
+                                                <!--<tbody>-->
+                                                <!--</tbody>-->
+                                            <!--</table>-->
+                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    </div>
+                </div>
+                <div class="layui-colla-item">
+                    <h2 class="layui-colla-title">排口信息</h2>
+                    <div class="layui-colla-content layui-show">
+                        <table class="layui-table " lay-skin="row" style="margin-top: 4px;">
+                            <colgroup>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col>
+                                <col  width="80">
+                            </colgroup>
+                            <thead>
+                            <tr>
+                                <th>排口附页编号</th>
+                                <th>排污口编码</th>
+                                <th>排污口名称</th>
+                                <th>排放方式</th>
+                                <th>排放去向</th>
+                                <th>年排放总量</th>
+                                <th style="text-align: center">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="dis-port-list">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
                 <!--<div class="layui-colla-item">-->
@@ -305,46 +311,6 @@
         </div>
     </div>
 </div>
-
-<!--<form id="pk_window" class="layui-form"> &lt;!&ndash; 提示：如果你不想用form，你可以换成div等任何一个普通元素 &ndash;&gt;-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">排口附页编号：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="pageNumber" placeholder="排口附页编号" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">排口编码：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="dischargePortCode" placeholder="排口附页编号" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">排口名称：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="dischargePortName" placeholder="排污口名称" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">排放方式：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="mode" placeholder="排放方式" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">排放流向：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="whereabouts" placeholder="排放去向" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="layui-form-item">-->
-        <!--<label class="layui-form-label">年排放总量：</label>-->
-        <!--<div class="layui-input-block">-->
-            <!--<input type="text" name="emissionAmount" placeholder="年排放总量" autocomplete="off" class="layui-input">-->
-        <!--</div>-->
-    <!--</div>-->
-<!--</form>-->
-
 <script>
     $(function (){
         $(".js-silder").silder({

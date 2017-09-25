@@ -114,8 +114,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
+            websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
+            // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
             // websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
         }
         else{
@@ -462,28 +462,30 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             },
             type: 'post',
             data: field,
-            success: function (result){
-                var row = result.data.rows;
-                $("#d_select ").empty();
-                if(row == null){
-                    $("#d_select").append("<option value='' selected='selected'>无数采仪</option>");
-                    $("#e_select").empty();
-                    $("#e_select").append("<option value='' selected='selected'>无设备</option>");
-                    $("#f_select").empty();
-                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
-                    code = '';
-                    Fname = '无监测因子';
-                    mn = '';
-                    initChart();
-                }else{
-                    // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
-                    for(var i in row){
-                        $("#d_select").append("<option id='d_option' data-mn="+row[i].mn+" value="+row[i].id+">"+row[i].aname+"</option>");
+            success: function (result) {
+                if(result.data){
+                    var row = result.data.rows;
+                    $("#d_select ").empty();
+                    if (row == null) {
+                        $("#d_select").append("<option value='' selected='selected'>无数采仪</option>");
+                        $("#e_select").empty();
+                        $("#e_select").append("<option value='' selected='selected'>无设备</option>");
+                        $("#f_select").empty();
+                        $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                        code = '';
+                        Fname = '无监测因子';
+                        mn = '';
+                        initChart();
+                    } else {
+                        // $("#d_select").append("<option value='' selected='selected'>选择数采仪</option>");
+                        for (var i in row) {
+                            $("#d_select").append("<option id='d_option' data-mn=" + row[i].mn + " value=" + row[i].id + ">" + row[i].aname + "</option>");
+                        }
+                        mn = row[0].mn;
+                        loadEquipment(row[0].id, mn);
                     }
-                    mn = row[0].mn;
-                    loadEquipment(row[0].id,mn);
+                    form.render('select');
                 }
-                form.render('select');
             }
         })
     };
@@ -516,11 +518,11 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     for(var i in row){
                         $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
                     }
+                    loadFactorSelect(row[0].id);
                 }
-                $('#e_select').find('option').eq(6).attr('selected', true)
+                // $('#e_select').find('option').eq(6).attr('selected', true)
                 // console.log($("#e_select")[6]);
                 form.render('select');
-                loadFactorSelect(row[6].id);
             }
         })
     };
@@ -551,10 +553,10 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     for(var i in row){
                         $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
                     }
+                    code=row[0].factorCode;
+                    Fname=row[0].factorName;
                 }
                 form.render('select');
-                code=row[0].factorCode;
-                Fname=row[0].factorName;
                 needRefresh = true;
                 initChart();
             }

@@ -132,8 +132,20 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
                 "url": "pages/statisticsMng/alarmStatistics.html",
                 "class": "equipmentmng"
             },
-            "监测统计": {
-                "url": "pages/statisticsMng/monitorStatistics.html",
+            "废水日均报表": {
+                "url": "pages/statisticsMng/waterDaily.html",
+                "class": "daily"
+            },
+            "废水月报": {
+                "url": "pages/statisticsMng/waterMonthly.html",
+                "class": "monthly"
+            },
+            "废水年报": {
+                "url": "pages/statisticsMng/waterAnnual.html",
+                "class": "yearly"
+            },
+            "超标统计": {
+                "url": "pages/statisticsMng/overproofList.html",
                 "class": "mnmng"
             },
             "企业管理": {

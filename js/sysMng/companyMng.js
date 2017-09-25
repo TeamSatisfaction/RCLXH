@@ -39,26 +39,30 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                      pages = result.data.pages,
                      str = "";
                 //模拟渲染
-                var render = function(cData, curr) {
-                    var arr = []
-                        , thisData = cData.concat().splice(curr * nums - nums, nums);
-                    layui.each(thisData, function(index, item){
-                        str = '<tr>' +
-                            '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.name + '</td>' +
-                            '<td>' + item.address + '</td>' +
-                            '<td>' + item.head+ '</td>' +
-                            '<td>' + item.headPhone + '</td>' +
-                            '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alterCompanyWin(\''+item.baseEnterpriseId+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\''+item.baseEnterpriseId+'\')" title="报警规则"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompanyData(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
-                            '</tr>';
-                        arr.push(str);
-                    });
-                    return arr.join('');
-                };
-                cTobody.html(render(cData, obj.curr));
+                if(cData != null) {
+                    var render = function (cData, curr) {
+                        var arr = []
+                            , thisData = cData.concat().splice(curr * nums - nums, nums);
+                        layui.each(thisData, function (index, item) {
+                            str = '<tr>' +
+                                '<td>' + (index + 1) + '</td>' +
+                                '<td>' + item.name + '</td>' +
+                                '<td>' + item.address + '</td>' +
+                                '<td>' + item.head + '</td>' +
+                                '<td>' + item.headPhone + '</td>' +
+                                '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin(\'' + item.baseEnterpriseId + '\')" title="详情"><img src="../../img/mng/details.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alterCompanyWin(\'' + item.baseEnterpriseId + '\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\'' + item.baseEnterpriseId + '\')" title="报警规则"><img src="../../img/mng/configure.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompanyData(\'' + item.baseEnterpriseId + '\')" title="删除"><img src="../../img/mng/delete.png"></a>' +
+                                '</tr>';
+                            arr.push(str);
+                        });
+                        return arr.join('');
+                    };
+                    cTobody.html(render(cData, obj.curr));
+                }else{
+                    cTobody.html(str);
+                }
                 //调用分页
                 laypage({
                     cont: 'demo1',

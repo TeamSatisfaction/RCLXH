@@ -71,6 +71,10 @@
 .side .layui-nav .layui-nav-item .networkmng i { background-image: url(../img/mng/networkMng_1.png); }
 .side .layui-nav .layui-nav-item .usermng i { background-image: url(../img/mng/userMng_1.png); }
 .side .layui-nav .layui-nav-item .rolemng i { background-image: url(../img/mng/roleMng_1.png); }
+.side .layui-nav .layui-nav-item .daily i { background-image: url(../img/mng/daily1.png); }
+.side .layui-nav .layui-nav-item .monthly i { background-image: url(../img/mng/monthly1.png); }
+.side .layui-nav .layui-nav-item .yearly i { background-image: url(../img/mng/year1.png); }
+
 /*左侧树二级菜单选中图标*/
 .side .layui-nav .layui-nav-item .cmng.layui-this i { background-image: url(../img/mng/C_Mng.png); }
 .side .layui-nav .layui-nav-item .mnmng.layui-this i { background-image: url(../img/mng/mnMng.png); }
@@ -78,6 +82,9 @@
 .side .layui-nav .layui-nav-item .networkmng.layui-this i { background-image: url(../img/mng/networkMng.png); }
 .side .layui-nav .layui-nav-item .usermng.layui-this i { background-image: url(../img/mng/userMng.png); }
 .side .layui-nav .layui-nav-item .rolemng.layui-this i { background-image: url(../img/mng/roleMng.png); }
+.side .layui-nav .layui-nav-item .daily.layui-this i { background-image: url(../img/mng/daily.png); }
+.side .layui-nav .layui-nav-item .monthly.layui-this i { background-image: url(../img/mng/monthly.png); }
+.side .layui-nav .layui-nav-item .yearly.layui-this i { background-image: url(../img/mng/year.png); }
 
 
     /*.side>.layui-nav-item{background-image: url("../img/index/caidan-.png");height: 72px;}*/
@@ -352,8 +359,8 @@ tr .align-right{width:120px;text-align: right}
 
 .com-content #alarm_chart{ height: 100%; width: calc(100% - 620px); float: left;}
 .com-content #alarm_pie{ height: 100%; width: 600px; float: right;  border-left: 1px solid #ccc}
-.com-content #com_chart1{ height: calc(100% - 20px); width: calc(100% - 620px); float: left;}
-.com-content #com_fac1{ height: calc(100% - 20px); width: 600px; float: right;  border-left: 1px solid #ccc}
+/*.com-content #com_chart1{ height: calc(600px); width: calc(100% - 20px);}*/
+/*.com-content #com_fac1{ height: calc(100% - 620px); width: calc(100% - 20px); border-top: 1px solid #ccc}*/
 
 /*报警详情*/
 #alarm_data_view fieldset { margin: 10px; padding: 10px; box-sizing: border-box; }

@@ -12,7 +12,9 @@
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             MSMng : 'MSMng'
-        }).use('MSMng')
+        }).use('MSMng',function () {
+            layui.MSMng.loadMSDetails()
+        })
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
@@ -24,35 +26,35 @@
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">监测站名称：</label>
-                        <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="site" lay-verify="required">
+                        <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="name" lay-verify="required">
                         <span class="required">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">联系人：</label>
-                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="contacts" lay-verify="required">
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="head" lay-verify="required">
                         <span class="required">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">联系人电话：</label>
-                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="mobile" lay-verify="required||phone">
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="headPhone" lay-verify="required||phone">
                         <span class="required">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">经度：</label>
-                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="longitude" lay-verify="required|lon">
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lon" lay-verify="required|lon">
                         <span class="required">*</span>
                     </div>
                 </div>
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">纬度：</label>
-                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="latitude" lay-verify="required|lat">
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lat" lay-verify="required|lat">
                         <span class="required">*</span>
                     </div>
                 </div>

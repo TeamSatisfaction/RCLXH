@@ -191,6 +191,14 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     data: field,
                     success: function (result) {
                         console.log(result)
+                        if(result.code == '1000'){
+                            layer.msg('绑定成功！', {icon: 1,time:1000},function () {
+                                layer.close(index);
+                                location.reload(); // 父页面刷新
+                            });
+                        }else {
+                            layer.msg('绑定失败！', {icon: 2,time:2000});
+                        }
                     }
                 })
             }
