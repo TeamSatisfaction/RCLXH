@@ -114,9 +114,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
-            // websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
+            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -233,6 +233,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
+            // async : false,
             type: 'get',
             data: data,
             success: function (result) {
@@ -315,68 +316,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 chart = new Highcharts.chart('mapStats_Line', option);
             }
         })
-        // var option = {
-        //     chart: {
-        //         type: 'spline',
-        //         backgroundColor: 'rgba(0,0,0,0)'
-        //     },
-        //     title: {
-        //         text: Fname
-        //     },
-        //     xAxis: {
-        //         type: 'datetime',
-        //         dateTimeLabelFormats: {
-        //             day: '%H:%M:%S'
-        //         },
-        //         labels : {
-        //             formatter : function () {
-        //                 return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-        //             }
-        //         },
-        //         categories : x
-        //     },
-        //     tooltip : {
-        //         xDateFormat: '%H:%M:%S',
-        //         shared: true
-        //     },
-        //     yAxis: {
-        //         title: {
-        //             text: '',
-        //             style : {
-        //                 color: '#000000'
-        //             }
-        //         },
-        //         labels : {
-        //             style : {
-        //                 color: '#000000'
-        //             }
-        //         }
-        //         // ,plotLines: [{
-        //         //     value: 60,
-        //         //     dashStyle:'ShortDash',
-        //         //     width: 3,
-        //         //     color: 'red',
-        //         //     label: {
-        //         //         text: '阈值',
-        //         //         align: 'center',
-        //         //         style: {
-        //         //             color: 'gray'
-        //         //         }
-        //         //     }
-        //         // }]
-        //     },
-        //     legend: {
-        //         enabled: false
-        //     },
-        //     series: [{
-        //         name: Fname,
-        //         data: y,
-        //         marker: {
-        //             enabled: true
-        //         }
-        //     }]
-        // };
-        // chart = new Highcharts.chart('mapStats_Line', option);
     }
     /*曲线图-添加实时点位*/
     function drawLine(data) {
@@ -419,6 +358,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
+            // async : false,
             type: 'post',
             data: field,
             success: function (result) {

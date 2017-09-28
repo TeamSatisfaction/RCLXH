@@ -51,12 +51,16 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">组织机构代码：</label>
                     <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="enterpriseRole" lay-verify="required">
-                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="orgCode" lay-verify="required">-->
                     <span class="required">*</span>
                 </div>
                 <div class="layui-inline">
                     <label class="layui-form-label">管控级别：</label>
-                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="controlLevel" lay-verify="required">
+                    <div class="layui-input-inline">
+                        <select name="controlLevel" lay-verify="required" lay-search="">
+                            <option value="area_control">区(县)控</option>
+                            <option value="country_control">国控</option>
+                        </select>
+                    </div>
                     <span class="required">*</span>
                 </div>
             </div>
@@ -84,8 +88,9 @@
                     <span class="required">*</span>
                 </div>
                 <div class="layui-inline">
-                    <label class="layui-form-label">成立日期：</label>
-                    <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="establishDate">
+                    <label class="layui-form-label">预计建成时间：</label>
+                    <input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy'})" name="expectDate">
+                    <span class="required">*</span>
                 </div>
             </div>
             <div class="layui-form-item">

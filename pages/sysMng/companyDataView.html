@@ -19,6 +19,9 @@
             sysMng : 'companyMng'
         }).use('companyMng', function () {
             layui.jquery(".detail-form").find("input").attr("readonly", true);
+            layui.companyMng.loadCompanyData();
+            layui.companyMng.loadLicenseData();
+            layui.companyMng.loadPortData();
         }); //加载入口
     </script>
 </head>
@@ -34,14 +37,11 @@
                         <div class="js-silder detail-form-right">
                             <div class="silder-scroll">
                                 <div class="silder-main">
-                                    <div class="silder-main-img">
-                                        <img src="../../img/data/001.png" alt="">
-                                    </div>
-                                    <div class="silder-main-img">
-                                        <img src="../../img/data/002.png" alt="" style="width: 600px;height: 400px">
-                                    </div>
                                     <!--<div class="silder-main-img">-->
-                                        <!--<img src="../../img/1-1.jpg" alt="">-->
+                                        <!--<img src="../../img/data/001.png" alt="">-->
+                                    <!--</div>-->
+                                    <!--<div class="silder-main-img">-->
+                                        <!--<img src="../../img/data/002.png" alt="" style="width: 600px;height: 400px">-->
                                     <!--</div>-->
                                 </div>
                             </div>
@@ -114,7 +114,7 @@
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">建设目标：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="expectDate">
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -142,48 +142,40 @@
                     <div class="layui-colla-content layui-show" style="text-align: center">
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">许可证类型：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">许可证性质：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
-                            </div>
-                        </div>
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
                                 <label class="layui-form-label">许可证编号：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenseCode">
                             </div>
                             <div class="layui-inline">
                                 <label class="layui-form-label">许可证状态：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenseStatus">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline">
+                            <div class="layui-form-item layui-inline">
                                 <label class="layui-form-label">起始时间：</label>
-                                <input class="layui-input layui-input-inline" placeholder="起始时间" onclick="layui.laydate({elem: this})">
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="beginDate">
+                                <!--<input class="layui-input-inline layui-input" placeholder="起始时间" onclick="WdatePicker()" name="beginDate">-->
                             </div>
-                            <div class="layui-inline">
+                            <div class="layui-form-item layui-inline">
                                 <label class="layui-form-label">截至时间：</label>
-                                <input class="layui-input layui-input-inline" placeholder="截至时间" onclick="layui.laydate({elem: this})">
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="endDate">
+                                <!--<input class="layui-input-inline layui-input" placeholder="截至时间" onclick="WdatePicker()" name="endDate">-->
                             </div>
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-inline">
-                                <label class="layui-form-label">发证日期：</label>
-                                <input class="layui-input layui-input-inline" placeholder="发证日期" onclick="layui.laydate({elem: this})">
+                                <label class="layui-form-label">废气排放最大流量(立方米/秒)：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="maxiMum">
                             </div>
                             <div class="layui-inline">
-                                <label class="layui-form-label">办理人：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                <label class="layui-form-label">年废气排放总量(吨)：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="gross">
                             </div>
                         </div>
                         <div class="layui-form-item">
-                            <div class="layui-inline" style="width: calc(90% + 20px);">
-                                <label class="layui-form-label">许可证状态：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                            <div class="layui-inline"  style="width: calc(90% + 20px);">
+                                <label class="layui-form-label">许可证类型：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenceType">
                             </div>
                         </div>
                         <div class="layui-form-item">
@@ -195,61 +187,15 @@
                                         <li>副本</li>
                                         <!--<li>排口列表</li>-->
                                     </ul>
-                                    <div class="layui-tab-content">
+                                    <div class="layui-tab-content" id="pdv_pk">
                                         <!--正本-->
-                                        <div class="layui-tab-item layui-show" >
-                                            <div class="thumbs">
-                                                <div class="thumb">
-                                                    <div class="thumb">
-                                                        <img src="../../img/data/003.png" style="width: 600px;height: 500px">
-                                                        <input name="file" class="layui-upload-file" type="file"
-                                                               accept="image/gif,image/jpeg,image/jpg,image/png">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="layui-tab-item layui-show lay-img" id="zhengben">
+                                            <img src="" style="width: 600px;height: 500px">
                                         </div>
                                         <!--副本-->
-                                        <div class="layui-tab-item">
-                                            <div class="thumbs">
-                                                <div class="thumb">
-                                                    <div class="thumb">
-                                                        <img src="../../img/data/004.png" class="imgmax" style="width: 600px;height: 500px">
-                                                        <input name="file" class="layui-upload-file" type="file"
-                                                               accept="image/gif,image/jpeg,image/jpg,image/png">
-                                                    </div>
-                                                </div>
-                                            </div>
+                                        <div class="layui-tab-item lay-img" id="fuben">
+                                            <img src="" style="width: 600px;height: 500px">
                                         </div>
-                                        <!--&lt;!&ndash;排口&ndash;&gt;-->
-                                        <!--<div class="layui-tab-item">-->
-                                            <!--&lt;!&ndash;<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">&ndash;&gt;-->
-                                            <!--&lt;!&ndash;<i class="layui-icon">&#xe608;</i>新增&ndash;&gt;-->
-                                            <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                            <!--<table class="layui-table " lay-skin="row" style="margin-top: 4px;">-->
-                                                <!--<colgroup>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                    <!--<col>-->
-                                                <!--</colgroup>-->
-                                                <!--<thead>-->
-                                                <!--<tr>-->
-                                                    <!--<th>排口附页编号</th>-->
-                                                    <!--<th>排污口编码</th>-->
-                                                    <!--<th>排污口名称</th>-->
-                                                    <!--<th>排放方式</th>-->
-                                                    <!--<th>排放去向</th>-->
-                                                    <!--<th>年排放总量</th>-->
-                                                    <!--<th>操作</th>-->
-                                                <!--</tr>-->
-                                                <!--</thead>-->
-                                                <!--<tbody>-->
-                                                <!--</tbody>-->
-                                            <!--</table>-->
-                                        <!--</div>-->
                                     </div>
                                 </div>
                             </div>
@@ -267,7 +213,6 @@
                                 <col>
                                 <col>
                                 <col>
-                                <col  width="80">
                             </colgroup>
                             <thead>
                             <tr>
@@ -277,7 +222,6 @@
                                 <th>排放方式</th>
                                 <th>排放去向</th>
                                 <th>年排放总量</th>
-                                <th style="text-align: center">操作</th>
                             </tr>
                             </thead>
                             <tbody id="dis-port-list">
@@ -285,44 +229,9 @@
                         </table>
                     </div>
                 </div>
-                <!--<div class="layui-colla-item">-->
-                    <!--<h2 class="layui-colla-title">企业处理工艺</h2>-->
-                    <!--<div class="layui-colla-content layui-show">-->
-                        <!--&lt;!&ndash;照片&ndash;&gt;-->
-                        <!--<div class="photo-area clgy_photos">-->
-                            <!--<div class="thumbs">-->
-                                <!--<div class="thumb">-->
-                                    <!--<img src="../../img/data/005.png" style="width: 600px;height: 500px">-->
-                                    <!--<input name="file" class="layui-upload-file" type="file"-->
-                                           <!--accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.clgyImgSelect(this);">-->
-                                    <!--<div>工艺流程图</div>-->
-                                <!--</div>-->
-                                <!--&lt;!&ndash;<div class="thumb">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<img src="../../img/map/monistation.png">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<input name="file" class="layui-upload-file" type="file"&ndash;&gt;-->
-                                           <!--&lt;!&ndash;accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.clgyImgSelect(this);">&ndash;&gt;-->
-                                    <!--&lt;!&ndash;<div>工艺2</div>&ndash;&gt;-->
-                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                            <!--</div>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
             </form>
         </div>
     </div>
 </div>
-<script>
-    $(function (){
-        $(".js-silder").silder({
-            auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-            speed: 20,//轮播图运动速度
-            sideCtrl: true,//是否需要侧边控制按钮
-            bottomCtrl: true,//是否需要底部控制按钮
-            defaultView: 0,//默认显示的索引
-            interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-            activeClass: "active",//小的控制按钮激活的样式，不包括作用两边，默认active
-        });
-    });
-</script>
 </body>
 </html>

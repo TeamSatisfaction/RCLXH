@@ -96,8 +96,8 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports) {
         // loadaCharts : loadaCharts,
         // loadPie : loadPie,
         monitorListWin : monitorListWin,
-        monitorListYearWin : monitorListYearWin,
-        loadDailyList : loadDailyList
+        monitorListYearWin : monitorListYearWin
+        // loadDailyList : loadDailyList
     };
     /*输出内容，注意顺序*/
     exports('monitorStatistics',obj)

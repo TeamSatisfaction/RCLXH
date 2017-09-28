@@ -23,6 +23,8 @@
             $(function(){
                 layui.jquery(".detail-form").find("input").attr("readonly", true);
                 layui.pollutionDataMng.loadData();
+//                layui.pollutionDataMng.loadLicenseData();
+//                layui.pollutionDataMng.loadPortData();
                 layui.pollutionDataMng.draw3dPie();
             });
 //            layui.pollutionMng. loadaCharts();
@@ -59,87 +61,87 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">企业名称：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="qymc">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="name">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">法人代表：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="frdb">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="legalRepresentative">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">企业负责人：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="qyfzr">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="head">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">负责人电话：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="fzrdh">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="headPhone">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">组织机构代码：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="zzjgdm">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="orgCode">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">管控级别：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="gkjb">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="controlLevel">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
-                                        <label class="layui-form-label">联系人：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lxr">
+                                        <label class="layui-form-label">环保负责人：</label>
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="envHead">
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label">联系人电话：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lxrdh">
+                                        <label class="layui-form-label">环保负责人电话：</label>
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="envHeadPhone">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">建设状态：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jszt">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="buildStatusName">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">运行状态：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="yxzt">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">设计处理量(吨/天)：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="shejicll">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="processing">
                                     </div>
                                     <div class="layui-inline">
-                                        <label class="layui-form-label">实际处理量(吨/天)：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="shijicll">
+                                        <label class="layui-form-label">所属流域：</label>
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="riverBasin">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">行业类别：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="hylb">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">建设目标：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jsmb">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="expectDate">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">经度：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="jd">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lon">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">纬度：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="wd">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="lat">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
                                     <div class="layui-inline" style="width: calc(90% + 20px);">
                                         <label class="layui-form-label">地址：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="dz">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="address">
                                     </div>
                                 </div>
                             </div>
@@ -151,50 +153,42 @@
                         <div class="layui-colla-content layui-show" style="text-align: center">
                             <div class="layui-form-item">
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">许可证类型：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzlx">
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">许可证性质：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzxz">
-                                </div>
-                            </div>
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
                                     <label class="layui-form-label">许可证编号：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzbh">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenseCode">
                                 </div>
                                 <div class="layui-inline">
                                     <label class="layui-form-label">许可证状态：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzzt">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenseStatus">
                                 </div>
                             </div>
                             <div class="layui-form-item">
-                                <div class="layui-inline">
+                                <div class="layui-form-item layui-inline">
                                     <label class="layui-form-label">起始时间：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="起始时间" name="xkzqssj">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="beginDate">
+                                    <!--<input class="layui-input-inline layui-input" placeholder="起始时间" onclick="WdatePicker()" name="beginDate">-->
                                 </div>
-                                <div class="layui-inline">
+                                <div class="layui-form-item layui-inline">
                                     <label class="layui-form-label">截至时间：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="截至时间" name="xkzjzsj">
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="endDate">
+                                    <!--<input class="layui-input-inline layui-input" placeholder="截至时间" onclick="WdatePicker()" name="endDate">-->
                                 </div>
                             </div>
                             <div class="layui-form-item">
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">发证日期：</label>
-                                    <input class="layui-input layui-input-inline" placeholder="发证日期" name="xkzfzrq">
+                                    <label class="layui-form-label">废气排放最大流量(立方米/秒)：</label>
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="maxiMum">
                                 </div>
                                 <div class="layui-inline">
-                                    <label class="layui-form-label">办理人：</label>
-                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="xkzblr">
+                                    <label class="layui-form-label">年废气排放总量(吨)：</label>
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="gross">
                                 </div>
                             </div>
-                            <!--<div class="layui-form-item">-->
-                                <!--<div class="layui-inline" style="width: calc(90% + 20px);">-->
-                                    <!--<label class="layui-form-label">许可证状态：</label>-->
-                                    <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text">-->
-                                <!--</div>-->
-                            <!--</div>-->
+                            <div class="layui-form-item">
+                                <div class="layui-inline"  style="width: calc(90% + 20px);">
+                                    <label class="layui-form-label">许可证类型：</label>
+                                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="licenceType">
+                                </div>
+                            </div>
                             <div class="layui-form-item">
                                 <!--照片-->
                                 <div class="photo-area">
@@ -213,40 +207,38 @@
                                             <div class="layui-tab-item lay-img">
                                                 <img src="../../img/data/004.png" style="width: 600px;height: 500px">
                                             </div>
-                                            <!--排口-->
-                                            <!--<div class="layui-tab-item">-->
-                                                <!--&lt;!&ndash;<div class="layui-btn layui-btn-normal" style="margin-top: -6px;" onclick="layui.companyMng.addPk();">&ndash;&gt;-->
-                                                    <!--&lt;!&ndash;<i class="layui-icon">&#xe608;</i>新增&ndash;&gt;-->
-                                                <!--&lt;!&ndash;</div>&ndash;&gt;-->
-                                                <!--<table class="layui-table " lay-skin="row" style="margin-top: 4px;">-->
-                                                    <!--<colgroup>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                        <!--<col>-->
-                                                    <!--</colgroup>-->
-                                                    <!--<thead>-->
-                                                    <!--<tr>-->
-                                                        <!--<th>排口附页编号</th>-->
-                                                        <!--<th>排污口编码</th>-->
-                                                        <!--<th>排污口名称</th>-->
-                                                        <!--<th>排放方式</th>-->
-                                                        <!--<th>排放去向</th>-->
-                                                        <!--<th>年排放总量</th>-->
-                                                        <!--<th>操作</th>-->
-                                                    <!--</tr>-->
-                                                    <!--</thead>-->
-                                                    <!--<tbody>-->
-                                                    <!--</tbody>-->
-                                                <!--</table>-->
-                                            <!--</div>-->
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
+                        </div>
+                    </div>
+                    <div class="layui-colla-item">
+                        <h2 class="layui-colla-title">排口信息</h2>
+                        <div class="layui-colla-content layui-show">
+                            <table class="layui-table " lay-skin="row" style="margin-top: 4px;">
+                                <colgroup>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                    <col>
+                                </colgroup>
+                                <thead>
+                                <tr>
+                                    <th>排口附页编号</th>
+                                    <th>排污口编码</th>
+                                    <th>排污口名称</th>
+                                    <th>排放方式</th>
+                                    <th>排放去向</th>
+                                    <th>年排放总量</th>
+                                </tr>
+                                </thead>
+                                <tbody id="dis-port-list">
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </form>
@@ -309,14 +301,23 @@
                 </div>
             </div>
             <!--设备工况-->
-            <div class="layui-tab-item company-equip-sit" style="text-align: center">
-                <img src="../../img/data/gongkuang1.jpg" style="width: 1600px;height: 800px;" >
-                <div style=" position:absolute;top:155px;left: 710px;;color: red">
+            <div class="layui-tab-item company-equip-sit">
+                <img src="../../img/data/gongkuang1.jpg">
+                <div class="info" id="prompt">
+                    <!--<span>提示信息</span>-->
                     <p>流量：30</p>
                     <p>开关量：30</p>
                     <p>电流：30</p>
                     <p>电压：30</p>
+                    <div class="nav nav-border"></div>
+                    <div class="nav nav-background"></div>
                 </div>
+                <!--<div id="prompt">-->
+                    <!--<p>流量：30</p>-->
+                <!--<p>开关量：30</p>-->
+                <!--<p>电流：30</p>-->
+                <!--<p>电压：30</p>-->
+                <!--</div>-->
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>设备列表</legend>
                     <div class="layui-field-box">

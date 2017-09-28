@@ -7,6 +7,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var urlConfig1 = 'http://172.16.1.10:9702';
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
@@ -44,9 +45,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             $("#rule-col").html(col);
             $("#rule-head").html(head);
             if(type == 'online_alarm_rule'){
-                url = 'http://172.16.1.102:9702/v02/htwl/alarm/rule/online'
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/online'
             }else if(type == 'poly_online_alarm_rule'){
-                url = 'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online'
+                url = ''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online'
             }
             $.ajax({
                 url :url,
@@ -93,7 +94,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 '</tr>';
             $("#rule-col").html(col);
             $("#rule-head").html(head);
-            url = 'http://172.16.1.102:9702/v02/htwl/alarm/rule/license';
+            url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
             $.ajax({
                 url :url,
                 type : 'get',
@@ -112,7 +113,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                 '<td>' + text + '</td>' +
                                 '<td></td>' +
                                 '<td></td>' +
-                                // '<td>' + item.firstLayerEncodingName + '</td>' +
                                 '<td style="text-align: center">' +
                                 '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
                                 '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
@@ -176,7 +176,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         isContain : is_contain
                     };
                     $.ajax({
-                        url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online',
+                        url :''+urlConfig1+'/v02/htwl/alarm/rule/online',
                         headers : {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -185,7 +185,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         success : function (result){
                             if(result.code == '1000'){
                                 layer.msg('新增成功！', {icon: 1,time:1000}, function() {
-                                    layer.close(1); //再执行关闭
+                                    layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
                                 });
                             }
@@ -246,7 +246,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         conditionKey : condition_key
                     };
                     $.ajax({
-                        url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online',
+                        url :''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online',
                         headers : {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -255,7 +255,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         success : function (result){
                             if(result.code == '1000'){
                                 layer.msg('新增成功！', {icon: 1,time:1000}, function() {
-                                    layer.close(1); //再执行关闭
+                                    layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
                                     // location.reload();
                                 });
@@ -266,6 +266,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                             layer.msg(message, {icon: 2,time:1000});
                         }
                     })
+                }
+            })
+        }else if(type == 'licence_alarm_rule'){
+            layer.open({
+                title :'新增许可证报警规则',
+                id : id,
+                type : 2,
+                moveOut: true,
+                area : ['1000px','300px'],
+                content : '../../pages/alarmMng/licenceAlarmRule.html',
+                btn: [ '提交','返回'],
+                btnAlign: 'c',
+                yes  : function (index,layero) {
+                    var body = layer.getChildFrame('body',index);
                 }
             })
         }
@@ -363,7 +377,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         isContain: is_contain
                     };
                     $.ajax({
-                        url: 'http://172.16.1.102:9702/v02/htwl/alarm/rule/online',
+                        url: ''+urlConfig1+'/v02/htwl/alarm/rule/online',
                         headers: {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -433,7 +447,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         conditionKey : condition_key
                     };
                     $.ajax({
-                        url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online',
+                        url :''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online',
                         headers : {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -463,7 +477,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             title =  $(window.parent.document).find('.layui-layer-title').text();
         if(title == '修改在线报警规则'){
             $.ajax({
-                url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online/'+id+'',
+                url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
                 type: 'get',
                 success: function (result) {
                     $('#first_layer_encoding_name').children("option").each(function(){
@@ -508,7 +522,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             })
         }else if(title == '修改聚合在线报警规则'){
             $.ajax({
-                url :'http://172.16.1.102:9702/v02/htwl/aggregation/alarm/rule/online/'+id+'',
+                url :''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online/'+id+'',
                 type: 'get',
                 success : function (result) {
                     console.log(result);
@@ -564,7 +578,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             btn: ['确定', '取消'],
             yes : function (index,layero) {
                 $.ajax({
-                    url :'http://172.16.1.102:9702/v02/htwl/alarm/rule/online/'+id+'',
+                    url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
                     type : 'delete',
                     success : function (result){
                         console.log(result)

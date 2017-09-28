@@ -7,67 +7,100 @@
     <link href="../layUi/css/layui.css" rel="stylesheet">
     <style>
         body{padding: 50px 100px;}
+        .info {
+            top: 50px;
+            position:absolute;
+            width:200px;
+            height:50px;
+            line-height:60px;
+            background:#F6F1B3;
+            box-shadow:1px 2px 3px #E9D985;
+            border:1px solid #DACE7C;
+            border-radius:4px;
+            text-align:center;
+            color:red;
+        }
+        .nav {
+            position:absolute;
+            left:30px;
+            overflow:hidden;
+            width:0;
+            height:0;
+            border-width:10px;
+            border-style:solid dashed dashed dashed;
+        }
+        .nav-border {
+            top:51px;
+            border-color:#DACE7C transparent transparent  transparent;
+        }
+        .nav-background {
+            top:50px;
+            border-color:#F6F1B3 transparent transparent transparent;
+        }
     </style>
 </head>
 <body>
 
-<button class="layui-btn demo" data-type="test">测试一</button>
-<button class="layui-btn demo" data-type="test2">测试二</button>
-<button class="layui-btn demo" data-type="test3">捕获页</button>
+<!--<button class="layui-btn demo" data-type="test">测试一</button>-->
+<!--<button class="layui-btn demo" data-type="test2">测试二</button>-->
+<!--<button class="layui-btn demo" data-type="test3">捕获页</button>-->
 
-<div id="bbs_update_form" style="display: none;padding: 20px;">
-    <form class="layui-form layui-form-pane" id="update_bbs_info_form">
+<!--<div id="bbs_update_form" style="display: none;padding: 20px;">-->
+    <!--<form class="layui-form layui-form-pane" id="update_bbs_info_form">-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛封面</label>
-            <div class="layui-input-block">
-                <input type="text" name="bbs_bg" autocomplete="off" placeholder="请输入图片地址（1045px*180px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/bbs_bg.jpg">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">论坛封面</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="bbs_bg" autocomplete="off" placeholder="请输入图片地址（1045px*180px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/bbs_bg.jpg">-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛头像</label>
-            <div class="layui-input-block">
-                <input type="text" name="bbs_avatar" autocomplete="off" placeholder="请输入图片地址（150px*150px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/timg.jpg">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">论坛头像</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="text" name="bbs_avatar" autocomplete="off" placeholder="请输入图片地址（150px*150px）" class="layui-input" value="http://q.jinsom.cn/wp-content/uploads/2016/12/timg.jpg">-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛介绍</label>
-            <div class="layui-input-block">
-      <textarea placeholder="50字内" class="layui-textarea" name="bbs_desc" >LightSNS是一款wordpress轻社交主题，这里是关于你这个论坛的描述，随便扯吧。
-</textarea>
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">论坛介绍</label>-->
+            <!--<div class="layui-input-block">-->
+      <!--<textarea placeholder="50字内" class="layui-textarea" name="bbs_desc" >LightSNS是一款wordpress轻社交主题，这里是关于你这个论坛的描述，随便扯吧。-->
+<!--</textarea>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">论坛公告</label>
-            <div class="layui-input-block">
-                <textarea placeholder="100字内" class="layui-textarea" name="bbs_notice">公告</textarea>
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">论坛公告</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<textarea placeholder="100字内" class="layui-textarea" name="bbs_notice">公告</textarea>-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">付费功能</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="bbs_fufei" lay-skin="switch" title="开启付费可看功能"  checked lay-skin="switch">
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">付费功能</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="checkbox" name="bbs_fufei" lay-skin="switch" title="开启付费可看功能"  checked lay-skin="switch">-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item">
-            <label class="layui-form-label">验证码</label>
-            <div class="layui-input-block">
-                <input type="checkbox" name="bbs_captcha" lay-skin="switch" title="开启验证码功能" >
-            </div>
-        </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">验证码</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<input type="checkbox" name="bbs_captcha" lay-skin="switch" title="开启验证码功能" >-->
+            <!--</div>-->
+        <!--</div>-->
 
-        <div class="layui-form-item" style="text-align: right;">
-            <div class="layui-btn" id="bbs_update_button">更新</div>
-        </div>
-
-    </form>
+        <!--<div class="layui-form-item" style="text-align: right;">-->
+            <!--<div class="layui-btn" id="bbs_update_button">更新</div>-->
+        <!--</div>-->
+    <!--</form>-->
+<!--</div>-->
+<div class="info">
+    <span>提示信息</span>
+    <div class="nav nav-border"></div>
+    <div class="nav nav-background"></div>
 </div>
-
 <script src="../layUi/layui.js"></script>
 <script>
     layui.use('layer', function(){

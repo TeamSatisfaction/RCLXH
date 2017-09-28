@@ -14,7 +14,11 @@
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
             companyMng : 'companyMng'
-        }).use('companyMng')
+        }).use('companyMng',function () {
+            layui.companyMng.loadCompanyData();
+            layui.companyMng.loadLicenseData();
+            layui.companyMng.loadPortData();
+        })
         //加载入口
     </script>
 </head>
@@ -56,7 +60,7 @@
                                 <label class="layui-form-label">管控级别：</label>
                                 <div class="layui-input-inline">
                                     <select name="controlLevel" lay-verify="required" lay-search="">
-                                        <option value="建成">国控</option>
+                                        <option value="country_control">国控</option>
                                         <option value="待建设">市控</option>
                                         <option value="area_control">区(县)控</option>
                                         <option value="建设中-硬件部署">其他</option>
@@ -78,8 +82,8 @@
                             <div class="layui-inline">
                                 <label class="layui-form-label">建设状态：</label>
                                 <div class="layui-input-inline">
-                                    <select name="buildStatusName" lay-verify="required" lay-search="">
-                                        <option value="建成">建成</option>
+                                    <select name="buildStatus" lay-verify="required" lay-search="">
+                                        <option value="已建成">已建成</option>
                                         <option value="待建设">待建设</option>
                                         <option value="建设中-基础信息收集">建设中-基础信息收集</option>
                                         <option value="建设中-硬件部署">建设中-硬件部署</option>
@@ -88,46 +92,50 @@
                                 </div>
                             </div>
                             <div class="layui-inline">
+                                <label class="layui-form-label">预计建成时间：</label>
+                                <input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy'})" name="expectDate">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
+                            <div class="layui-inline">
                                 <label class="layui-form-label">运行状态：</label>
                                 <div class="layui-input-inline">
-                                    <select name="modules" lay-verify="required" lay-search="">
+                                    <select name="runStatus" lay-verify="required" lay-search="">
                                         <option value="正常运行">正常运行</option>
                                         <option value="非正常运行">非正常运行</option>
                                         <option value="正常停产">正常停产</option>
                                     </select>
                                 </div>
                             </div>
-                        </div>
-                        <div class="layui-form-item">
                             <div class="layui-inline">
                                 <label class="layui-form-label">设计处理量(吨/天)：</label>
                                 <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="processing">
                             </div>
+                        </div>
+                        <div class="layui-form-item">
                             <div class="layui-inline">
                                 <label class="layui-form-label">所属流域：</label>
                                 <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="riverBasin">
                             </div>
-                        </div>
-                        <div class="layui-form-item">
                             <div class="layui-inline">
                                 <label class="layui-form-label">行业类别：</label>
                                 <div class="layui-input-inline">
-                                    <select name="modules" lay-verify="required" lay-search="">
+                                    <select name="industryCodes" lay-verify="required" lay-search="">
                                         <option value="汽车制造业">汽车制造业</option>
                                         <option value="模具制造业">模具制造业</option>
                                     </select>
                                 </div>
                             </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">建设目标：</label>
-                                <div class="layui-input-inline">
-                                    <select name="expectDate" lay-verify="required" lay-search="" >
-                                        <option value="2017">2017</option>
-                                        <option value="2018">2018</option>
-                                        <option value="2019">2019</option>
-                                    </select>
-                                </div>
-                            </div>
+                            <!--<div class="layui-inline">-->
+                                <!--<label class="layui-form-label">建设预计日期：</label>-->
+                                <!--<div class="layui-input-inline">-->
+                                    <!--<select name="expectDate" lay-verify="required" lay-search="" >-->
+                                        <!--<option value="2017">2017</option>-->
+                                        <!--<option value="2018">2018</option>-->
+                                        <!--<option value="2019">2019</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
                         </div>
                         <div class="layui-form-item">
                             <div class="layui-inline">
@@ -145,12 +153,9 @@
                                 <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="address">
                             </div>
                         </div>
-                        <button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="company-save" id="company-alter">
-                            <i class="layui-icon"></i>提交
+                        <button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="company-alter" id="company-alter">
+                            <i class="layui-icon"></i>保存
                         </button>
-                        <!--<button class="layui-btn layui-btn-primary layui-btn-small" lay-submit lay-filter="close" onclick="layui.companyMng.closeWin()">-->
-                            <!--<i class="layui-icon"></i>返回-->
-                        <!--</button>-->
                     </div>
                 </form>
             </div>
@@ -202,32 +207,37 @@
                             </div>
                         </div>
                         <div class="layui-form-item">
+                            <div class="layui-inline"  style="width: calc(90% + 20px);display: none">
+                                <label class="layui-form-label">id：</label>
+                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="id">
+                            </div>
+                        </div>
+                        <div class="layui-form-item">
                             <!--照片-->
                             <div class="photo-area">
                                 <div class="layui-tab">
                                     <ul class="layui-tab-title">
                                         <li class="layui-this">正本</li>
                                         <li>副本</li>
-                                        <!--<li>排口列表</li>-->
                                     </ul>
                                     <div class="layui-tab-content">
                                         <!--正本-->
                                         <div class="layui-tab-item layui-show" >
                                             <div class="thumbs">
-                                                <div class="thumb thumb-input">
+                                                <div class="thumb thumb-input" id="thumb1">
                                                     <img src="../../img/plus.png">
-                                                    <input name="" class="layui-upload-file" type="file"
-                                                           accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
+                                                    <input name="thumb1" class="layui-upload-file" type="file"
+                                                           accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect1(this);">
                                                 </div>
                                             </div>
                                         </div>
                                         <!--副本-->
                                         <div class="layui-tab-item">
                                             <div class="thumbs">
-                                                <div class="thumb thumb-input">
+                                                <div class="thumb thumb-input" id="thumb2">
                                                     <img src="../../img/plus.png">
-                                                    <input name="" class="layui-upload-file" type="file"
-                                                           accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
+                                                    <input name="thumb2" class="layui-upload-file" type="file"
+                                                           accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect1(this);">
                                                 </div>
                                             </div>
                                         </div>
@@ -235,18 +245,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="layui-form-item" style="display: none">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">附件地址：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="attach">
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">id：</label>
-                                <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="id">
-                            </div>
-                        </div>
                         <button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="Licence-save" id="Licence-save">
-                            <i class="layui-icon"></i>提交
+                            <i class="layui-icon"></i>保存
                         </button>
                     </div>
                 </form>
@@ -254,26 +254,25 @@
             <div class="layui-colla-item">
                 <h2 class="layui-colla-title">企业污染设置照片</h2>
                 <div class="layui-colla-content layui-show">
-                    <div class="layui-form-item">
-                        <!--照片-->
-                        <div class="photo-area">
-                            <div class="thumbs">
-                                <div class="thumb thumb-input">
-                                    <img src="../../img/plus.png">
-                                    <input name="file" class="layui-upload-file" type="file"
-                                           accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
+                    <form class="layui-form">
+                        <div class="layui-form-item">
+                            <!--照片-->
+                            <div class="photo-area">
+                                <div class="thumbs" id="thumbs3">
+                                    <div class="thumb thumb-input">
+                                        <img src="../../img/plus.png">
+                                        <input name="thumb3" class="layui-upload-file" type="file"
+                                               accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect(this);">
+                                    </div>
                                 </div>
                             </div>
+                            <!--<div style="text-align: center">-->
+                                <!--<button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="photo-save" id="photo-save">-->
+                                    <!--<i class="layui-icon"></i>保存-->
+                                <!--</button>-->
+                            <!--</div>-->
                         </div>
-                        <div style="text-align: center">
-                            <button class="layui-btn layui-btn-normal layui-btn-small" lay-submit lay-filter="photo-save" id="photo-save">
-                                <i class="layui-icon"></i>提交
-                            </button>
-                            <!--<button class="layui-btn layui-btn-primary layui-btn-small" lay-submit lay-filter="close"  onclick="layui.companyMng.closeWin()">-->
-                                <!--<i class="layui-icon"></i>返回-->
-                            <!--</button>-->
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
             <div class="layui-colla-item">
@@ -308,32 +307,6 @@
                     </table>
                 </div>
             </div>
-            <!--<div class="layui-colla-item clgy_item">-->
-            <!--<h2 class="layui-colla-title">企业处理工艺</h2>-->
-            <!--<div class="layui-colla-content layui-show">-->
-            <!--<div class="layui-form-item">-->
-            <!--<div class="layui-inline">-->
-            <!--<label class="layui-form-label">工艺类型：</label>-->
-            <!--<input name="gylx" autocomplete="off" class="layui-input layui-input-inline" type="text">-->
-            <!--</div>-->
-            <!--<div class="layui-inline">-->
-            <!--<div class="layui-btn layui-btn-normal" id="clgy_upload" style="margin-top: -6px;">-->
-            <!--<i class="layui-icon">&#xe608;</i>上传照片-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--&lt;!&ndash;照片&ndash;&gt;-->
-            <!--<div class="photo-area clgy_photos">-->
-            <!--<div class="thumbs">-->
-            <!--<div class="thumb thumb-input" style="display: none">-->
-            <!--<img src="../../img/plus.png">-->
-            <!--<input name="file" class="layui-upload-file" type="file"-->
-            <!--accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.clgyImgSelect(this);">-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
-            <!--</div>-->
         </div>
     </div>
 </div>

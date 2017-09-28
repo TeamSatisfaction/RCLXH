@@ -190,6 +190,9 @@
 .photo-area .thumb-input { border: dashed 1px #bbbbbb; display: inline-block }
 .photo-area .thumb-input .layui-upload-file { position: absolute; width: 200px; height: 200px; opacity: 0; top: 0;}
 .photo-area .thumb-input img { height: 160px;  width:160px; margin: 20px;}
+.photo-area .thumb { border: dashed 1px #bbbbbb; display: inline-block }
+.photo-area .thumb .layui-upload-file { position: absolute; width: 200px; height: 200px; opacity: 0; top: 0;left:0}
+/*.photo-area .thumb img { height: 160px;  width:160px; margin: 20px;}*/
 .photo-area .thumb div {text-align: center}
 /*详情*/
 tr .align-right{width:120px;text-align: right}
@@ -309,8 +312,45 @@ tr .align-right{width:120px;text-align: right}
 .company-online-monitor .ces-content #ces_pie1{ height: 600px; width: 600px; float: right;  border-left: 1px solid #ccc}
 
 
+/*企业信息-设备工况*/
+/*.company-equip-sit{text-align: center}*/
+.company-equip-sit img{width: 1600px;height: 800px;}
+/*.company-equip-sit #prompt{position:absolute;top:155px;left: 710px;color: red;background-color: rgba(0,0,0,0.2); padding: 10px; border-radius: 5px;}*/
+.company-equip-sit #prompt{
+    top: 140px;
+    left: 640px;
+    position:absolute;
+    width:150px;
+    height:80px;
+    /*line-height:60px;*/
+    background-color:rgba(255, 255, 255, 0.7);
+    /*background:#F6F1B3;*/
+    /*box-shadow:#E9D985 2px 1px 3px;*/
+    border:1px solid #DACE7C;
+    border-radius:4px;
+    text-align:center;
+    color: red;
+}
+.company-equip-sit #prompt .nav{
+    position:absolute;
+    left:65px;
+    overflow:hidden;
+    width:0;
+    height:0;
+    border-width:10px;
+    border-style:solid dashed dashed dashed;
+}
+.company-equip-sit #prompt .nav-border {
+    top:80px;
+    border-color: rgba(255, 255, 255, 0.6) transparent transparent transparent;
+}
+.company-equip-sit #prompt .nav-background {
+    top:79px;
+    border-color: rgba(246, 241, 179, 0.6) transparent transparent transparent;
+}
+.company-equip-sit table tr th{text-align: center}
 /*地图图例*/
-.mapLegend {position: fixed; right: 30px; bottom: 30px; background-color: rgba(255,255,255,0.7); border-radius: 5px;}
+.mapLegend {position: fixed; right: 30px; bottom: 30px; background-color: rgba(0,0,0,0.8); border-radius: 5px;}
 .mapLegend div{padding: 5px 20px; text-align: center; color: #689ff2}
 .mapLegend p{padding: 5px 20px;}
 .mapLegend p img{height: 1.5em; margin-right: 10px;}

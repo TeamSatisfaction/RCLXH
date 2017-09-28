@@ -79,7 +79,21 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             }
         })
     };
-    /*选择图片*/
+    /*单选图片*/
+    var imgSelect1 = function (input) {
+        /*创建图片路径*/
+        var src = window.URL.createObjectURL(input.files[0]),
+            thumb =  $(input).parent(".thumb");
+        /*写HTML*/
+        var str =
+            '<img src="' + src + '"> ' +
+            '<i class="layui-icon" onclick="layui.companyMng.imgDelete1(this);">&#x1007;</i> ';
+        $(input).removeAttr("onchange").hide();
+        thumb.find("img").remove();
+        thumb.removeClass("thumb-input").prepend(str).show();
+        getImgLicence(input);
+    };
+    /*多选图片*/
     var imgSelect = function (input) {
         /*创建图片路径*/
         var src = window.URL.createObjectURL(input.files[0]),
@@ -88,46 +102,95 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         /*写HTML*/
         var str =
                 '<img src="' + src + '"> ' +
-                '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' ;
-
+                '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ';
+                // '<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="id">'+
+                // '<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="attach">';
         $(input).removeAttr("onchange").hide();
         thumb.find("img").remove();
         thumb.removeClass("thumb-input").prepend(str).show();
         thumb.after(thisContent);
         getImgSelection(input);
     };
-    /*移除选择的图片*/
-    var imgDelete = function (i) {
+    /*移除单个选择的图片*/
+    var imgDelete1 = function (i) {
         var thumb = $(i).parent(".thumb");
-        thumb.remove();
+        var fileId = thumb.find("img").attr("data-id");
+        $.ajax({
+            url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
+            post : 'delete',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            success : function (result){
+                if(result.code == 1000){
+                    $.ajax({
+                        url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
+                        post : 'delete',
+                        headers : {
+                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        success : function (result){
+                            console.log(result);
+                            thumb.empty();
+                            var str =
+                                '<img src="../../img/plus.png">'+
+                                '<input name="thumb1" class="layui-upload-file" type="file" ' +
+                                'accept="image/gif,image/jpeg,image/jpg,image/png" onchange="layui.companyMng.imgSelect1(this);">';
+                            thumb.html(str);
+                        }
+                    })
+                }
+            }
+        })
     };
-
-    /*处理工艺的图片事件*/
-    var clgyImgSelect = function (input) {
-        /*创建图片路径*/
-        var src = window.URL.createObjectURL(input.files[0]),
-            thumb =  $(input).parent(".thumb"),
-            thisContent = thumb[0].outerHTML;
-        /*写HTML*/
-        var str =
-            '<img src="' + src + '"> ' +
-            '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> '+
-            '<div>' + ($(".clgy_item").find("input[name='gylx']").val()) + '</div>';    //工艺类型
-        $(input).removeAttr("onchange").hide();
-        thumb.find("img").remove();
-        thumb.removeClass("thumb-input").prepend(str).show();
-        thumb.after(thisContent);
-        //重新定义上传按钮的事件
-        // $('#clgy_upload').off("click").click(function () {
-        //     $(".clgy_photos").find(".thumb-input").find("input").click()
-        // });
-        getImgSelection(input);
+    /*移除多个选择的图片*/
+    var imgDelete = function (i) {
+        var thumb = $(i).parent(".thumb"),
+            fileId = thumb.find("input[name='id']").val();
+        $.ajax({
+            url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
+            post : 'delete',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            success : function (result){
+                if(result.code == 1000){
+                    $.ajax({
+                        url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
+                        post : 'delete',
+                        headers : {
+                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        success : function (result){
+                            console.log(result);
+                            thumb.remove();
+                        }
+                    })
+                }
+            }
+        })
     };
-    //定义上传按钮事件
-    $('#clgy_upload').click(function () {
-        $(".clgy_photos").find(".thumb-input").find("input").click()
-    });
-
+    // /*处理工艺的图片事件*/
+    // var clgyImgSelect = function (input) {
+    //     /*创建图片路径*/
+    //     var src = window.URL.createObjectURL(input.files[0]),
+    //         thumb =  $(input).parent(".thumb"),
+    //         thisContent = thumb[0].outerHTML;
+    //     /*写HTML*/
+    //     var str =
+    //         '<img src="' + src + '"> ' +
+    //         '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> '+
+    //         '<div>' + ($(".clgy_item").find("input[name='gylx']").val()) + '</div>';    //工艺类型
+    //     $(input).removeAttr("onchange").hide();
+    //     thumb.find("img").remove();
+    //     thumb.removeClass("thumb-input").prepend(str).show();
+    //     thumb.after(thisContent);
+    //     getImgSelection(input);
+    // };
+    // //定义上传按钮事件
+    // $('#clgy_upload').click(function () {
+    //     $(".clgy_photos").find(".thumb-input").find("input").click()
+    // });
     /*获取所有图片的方法
     * urls: 图片的本地路径，若为C://fakepath/ 是被浏览器保护了
     * formData: 文件转为formData格式，在非IE浏览器可以用ajax的POST上传formData中文件
@@ -136,21 +199,14 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     * 		contentType: false,  	//必要
     * 		processData: false,  	//必要，防止ajax处理文件流
     * */
+    //提交企业附件
     var getImgSelection = function (input) {
-        var thumbs = $(input).parents(".photo-area").find(".thumbs"),
-            urls = [],
-            formData = new FormData(),
-            name = thumbs.find("input")[0].name,
-            str = '';
-        console.log(name);
-        /*遍历*/
-        $(thumbs).find('.thumb').each(function () {
-            formData.append($(this).index().toString(), $(this).find("input")[0].files[0]);
-            urls.push($(this).find("input").val());
-        });
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        var formData = new FormData();
+            formData.append(input.value, input.files[0]);
         /*formData打印不出来的，需要有接口才能测试*/
         $.ajax({
-            url : 'http://39.108.112.173:9001/v01/htwl/file/upload',
+            url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
             type: 'POST',           //必须是post
             data: formData,         //参数为formData
             contentType: false,  	//必要
@@ -159,17 +215,52 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             success : function (result){
-                var data = result.data;
-                for(var i = 0;i<data.length;i++){
-                    console.log(data.length);
-                    if(data.length == 1){
-                        str = data[i].uri
-                    }else{
-                        str += data[i].uri+ ",";
+                var data = result.data[0],
+                    field = {
+                        attachmentName : data.fileName,
+                        attachmentAddress : data.uri,
+                        attachmentGroup : 'enterprise',
+                        majorKey : Cid,
+                        createUser: 'admin'
+                    };
+                var thumb = $(input).parent(".thumb");
+                thumb.find("input[name = 'id']").val(data.fileId);
+                field = JSON.stringify(field);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    dataType : 'json',
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        console.log(result)
                     }
-                }
-               $('.layui-form-item').find("input[name='attach']").val(str);
-                console.log(str)
+                })
+            }
+        })
+    };
+    //提交许可证附件
+    var getImgLicence = function (input) {
+        var thumb = $(input).parent(".thumb");
+        var formData = new FormData();
+        formData.append(input.value, input.files[0]);
+        /*formData打印不出来的，需要有接口才能测试*/
+        $.ajax({
+            url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
+            type: 'POST',           //必须是post
+            data: formData,         //参数为formData
+            contentType: false,  	//必要
+            processData: false,  	//必要，防止ajax处理文件流
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            success : function (result){
+                var data = result.data[0];
+                thumb.find("img").attr("data-id",data.fileId);
+                thumb.find("img").attr("data-address",data.uri);
             }
         })
     };
@@ -189,12 +280,12 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         });
         layer.full(win);
     };
-    //form表单提交
+    //form表单提交-新增企业信息
     form.on('submit(company-save)',function (data) {
         data.field.areaCode = "500000-500153";
-        data.field.buildStatus = "123";
-        data.field.expectDate = "123";
-        data.field.orgCode = "production_enterprise";
+        data.field.orgCode = "production_enterprise"; //这里和enterpriseRole是反的
+        data.field.establishDate = '2017-9-28';
+        data.field.buildStatus = "已建成";
         var field = JSON.stringify(data.field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
@@ -202,17 +293,48 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
-            dataType : 'json',
+            // dataType : 'json',
             type : 'post',
             data : field,
             success : function (result){
                 console.log(result);
                 var  frameindex= parent.layer.getFrameIndex(window.name);
                 if(result.code == '1000'){
-                    parent.layer.close(frameindex);
-                    parent.location.reload(); // 父页面刷新
-                    layer.msg('提交成功！', {icon: 1});
+                    layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                        parent.layer.close(frameindex);
+                        parent.location.reload(); // 父页面刷新
+                    });
                     // parent.layer.msg('提交成功', { icon: 1, shade: 0.4, time: 1000 });
+                }else{
+                    layer.msg(result.message, {icon: 2});
+                }
+            }
+        });
+        return false;
+    });
+    //form表单提交-修改企业信息
+    form.on('submit(company-alter)',function (data) {
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');
+        data.field.areaCode = "500000-500153";
+        data.field.orgCode = "production_enterprise"; //这里和enterpriseRole是反的
+        // data.field.establishDate = 1506587532;
+        data.field.baseEnterpriseId = Cid;
+        var field = JSON.stringify(data.field);
+        console.log(field)
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            // dataType : 'json',
+            type : 'put',
+            data : field,
+            success : function (result){
+                console.log(result);
+                var  frameindex= parent.layer.getFrameIndex(window.name);
+                if(result.code == '1000'){
+                    layer.msg('保存成功！', {icon: 1});
                 }else{
                     layer.msg(result.message, {icon: 2});
                 }
@@ -256,67 +378,73 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             area : ['1200px','700px'],
             content : '../../pages/sysMng/alterCompanyView.html',
             btn: [ '返回'],
-            btnAlign: 'c',
-            success: function(layero,index){
-                var body = layer.getChildFrame('body', index);
-                var id = $('.layui-layer-content').attr('id');
-                loadCompanyData(id,body);
-                loadLicenseData(id,body);
-                loadPortData(id,body);
-            }
+            btnAlign: 'c'
         });
         layer.full(win);
     };
     //编辑许可证信息
     form.on('submit(Licence-save)',function (data) {
         var id = $('.layui-form-item').find("input[name='id']").val();//许可证id
-        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id'),
+            attach,
+            field;
+        var img1 = $('#thumb1').find("img").attr("data-address"),
+            img2 = $('#thumb2').find("img").attr("data-address");
+        if(!img1){
+            img1 = 'null'
+        }
+        if(!img2){
+            img2 = 'null'
+        }
+        attach = img1+","+img2;
+        data.field.attach = attach;
         data.field.enterpriseId = Cid;
-        var field = JSON.stringify(data.field);
-        if(id == ""){
+        if(id == ""){//新增
+            field = JSON.stringify(data.field);
             $.ajax({
                 url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
                 headers : {
                     'Content-type': 'application/json;charset=UTF-8',
                     Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                 },
-                dataType : 'json',
+                async : false,
                 type : 'post',
                 data : field,
                 success : function (result){
                     if(result.code == '1000'){
-                        // parent.layer.close(frameindex);
-                        // parent.location.reload(); // 父页面刷新
-                        layer.msg('提交成功！', {icon: 1});
+                        layer.msg('保存成功！', {icon: 1});
                     }else{
                         layer.msg(result.message, {icon: 2});
                     }
                 }
             })
-        }else{
+        }else{//修改
+            data.field.id = id;
+            field = JSON.stringify(data.field);
             $.ajax({
                 url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
                 headers : {
                     'Content-type': 'application/json;charset=UTF-8',
                     Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                 },
-                dataType : 'json',
+                async : false,
                 type : 'put',
                 data : field,
                 success : function (result){
                     if(result.code == '1000'){
-                        // parent.layer.close(frameindex);
-                        // parent.location.reload(); // 父页面刷新
-                        layer.msg('提交成功！', {icon: 1});
+                        layer.msg('保存成功！', {icon: 1});
                     }else{
                         layer.msg(result.message, {icon: 2});
                     }
                 }
             })
         }
+        return false;
     });
     //请求企业基本信息
-    var loadCompanyData = function(id,body){
+    var loadCompanyData = function(){
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
             headers : {
@@ -330,30 +458,72 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         data.controlLevel = '区(县)控'
                         break;
                 }
-                body.contents().find("input[name='name']").val(data.name);
-                body.contents().find("input[name='legalRepresentative']").val(data.legalRepresentative);
-                body.contents().find("input[name='head']").val(data.head);
-                body.contents().find("input[name='headPhone']").val(data.headPhone);
-                body.contents().find("input[name='orgCode']").val(data.orgCode);
-                body.contents().find("input[name='controlLevel']").val(data.controlLevel);
-                body.contents().find("input[name='envHead']").val(data.envHead);
-                body.contents().find("input[name='envHeadPhone']").val(data.envHeadPhone);
-                body.contents().find("input[name='processing']").val(data.processing);
-                body.contents().find("input[name='riverBasin']").val(data.riverBasin);
-                body.contents().find("input[name='lon']").val(data.lon);
-                body.contents().find("input[name='lat']").val(data.lat);
-                body.contents().find("input[name='address']").val(data.address);
-                console.log(body.contents().find("select[name='controlLevel']"));
-                body.contents().find("select[name='controlLevel']").children("option").each(function(){
-                    if (this.text == data.controlLevel) {
-                        this.setAttribute("selected","selected");
+                var qyImg = [{
+                    "url":"../../img/data/002.png"
+                },{
+                    "url":"../../img/data/001.png"
+                }];
+                //企业基本信息
+                $("input[name='name']").val(data.name);
+                $("input[name='legalRepresentative']").val(data.legalRepresentative);
+                $("input[name='head']").val(data.head);
+                $("input[name='headPhone']").val(data.headPhone);
+                $("input[name='orgCode']").val(data.orgCode);
+                $("input[name='controlLevel']").val(data.controlLevel);
+                $("input[name='envHead']").val(data.envHead);
+                $("input[name='envHeadPhone']").val(data.envHeadPhone);
+                $("input[name='buildStatusName']").val(data.buildStatusName);
+                $("input[name='processing']").val(data.processing);
+                $("input[name='riverBasin']").val(data.riverBasin);
+                $("input[name='lon']").val(data.lon);
+                $("input[name='lat']").val(data.lat);
+                $("input[name='expectDate']").val(data.expectDate);
+                $("input[name='address']").val(data.address);
+                if(title == "编辑企业信息"){
+                    var attach = data.attachments;
+                    if(attach.length > 0){
+                        /*创建图片路径*/
+                        var thumb =  $("#thumbs3").find(".thumb"),
+                            thisContent = thumb[0].outerHTML;
+                        layui.each(attach, function (index, item){
+                            var str =
+                                '<div class="thumb">'+
+                                '<img src="' + item.attachmentAddress + '"> ' +
+                                '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
+                                '</div>';
+                            thumb.before(str).show();
+                        })
                     }
-                });
+                }else{
+                    //企业照片
+                    var qyPhotos = "";
+                    for(var i in qyImg){
+                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 400px'> </div>"
+                    }
+                    $(".silder-main").html(qyPhotos);
+                    //图片点击
+                    layer.photos({
+                        photos: '.lay-img'
+                        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                    });
+
+                    $(".js-silder").silder({
+                        auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                        speed: 20,//轮播图运动速度
+                        sideCtrl: true,//是否需要侧边控制按钮
+                        bottomCtrl: true,//是否需要底部控制按钮
+                        defaultView: 0,//默认显示的索引
+                        interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                        activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                    });
+                }
             }
         })
     };
     //请求许可证基本信息
-    var loadLicenseData = function (id,body) {
+    var loadLicenseData = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/license/'+id+'',
             headers : {
@@ -363,19 +533,61 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             success : function (result){
                 var data = result.data[0];
                 if(data){
-                    body.contents().find("input[name='licenseCode']").val(data.licenseCode);
-                    body.contents().find("input[name='beginDate']").val(data.beginDate);
-                    body.contents().find("input[name='endDate']").val(data.endDate);
-                    body.contents().find("input[name='maxiMum']").val(data.maxiMum);
-                    body.contents().find("input[name='gross']").val(data.gross);
-                    body.contents().find("input[name='licenceType']").val(data.licenceType);
-                    body.contents().find("input[name='id']").val(data.id);
+                    $("input[name='licenseCode']").val(data.licenseCode);
+                    $("input[name='beginDate']").val(data.beginDate);
+                    $("input[name='endDate']").val(data.endDate);
+                    $("input[name='maxiMum']").val(data.maxiMum);
+                    $("input[name='gross']").val(data.gross);
+                    $("input[name='licenceType']").val(data.licenceType);
+                    $("input[name='id']").val(data.id);
+                    console.log(data.pic.length)
+                    if(title == '企业详情'){
+                        if(data.pic[1].attachmentAddress!='null'){
+                            $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[1].attachmentAddress);
+                        }else{
+                            var str = '<span>未上传正本</span>';
+                            $('#zhengben').html(str);
+                        }
+                        if(data.pic[0].attachmentAddress != 'null'){
+                            $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[0].attachmentAddress);
+                        }else{
+                            var str = '<span>未上传副本</span>';
+                            $('#fuben').html(str);
+                        }
+                    }else if(title == '编辑企业信息'){
+                        console.log(data)
+                        if(data.pic[0].attachmentAddress != 'null'){
+                            var thumb1 =  $('#thumb1');
+                            var str1 =
+                                '<img src="' + data.pic[0].attachmentAddress + '" data-address="'+data.pic[0].attachmentAddress+'" data-id="'+data.pic[0].id+'"> ' +
+                                '<i class="layui-icon" onclick="layui.companyMng.imgDelete1(this);">&#x1007;</i> ';
+                            thumb1.find("input").removeAttr("onchange").hide();
+                            thumb1.find("img").remove();
+                            thumb1.removeClass("thumb-input").prepend(str1).show();
+                        }
+                        if(data.pic[1].attachmentAddress != 'null'){
+                            var thumb2 =  $('#thumb2');
+                            var str2 =
+                                '<img src="' + data.pic[1].attachmentAddress + '" data-address="'+data.pic[0].attachmentAddress+'" data-id="'+data.pic[0].id+'"> ' +
+                                '<i class="layui-icon" onclick="layui.companyMng.imgDelete1(this);">&#x1007;</i> ';
+                            thumb2.find("input").removeAttr("onchange").hide();
+                            thumb2.find("img").remove();
+                            thumb2.removeClass("thumb-input").prepend(str2).show();
+                        }
+                    }
+                }else{
+                    var str = '<span>未上传正本</span>';
+                    $('#zhengben').html(str);
+                    var str1 = '<span>未上传副本</span>';
+                    $('#fuben').html(str1);
                 }
             }
         })
     };
     //请求排口信息
-    var loadPortData = function (id,body) {
+    var loadPortData = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
             headers : {
@@ -387,22 +599,32 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     var arr = [],
                         str = '';
                     layui.each(result, function(index, item){
-                        str = '<tr>' +
-                            '<td>' + item.pageNumber + '</td>' +
-                            '<td>' + item.dischargePortCode + '</td>' +
-                            '<td>' + item.dischargePortName + '</td>' +
-                            '<td>' + item.mode + '</td>' +
-                            '<td>' + item.whereabouts + '</td>' +
-                            '<td>' + item.emissionAmount + '</td>' +
-                            '<td style="text-align: center">'+
-                            // '<a href="#" onclick="layui.companyMng.lookPk(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '<a href="#" onclick="layui.companyMng.deletePK(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
-                            '</tr>';
+                        if(title == '编辑企业信息'){
+                            str = '<tr>' +
+                                '<td>' + item.pageNumber + '</td>' +
+                                '<td>' + item.dischargePortCode + '</td>' +
+                                '<td>' + item.dischargePortName + '</td>' +
+                                '<td>' + item.mode + '</td>' +
+                                '<td>' + item.whereabouts + '</td>' +
+                                '<td>' + item.emissionAmount + '</td>' +
+                                '<td style="text-align: center">'+
+                                '<a href="#" onclick="layui.companyMng.deletePK(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
+                                '</tr>';
+                        }else{
+                            str = '<tr>' +
+                                '<td>' + item.pageNumber + '</td>' +
+                                '<td>' + item.dischargePortCode + '</td>' +
+                                '<td>' + item.dischargePortName + '</td>' +
+                                '<td>' + item.mode + '</td>' +
+                                '<td>' + item.whereabouts + '</td>' +
+                                '<td>' + item.emissionAmount + '</td>' +
+                                '</tr>';
+                        }
                         arr.push(str);
                     });
                     return arr.join('');
                 };
-                body.contents().find("#dis-port-list").html(render(result));
+                $("#dis-port-list").html(render(result));
             }
         })
     };
@@ -420,13 +642,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             ,btnAlign: 'c'
             ,btn: ['提交', '返回'] //只是为了演示
             ,yes: function(index,layero){
-                // layero.find("iframe").contents().find('#company-save').click();
                 $("#pk-save").click();
             }
             ,zIndex: layer.zIndex //重点1
-            // ,success: function(layero){
-            //     layer.setTop(layero); //重点2
-            // }
         })
     };
     form.on('submit(pk-save)',function (data) {
@@ -445,30 +663,13 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 console.log(result);
                 layer.msg('新增成功！', {icon: 1,time:1000}, function() {
                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                    parent.layer.close(index); //再执行关闭
-                    parent.location.reload();
+                    layer.close(index); //再执行关闭
+                    location.reload();
                 });
             }
         })
+        return false;
     });
-    /*查看排口信息*/
-    // var lookPk = function (id) {
-    //     var pk_win =  $('#pk_window');
-    //     pk_win.find('input').attr('disabled', 'disabled');
-    //     pk_win.find('.thumb-input').hide();
-    //     layer.open({
-    //         type: 1
-    //         ,title: '查看排口'
-    //         ,area: ['800px']
-    //         ,shade: 0.3
-    //         ,content: pk_win
-    //         ,btnAlign: 'c'
-    //         ,btn: ['关闭']
-    //         ,success: function(layero,index){
-    //             loadPKData(id);
-    //         }
-    //     })
-    // };
     /*删除排口*/
     var deletePK = function (id) {
         layer.msg('是否确定删除该排口', {
@@ -484,7 +685,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     type : 'delete',
                     success : function (result){
                         if(result.resultcode == '2'){
-                            layer.msg('删除成功！', {icon: 1,time:2000}, function() {
+                            layer.msg('删除成功！', {icon: 1,time:1000}, function() {
                                 location.reload()
                             });
                         }else{
@@ -505,12 +706,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             area : ['1200px','700px'],
             content : '../../pages/sysMng/companyDataView.html',
             btn: [ '返回'],
-            btnAlign: 'c',
-            success: function(layero, index){
-                var body = layer.getChildFrame('body', index);
-                var id = $('.layui-layer-content').attr('id');
-                loadCompanyData(id,body);
-            }
+            btnAlign: 'c'
         });
         layer.full(index);
     };
@@ -562,19 +758,20 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         loadPage : loadPage,
         loadCompanyList : loadCompanyList,
         imgSelect: imgSelect,
+        imgSelect1 : imgSelect1,
+        imgDelete1 : imgDelete1,
         imgDelete: imgDelete,
         addCompanyWin : addCompanyWin,
         deleteCompanyData : deleteCompanyData,
         alterCompanyWin : alterCompanyWin,
         loadCompanyData : loadCompanyData,
         addPk : addPk,
-        // lookPk : lookPk,
         deletePK : deletePK,
-        clgyImgSelect : clgyImgSelect,
         detailCompanyWin : detailCompanyWin,
         alarmRuleList : alarmRuleList,
-        // loadAlarmRuleDetails : loadAlarmRuleDetails,
-        closeWin : closeWin
+        closeWin : closeWin,
+        loadLicenseData : loadLicenseData,
+        loadPortData : loadPortData
     };
     exports('companyMng',obj)
 })
