@@ -169,7 +169,7 @@
 /*#addMS .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 170px); }*/
 /*新增*/
 .add-form .layui-layout-admin{ margin-top: 10px;    margin-bottom: 40px; }
-.add-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 420px;}
+.add-form .layui-form .layui-form-item .layui-inline { width: 45%; min-width: 400px;}
 .add-form .layui-form .layui-form-item .layui-form-label { width: 100px; }
 .add-form .layui-form .layui-form-item .layui-input-inline { width: calc(100% - 200px); }
 /*详情*/

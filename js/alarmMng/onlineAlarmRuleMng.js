@@ -7,7 +7,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
-    var urlConfig1 = 'http://172.16.1.10:9702';
+    // var urlConfig1 = 'http://172.16.1.10:9702';
+    var urlConfig1 = 'http://172.16.1.102:9702';
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();

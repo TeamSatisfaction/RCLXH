@@ -13,7 +13,6 @@
         }).extend({
             networkMng : 'networkMng'
         }).use('networkMng',function(){
-//            layui.networkMng.loadCompanySelect();
             layui.networkMng.loadNetworkDetails();
         })
             .link('../../css/style.css'); //加载入口
@@ -41,15 +40,13 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">IP：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="ip" lay-verify="required">
-                    <span class="required">*</span>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="ip" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">密码：</label>
-                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="password" lay-verify="required">
-                    <span class="required">*</span>
+                    <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="password" lay-verify="">
                 </div>
             </div>
             <div class="layui-form-item">

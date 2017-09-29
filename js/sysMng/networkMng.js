@@ -49,6 +49,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.ip + '</td>' +
                             '<td>' + item.mn + '</td>' +
                             '<td>' + item.address + '</td>' +
+                            '<td>' + item.epName + '</td>' +
                             '<td>' + item.dischargePortName + '</td>' +
                             '<td style="text-align: center">'+
                             '<a href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
@@ -129,11 +130,40 @@ layui.define(['layer','element','laypage','form'],function (exports){
             btn: [ '提交','返回'],
             btnAlign: 'c',
             yes  : function (index,layero) {
-                layero.find("iframe").contents().find('#netWork-save').click();
-            },
-            success : function (layero,index) {
-                var body = layer.getChildFrame('body',index);
-                // var password = body.contents().find('')
+                var body = layer.getChildFrame('body',index),
+                    aname = body.contents().find("input[name='aname']").val(),
+                    mn = body.contents().find("input[name='mn']").val(),
+                    ip = body.contents().find("input[name='ip']").val(),
+                    password = body.contents().find("input[name='password']").val(),
+                    address = body.contents().find("input[name='address']").val();
+                var data = {
+                    id : id,
+                    aname : aname,
+                    mn : mn,
+                    ip : ip,
+                    password : password,
+                    address : address
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'put',
+                    data : field,
+                    success : function (result){
+                        if(result.code == 1000){
+                            layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                                location.reload(); // 父页面刷新
+                                layer.close(index);
+                            });
+                        }else{
+                            layer.msg('提交失败！', {icon: 2,time:2000});
+                        }
+                    }
+                })
             }
         });
         // layer.full(index);
@@ -161,7 +191,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 }
             })
         }
-    }
+    };
     //绑定企业排口win
     var bindCompanyWin = function (id) {
         var index = layer.open({
@@ -190,7 +220,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     type: 'put',
                     data: field,
                     success: function (result) {
-                        console.log(result)
                         if(result.code == '1000'){
                             layer.msg('绑定成功！', {icon: 1,time:1000},function () {
                                 layer.close(index);
@@ -260,8 +289,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //企业select change事件
     form.on('select(c_select1)', function(data){
-        Cid = data.value;
-        loadPKSelect(Cid);
+        loadPKSelect(data.value);
     });
     //删除数采仪
     var deleteNetWork = function (id) {
@@ -372,8 +400,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.equipmentType + '</td>' +
                             '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.deleteEquipment(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -443,8 +471,32 @@ layui.define(['layer','element','laypage','form'],function (exports){
         });
         return false;
     });
-    //修改设备窗口
-
+    //删除设备
+    var deleteEquipment = function (id) {
+        layer.msg('是否确定删除该设备', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.code == '1000'){
+                            layer.msg('删除成功！', {icon: 1,time:1000}, function() {
+                                location.reload()
+                            });
+                        }else{
+                            layer.msg('删除失败！', {icon: 2});
+                        }
+                    }
+                })
+            }
+        })
+    };
     //配置因子窗口
     var equipmentFactorWin = function () {
         var index = layer.open({
@@ -474,6 +526,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         bindCompanyWin : bindCompanyWin,
         loadCompanySelect : loadCompanySelect,
         addEquipmentWin : addEquipmentWin,
+        deleteEquipment : deleteEquipment,
         alterEquipmentWin : alterEquipmentWin,
         loadEquipmentData : loadEquipmentData,
         addEquipmentWin : addEquipmentWin,

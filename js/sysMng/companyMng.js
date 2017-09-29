@@ -6,7 +6,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         layer = layui.layer,
         laypage = layui.laypage,
         form = layui.form(),
-        // upload = layui.upload,
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
     var loadPage = function(url){
@@ -103,8 +102,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         var str =
                 '<img src="' + src + '"> ' +
                 '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ';
-                // '<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="id">'+
-                // '<input autocomplete="off" class="layui-input layui-input-inline" type="text" name="attach">';
         $(input).removeAttr("onchange").hide();
         thumb.find("img").remove();
         thumb.removeClass("thumb-input").prepend(str).show();
@@ -146,7 +143,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     /*移除多个选择的图片*/
     var imgDelete = function (i) {
         var thumb = $(i).parent(".thumb"),
-            fileId = thumb.find("input[name='id']").val();
+            fileId = thumb.find("img").attr("data-id");
         $.ajax({
             url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
             post : 'delete',
@@ -223,8 +220,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         majorKey : Cid,
                         createUser: 'admin'
                     };
+                console.log(data);
                 var thumb = $(input).parent(".thumb");
-                thumb.find("input[name = 'id']").val(data.fileId);
+                thumb.find("img").attr("data-id",data.id);
                 field = JSON.stringify(field);
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment',
@@ -236,7 +234,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     type : 'post',
                     data : field,
                     success : function (result){
-                        console.log(result)
+                        console.log(result);
+                        layui.msg('上传成功!',{icon:1})
                     }
                 })
             }
@@ -316,11 +315,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     form.on('submit(company-alter)',function (data) {
         var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');
         data.field.areaCode = "500000-500153";
-        data.field.orgCode = "production_enterprise"; //这里和enterpriseRole是反的
-        // data.field.establishDate = 1506587532;
+        data.field.enterpriseRole = "production_enterprise";
         data.field.baseEnterpriseId = Cid;
         var field = JSON.stringify(data.field);
-        console.log(field)
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
             headers : {
@@ -331,8 +328,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             type : 'put',
             data : field,
             success : function (result){
-                console.log(result);
-                var  frameindex= parent.layer.getFrameIndex(window.name);
                 if(result.code == '1000'){
                     layer.msg('保存成功！', {icon: 1});
                 }else{
@@ -357,9 +352,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     type : 'delete',
                     success : function (result){
                         if(result.code == '1000'){
-                            layer.close(index);
-                            location.reload(); // 页面刷新
-                            layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 });
+                            layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 },function () {
+                                layer.close(index);
+                                location.reload(); // 页面刷新
+                            });
                         }else {
                             layer.msg(result.resultdesc, {icon: 2});
                         }
@@ -452,17 +448,23 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             },
             type : 'get',
             success : function (result){
+                console.log(result)
                 var data = result.data;
                 switch (data.controlLevel){
                     case "area_control":
-                        data.controlLevel = '区(县)控'
+                        data.controlLevel = '区(县)控';
+                        break;
+                    case "country_control":
+                        data.controlLevel = '国控';
                         break;
                 }
-                var qyImg = [{
-                    "url":"../../img/data/002.png"
-                },{
-                    "url":"../../img/data/001.png"
-                }];
+                // var qyImg = [{
+                //     "url":"../../img/data/002.png"
+                // },{
+                //     "url":"../../img/data/001.png"
+                // }
+                // ];
+                var qyImg =data.attachments;
                 //企业基本信息
                 $("input[name='name']").val(data.name);
                 $("input[name='legalRepresentative']").val(data.legalRepresentative);
@@ -495,27 +497,32 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         })
                     }
                 }else{
-                    //企业照片
-                    var qyPhotos = "";
-                    for(var i in qyImg){
-                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 400px'> </div>"
-                    }
-                    $(".silder-main").html(qyPhotos);
-                    //图片点击
-                    layer.photos({
-                        photos: '.lay-img'
-                        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-                    });
+                    if(qyImg.length>0){
+                        //企业照片
+                        var qyPhotos = "";
+                        for(var i in qyImg){
+                            qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>"
+                        }
+                        $(".silder-main").html(qyPhotos);
+                        //图片点击
+                        layer.photos({
+                            photos: '.lay-img'
+                            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                        });
 
-                    $(".js-silder").silder({
-                        auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-                        speed: 20,//轮播图运动速度
-                        sideCtrl: true,//是否需要侧边控制按钮
-                        bottomCtrl: true,//是否需要底部控制按钮
-                        defaultView: 0,//默认显示的索引
-                        interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-                        activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
-                    });
+                        $(".js-silder").silder({
+                            auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                            speed: 20,//轮播图运动速度
+                            sideCtrl: true,//是否需要侧边控制按钮
+                            bottomCtrl: true,//是否需要底部控制按钮
+                            defaultView: 0,//默认显示的索引
+                            interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                            activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                        });
+                    }else{
+                        var str = '<p style="text-align: center">未上传企业照片</p>';
+                        $(".silder-main").html(str);
+                    }
                 }
             }
         })

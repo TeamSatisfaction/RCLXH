@@ -53,7 +53,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.lat + '</td>' +
                             '<td style="text-align: center">'+
                             '<a href="#" onclick="layui.MSMng.alterMSWin(\''+item.baseEnterpriseId+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.MSMng.deleteMS(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -84,9 +84,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
             content : '../../pages/sysMng/addMsView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',
-            // success: function(layero,index){
-            //
-            // },
             yes  : function (index,layero) {
                 layero.find("iframe").contents().find('#ms-save').click();
             }
@@ -94,10 +91,13 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //form表单提交
     form.on('submit(formDemo)', function(data){
+        var title =  $(window.parent.document).find('.layui-layer-title').text();
+        console.log(title)
         data.field.areaCode = "500000-500153";
-        data.field.buildStatus = "123";
-        data.field.expectDate = "123";
-        data.field.orgCode = "monitoringStation_enterprise";
+        data.field.buildStatus = "已建成";
+        data.field.expectDate = "2017";
+        data.field.establishDate = '2017-9-28';
+        data.field.enterpriseRole = "monitoringStation_enterprise";
         var field = JSON.stringify(data.field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
@@ -109,7 +109,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             type : 'post',
             data : field,
             success : function (result){
-                if(result.resultdesc == '成功'){
+                if(result.code == 1000){
                     layer.msg('提交成功！', {icon: 1,time:1000},function () {
                         parent.location.reload(); // 父页面刷新
                         layer.close(1);
@@ -132,33 +132,108 @@ layui.define(['layer','element','laypage','form'],function (exports){
             btn: [ '提交','返回'],
             btnAlign: 'c',
             yes  : function (index,layero) {
-                layero.find("iframe").contents().find('#ms-save').click();
+                var body = layer.getChildFrame('body',index),
+                    name = body.contents().find("input[name='name']").val(),
+                    head = body.contents().find("input[name='head']").val(),
+                    headPhone = body.contents().find("input[name='headPhone']").val(),
+                    lon = body.contents().find("input[name='lon']").val(),
+                    lat = body.contents().find("input[name='lat']").val(),
+                    address = body.contents().find("input[name='address']").val();
+                var data = {
+                    name : name,
+                    head : head,
+                    headPhone : headPhone,
+                    lon : lon,
+                    lat : lat,
+                    address : address,
+                    baseEnterpriseId : id,
+                    industryCodes : '行业类别',
+                    areaCode : "500000-500153",
+                    enterpriseRole : "monitoringStation_enterprise"
+                };
+                var field = JSON.stringify(data);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/enterprise',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'put',
+                    data : field,
+                    success : function (result){
+                        if(result.code == 1000){
+                            layer.msg('修改成功！', {icon: 1,time:1000},function () {
+                                location.reload(); // 父页面刷新
+                                layer.close(index);
+                            });
+                        }else{
+                            layer.msg('修改失败！', {icon: 2});
+                        }
+                    }
+                })
             }
         })
-    }
+    };
    //载入监测站详情
     var loadMSDetails = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//监测站id
             title =  $(window.parent.document).find('.layui-layer-title').text();
         if(title == '修改监控站'){
             $.ajax({
-                url :''+urlConfig+'/v01/htwl/lxh/water/query/'+id+'',
+                url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
                 headers : {
                     Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                 },
                 type : 'get',
                 success : function (result){
                     console.log(result)
+                    var data = result.data;
+                    if(data){
+                        $("input[name='name']").val(data.name);
+                        $("input[name='head']").val(data.head);
+                        $("input[name='headPhone']").val(data.headPhone);
+                        $("input[name='lon']").val(data.lon);
+                        $("input[name='lat']").val(data.lat);
+                        $("input[name='address']").val(data.address);
+                    }
                 }
             })
         }
+    };
+    //删除监测站
+    var deleteMS = function (id) {
+        layer.msg('是否确定删除该监测站', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.code == '1000'){
+                            layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 },function () {
+                                layer.close(index);
+                                location.reload(); // 页面刷新
+                            });
+                        }else {
+                            layer.msg(result.resultdesc, {icon: 2});
+                        }
+                    }
+                })
+            }
+        });
     };
     var obj = {
         loadPage : loadPage,
         loadMSData : loadMSData,
         addMSWin : addMSWin,
         alterMSWin : alterMSWin,
-        loadMSDetails : loadMSDetails
+        loadMSDetails : loadMSDetails,
+        deleteMS : deleteMS
     };
     /*输出内容，注意顺序*/
     exports('MSMng',obj)

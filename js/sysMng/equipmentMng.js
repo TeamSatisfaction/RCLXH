@@ -63,7 +63,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>' +
                                     '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>' +
                                     '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.equipmentFactorWin(\''+type+'\',\''+item.id+'\')" title="配置因子"><img src="../../img/mng/configure.png"></a>' +
-                                    '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="删除"><img src="../../img/mng/delete.png"></a>' +
+                                    '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.equipmentMng.deleteEquipment(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a>' +
                                     '</tr>';
                                 arr.push(str);
                             });
@@ -107,7 +107,6 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             data : field,
             type: 'post',
             success: function (result) {
-                console.log(result)
                 var row = result.data.rows;
                 if(row == null){
                     $("#dau").empty();
@@ -178,6 +177,32 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         });
         return false;
     });
+    //删除设备
+    var deleteEquipment = function (id) {
+        layer.msg('是否确定删除该设备', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/'+id+'',
+                    headers : {
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'delete',
+                    success : function (result){
+                        if(result.code == '1000'){
+                            layer.msg('删除成功！', {icon: 1,time:1000}, function() {
+                                location.reload()
+                            });
+                        }else{
+                            layer.msg('删除失败！', {icon: 2});
+                        }
+                    }
+                })
+            }
+        })
+    };
     //配置因子窗口
     var equipmentFactorWin = function (type,id) {
         var a = [];
@@ -328,6 +353,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         loadEquipmentData : loadEquipmentData,
         loadMnSelect : loadMnSelect,
         addEquipmentWin : addEquipmentWin,
+        deleteEquipment : deleteEquipment,
         equipmentFactorWin : equipmentFactorWin,
         loadAllFactorData : loadAllFactorData,
         loadFactorData : loadFactorData,
