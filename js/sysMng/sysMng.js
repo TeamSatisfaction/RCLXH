@@ -24,9 +24,9 @@ layui.define(['layer', 'element','form'],function (exports) {
         }
     };
 
-    function loadAuthor(){
+    function loadAuthen(){
         var authList = JSON.parse(localStorage.getItem('authList'));
-        $(".layui-btn").each(function(){
+        $(".auth-btn").each(function(){
             var flag = false;
             for(var i in authList){
                 if(authList[i].authId == $(this).attr('data-authId')){
@@ -39,7 +39,7 @@ layui.define(['layer', 'element','form'],function (exports) {
             if(!flag){ $(this).hide() }
         });
     }
-    loadAuthor();
+    loadAuthen();
 
     var obj = {
         loadPage : loadPage,
