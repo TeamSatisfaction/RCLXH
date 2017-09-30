@@ -7,7 +7,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
         element = layui.element(),
         form = layui.form();
     var verifyCode;
-
     initVerify = function () {
         verifyCode = new GVerify("verify_image");
     };
@@ -22,8 +21,44 @@ layui.define(['layer', 'form', 'element'], function(exports){
         else if(!password)
             layer.msg("请输入密码");
         console.log(username, password)
+        var data = {
+            userName : username,
+            password : hex_md5(password)
+        };
+        var field = JSON.stringify(data);
+        console.log(field)
+        $.ajax({
+            url :'http://172.16.1.102:8095/v01/htwl/lxh/login',
+            headers : {
+                'Content-type': 'application/json;charset=UTF-8'
+            },
+            type : 'post',
+            data : field,
+            success : function (result) {
+                if(result.resultcode){
+                    layer.msg(result.resultdesc,{icon:2,time:1000},function () {
+                        verifyCode.refresh();
+                        $('input[name="username"]').val('');
+                        $('input[name="password"]').val('');
+                        $('#verify').val('');
+                    })
+                }else if(result.userName){
+                    window.dataConfig = result;
+                    window.location.href="index.html";
+                    setCookie("userName",result.userName);
+                    setCookie("userId",result.userId)
+                }
+            }
+        })
     };
 
+    function setCookie(name,value)
+    {
+        var Days = 30;
+        var exp = new Date();
+        exp.setTime(exp.getTime() + Days*24*60*60*1000);
+        document.cookie = name + "="+ escape (value) + ";expires=" + exp.toGMTString();
+    };
     layer.open({
         type : 1,
         content : $('#login_container')

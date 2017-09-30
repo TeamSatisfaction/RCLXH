@@ -15,23 +15,9 @@
             base: 'js/' //你的模块目录
         }).use('app'); //加载入口
     </script>
-    <!--<style>-->
-        <!--#time-input1 {position: fixed; bottom: 100px; left: 0px; z-index: 20000; width: 200px; background-color: orange;}-->
-        <!--#time-input2 {position: fixed; bottom: 20px; left: 0px; z-index: 20000; width: 200px; background-color: orange;}-->
-        <!--#time-input3 {position: fixed; bottom: 20px; left: 220px; z-index: 20000; width: 200px; background-color: orange;}-->
-    <!--</style>-->
 </head>
 <body class="main_body">
     <div class="layui-layout layui-layout-admin">
-        <!--&lt;!&ndash; 单个 &ndash;&gt;-->
-        <!--<input type="date" class="layui-input" id="time-input1" value="2017-01-01"-->
-               <!--onClick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'#F{\'new Date()\'}'})"/>-->
-        <!--&lt;!&ndash; 多个 &ndash;&gt;-->
-        <!--<input type="date" class="layui-input" id="time-input2" value="2017-01-01"-->
-               <!--onClick="WdatePicker({dateFmt:'yyyy-MM-dd', maxDate:'#F{$dp.$D(\'time-input3\')||\'new Date()\'}'})"/>-->
-        <!--<input type="date" class="layui-input" id="time-input3" value="2017-01-01"-->
-               <!--onClick="WdatePicker({dateFmt:'yyyy-MM-dd', minDate:'#F{$dp.$D(\'time-input2\')}', maxDate:new Date()})"/>-->
-
         <!--标题栏-->
         <div class="layui-header header">
             <div class="layui-inline logo layui-icon" onclick="layui.index.loadPage('pages/Map/Map.html')"></div>
@@ -41,10 +27,10 @@
                 <li class="layui-nav-item">
                     <a href="javascript:;">
                         <img src="img/index/name-blue.png" style="width: 18px; margin: -2px 4px 0 4px;   "/>
-                        <span>用户名</span>
+                        <span id="nametext"></span>
                     </a>
                     <dl class="layui-nav-child">
-                        <dd><a href="login.html">退出</a></dd>
+                        <dd><a onclick="layui.index.signOut()">退出</a></dd>
                     </dl>
                 </li>
             </ul>

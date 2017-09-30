@@ -7,15 +7,25 @@
     <style>.layui-layer-page{background: transparent!important;}</style>
     <script src="layUi/layui.js"></script>
     <script src="js/lib/gVerify.js"></script>
+    <script src="js/lib/md5.js"></script>
     <script>
         layui.link('css/style.css');
         layui.config({
             base: 'js/' //你的模块目录
         }).use('login'); //加载入口
     </script>
-
+    <script>
+        //回车时，默认是登陆
+        function on_return(){
+            if(window.event.keyCode == 13){
+                if (document.all('login_btn')!=null){
+                    document.all('login_btn').click();
+                }
+            }
+        }
+    </script>
 </head>
-<body class="main_body">
+<body class="main_body"  onkeydown="on_return();">
     <div id="login_container">
         <!--<h1>荣昌区环保物联网在线监控平台</h1>-->
         <!--<h1>登陆</h1>-->
@@ -35,7 +45,7 @@
                 <div id="login_reset" class="layui-btn layui-btn-normal">
                     重置
                 </div>
-                <div id="login_btn" class="layui-btn layui-btn-normal" lay-filter="formDemo" onclick="window.location.href='index.html';">
+                <div id="login_btn" class="layui-btn layui-btn-normal" lay-filter="formDemo">
                     登陆
                 </div>
             </div>

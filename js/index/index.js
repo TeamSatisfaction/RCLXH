@@ -175,6 +175,27 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         };
         return menuData[name];
     };
+    var signOut = function () {
+        delCookie("userName");
+        delCookie("userId");
+        window.location.href="login.html";
+    };
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    };
+    function delCookie(name)
+    {
+        var exp = new Date();
+        exp.setTime(exp.getTime() - 1);
+        var cval=getCookie(name);
+        if(cval!=null)
+            document.cookie= name + "="+cval+";expires="+exp.toGMTString();
+    }
     //按钮管理
     var buttonMng = function () {
         $.ajax({
@@ -185,12 +206,22 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
                 console.log(msg)
             }
         })
-    }
+    };
+    layer.ready(function(){
+        var userName = getCookie("userName");
+        if(userName){
+            $("#nametext").html(userName);
+        }else{
+            window.location.href = "login.html";
+        }
+        // console.log(dataConfig);
+    });
     /*输出内容，注意顺序*/
     var obj = {
         init : init,
         loadPage : loadPage,
         menuMng : menuMng,
+        signOut : signOut,
         buttonMng : buttonMng
     };
     //输出test接口
