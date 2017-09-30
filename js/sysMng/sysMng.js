@@ -23,6 +23,24 @@ layui.define(['layer', 'element','form'],function (exports) {
             case '5':layui.roleMng.loadRoleData();break;
         }
     };
+
+    function loadAuthor(){
+        var authList = JSON.parse(localStorage.getItem('authList'));
+        $(".layui-btn").each(function(){
+            var flag = false;
+            for(var i in authList){
+                if(authList[i].authId == $(this).attr('data-authId')){
+                    $(this).attr('data-ajaxUrl', authList[i].url);
+                    $(this).attr('data-ajaxType', authList[i].type);
+                    $(this).show();
+                    flag = true;
+                }
+            }
+            if(!flag){ $(this).hide() }
+        });
+    }
+    loadAuthor();
+
     var obj = {
         loadPage : loadPage,
         getTab: getTab

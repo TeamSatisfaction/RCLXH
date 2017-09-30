@@ -203,7 +203,8 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             dataType : 'json',
             type: 'get',
             success: function(msg){
-                console.log(msg)
+                var authList = msg.authList;
+                localStorage.setItem('authList', JSON.stringify(authList));
             }
         })
     };
@@ -212,9 +213,10 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         if(userName){
             $("#nametext").html(userName);
         }else{
-            window.location.href = "login.html";
+            // window.location.href = "login.html";
         }
     });
+
     /*输出内容，注意顺序*/
     var obj = {
         init : init,
