@@ -43,7 +43,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
                         $('#verify').val('');
                     })
                 }else if(result.userName){
-                    window.dataConfig = result;
                     window.location.href="index.html";
                     setCookie("userName",result.userName);
                     setCookie("userId",result.userId)
