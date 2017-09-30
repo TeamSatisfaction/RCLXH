@@ -7,8 +7,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
-    // var urlConfig1 = 'http://172.16.1.10:9702';
-    var urlConfig1 = 'http://172.16.1.102:9702';
+    var urlConfig1 = 'http://172.16.1.10:9702';
+    // var urlConfig1 = 'http://172.16.1.102:9702';
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
@@ -188,6 +188,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                 layer.msg('新增成功！', {icon: 1,time:1000}, function() {
                                     layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
+                                    addAlarmRuleTime(result.param.id);
                                 });
                             }
                         },
@@ -285,6 +286,79 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             })
         }
     };
+    //新增上报时间
+    var addAlarmRuleTime = function (id) {
+        layer.open({
+            title :'新增报警时间',
+            // id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1000px','500px'],
+            content : '../../pages/alarmMng/alarmRuleTime.html',
+            btn: [ '提交','返回'],
+            btnAlign: 'c',
+            yes  : function (index,layero) {
+                var body = layer.getChildFrame('body',index);
+                var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
+                var d={
+                    refid : id
+                };
+                body.contents().find("form").find('input,select').each(function(){
+                    d[this.name]=this.value
+                });
+                if(threeLevelTime == ""){
+                    d.threeLevelType = '1';
+                    d.threeLevelTime = "999999999";
+                }
+                var field = JSON.stringify(d);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        console.log(result)
+                        if(result.resultcode == "2"){
+                            layer.msg('新增成功！', {icon: 1,time:1000}, function() {
+                                layer.close(index); //再执行关闭
+                            });
+                        }else{
+                            layer.msg('新增失败！', {icon: 2,time:1000}, function() {
+                                layer.close(index); //再执行关闭
+                            });
+                        }
+                    }
+                })
+            }
+        })
+    };
+    //角色select
+    var loadRoleSelect = function () {
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+
+                if(result == null){
+                    // $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                }else{
+                    for(var i in result){
+                        $("select[name='oneLevelType']").append("<option value="+result[i].roleId+">"+result[i].roleName+"</option>");
+                        $("select[name='twoLevelType']").append("<option value="+result[i].roleId+">"+result[i].roleName+"</option>");
+                        $("select[name='threeLevelType']").append("<option value="+result[i].roleId+">"+result[i].roleName+"</option>");
+                    }
+                }
+                form.render('select');
+                loadAlarmRuleDetails();
+            }
+        })
+    };
     //设备select
     var loadEquipmentSelect = function () {
         $.ajax({
@@ -339,7 +413,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 id: id,
                 moveOut: true,
                 area: ['1000px', '600px'],
-                content: '../../pages/alarmMng/onlineAlarmRule.html',
+                content: '../../pages/alarmMng/alterOnlineAlarmRule.html',
                 btn: ['提交', '返回'],
                 btnAlign: 'c',
                 yes: function (index, layero) {
@@ -571,6 +645,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             })
         }
     };
+    //载入
     //删除规则
     var deleteAlarmRule = function (id) {
         layer.msg('是否确定删除该规则', {
@@ -599,11 +674,13 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
     var obj = {
         loadAlarmRuleList : loadAlarmRuleList,
         addAlarmRuleWin : addAlarmRuleWin,
+        loadRoleSelect : loadRoleSelect,
         loadEquipmentSelect : loadEquipmentSelect,
         loadFactorSelect : loadFactorSelect,
         alterAlarmRuleWin : alterAlarmRuleWin,
         loadAlarmRuleDetails : loadAlarmRuleDetails,
-        deleteAlarmRule : deleteAlarmRule
+        deleteAlarmRule : deleteAlarmRule,
+        addAlarmRuleTime : addAlarmRuleTime
     };
     exports('onlineAlarmRuleMng',obj)
 })

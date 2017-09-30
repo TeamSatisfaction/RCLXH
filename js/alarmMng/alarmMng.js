@@ -141,7 +141,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.enterpriseName + '</td>' +
                             '<td>' + item.alarmTime + '</td>' +
-                            '<td>' + item.ruleName + '</td>' +
+                            '<td>' + item.remark + '</td>' +
                             '<td>' + item.alarmType+ '</td>' +
                             '<td>' + item.status + '</td>' +
                             // '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')">详情</button></td>' +

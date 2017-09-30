@@ -49,9 +49,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.name + '</td>' +
-                            '<td>' + item.address + '</td>' +
+                            '<td>' + item.address + '</td>'+
                             '<td>' + item.head+ '</td>' +
-                            '<td>' + item.headPhone + '</td>' +
+                            '<td>' + item.headPhone + '</td>'+
                             '<td style="text-align: center"><a href="#" onclick="layui.pollutionMng.detailCompanyWin(\''+item.baseEnterpriseId+'\')" title="详情"><img src="../../img/mng/details.png"></a></td>'
                             '</tr>';
                         arr.push(str);

@@ -114,9 +114,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
-            // websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -197,7 +197,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             cn : 2011
         };
         var unit;
-        console.log(Fname);
+        // console.log(Fname);
         switch (Fname){
             case "COD" :
                 unit = "mg/L";
@@ -239,7 +239,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             success: function (result) {
                 var arr = [],
                     i;
-                if(result.onlineTime){
+                if(result.onlineData != null){
                     var time = result.onlineTime,
                         onlineData = result.onlineData.data[0].online;
                     for(i=0;i<time.length;i++){
@@ -363,7 +363,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             data: field,
             success: function (result) {
                 var list = result.data.list;
-                console.log(result);
+                // console.log(result);
                 $("#c_select").empty();
                 if(list == null){
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");
@@ -489,6 +489,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 $("#f_select").empty();
                 if(row == null){
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                    Fname = '无监测因子';
                 }else{
                     for(var i in row){
                         $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
@@ -513,43 +514,44 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     });
     //设备select change事件
     form.on('select(e_select)', function(data){
-        var Fid = data.value;
-        // loadFactorSelect(data.value);
-        var data1 = {
-            pageNumber : 1,
-            pageSize : 1000,
-            factorMap : {
-                equipmentId : Fid
-            }
-        };
-        var field = JSON.stringify(data1);
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
-            headers: {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'post',
-            data: field,
-            success: function (result){
-                var row = result.data.rows;
-                $("#f_select").empty();
-                if(row == null){
-                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
-                    Fname = '无监测因子';
-                }else{
-                    for(var i in row){
-                        $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
-                    }
-                    code=row[0].factorCode;
-                    Fname=row[0].factorName;
-                }
-                form.render('select');
-                needRefresh = true;
-                initChart();
-            }
-        })
+        // var Fid = data.value;
+        loadFactorSelect(data.value);
+        // var data1 = {
+        //     pageNumber : 1,
+        //     pageSize : 1000,
+        //     factorMap : {
+        //         equipmentId : Fid
+        //     }
+        // };
+        // var field = JSON.stringify(data1);
+        // $.ajax({
+        //     url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
+        //     headers: {
+        //         'Content-type': 'application/json;charset=UTF-8',
+        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        //     },
+        //     type: 'post',
+        //     data: field,
+        //     success: function (result){
+        //         var row = result.data.rows;
+        //         $("#f_select").empty();
+        //         if(row == null){
+        //             $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+        //             Fname = '无监测因子';
+        //         }else{
+        //             for(var i in row){
+        //                 $("#f_select").append("<option value="+row[i].factorCode+">"+row[i].factorName+"</option>");
+        //             }
+        //             code=row[0].factorCode;
+        //             Fname=row[0].factorName;
+        //         }
+        //         form.render('select');
+        //         needRefresh = true;
+        //         initChart();
+        //     }
+        // })
     });
+
     //环境统计list
     function loadMonthlydata() {
         var myDate = new Date(),
@@ -612,7 +614,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             }
         })
     };
-
     //输出test接口
     exports('map', {
         btnClick : btnClick,

@@ -27,7 +27,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     /*添加点位*/
     var addPoint = function (point, type, isAlt, attr) {
         var symbolUrl;
-        console.log(attr);
+        // console.log(attr);
         if(type === "production_enterprise"){
             symbolUrl = "../../img/index/qiye.png"
         }else if (type === "monitoringStation_enterprise"){
@@ -63,20 +63,15 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             data: field,
             success: function (result) {
                 var list = result.data.list;
-                console.log(list);
                 if(list){
                     for(var i in list){
                         var lon = list[i].lon,
                             lat = list[i].lat,
-                            // name = list[i].name,
-                            // address = list[i].address,
                             enterpriseRole = list[i].enterpriseRole;
                         var pt = new esri.geometry.Point(lon, lat, new esri.SpatialReference({wkid:4326})),
                             type = enterpriseRole;
                         addPoint(pt, type, true, list[i]);
                     }
-                    // console.log(graphicLayer)
-                    // map.addLayer(graphicLayer);
                 }
             }
         })
@@ -102,7 +97,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             titleHtml = attr.name;
             contentHtml += "<p>企业名称：<span>"+attr.name+"</span></p>"
                 +"<p>企业地址：<span>"+attr.address+"</span></p>"
-                +"<p>行业类别：<span>医药制造业</span></p>"
+                // +"<p>行业类别：<span>医药制造业</span></p>"
                 +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
         } else if (symbolUrl.indexOf("mn") != -1) {
             titleHtml = attr.name;

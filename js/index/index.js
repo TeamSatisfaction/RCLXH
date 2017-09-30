@@ -174,13 +174,24 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             }
         };
         return menuData[name];
+    };
+    //按钮管理
+    var buttonMng = function () {
+        $.ajax({
+            url: 'data/menuData.json',
+            dataType : 'json',
+            type: 'get',
+            success: function(msg){
+                console.log(msg)
+            }
+        })
     }
-
     /*输出内容，注意顺序*/
     var obj = {
         init : init,
         loadPage : loadPage,
-        menuMng : menuMng
+        menuMng : menuMng,
+        buttonMng : buttonMng
     };
     //输出test接口
     exports('index', obj);

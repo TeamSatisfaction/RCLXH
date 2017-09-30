@@ -16,7 +16,7 @@
         }).use('onlineAlarmRuleMng',function () {
             layui.onlineAlarmRuleMng.loadEquipmentSelect();
             layui.onlineAlarmRuleMng.loadFactorSelect();
-//            layui.onlineAlarmRuleMng.loadAlarmRuleDetails();
+            layui.onlineAlarmRuleMng.loadRoleSelect();
         }); //加载入口
     </script>
 </head>
@@ -27,10 +27,10 @@
             <h2 class="layui-colla-title">基本信息</h2>
             <div class="layui-colla-content layui-show" style="text-align: center">
                 <!--<div class="layui-form-item">-->
-                    <!--<div class="layui-inline">-->
-                        <!--<label class="layui-form-label">规则名称：</label>-->
-                        <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="ruleName" value="在线报警规则">-->
-                    <!--</div>-->
+                <!--<div class="layui-inline">-->
+                <!--<label class="layui-form-label">规则名称：</label>-->
+                <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="ruleName" value="在线报警规则">-->
+                <!--</div>-->
                 <!--</div>-->
                 <div class="layui-form-item">
                     <div class="layui-inline">
@@ -131,6 +131,78 @@
                                 <option value="2">or</option>
                             </select>
                         </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">上报时间</h2>
+            <div class="layui-colla-content layui-show" style="text-align: center">
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警类型：</label>
+                        <input name="oneLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="一级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="required" lay-search="" name="oneLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警时间(分)：</label>
+                        <input name="oneLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="required">
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警类型：</label>
+                        <input name="twoLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="二级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="" lay-search="" name="twoLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警时间(分)：</label>
+                        <input name="twoLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警类型：</label>
+                        <input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="一级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="" lay-search="" name="threeLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警时间(分)：</label>
+                        <input name="threeLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
                     </div>
                 </div>
             </div>
