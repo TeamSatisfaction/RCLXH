@@ -39,11 +39,10 @@ layui.define(['layer', 'element','form'],function (exports) {
             if(!flag){ $(this).hide() }
         });
     }
-    loadAuthen();
-
     var obj = {
         loadPage : loadPage,
-        getTab: getTab
+        getTab: getTab,
+        loadAuthen : loadAuthen
     };
     /*输出内容，注意顺序*/
     exports('sysMng',obj)

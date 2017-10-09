@@ -103,14 +103,15 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.idCard+ '</td>' +
                             '<td>' + item.status + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="权限配置"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="初始化密码"><img src="../../img/mng/password.png"></a></td>'+
+                            '<a class="auth-btn" data-authId="81" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="分配角色"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="57" href="#" onclick="" title="初始化密码"><img src="../../img/mng/password.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 uTobody.html(render(uData, obj.curr));
+                layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo4',

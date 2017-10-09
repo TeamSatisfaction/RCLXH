@@ -35,44 +35,21 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         url : 'http://api.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
         // url : 'http://login.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
         method : 'post',
-        // type : 'json',
         success: function(res){
             console.log(res);
         }
     });
-
-    // var initTimeSelect = function () {
-    //     var st = document.getElementById('startTime'),
-    //         et = document.getElementById('endTime');
-    //     var start = {
-    //         elem: st,
-    //         min: '1909-06-16 23:59:59', //设定最小日期为当前日期
-    //         max: laydate.now(), //最大日期
-    //         istime: true,
-    //         istoday: true,
-    //         choose: function (datas) {
-    //             end.min = datas; //开始日选好后，重置结束日的最小日期
-    //             end.start = datas; //将结束日的初始值设定为开始日
-    //         }
-    //     };
-    //     var end = {
-    //         elem: et,
-    //         min: laydate.now(),
-    //         max: '2099-06-16 23:59:59',
-    //         istime: true,
-    //         istoday: true,
-    //         choose: function (datas) {
-    //             start.max = datas; //结束日选好后，重置开始日的最大日期
-    //         }
-    //     };
-    //     $(st).click(function () {laydate(start);});
-    //     $(et).click(function () {laydate(end);});
-    // };
-    // initTimeSelect();
-
+    //初始化时间
+    var setTime = function () {
+        var sTime = date.getFullYear()+"-01-01",
+            eTime =  date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        $('#startTime').val(sTime);
+        $('#endTime').val(eTime);
+    };
+    setTime();
     //报警列表
     var loadAlarmData = function (curr,alarmType) {
-        console.log(alarmType);
+        console.log($("#getType").find('.layui-this')[0].innerHTML);
         switch (alarmType){
             case "在线监测报警":
                 alarmType = 'detection_alarm'

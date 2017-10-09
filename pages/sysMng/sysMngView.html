@@ -73,19 +73,7 @@
                         </tr>
                         </thead>
                         <tbody id="company-result">
-                            <!--<tr>-->
-                                <!--<td></td>-->
-                                <!--<td></td>-->
-                                <!--<td></td>-->
-                                <!--<td></td>-->
-                                <!--<td></td>-->
-                                <!--<td style="text-align: center">-->
-                                    <!--<a class="auth-btn" data-authId="19" href="#"  title="企业详情"><img src="../../img/mng/details.png"></a>-->
-                                    <!--&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="21" href="#"  title="更新企业"><img src="../../img/mng/alter.png"></a>-->
-                                    <!--&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="54" href="#"  title="报警规则列表"><img src="../../img/mng/configure.png"></a>-->
-                                    <!--&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="20" href="#" title="删除企业"><img src="../../img/mng/delete.png"></a>-->
-                                <!--</td>-->
-                            <!--</tr>-->
+
                         </tbody>
                     </table>
                     <div class="layui-footer" style="position: fixed;bottom: 0;width: 100%;left:10px;background-color:white">
@@ -101,7 +89,7 @@
                 <div class="layui-tab-item" id="ms_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.MSMng.addMSWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.MSMng.addMSWin()" data-authId="17">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -155,7 +143,7 @@
                                     <option value="">--请先选择数采仪--</option>
                                 </select>
                             </div>
-                            <button class="layui-btn auth-btn"  onclick="layui.equipmentMng.addEquipmentWin()" style="margin-left: 5px">
+                            <button class="layui-btn auth-btn"  onclick="layui.equipmentMng.addEquipmentWin()" style="margin-left: 5px" data-authId="39">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                         <!--</div>-->
@@ -200,7 +188,7 @@
                 <div class="layui-tab-item" id="mn_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()" data-authId="22">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -245,7 +233,7 @@
                 <div class="layui-tab-item" id="user_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0;">
-                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.userMng.addUserWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.userMng.addUserWin()" data-authId="56">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -291,7 +279,7 @@
                 <div class="layui-tab-item" id="role_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.roleMng.addRoleWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.roleMng.addRoleWin()" data-authId="68">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                         </div>

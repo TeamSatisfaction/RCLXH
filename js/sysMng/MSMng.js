@@ -52,14 +52,15 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.lon + '</td>' +
                             '<td>' + item.lat + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.MSMng.alterMSWin(\''+item.baseEnterpriseId+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.MSMng.deleteMS(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '<a class="auth-btn" data-authId="8" href="#" onclick="layui.MSMng.alterMSWin(\''+item.baseEnterpriseId+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="7" href="#" onclick="layui.MSMng.deleteMS(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 msTobody.html(render(msData, obj.curr));
+                layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo2',

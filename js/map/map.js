@@ -403,6 +403,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type: 'post',
             data: field,
             success: function (result) {
+                // console.log(result)
                 if(result.data){
                     var row = result.data.rows;
                     $("#d_select ").empty();
@@ -424,6 +425,18 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         mn = row[0].mn;
                         loadEquipment(row[0].id, mn);
                     }
+                    form.render('select');
+                }else{
+                    $("#d_select ").empty();
+                    $("#d_select").append("<option value='' selected='selected'>无数采仪</option>");
+                    $("#e_select").empty();
+                    $("#e_select").append("<option value='' selected='selected'>无设备</option>");
+                    $("#f_select").empty();
+                    $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                    code = '';
+                    Fname = '无监测因子';
+                    mn = '';
+                    initChart();
                     form.render('select');
                 }
             }

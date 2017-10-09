@@ -28,14 +28,15 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                             '<td style="text-align: center">' + item.roleName + '</td>' +
                             '<td style="text-align: center">' + item.description + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.roleMng.roleMngWin(\''+item.roleId+'\')" title="编辑"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.roleMng.deleteRole(\''+item.roleId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '<a class="auth-btn" data-authId="75" href="#" onclick="layui.roleMng.roleMngWin(\''+item.roleId+'\')" title="权限配置"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="76" href="#" onclick="layui.roleMng.deleteRole(\''+item.roleId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 rTobody.html(render(result, obj.curr));
+                layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo5',

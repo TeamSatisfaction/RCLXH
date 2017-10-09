@@ -52,16 +52,17 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.epName + '</td>' +
                             '<td>' + item.dischargePortName + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.bindCompanyWin(\''+item.id+'\')" title="绑定企业"><img src="../../img/mng/company.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.deleteNetWork(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
+                            '<a class="auth-btn" data-authId="26" href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="24" href="#" onclick="layui.networkMng.bindCompanyWin(\''+item.id+'\')" title="绑定企业"><img src="../../img/mng/company.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="25" href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="23" href="#" onclick="layui.networkMng.deleteNetWork(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 scyTobody.html(render(rows, obj.curr));
+                layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo6',
@@ -398,16 +399,17 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.classicType + '</td>' +
                             '<td>' + item.usedDate + '</td>' +
                             '<td>' + item.equipmentType + '</td>' +
-                            '<td style="text-align: center"><a href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.networkMng.deleteEquipment(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
+                            '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="40" href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="47" href="#" onclick="layui.networkMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="41" href="#" onclick="layui.networkMng.deleteEquipment(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
                     });
                     return arr.join('');
                 };
                 eTobody.html(render(eData, obj.curr));
+                layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo3',

@@ -59,6 +59,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         return arr.join('');
                     };
                     cTobody.html(render(cData, obj.curr));
+                    // layui.utils.getBtn();
+                    layui.sysMng.loadAuthen();
                 }else{
                     cTobody.html(str);
                 }
@@ -74,7 +76,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             loadCompanyData(obj.curr);
                         }
                     }
-                })
+                });
             }
         })
     };

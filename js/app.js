@@ -38,18 +38,18 @@ layui.define(['layer', 'form', 'element'], function(exports){
     element.on('nav(left_menu)', function(elem){
         // console.log(elem)
     });
-    layer.ready(function(){
-        // var storage=window.localStorage;
-        // var userName = getCookie("userName");
-        // if(userName){
-        //     $("#nametext").html(userName);
-        // }else{
-        //     // window.location.href = "login.html";
-        // }
-        // // console.log(storage.data);
-        var auth_btn = $(window.parent.document).find('.auth-btn');
-        console.log(auth_btn);
-    });
+    // layer.ready(function(){
+    //     // var storage=window.localStorage;
+    //     // var userName = getCookie("userName");
+    //     // if(userName){
+    //     //     $("#nametext").html(userName);
+    //     // }else{
+    //     //     // window.location.href = "login.html";
+    //     // }
+    //     // // console.log(storage.data);
+    //     var auth_btn = $(window.parent.document).find('.auth-btn');
+    //     console.log(auth_btn);
+    // });
     exports('app', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });
 

@@ -56,7 +56,7 @@ layui.define(function(exports){
             re = new RegExp(String() + key + "=([^&?]*)", "ig");
         return ((uri.match(re)) ? (uri.match(re)[0].substr(key.length + 1)) : null);
     };
-
+    //获取按钮
     var getBtn = function () {
         var $ = layui.jquery;
         var auth_btn_list = [];

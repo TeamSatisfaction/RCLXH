@@ -8,7 +8,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         Fname,
         Cid,
         mn;
-        // cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
 
     // //获取企业基本信息
