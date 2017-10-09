@@ -23,6 +23,7 @@
         }).use(['utils', 'sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
             layui.sysMng.getTab();
             layui.equipmentMng.loadMnSelect();
+            layui.utils.getBtn();
         }); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -100,7 +101,7 @@
                 <div class="layui-tab-item" id="ms_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn" style="margin-left: 0" onclick="layui.MSMng.addMSWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.MSMng.addMSWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -154,7 +155,7 @@
                                     <option value="">--请先选择数采仪--</option>
                                 </select>
                             </div>
-                            <button class="layui-btn"  onclick="layui.equipmentMng.addEquipmentWin()" style="margin-left: 5px">
+                            <button class="layui-btn auth-btn"  onclick="layui.equipmentMng.addEquipmentWin()" style="margin-left: 5px">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                         <!--</div>-->
@@ -199,7 +200,7 @@
                 <div class="layui-tab-item" id="mn_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.networkMng.addNetworkWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -244,7 +245,7 @@
                 <div class="layui-tab-item" id="user_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0;">
-                            <button class="layui-btn" style="margin-left: 0" onclick="layui.userMng.addUserWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.userMng.addUserWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                             <div class="layui-input-inline" style="float: right">
@@ -290,7 +291,7 @@
                 <div class="layui-tab-item" id="role_tab">
                     <div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
                         <div class="layui-form-item" style="margin: 5px 0">
-                            <button class="layui-btn" style="margin-left: 0" onclick="layui.roleMng.addRoleWin()">
+                            <button class="layui-btn auth-btn" style="margin-left: 0" onclick="layui.roleMng.addRoleWin()">
                                 <i class="layui-icon">&#xe608;</i>新增
                             </button>
                         </div>

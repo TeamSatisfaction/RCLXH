@@ -3,6 +3,7 @@
  */
 layui.define(function(exports){
 
+
     /*时间格式化；*/
     var dateFormat = function (fmt, d) {
         if(!d) d = new Date();
@@ -55,10 +56,39 @@ layui.define(function(exports){
             re = new RegExp(String() + key + "=([^&?]*)", "ig");
         return ((uri.match(re)) ? (uri.match(re)[0].substr(key.length + 1)) : null);
     };
+
+    var getBtn = function () {
+        var $ = layui.jquery;
+        var auth_btn_list = [];
+
+        if($('.auth-btn').length>0){
+            console.log($('.auth-btn'))
+            for(var i = 0; i < $('.auth-btn').length; i++){
+                auth_btn_list.push($('.auth-btn').eq(i));
+            }
+        }
+        if($(window.parent)){
+            if($(window.parent.document).find('.auth-btn').length>0){
+                for(var i = 0; i < $(window.parent.document).find('.auth-btn').length; i++) {
+                    auth_btn_list.push($(window.parent.document).find('.auth-btn').eq(i));
+                }
+            }
+        }
+        if($('iframe').length>0) {
+            for (var i = 0; i < $('iframe').length; i++) {
+                if($('iframe').eq(i).find('.auth-btn').length>0){
+                    auth_btn_list.push($('iframe').eq(i).find('.auth-btn'))
+                }
+            }
+        }
+        console.log(auth_btn_list)
+    };
+
     exports('utils', {
         dateFormat: dateFormat,
         loadPage: loadPage,
         getArg : getArg,
-        getUrlArg : getUrlArg
+        getUrlArg : getUrlArg,
+        getBtn: getBtn
     }); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });
