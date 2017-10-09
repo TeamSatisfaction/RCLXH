@@ -169,6 +169,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             }
         });
     };
+    //左边菜单栏
     var zTreeObj; //zTree对象
     var tree = function (id,winFrame) {
         // zTree 的参数配置，深入使用请参考 API 文档（setting 配置详解）
@@ -191,7 +192,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         zTreeObj = winFrame.jQuery.fn.zTree.init($(treeDemo), setting, zNodes);
         loadRoleStore(id,winFrame);
     };
-    // 加载权限
+    // 加载菜单权限
     var loadRoleStore = function (id,winFrame) {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/role/menu/'+id+'',
@@ -209,22 +210,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 }
             }
         });
-        // $.ajax({
-        //     url : '../../data/roleData.json',
-        //     type : 'get',
-        //     success: function (result){
-        //         var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
-        //         var nodes = treeObj.getNodes();
-        //         // // var children1 = nodes.children;
-        //         //     console.log(nodes);
-        //         // // for (var i=0; i < nodes.length; i++) {
-        //         // //     treeObj.checkNode(nodes[i], true, true);
-        //         // // }
-        //         // console.log(getCheckedArr(result[0],[]) );
-        //         var checkedArr = getCheckedArr(result[0],[]);
-        //         checkTree(nodes, checkedArr, treeObj );
-        //     }
-        // })
     };
     //已选中的项(最下层)
     function getCheckedArr(jsonObject, array) {
@@ -250,12 +235,37 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             }
         }
     }
-
+    // //右侧按钮栏
+    // var buttons = function (id,winFrame){
+    //
+    // };
+    //加载右侧按钮数据
+    var loadButtonData = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//角色id
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/role/auth/'+id+'',
+            headers: {
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+                var str = '';
+                layui.each(result, function (index, item) {
+                     str +=
+                        '<input type="checkbox" name="" title="'+item.authName+'" lay-skin="primary">';
+                });
+                $("#treeButton").html(str);
+                console.log($("#treeButton"));
+                form.render();
+            }
+        })
+    }
     var obj = {
         loadRoleData : loadRoleData,
         addRoleWin : addRoleWin,
         deleteRole : deleteRole,
-        roleMngWin : roleMngWin
+        roleMngWin : roleMngWin,
+        loadButtonData : loadButtonData
     };
     /*输出内容，注意顺序*/
     exports('roleMng',obj)

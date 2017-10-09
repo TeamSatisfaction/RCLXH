@@ -17,28 +17,21 @@
         }).extend({
             roleMng : 'roleMng'
         }).use('roleMng',function () {
-
+            layui.roleMng.loadButtonData()
         }).link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body style="width:100%;height: 100%; overflow: auto;">
-    <div style="float: left;width: 250px;height:95%;margin-top:2%;margin-left: 5px;border:1px solid #d8e7fa">
+    <div style="float: left;width: 250px;height:95%;margin-top:2%;margin-left: 5px;border:1px solid #d8e7fa;overflow:scroll;">
         <ul id="treeDemo" class="ztree"></ul>
     </div>
-    <div style="float: left;width: calc(100% - 270px); margin-top:2%;height:95%;margin-left:5px;margin-right:5px;border:1px solid #d8e7fa">
+    <div style="float: left;width: calc(100% - 270px); margin-top:2%;height:95%;margin-left:5px;margin-right:5px;border:1px solid #d8e7fa;overflow:scroll;">
         <fieldset class="layui-elem-field">
             <legend>业务权限配置</legend>
             <div class="layui-field-box">
                 <form class="layui-form" action="">
                     <div class="layui-form-item">
-                        <div class="layui-form-item">
-                            <div class="layui-input-block">
-                                <input type="checkbox" name="" title="报警规则配置" lay-skin="primary" id="alarm_mng">
-                                <input type="checkbox" name="" title="设备管理" lay-skin="primary">
-                                <input type="checkbox" name="" title="因子管理" lay-skin="primary">
-                                <input type="checkbox" name="" title="用户角色管理" lay-skin="primary">
-                                <input type="checkbox" name="" title="角色权限配置" lay-skin="primary">
-                            </div>
+                        <div  id="treeButton">
                         </div>
                     </div>
                 </form>

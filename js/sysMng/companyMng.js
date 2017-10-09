@@ -49,10 +49,10 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                                 '<td>' + item.address + '</td>' +
                                 '<td>' + item.head + '</td>' +
                                 '<td>' + item.headPhone + '</td>' +
-                                '<td style="text-align: center"><a href="#" onclick="layui.companyMng.detailCompanyWin(\'' + item.baseEnterpriseId + '\')" title="详情"><img src="../../img/mng/details.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alterCompanyWin(\'' + item.baseEnterpriseId + '\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.alarmRuleList(\'' + item.baseEnterpriseId + '\')" title="报警规则"><img src="../../img/mng/configure.png"></a>' +
-                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.companyMng.deleteCompanyData(\'' + item.baseEnterpriseId + '\')" title="删除"><img src="../../img/mng/delete.png"></a>' +
+                                '<td style="text-align: center"><a class="auth-btn" data-authId="19" href="#" onclick="layui.companyMng.detailCompanyWin(\'' + item.baseEnterpriseId + '\')" title="企业详情"><img src="../../img/mng/details.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="21" href="#" onclick="layui.companyMng.alterCompanyWin(\'' + item.baseEnterpriseId + '\')" title="更新企业"><img src="../../img/mng/alter.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="54" href="#" onclick="layui.companyMng.alarmRuleList(\'' + item.baseEnterpriseId + '\')" title="报警规则列表"><img src="../../img/mng/configure.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="20" href="#" onclick="layui.companyMng.deleteCompanyData(\'' + item.baseEnterpriseId + '\')" title="删除企业"><img src="../../img/mng/delete.png"></a>' +
                                 '</tr>';
                             arr.push(str);
                         });
@@ -363,7 +363,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 })
             }
         });
-    }
+    };
     // 编辑企业信息
     var alterCompanyWin = function (id) {
         var win = layer.open({

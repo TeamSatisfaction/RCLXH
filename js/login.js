@@ -26,7 +26,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
             password : hex_md5(password)
         };
         var field = JSON.stringify(data);
-        console.log(field)
         $.ajax({
             url :'http://172.16.1.102:8095/v01/htwl/lxh/login',
             headers : {
@@ -43,9 +42,17 @@ layui.define(['layer', 'form', 'element'], function(exports){
                         $('#verify').val('');
                     })
                 }else if(result.userName){
-                    window.location.href="index.html";
-                    setCookie("userName",result.userName);
-                    setCookie("userId",result.userId)
+                    if(!window.localStorage){
+                        layer.msg("该浏览器版本过低，请更换高版本的浏览器！");
+                    }else{
+                        var storage=window.localStorage;
+                        var data = result.authList;
+                        var d=JSON.stringify(data);
+                        storage.setItem("data",d);
+                        setCookie("userName",result.userName);
+                        setCookie("userId",result.userId)
+                        window.location.href="index.html";
+                    }
                 }
             }
         })

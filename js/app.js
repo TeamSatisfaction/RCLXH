@@ -38,30 +38,18 @@ layui.define(['layer', 'form', 'element'], function(exports){
     element.on('nav(left_menu)', function(elem){
         // console.log(elem)
     });
-    // layer.ready(function () {
-    //     var code = window.location.href;
-    //     console.log(code);
-    //     var data={};
-    //     data.client_id="dad449b578874069b7a77976b7d94b91";
-    //     data.client_secret="0ff0b7a8f5b64beba42a58bc15029588";
-    //     data.code="4bb310ab49f94e59b1905a8a13fb9cf2";
-    //     $.ajax({
-    //         url : 'http://login.cqhtwl.com.cn/htwl/oauth2/token',
-    //         type : 'post',
-    //         data : data,
-    //         headers: {
-    //             'Content-Type': 'application/x-www-form-urlencoded'
-    //         },
-    //         async:false,
-    //         success : function (result){
-    //             // console.log(result);
-    //             sessionStorage.setItem("access_token", result.access_token);
-    //             sessionStorage.setItem("refresh_token", result.refresh_token);
-    //             sessionStorage.setItem("expires_in", result.expires_in);
-    //         }
-    //     })
-    // });
-
+    layer.ready(function(){
+        // var storage=window.localStorage;
+        // var userName = getCookie("userName");
+        // if(userName){
+        //     $("#nametext").html(userName);
+        // }else{
+        //     // window.location.href = "login.html";
+        // }
+        // // console.log(storage.data);
+        var auth_btn = $(window.parent.document).find('.auth-btn');
+        console.log(auth_btn);
+    });
     exports('app', {}); //注意，这里是模块输出的核心，模块名必须和use时的模块名一致
 });
 

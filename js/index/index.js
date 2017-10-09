@@ -175,11 +175,13 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         };
         return menuData[name];
     };
+    //登出
     var signOut = function () {
         delCookie("userName");
         delCookie("userId");
         window.location.href="login.html";
     };
+    //获取Cookie
     function getCookie(name)
     {
         var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
@@ -188,6 +190,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         else
             return null;
     };
+    //清除Cookie
     function delCookie(name)
     {
         var exp = new Date();
@@ -208,14 +211,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             }
         })
     };
-    layer.ready(function(){
-        var userName = getCookie("userName");
-        if(userName){
-            $("#nametext").html(userName);
-        }else{
-            // window.location.href = "login.html";
-        }
-    });
+
 
     /*输出内容，注意顺序*/
     var obj = {
