@@ -405,18 +405,19 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             inputs = inputBoxes.find("input");
 
         inputBoxes.find(".layui-form-checkbox").on('click',function () {
-            var index = $(this).parents(".layui-form-item").index();
-            rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
             /*右边form*/
             laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
                 rightForm.html(html) ;
                 layui.each(row, function (index, item) {
-                    rightForm.find("input[name=factorCode]").eq(index).val(item.factorCode);
-                    rightForm.find('select[name=dicName]').eq(index).children("option").each(function(){
-                        if (this.value == item.factorType) {
-                            this.setAttribute("selected","selected");
-                        }
-                    });
+                    var i = $.inArray(item.factorName, getCheckedArray(inputs))
+                    if(i>=0){
+                        rightForm.find("input[name=factorCode]").eq(i).val(item.factorCode);
+                        rightForm.find('select[name=dicName]').eq(i).children("option").each(function(){
+                            if (this.value == item.factorType) {
+                                this.setAttribute("selected","selected");
+                            }
+                        });
+                    }
                 });
                 form.render("select");
             });
