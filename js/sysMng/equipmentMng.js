@@ -404,17 +404,19 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             inputBoxes = leftForm.find(".layui-form-item"),
             inputs = inputBoxes.find("input");
 
-        inputBoxes.find(".layui-form-checkbox").off('click').on('click',function () {
+        inputBoxes.find(".layui-form-checkbox").on('click',function () {
             var index = $(this).parents(".layui-form-item").index();
             rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
             /*右边form*/
             laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
                 rightForm.html(html) ;
-                rightForm.find("input[name=factorCode]").eq(index).val(item.factorCode);
-                rightForm.find('select[name=dicName]').eq(index).children("option").each(function(){
-                    if (this.value == item.factorType) {
-                        this.setAttribute("selected","selected");
-                    }
+                layui.each(row, function (index, item) {
+                    rightForm.find("input[name=factorCode]").eq(index).val(item.factorCode);
+                    rightForm.find('select[name=dicName]').eq(index).children("option").each(function(){
+                        if (this.value == item.factorType) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
                 });
                 form.render("select");
             });
@@ -483,12 +485,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             },
             type : 'post',
             data : field,
-            success : function (r){
-                var result = [{
-                    factorCode : "ez61a01",
-                    factorName : "A相电流",
-                    factorType : "Z"
-                }];
+            success : function (result){
                 var row = result.data.rows;
                 var checkedArray = []; //选中的元素
                 for(var i in row){
