@@ -483,7 +483,12 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             },
             type : 'post',
             data : field,
-            success : function (result){
+            success : function (r){
+                var result = [{
+                    factorCode : "ez61a01",
+                    factorName : "A相电流",
+                    factorType : "Z"
+                }];
                 var row = result.data.rows;
                 var checkedArray = []; //选中的元素
                 for(var i in row){
