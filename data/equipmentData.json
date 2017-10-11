@@ -1,295 +1,79 @@
 {
-  "jsonObject": {
-    "data": [{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    },{
-      "objectid":1,
-      "eCode" : "设备编码",
-      "name":"设备名称",
-      "eModel" : "设备型号",
-      "mType" : "监测类型",
-      "eType" : "设备类型",
-      "eCType" : "设备分类类型",
-      "useTime" : "2017-01-01",
-      "ifEquipment" : "是"
-    }]
+  "demo_image_1": {
+    "0": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "800",
+        "long": "228"
+      }
+    },
+    "1": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "597",
+        "long": "357"
+      }
+    },
+    "2": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "241",
+        "long": "352"
+      }
+    },
+    "3": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "365",
+        "long": "283"
+      }
+    },
+    "4": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "713",
+        "long": "276"
+      }
+    },
+    "5": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "771",
+        "long": "510"
+      }
+    },
+    "6": {
+      "liuliang": "30",
+      "kaiguan": "30. ",
+      "dianliu": "10",
+      "dianya": "620",
+      "coords": {
+        "lat": "496",
+        "long": "277"
+      }
+    },
+    "canvas": {
+      "src": "fashion.jpg",
+      "width": "1000",
+      "height": "625"
+    }
   }
 }

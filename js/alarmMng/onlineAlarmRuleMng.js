@@ -157,7 +157,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         two_conditions_name = body.contents().find("select[name='two_conditions_name']").find("option:selected").text(),
                         two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
                         two_threshold = body.contents().find("input[name='two_threshold']").val(),
-                        is_contain = body.contents().find("select[name='is_contain']").val();
+                        is_contain = body.contents().find("input[name='is_contain']:checked").val();
                     var data = {
                         epId : id,
                         firstLayerEncodingName : first_layer_encoding_name,
@@ -432,7 +432,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         two_conditions_name = body.contents().find("select[name='two_conditions_name']").find("option:selected").text(),
                         two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
                         two_threshold = body.contents().find("input[name='two_threshold']").val(),
-                        is_contain = body.contents().find("select[name='is_contain']").val();
+                        is_contain = body.contents().find("input[name='is_contain']:checked").val();
+
                     var data = {
                         id: id,
                         firstLayerEncodingName: first_layer_encoding_name,
@@ -555,6 +556,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
                 type: 'get',
                 success: function (result) {
+                    console.log(result)
                     $('#first_layer_encoding_name').children("option").each(function(){
                         if (this.text == result.firstLayerEncodingName) {
                             this.setAttribute("selected","selected");
@@ -585,14 +587,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                             this.setAttribute("selected","selected");
                         }
                     });
-                    $('#is_contain').children("option").each(function(){
-                        if (this.value == result.isContain) {
-                            this.setAttribute("selected","selected");
-                        }
-                    });
+                    $("input[name='is_contain'][value='"+result.isContain+"']").prop("checked",true);
                     $('#one_threshold').val(result.oneThreshold);
                     $('#two_threshold').val(result.twoThreshold);
-                    form.render('select');
+                    form.render();
                 }
             })
         }else if(title == '修改聚合在线报警规则'){
@@ -600,7 +598,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 url :''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online/'+id+'',
                 type: 'get',
                 success : function (result) {
-                    console.log(result);
                     $('#first_layer_encoding_name').children("option").each(function(){
                         if (this.text == result.firstLayerEncodingName) {
                             this.setAttribute("selected","selected");

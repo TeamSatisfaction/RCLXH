@@ -219,6 +219,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 },
                 type : 'get',
                 success : function (result){
+                    console.log(result);
                     var qyImg = [{
                         "url":"../../img/data/002.png"
                     },{

@@ -25,13 +25,7 @@
     <form class="layui-form layui-collapse" action="" id="rule_form" method="post">
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">基本信息</h2>
-            <div class="layui-colla-content layui-show" style="text-align: center">
-                <!--<div class="layui-form-item">-->
-                <!--<div class="layui-inline">-->
-                <!--<label class="layui-form-label">规则名称：</label>-->
-                <!--<input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="ruleName" value="在线报警规则">-->
-                <!--</div>-->
-                <!--</div>-->
+            <div class="layui-colla-content layui-show" style="margin-left: 30px">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">监测类型：</label>
@@ -81,7 +75,7 @@
         </div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">上报规则</h2>
-            <div class="layui-colla-content layui-show" style="text-align: center">
+            <div class="layui-colla-content layui-show" style="margin-left: 30px">
                 <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">一级报警条件：</label>
@@ -122,14 +116,23 @@
                         <input name="two_threshold" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="" id="two_threshold">
                     </div>
                 </div>
+                <!--<div class="layui-form-item">-->
+                    <!--<div class="layui-inline" style="width: calc(90% + 20px);">-->
+                        <!--<label class="layui-form-label">报警条件关系：</label>-->
+                        <!--<div class="layui-input-inline">-->
+                            <!--<select name="is_contain"  lay-search="" id="is_contain">-->
+                                <!--<option value="1">and</option>-->
+                                <!--<option value="2">or</option>-->
+                            <!--</select>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="layui-form-item">
                     <div class="layui-inline" style="width: calc(90% + 20px);">
                         <label class="layui-form-label">报警条件关系：</label>
-                        <div class="layui-input-inline">
-                            <select name="is_contain"  lay-search="" id="is_contain">
-                                <option value="1">and</option>
-                                <option value="2">or</option>
-                            </select>
+                        <div class="layui-input-block">
+                            <input name="is_contain" value="1" title="and" checked="" type="radio">
+                            <input name="is_contain" value="2" title="or" type="radio">
                         </div>
                     </div>
                 </div>
@@ -137,7 +140,7 @@
         </div>
         <div class="layui-colla-item">
             <h2 class="layui-colla-title">上报时间</h2>
-            <div class="layui-colla-content layui-show" style="text-align: center">
+            <div class="layui-colla-content layui-show" style="margin-left: 30px">
                 <div class="layui-form-item" style="display: none">
                     <div class="layui-inline">
                         <label class="layui-form-label">一级报警类型：</label>
@@ -153,10 +156,10 @@
                                 <option value="">--请选择--</option>
                             </select>
                         </div>
-                        <span class="required">*</span>
+                        <p class="required">*</p>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">一级报警时间(分)：</label>
+                        <label class="layui-form-label">一级报警时间：</label>
                         <input name="oneLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="required">
                         <span class="required">*</span>
                     </div>
@@ -179,7 +182,7 @@
                         <span class="required">*</span>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">二级报警时间(分)：</label>
+                        <label class="layui-form-label">二级报警时间：</label>
                         <input name="twoLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
                         <span class="required">*</span>
                     </div>
@@ -201,7 +204,7 @@
                         </div>
                     </div>
                     <div class="layui-inline">
-                        <label class="layui-form-label">三级报警时间(分)：</label>
+                        <label class="layui-form-label">三级报警时间：</label>
                         <input name="threeLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
                     </div>
                 </div>

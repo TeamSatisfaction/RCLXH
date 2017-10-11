@@ -49,7 +49,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     setTime();
     //报警列表
     var loadAlarmData = function (curr,alarmType) {
-        console.log($("#getType").find('.layui-this')[0].innerHTML);
+        if(!alarmType){
+            alarmType = $('#getType').find('.layui-this')[0].innerHTML;
+        }
         switch (alarmType){
             case "在线监测报警":
                 alarmType = 'detection_alarm'

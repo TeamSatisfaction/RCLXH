@@ -36,10 +36,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     function loadPage(url) {
         window.parent.layui.index.loadPage(url)
     }
-    
-    function statsSearch() {
-
-    }
 
     function close() {
         // $(".mapStats").animate({left:-560},300)
@@ -286,7 +282,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                             }
                         }
                         // ,plotLines: [{
-                        //     value: 60,
+                        //     value: 26.6,
                         //     dashStyle:'ShortDash',
                         //     width: 3,
                         //     color: 'red',
@@ -564,7 +560,24 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //     }
         // })
     });
-
+    //报警信息
+    function loadAlardata() {
+        var data = {
+            pageNo : 1,
+            pageSize : 10000
+        };
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data,
+            success : function (result){
+                console.log(result);
+            }
+        })
+    }
     //环境统计list
     function loadMonthlydata() {
         var myDate = new Date(),
@@ -639,6 +652,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,
         loadFactorSelect : loadFactorSelect,
+        loadAlardata : loadAlardata,
         loadMonthlydata : loadMonthlydata
     });
 

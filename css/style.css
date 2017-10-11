@@ -324,8 +324,6 @@ tr .align-right{width:120px;text-align: right}
     height:80px;
     /*line-height:60px;*/
     background-color:rgba(255, 255, 255, 0.7);
-    /*background:#F6F1B3;*/
-    /*box-shadow:#E9D985 2px 1px 3px;*/
     border:1px solid #DACE7C;
     border-radius:4px;
     text-align:center;
@@ -372,6 +370,8 @@ tr .align-right{width:120px;text-align: right}
 #ef .ef-right .layui-input { width: 250px; }
 #ef .ef-right b { width: 160px; display: inline-block; text-align: right }
 #ef .required { font-size: 30px; margin-bottom: -20px; position:relative; top:6px; }
+
+#rule_form .required{ font-size: 300%; position:relative; top:12px;}
 
 
 /*统计分析*/

@@ -450,16 +450,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             },
             type : 'get',
             success : function (result){
-                console.log(result)
                 var data = result.data;
-                switch (data.controlLevel){
-                    case "area_control":
-                        data.controlLevel = '区(县)控';
-                        break;
-                    case "country_control":
-                        data.controlLevel = '国控';
-                        break;
-                }
                 // var qyImg = [{
                 //     "url":"../../img/data/002.png"
                 // },{
@@ -468,22 +459,38 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 // ];
                 var qyImg =data.attachments;
                 //企业基本信息
-                $("input[name='name']").val(data.name);
-                $("input[name='legalRepresentative']").val(data.legalRepresentative);
-                $("input[name='head']").val(data.head);
-                $("input[name='headPhone']").val(data.headPhone);
-                $("input[name='orgCode']").val(data.orgCode);
-                $("input[name='controlLevel']").val(data.controlLevel);
-                $("input[name='envHead']").val(data.envHead);
-                $("input[name='envHeadPhone']").val(data.envHeadPhone);
-                $("input[name='buildStatusName']").val(data.buildStatusName);
-                $("input[name='processing']").val(data.processing);
-                $("input[name='riverBasin']").val(data.riverBasin);
-                $("input[name='lon']").val(data.lon);
-                $("input[name='lat']").val(data.lat);
-                $("input[name='expectDate']").val(data.expectDate);
-                $("input[name='address']").val(data.address);
+                // $("input[name='name']").val(data.name);
+                // $("input[name='legalRepresentative']").val(data.legalRepresentative);
+                // $("input[name='head']").val(data.head);
+                // $("input[name='headPhone']").val(data.headPhone);
+                // $("input[name='orgCode']").val(data.orgCode);
+                // $("input[name='controlLevel']").val(data.controlLevel);
+                // $("input[name='envHead']").val(data.envHead);
+                // $("input[name='envHeadPhone']").val(data.envHeadPhone);
+                // $("input[name='buildStatusName']").val(data.buildStatusName);
+                // $("input[name='processing']").val(data.processing);
+                // $("input[name='riverBasin']").val(data.riverBasin);
+                // $("input[name='lon']").val(data.lon);
+                // $("input[name='lat']").val(data.lat);
+                // $("input[name='expectDate']").val(data.expectDate);
+                // $("input[name='address']").val(data.address);
                 if(title == "编辑企业信息"){
+                    $.each(data,function(key,value){
+                        var formField = $("[name='"+key+"']");
+                        if(formField[0] !== undefined){
+                            var fieldTagName = formField[0].tagName.toLowerCase();
+                            if(fieldTagName == 'input'){
+                                formField.val(value);
+                            }else if(fieldTagName == 'select'){
+                                formField.children("option").each(function () {
+                                    if(this.value == value){
+                                        this.setAttribute("selected","selected");
+                                    }
+                                    form.render('select');
+                                })
+                            }
+                        }
+                    });
                     var attach = data.attachments;
                     if(attach.length > 0){
                         /*创建图片路径*/
@@ -499,6 +506,18 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         })
                     }
                 }else{
+                    switch (data.controlLevel){
+                        case "area_control":
+                            data.controlLevel = '区(县)控';
+                            break;
+                        case "country_control":
+                            data.controlLevel = '国控';
+                            break;
+                    }
+                    $.each(data,function(key,value){
+                        var formField = $("input[name='"+key+"']");
+                        formField.val(value);
+                    });
                     if(qyImg.length>0){
                         //企业照片
                         var qyPhotos = "";

@@ -1,0 +1,81 @@
+<!--新增监测站信息-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>title</title>
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.config({
+            base: '../../js/sysMng/' //你的模块目录
+        }).extend({
+            userMng : 'userMng'
+        }).use('userMng')
+                .link('../../css/style.css'); //加载入口
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin layui-tab-brief add-form" lay-filter="docDemoTabBrief" id="alterUser">
+    <!--表单-->
+    <div class="layui-layout-admin" style="text-align: center;margin-top: 10px">
+        <form class="layui-form" action="">
+            <!--<div class="layui-form-item">-->
+                <!--<div class="layui-inline">-->
+                    <!--<label class="layui-form-label">登录名：</label>-->
+                    <!--<input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="loginName" lay-verify="required" disabled>-->
+                    <!--<span class="required">*</span>-->
+                <!--</div>-->
+            <!--</div>-->
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">姓名：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="realName" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">联系电话：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="tel" lay-filter="phone" name="phone" lay-verify="required||phone">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">邮箱：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-filter="mail" name="mail" lay-verify="required||email">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">身份证号：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="idCard" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">地址：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="address" lay-verify="required">
+                    <span class="required">*</span>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">备注：</label>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="description" lay-verify="">
+                </div>
+            </div>
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="user-alter" id="user-alter" style="display: none">
+                <i class="layui-icon">&#xe605;</i>提交
+            </button>
+        </form>
+        <!--按钮-->
+    </div>
+</div>
+</div>
+</body>
+</html>
