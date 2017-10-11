@@ -88,7 +88,7 @@
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
-                    <label class="layui-form-label">额定功率(单位kw)：</label>
+                    <label class="layui-form-label">额定功率(kw)：</label>
                     <input autocomplete="off"  class="layui-input layui-input-inline" type="text" name="ratedPower" lay-verify="">
                 </div>
                 <div class="layui-inline">
@@ -137,9 +137,9 @@
                 <div class="layui-inline">
                     <label class="layui-form-label">设备类型：</label>
                     <div class="layui-input-inline">
-                        <select name="detectionType" lay-verify="required" lay-search="">
-                            <option value="动力设备">动力设备</option>
-                            <option value="仪器仪表">仪器仪表</option>
+                        <select name="eaOrEb" lay-verify="required" lay-search="">
+                            <option value="EB">动力设备</option>
+                            <option value="EA">仪器仪表</option>
                         </select>
                     </div>
                 </div>

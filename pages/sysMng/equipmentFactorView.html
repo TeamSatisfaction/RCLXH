@@ -35,14 +35,16 @@
                 <b>{{ item }}</b>
                 <div class="layui-inline">
                     <label class="layui-form-label">编码：</label>
-                    <input class="layui-input-inline layui-input" placeholder="编码">
+                    <input class="layui-input-inline layui-input" placeholder="编码" name="factorCode">
                 </div>
                 <span class="required">*</span>
                 <div class="layui-inline">
                     <label class="layui-form-label">工艺类型：</label>
                     <div class="layui-input-block">
-                        <select lay-verify="" lay-search lay-filter="select_equipment">
-                            <option value="工艺过程">工艺过程</option>
+                        <select lay-verify="" lay-search lay-filter="select_equipment" name="dicName">
+                            <option value="1">进口污水流量及污染物</option>
+                            <option value="2">出口污水流量及污染物</option>
+                            <option value="Z">工艺过程</option>
                         </select>
                     </div>
                 </div>

@@ -52,7 +52,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.epName + '</td>' +
                             '<td>' + item.dischargePortName + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a class="auth-btn" data-authId="26" href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '<a class="auth-btn" data-authId="24" href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="24" href="#" onclick="layui.networkMng.bindCompanyWin(\''+item.id+'\')" title="绑定企业"><img src="../../img/mng/company.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="25" href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="23" href="#" onclick="layui.networkMng.deleteNetWork(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
@@ -389,6 +389,12 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     var arr = []
                         , thisData = eData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
+                        var type = item.eaOrEb;
+                        if(type == "EA"){
+                            type = 'power_equipment'
+                        }else{
+                            type = 'instrument_sensor'
+                        }
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.equipmentCode + '</td>' +
@@ -399,9 +405,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.classicType + '</td>' +
                             '<td>' + item.usedDate + '</td>' +
                             '<td>' + item.equipmentType + '</td>' +
-                            '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="" title="详情"><img src="../../img/mng/details.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="40" href="#" onclick="" title="修改"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="47" href="#" onclick="layui.networkMng.equipmentFactorWin()" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
+                            '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.networkMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="40" href="#" onclick="layui.networkMng.alterEquipmentDataWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="47" href="#" onclick="layui.networkMng.equipmentFactorWin(\''+type+'\',\''+item.id+'\')" title="配置因子"><img src="../../img/mng/configure.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="41" href="#" onclick="layui.networkMng.deleteEquipment(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
@@ -426,6 +432,20 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
+    //设备详情窗口
+    var equipmentDataWin = function (id) {
+        var index = layer.open({
+            title : '设备详情',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/equipmentDataView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c'
+        });
+        layer.full(index);
+    };
     //新增设备窗口
     var addEquipmentWin = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');
@@ -446,33 +466,50 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         });
     };
-    form.on('submit(equipment-save)', function(data){
-        var field = JSON.stringify(data.field);
-        console.log(field);
-        $.ajax({
-            url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
-            headers : {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            dataType : 'json',
-            type : 'post',
-            data : field,
-            success : function (result){
-                console.log(result);
-                if(result.code == '1000'){
-                    layer.msg('提交成功！', {icon: 1,time:1000},function () {
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                        parent.location.reload();
-                    });
-                }else {
-                    layer.msg('提交失败！', {icon: 2,time:1000});
-                }
+    //修改设备窗口
+    var alterEquipmentDataWin = function (id) {
+        var index = layer.open({
+            title : '修改设备',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1000px','600px'],
+            content : '../../pages/sysMng/addEquipmentView.html',
+            btn: ['提交', '返回'],
+            btnAlign: 'c',
+            yes : function (index,layero) {
+                layero.find("iframe").contents().find('#equipment-save').click();
             }
         });
-        return false;
-    });
+        layer.full(index);
+    };
+    // form.on('submit(equipment-save)', function(data){
+    //     var field = JSON.stringify(data.field);
+    //     console.log(field);
+    //     $.ajax({
+    //         url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
+    //         headers : {
+    //             'Content-type': 'application/json;charset=UTF-8',
+    //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         dataType : 'json',
+    //         type : 'post',
+    //         data : field,
+    //         success : function (result){
+    //             console.log(result);
+    //             if(result.code == '1000'){
+    //                 layer.msg('提交成功！', {icon: 1,time:1000},function () {
+    //                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+    //                     parent.layer.close(index); //再执行关闭
+    //                     parent.location.reload();
+    //                 });
+    //             }else {
+    //                 layer.msg('提交失败！', {icon: 2,time:1000});
+    //             }
+    //         }
+    //     });
+    //     return false;
+    // });
     //删除设备
     var deleteEquipment = function (id) {
         layer.msg('是否确定删除该设备', {
@@ -527,7 +564,9 @@ layui.define(['layer','element','laypage','form'],function (exports){
         loadNetworkDetails : loadNetworkDetails,
         bindCompanyWin : bindCompanyWin,
         loadCompanySelect : loadCompanySelect,
+        equipmentDataWin : equipmentDataWin,
         addEquipmentWin : addEquipmentWin,
+        alterEquipmentDataWin : alterEquipmentDataWin,
         deleteEquipment : deleteEquipment,
         alterEquipmentWin : alterEquipmentWin,
         loadEquipmentData : loadEquipmentData,

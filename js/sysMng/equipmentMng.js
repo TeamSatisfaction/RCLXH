@@ -153,30 +153,58 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         }
     };
     form.on('submit(equipment-save)', function(data){
-        var field = JSON.stringify(data.field);
-        console.log(field);
-        $.ajax({
-            url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
-            headers : {
-                'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            dataType : 'json',
-            type : 'post',
-            data : field,
-            success : function (result){
-                console.log(result);
-                if(result.code == '1000'){
-                    layer.msg('提交成功！', {icon: 1,time:1000},function () {
-                        var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-                        parent.layer.close(index); //再执行关闭
-                        parent.location.reload();
-                    });
-                }else {
-                    layer.msg('提交失败！', {icon: 2,time:1000});
+        var Eid = $(window.parent.document).find('.layui-layer-content').attr('id');//设备id
+        // console.log(Eid);
+        if(Eid != ''){
+            data.field.id = Eid;
+            var field = JSON.stringify(data.field);
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
+                headers : {
+                    'Content-type': 'application/json;charset=UTF-8',
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                dataType : 'json',
+                type : 'put',
+                data : field,
+                success : function (result){
+                    console.log(result);
+                    if(result.code == '1000'){
+                        layer.msg('修改成功！', {icon: 1,time:1000},function () {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            parent.location.reload();
+                        });
+                    }else {
+                        layer.msg('修改失败！', {icon: 2,time:1000});
+                    }
                 }
-            }
-        });
+            });
+        }else{
+            var field = JSON.stringify(data.field);
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
+                headers : {
+                    'Content-type': 'application/json;charset=UTF-8',
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                dataType : 'json',
+                type : 'post',
+                data : field,
+                success : function (result){
+                    console.log(result);
+                    if(result.code == '1000'){
+                        layer.msg('新增成功！', {icon: 1,time:1000},function () {
+                            var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
+                            parent.layer.close(index); //再执行关闭
+                            parent.location.reload();
+                        });
+                    }else {
+                        layer.msg('新增失败！', {icon: 2,time:1000});
+                    }
+                }
+            });
+        }
         return false;
     });
     //设备详情窗口
@@ -203,7 +231,10 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             area : ['1000px','600px'],
             content : '../../pages/sysMng/addEquipmentView.html',
             btn: ['提交', '返回'],
-            btnAlign: 'c'
+            btnAlign: 'c',
+            yes : function (index,layero) {
+                layero.find("iframe").contents().find('#equipment-save').click();
+            }
         });
         layer.full(index);
     };
@@ -219,7 +250,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 },
                 type : 'get',
                 success : function (result){
-                    console.log(result);
+                    console.log(result.data);
                     var qyImg = [{
                         "url":"../../img/data/002.png"
                     },{
@@ -227,6 +258,10 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     }
                     ];
                     if(title == "设备详情"){
+                        $.each(result.data,function(key,value){
+                            var formField = $("input[name='"+key+"']");
+                            formField.val(value);
+                        });
                         //设备照片
                         var qyPhotos = "";
                         for(var i in qyImg){
@@ -249,6 +284,22 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                             activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
                         });
                     }else if(title == "修改设备"){
+                        $.each(result.data,function(key,value){
+                            var formField = $("[name='"+key+"']");
+                            if(formField[0] !== undefined){
+                                var fieldTagName = formField[0].tagName.toLowerCase();
+                                if(fieldTagName == 'input'){
+                                    formField.val(value);
+                                }else if(fieldTagName == 'select'){
+                                    formField.children("option").each(function () {
+                                        if(this.value == value){
+                                            this.setAttribute("selected","selected");
+                                        }
+                                        form.render('select');
+                                    })
+                                }
+                            }
+                        });
                         if(qyImg.length > 0){
                             /*创建图片路径*/
                             var thumb =  $("#thumbs7").find(".thumb");
@@ -296,7 +347,6 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
     var equipmentFactorWin = function (type,id) {
         var a = [];
         a.push(type,id);
-        console.log(a);
         var index = layer.open({
             title : '关联因子',
             id : a,
@@ -307,8 +357,20 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             btn: ['提交', '返回'],
             btnAlign: 'c',
             yes : function (index,layero) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+                // layer.msg('提交成功！', {icon: 1});
+                // layer.close(index);
+                var body = layer.getChildFrame('body',index);
+                // 现在要做因子的添加
+                var rightFormItem = body.contents().find(".ef-right").find('.ef-checklist').find('.layui-form-item');
+                var array = [];
+                rightFormItem.each(function(){
+                    array.push({
+                        "id": $(this).find('input').eq(0).val(),
+                        "type": $(this).find('input').eq(1).val()
+                    });
+                });
+                console.log(array)
+                // console.log(rightForm.find('.layui-form-item').eq(0).find('input').eq(0).val(),rightForm.find('.layui-form-item').eq(0).find('input').eq(1).val() )
             }
         });
         layer.full(index);
@@ -333,28 +395,45 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         })
     };
 
-    var leftFormEvent = function(){
-
+    var leftFormEvent = function(r){
+        var row = r.data.rows;
+        console.log(row);
         var leftForm = $(".ef-left").find('.ef-checklist'),
             rightForm = $(".ef-right").find('.ef-checklist'),
             rightTpl = $("#rightTpl").html(),
             inputBoxes = leftForm.find(".layui-form-item"),
             inputs = inputBoxes.find("input");
 
-        inputBoxes.find(".layui-form-checkbox").on('click',function () {
+        inputBoxes.find(".layui-form-checkbox").off('click').on('click',function () {
             var index = $(this).parents(".layui-form-item").index();
-            // rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
+            rightForm.find(".layui-form-item").eq(index).slideToggle(); //toggle事件，如果出现问题，改成获取勾选状态控制显隐
             /*右边form*/
             laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
                 rightForm.html(html) ;
+                rightForm.find("input[name=factorCode]").eq(index).val(item.factorCode);
+                rightForm.find('select[name=dicName]').eq(index).children("option").each(function(){
+                    if (this.value == item.factorType) {
+                        this.setAttribute("selected","selected");
+                    }
+                });
                 form.render("select");
             });
         });
-        /*右边form*/
-        laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
-            rightForm.html(html) ;
-            form.render("select");
-        });
+
+        layui.each(row, function (index, item) {
+            /*右边form*/
+            laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
+                rightForm.html(html) ;
+                rightForm.find("input[name=factorCode]").val(item.factorCode);
+                rightForm.find('select[name=dicName]').children("option").each(function(){
+                    if (this.value == item.factorType) {
+                        this.setAttribute("selected","selected");
+                    }
+                });
+                form.render("select");
+            });
+        })
+
     };
 
     /*当前选中的元素*/
@@ -407,17 +486,6 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             success : function (result){
                 var row = result.data.rows;
                 var checkedArray = []; //选中的元素
-                // console.log(row);
-                // var row = [
-                //     {
-                //         "factorName": "A相电流",
-                //         "factorCode": "ez61a01",
-                //         "factorTypeDic": {
-                //             "baseDicId": "cc9475f3325a4e0081f89f5a2ef226d6",
-                //             "dicName": "工艺过程"
-                //         }
-                //     }
-                // ];
                 for(var i in row){
                     checkedArray.push(row[i].factorName)
                 }
@@ -431,7 +499,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     }
                 });
                 form.render('checkbox');
-                leftFormEvent();
+                leftFormEvent(result);
             }
         })
     };

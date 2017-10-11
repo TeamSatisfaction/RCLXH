@@ -1,3 +1,5 @@
+table {  table-layout: fixed;  width: 100%;  }
+table td {  white-space: nowrap;  overflow: hidden;  text-overflow: ellipsis;  }
 /*.header { border-bottom: 5px solid #404040 ; background-color: transparent; background-image: url("../img/index/background.png")}*/
 .header { border-bottom: 5px solid rgb(244,249,252) ; background-color: rgb(244,249,252) !important; }
 .header>.title { font-size: 30px; padding-left: 30px; line-height: 65px; color: #008cee; }

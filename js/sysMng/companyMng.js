@@ -570,6 +570,12 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     $("input[name='id']").val(data.id);
                     console.log(data.pic.length)
                     if(title == '企业详情'){
+                        if(data.pic.length == 0){
+                            var str1 = '<span>未上传正本</span>';
+                            $('#zhengben').html(str1);
+                            var str2 = '<span>未上传副本</span>';
+                            $('#fuben').html(str2);
+                        }
                         if(data.pic[1].attachmentAddress!='null'){
                             $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[1].attachmentAddress);
                         }else{
