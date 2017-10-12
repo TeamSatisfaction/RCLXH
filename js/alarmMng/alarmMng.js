@@ -155,17 +155,18 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             id : e,
             content : '../../pages/alarmMng/alarmDataView.html',
             btn: ['返回'],
-            btnAlign: 'c',
-            success : function (index, layero) {
-                var body = layer.getChildFrame('body', layero);
-                var id = $('.layui-layer-content').attr('id');
-                loadAlarmDetails(id,body);
-            }
+            btnAlign: 'c'
+            // success : function (index, layero) {
+            //     var body = layer.getChildFrame('body', layero);
+            //     var id = $('.layui-layer-content').attr('id');
+            //     loadAlarmDetails(id,body);
+            // }
         })
         layer.full(index);
     };
     //加载报警详情
-    var loadAlarmDetails = function (id,body) {
+    var loadAlarmDetails = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//报警id
         sessionStorage.setItem("AlarmId", id);
         $.ajax({
             url : ''+urlConfig+'/v01/htwl/lxh/alrm/query/'+id+'',
@@ -201,15 +202,15 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         break;
                 }
                 if(result.status != "未处理"){
-                    body.contents().find(".layui-btn").addClass('layui-btn-disabled');
-                    body.contents().find(".layui-btn").attr('disabled','disabled');
+                    $(".layui-btn").addClass('layui-btn-disabled');
+                    $(".layui-btn").attr('disabled','disabled');
                 }
-                body.contents().find("#alarmType1").html(result.alarmType);
-                body.contents().find("#alarmLevel1").html(result.alarmLevel+'级');
-                body.contents().find("#alarmTime1").html(result.alarmTime);
-                body.contents().find("#enterpriseName1").html(result.enterpriseName);
-                body.contents().find("#remark1").html(result.remark);
-                body.contents().find("#status1").html(result.status);
+                $("#alarmType1").html(result.alarmType);
+                $("#alarmLevel1").html(result.alarmLevel+'级');
+                $("#alarmTime1").html(result.alarmTime);
+                $("#enterpriseName1").html(result.enterpriseName);
+                $("#remark1").html(result.remark);
+                $("#status1").html(result.status);
                 var list = result.alarmLogs,
                     str = '',
                     arr = [];
@@ -237,10 +238,177 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     })
                     return arr.join('');
                 }
-                body.contents().find("#trail-result").html(render(list));
+                $("#trail-result").html(render(list));
+                if( result.alarmType == '在线监控报警'){
+                    var remark = result.remark;
+                    var time = result.alarmTime;
+                    var interTimes = 2*60*1000;
+                    interTimes=parseInt(interTimes);
+                    var atime = Date.parse(new Date(time));
+                    var date1 = new Date(atime-interTimes); //前2分钟
+                    var date2 = new Date(atime+interTimes);//后2分钟
+                    var beginDate = changeTime(date1);
+                    var endDate = changeTime(date2);
+                    var data = {
+                        beginDate : beginDate,
+                        endDate : endDate,
+                        enterpriseId  : result.enterpriseId,
+                        factor : 'e202B01',
+                        cn : 2011
+                    };
+                    loadaCharts();
+                    $.ajax({
+                        url: ''+urlConfig+'/v01/htwl/lxh/online',
+                        headers: {
+                            'Content-type': 'application/json;charset=UTF-8',
+                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        type: 'get',
+                        data: data,
+                        success: function (result) {
+                            console.log(result)
+                        }
+                    })
+                    //         var arr = [],
+                    //             i;
+                    //         if(result.onlineData != null){
+                    //             var time = result.onlineTime,
+                    //                 onlineData = result.onlineData.data[0].online;
+                    //             for(i=0;i<time.length;i++){
+                    //                 arr.push([
+                    //                     time[i],
+                    //                     onlineData[i]
+                    //                 ])
+                    //             }
+                    //         }
+                    //         var option = {
+                    //             chart: {
+                    //                 type: 'spline',
+                    //                 backgroundColor: 'rgba(0,0,0,0)'
+                    //             },
+                    //             title: {
+                    //                 text: Fname
+                    //             },
+                    //             credits : {
+                    //                 enabled: false
+                    //             },
+                    //             xAxis: {
+                    //                 type: 'category',
+                    //                 dateTimeLabelFormats: {
+                    //                     day: '%H:%M:%S'
+                    //                 },
+                    //                 labels : {
+                    //                     formatter : function () {
+                    //                         return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                    //                     }
+                    //                 }
+                    //                 // categories : time
+                    //             },
+                    //             yAxis: {
+                    //                 title: {
+                    //                     text: unit,
+                    //                     style : {
+                    //                         color: '#000000'
+                    //                     }
+                    //                 },
+                    //                 labels : {
+                    //                     style : {
+                    //                         color: '#000000'
+                    //                     }
+                    //                 }
+                    //                 // ,plotLines: [{
+                    //                 //     value: 26.6,
+                    //                 //     dashStyle:'ShortDash',
+                    //                 //     width: 3,
+                    //                 //     color: 'red',
+                    //                 //     label: {
+                    //                 //         text: '阈值',
+                    //                 //         align: 'center',
+                    //                 //         style: {
+                    //                 //             color: 'gray'
+                    //                 //         }
+                    //                 //     }
+                    //                 // }]
+                    //             },
+                    //             tooltip: {
+                    //                 valueSuffix: unit
+                    //             },
+                    //             legend: {
+                    //                 enabled: false
+                    //             },
+                    //             series: [{
+                    //                 name: Fname,
+                    //                 data: arr,
+                    //                 marker: {
+                    //                     enabled: true
+                    //                 }
+                    //             }]
+                    //         };
+                    //         chart = new Highcharts.chart('mapStats_Line', option);
+                    //     }
+                    // })
+                // }else if(result.alarmType == '在线监控报警'){
+                }else if(result.alarmType = '视频报警'){
+                    var qyImg = [{
+                        "url":"../../img/data/002.png"
+                    },{
+                        "url":"../../img/data/001.png"
+                    }
+                    ];
+                    //设备照片
+                    var qyPhotos = "";
+                    for(var i in qyImg){
+                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 240px'> </div>"
+                    }
+                    $(".silder-main").html(qyPhotos);
+                    //图片点击
+                    layer.photos({
+                        photos: '.lay-img'
+                        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                    });
+
+                    $(".js-silder").silder({
+                        auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                        speed: 20,//轮播图运动速度
+                        sideCtrl: true,//是否需要侧边控制按钮
+                        bottomCtrl: true,//是否需要底部控制按钮
+                        defaultView: 0,//默认显示的索引
+                        interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                        activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                    });
+                }
             }
         })
     };
+    //转换时间格式
+    function changeTime(date) {
+        var seperator1 = "-";
+        var seperator2 = ":";
+        var month = date.getMonth() + 1,
+            strDate = date.getDate(),
+            hours = date.getHours(),
+            minutes = date.getMinutes(),
+            seconds = date.getSeconds();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        if (hours >= 0 && hours <= 9) {
+            hours = "0" + hours;
+        }
+        if (minutes >= 0 && minutes <= 9) {
+            minutes = "0" + minutes;
+        }
+        if (seconds >= 0 && seconds <= 9) {
+            seconds = "0" + seconds;
+        }
+        var time = date.getFullYear() + seperator1 + month + seperator1 + strDate
+            + " " + hours + seperator2 + minutes
+            + seperator2 + seconds;
+        return time;
+    }
     //上报报警窗口
     var  reportAlarmWin = function () {
         var content = $('#report_Alarm');
@@ -442,7 +610,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 data: [6,6.5,6.7,5.2]
             }]
         };
-        Highcharts.chart('alarmChart', option);
+        var chart = new Highcharts.chart('alarmChart', option);
     };
     var obj = {
         loadPage : loadPage,

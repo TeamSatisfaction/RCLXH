@@ -8,6 +8,8 @@
     <script src="../../layUi/layui.js"></script>
     <script src="../../js/lib/highcharts/highcharts.js"></script>
     <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
+    <script src="../../js/lib/jquery-1.11.3.min.js" type="text/javascript"></script>
+    <script src="../../js/lib/wySilder.min.js" type="text/javascript"></script>
     <script>
         layui.link('../../css/style.css');
         layui.config({
@@ -16,12 +18,8 @@
             utils : 'utils',
             alarmMng : 'alarmMng/alarmMng'
         }).use(['alarmMng','utils'],function () {
-            layui.alarmMng.loadaCharts()
-//            var id = layui.utils.getArg('id');
-//            layui.alarmMng.loadAlarmDetails(id);
-//            console.log(id)
-//            var value = sessionStorage.getItem("code");
-//            console.log(value);
+//            layui.alarmMng.loadaCharts();
+            layui.alarmMng.loadAlarmDetails();
         });
         //加载入口
     </script>
@@ -33,10 +31,10 @@
         <div class="field-content" style="margin: 0 10px">
             <table class="layui-table" lay-even>
                 <colgroup>
-                    <col width="40">
-                    <col>
-                    <col width="40">
-                    <col>
+                    <col width="130">
+                    <col width="300">
+                    <col width="130">
+                    <col width="300">
                 </colgroup>
                 <tbody>
                 <tr>
@@ -69,7 +67,14 @@
                 </tr>
                 </tbody>
             </table>
-            <div class="chart" id="alarmChart"></div>
+            <div class="chart" id="alarmChart">
+                <div class="js-silder">
+                    <div class="silder-scroll">
+                        <div class="silder-main">
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="layui-footer" style="text-align: center">
             <button class="layui-btn layui-btn-normal" onclick="layui.alarmMng.closeAlarmWin()">

@@ -259,72 +259,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             }
         })
     };
-    // //小时charts
-    // var loadaSCharts = function () {
-    //     var option = {
-    //         chart: {
-    //             type : 'line'
-    //         },
-    //         title: {
-    //             text: '濑溪河流域水质自动监测站'
-    //         },
-    //         xAxis: {
-    //             categories : ["12:00:00","13:00:00","14:00:00","15:00:00","16:00:00","17:00:00"]
-    //         },
-    //         tooltip: {
-    //             valueSuffix: 'mg/L'
-    //         },
-    //         yAxis: {
-    //             title: {
-    //                 text: 'mg/L'
-    //             }
-    //         },
-    //         legend: {
-    //             layout: 'vertical',
-    //             align: 'right',
-    //             verticalAlign: 'middle',
-    //             borderWidth: 0
-    //         },
-    //         series: [{
-    //             name: 'COD',
-    //             data: [512,476,525,523,485,498]
-    //         }]
-    //     };
-    //     Highcharts.chart('wqs_tab1_chart', option);
-    // };
-    // //日charts
-    // var loadaRCharts = function () {
-    //     var option = {
-    //         chart: {
-    //             type : 'line'
-    //         },
-    //         title: {
-    //             text: '濑溪河流域水质自动监测站'
-    //         },
-    //         xAxis: {
-    //             categories : ["2017-08-17","2017-08-18","2017-08-19","2017-08-20","2017-08-21","2017-08-22"]
-    //         },
-    //         tooltip: {
-    //             valueSuffix: 'mg/L'
-    //         },
-    //         yAxis: {
-    //             title: {
-    //                 text: 'mg/L'
-    //             }
-    //         },
-    //         legend: {
-    //             layout: 'vertical',
-    //             align: 'right',
-    //             verticalAlign: 'middle',
-    //             borderWidth: 0
-    //         },
-    //         series: [{
-    //             name: 'COD',
-    //             data: [4235,4352,4245,4485,4652,4253,4152]
-    //         }]
-    //     };
-    //     Highcharts.chart('wqs_tab1_chart', option);
-    // };
     //监测站list
     var loadMSData = function (curr,title){
         switch (title){
@@ -367,7 +301,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             ' <span>'+(index+1)+'</span>'+
                             '<span>' + item.name + '</span></h2>' +
                             '<div class="layui-colla-content"> ' +
-                            '<span>所属流域：xxxx流域<br>断面水质：Ⅲ类<br>地理位置：'+item.address+''+
+                            '<span>所属流域：濑溪河流域<br>断面水质：Ⅲ类<br>地理位置：'+item.address+''+
                             '</span></div>'+
                             '</div>'
                         arr.push(str);
@@ -385,7 +319,6 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     };
     var loadChartForSite = function (e) {
         Cid = $(e).attr('data-id');
-        console.log(Cid);
         Cname = $(e).attr('data-name');
         $('.wqs_tab1_statsTitle').html(Cname);
         Fname='无监测因子';
@@ -538,9 +471,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             ,content : '../../pages/publicMng/factorDetails.html'
             ,btn: ['返回']
             ,btnAlign: 'c'
-            // ,success : function (index, layero) {
-            //
-            // }
+            ,zIndex : 1000
         });
         layer.full(win);
     };

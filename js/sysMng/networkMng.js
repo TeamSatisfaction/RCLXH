@@ -537,18 +537,53 @@ layui.define(['layer','element','laypage','form'],function (exports){
         })
     };
     //配置因子窗口
-    var equipmentFactorWin = function () {
+    var equipmentFactorWin = function (type,id) {
+        var a = [];
+        a.push(type,id);
         var index = layer.open({
             title : '关联因子',
+            id : a,
             type : 2,
             moveOut: true,
             area : ['1000px','600px'],
             content : '../../pages/sysMng/equipmentFactorView.html',
             btn: ['提交', '返回'],
             btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
+            yes : function (index,layero) {
+                var body = layer.getChildFrame('body',index);
+                // 现在要做因子的添加
+                var rightFormItem = body.contents().find(".ef-right").find('.ef-checklist').find('.layui-form-item');
+                var array = [];
+                rightFormItem.each(function(){
+                    array.push({
+                        equipmentId:id,
+                        factorName :$(this).find('b').eq(0)[0].innerHTML,
+                        factorCode: $(this).find('input').eq(0).val(),
+                        factorType : $(this).find('select')[0].value
+                    });
+                });
+                var field = JSON.stringify(array);
+                console.log(field);
+                // v01/htwl/lxh/jcsjgz/factor
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        if(result.code == 1000){
+                            layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                                layer.close(index); //再执行关闭
+                                // location.reload();
+                            });
+                        }else {
+                            layer.msg('提交失败！', {icon: 2,time:1000});
+                        }
+                    }
+                })
             }
         });
         layer.full(index);

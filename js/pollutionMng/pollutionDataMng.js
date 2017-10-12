@@ -161,6 +161,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     //请求企业基本信息
     var loadData = function(){
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        Cid = id;
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
             headers : {
@@ -309,13 +310,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            // console.log(obj);
             if(obj.mn == mn&&obj.xcode == code){
-                if(code == "ez52Z01"){
-                    console.log(obj)
+                if(code == "ez52Z01"||code == "ez52Z02"){
                     drawLine(obj.xcum);
                 }else {
-                    console.log(obj)
                     drawLine(obj.xrtd);
                 }
             }
@@ -365,7 +363,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             factor : code,
             cn : 2011
         };
-        console.log(data);
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
@@ -386,7 +383,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             onlineData[i]
                         ])
                     }
-                    console.log(arr);
+                    // console.log(arr);
                 }
                 var option = {
                     chart: {
@@ -590,54 +587,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     form.on('select(select_fac)', function(data){
         console.log(data);
     });
-    /*3D饼图*/
-    var draw3dPie = function() {
-        var option = {
-            chart: {
-                type: 'pie',
-                options3d: {
-                    enabled: true,
-                    alpha: 60,
-                    beta: 0
-                },
-                backgroundColor: 'rgba(0,0,0,0)'
-            },
-            credits: {enabled: false},
-            title: {text: '设备能耗统计'},
-            tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
-            plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    depth: 20,
-                    dataLabels: {
-                        enabled: true,
-                        format: '{point.name}'
-                    }
-                }
-            },
-            series: [{
-                type: 'pie',
-                name: '设备能耗占比',
-                data: [
-                    ['混排废水提升泵',   45.0],
-                    ['含镍废水提升泵',   26.8],
-                    ['含铬废水提升泵',   26.8],
-                    ['综合废水提升泵',   8.5],
-                    ['前处理废水提升泵',   6.2],
-                    ['生化鼓风机',   0.7]
-                ]
-            }]
-        };
-        Highcharts.chart('ces_pie1', option);
-    };
     /*输出内容，注意顺序*/
     var obj = {
         loadData : loadData,
         loadLicenseData : loadLicenseData,
         loadPortData : loadPortData,
-        loadChartForSite : loadChartForSite,
-        draw3dPie : draw3dPie
+        loadChartForSite : loadChartForSite
     };
     exports('pollutionDataMng',obj)
 })

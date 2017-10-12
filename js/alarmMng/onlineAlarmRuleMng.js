@@ -7,8 +7,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
-    var urlConfig1 = 'http://172.16.1.10:9702';
+    // var urlConfig1 = 'http://113.204.228.66:9702';
     // var urlConfig1 = 'http://172.16.1.102:9702';
+    var urlConfig1 = 'http://172.16.1.10:9702';
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
@@ -28,7 +29,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             pageSize : 16
         };
         if(type == 'online_alarm_rule'||type == 'poly_online_alarm_rule'){
-            console.log(1);
             col  = '<col width="60">'+
                 '<col width="350">'+
                 '<col>'+
@@ -642,7 +642,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             })
         }
     };
-    //载入
+    //载入上报时间
     //删除规则
     var deleteAlarmRule = function (id) {
         layer.msg('是否确定删除该规则', {
@@ -654,16 +654,13 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
                     type : 'delete',
                     success : function (result){
-                        console.log(result)
                         layer.msg('删除成功！', {icon: 1,time:1000}, function() {
-                            // layer.close(2); //再执行关闭
                             loadAlarmRuleList();
                         });
                     }
                 })
             },
             error: function(result) {
-                // var message = result.responseJSON.errors[0].defaultMessage;
                 layer.msg('删除失败！', {icon: 2,time:2000});
             }
         });

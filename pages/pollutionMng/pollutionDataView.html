@@ -23,9 +23,6 @@
             $(function(){
                 layui.jquery(".detail-form").find("input").attr("readonly", true);
                 layui.pollutionDataMng.loadData();
-//                layui.pollutionDataMng.loadLicenseData();
-//                layui.pollutionDataMng.loadPortData();
-                layui.pollutionDataMng.draw3dPie();
             });
 //            layui.pollutionMng. loadaCharts();
         }); //加载入口
@@ -265,37 +262,61 @@
                     </div>
                 </form>
                 <div class="com-content">
+                    <div id="com_fac1">
+                        <form class="layui-form" action="" style="margin-left: 80px">
+                            <div class="layui-inline">
+                                <label class="layui-form-label">数采仪：</label>
+                                <div class="layui-input-block">
+                                <select lay-verify="" lay-search id="select_dau" lay-filter="select_dau">
+                                    <option value="">无数采仪</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">设备：</label>
+                                <div class="layui-input-block">
+                                <select lay-verify="" lay-search id="select_equip" lay-filter="select_equip">
+                                <option value="">无设备</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="layui-inline">
+                                <label class="layui-form-label">监测因子：</label>
+                                <div class="layui-input-block">
+                                <select lay-verify="" lay-search id="select_fac">
+                                <option value="">无监测因子</option>
+                                </select>
+                                </div>
+                            </div>
+                            <!--<div style="margin: 10px 0">-->
+                                <!--<label class="layui-form-label">数采仪：</label>-->
+                                <!--<div class="layui-input-block">-->
+                                    <!--<select lay-verify="" lay-search id="select_dau" lay-filter="select_dau">-->
+                                        <!--<option value="">无数采仪</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div style="margin: 10px 0">-->
+                                <!--<label class="layui-form-label">设备：</label>-->
+                                <!--<div class="layui-input-block">-->
+                                    <!--<select lay-verify="" lay-search id="select_equip" lay-filter="select_equip">-->
+                                        <!--<option value="">无设备</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div style="margin: 10px 0">-->
+                                <!--<label class="layui-form-label">监测因子：</label>-->
+                                <!--<div class="layui-input-block">-->
+                                    <!--<select lay-verify="" lay-search id="select_fac">-->
+                                        <!--<option value="">无监测因子</option>-->
+                                    <!--</select>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                        </form>
+                    </div>
                     <div id="com_chart1">
                         <div class="chart_title" style="font-size: 20px; font-weight: bold; text-align: center">实时监测数据</div>
                         <div id="com_chart2"></div>
-                    </div>
-                    <div id="com_fac">
-                        <form class="layui-form" action="" style="margin-left: 80px">
-                            <div style="margin: 10px 0">
-                                <label class="layui-form-label">数采仪：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_dau" lay-filter="select_dau">
-                                        <option value="">无数采仪</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div style="margin: 10px 0">
-                                <label class="layui-form-label">设备：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_equip" lay-filter="select_equip">
-                                        <option value="">无设备</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div style="margin: 10px 0">
-                                <label class="layui-form-label">监测因子：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_fac">
-                                        <option value="">无监测因子</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </form>
                     </div>
                     <!--<div style="clear: both"></div>-->
                 </div>

@@ -12,8 +12,9 @@
         layui.config({
             base: '../../js/sysMng/' //你的模块目录
         }).extend({
-            sysMng : 'networkMng'
-        }).use('networkMng', function () {
+            networkMng : 'networkMng',
+            equipmentMng : 'equipmentMng'
+        }).use('networkMng','equipmentMng', function () {
         }); //加载入口
     </script>
 </head>

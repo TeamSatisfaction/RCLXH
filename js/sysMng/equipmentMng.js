@@ -357,20 +357,40 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             btn: ['提交', '返回'],
             btnAlign: 'c',
             yes : function (index,layero) {
-                // layer.msg('提交成功！', {icon: 1});
-                // layer.close(index);
                 var body = layer.getChildFrame('body',index);
                 // 现在要做因子的添加
                 var rightFormItem = body.contents().find(".ef-right").find('.ef-checklist').find('.layui-form-item');
                 var array = [];
                 rightFormItem.each(function(){
                     array.push({
-                        "id": $(this).find('input').eq(0).val(),
-                        "type": $(this).find('input').eq(1).val()
+                        equipmentId:id,
+                        factorName :$(this).find('b').eq(0)[0].innerHTML,
+                        factorCode: $(this).find('input').eq(0).val(),
+                        factorType : $(this).find('select')[0].value
                     });
                 });
-                console.log(array)
-                // console.log(rightForm.find('.layui-form-item').eq(0).find('input').eq(0).val(),rightForm.find('.layui-form-item').eq(0).find('input').eq(1).val() )
+                var field = JSON.stringify(array);
+                console.log(field);
+                // v01/htwl/lxh/jcsjgz/factor
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        if(result.code == 1000){
+                            layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                                layer.close(index); //再执行关闭
+                                // location.reload();
+                            });
+                        }else {
+                            layer.msg('提交失败！', {icon: 2,time:1000});
+                        }
+                    }
+                })
             }
         });
         layer.full(index);
@@ -406,6 +426,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
 
         inputBoxes.find(".layui-form-checkbox").on('click',function () {
             /*右边form*/
+            console.log("2");
             laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
                 rightForm.html(html) ;
                 layui.each(row, function (index, item) {
@@ -425,6 +446,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
 
         layui.each(row, function (index, item) {
             /*右边form*/
+            console.log("1");
             laytpl(rightTpl).render(getCheckedArray(inputs), function(html){
                 rightForm.html(html) ;
                 rightForm.find("input[name=factorCode]").val(item.factorCode);
@@ -464,6 +486,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             $(".ef-left").find('.ef-checklist').html(html) ;
             form.render();
         });
+        loadFactorData();
     };
 
     //请求已有的因子
@@ -495,7 +518,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 var leftForm = $(".ef-left").find('.ef-checklist'),
                     inputBoxes = leftForm.find(".layui-form-item"),
                     inputs = inputBoxes.find("input");
-
+                console.log(inputs);
                 inputs.each(function(){
                     if($.inArray($(this).attr("title"), checkedArray)!=-1){
                         $(this).attr("checked", "checked");

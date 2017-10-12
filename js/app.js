@@ -2,7 +2,7 @@
  项目JS主入口
  以依赖Layui的layer和form模块为例
  **/
-// sessionStorage.setItem("urlConfig", 'http://172.21.92.170:8095');
+// sessionStorage.setItem("urlConfig", 'http://113.204.228.66:8095');
 sessionStorage.setItem("urlConfig", 'http://172.16.1.10:8095');
 // sessionStorage.setItem("urlConfig", 'http://172.16.1.102:8095');
 // 113.204.228.66

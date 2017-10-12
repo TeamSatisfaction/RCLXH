@@ -111,7 +111,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
+            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
             websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
         }
         else{
@@ -229,7 +229,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
-            // async : false,
             type: 'get',
             data: data,
             success: function (result) {
@@ -245,7 +244,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         ])
                     }
                 }
-                // console.log(Fname);
                 var option = {
                     chart: {
                         type: 'spline',
