@@ -17,8 +17,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            // websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
-            websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
+            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
         }
         else{
@@ -468,11 +468,23 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     };
     //详情
     var detailsWin = function () {
-        // console.log(Cid)
+        console.log(cn)
+        var title;
+        switch (cn){
+            case "2011":
+                title = '实时监测'
+                break;
+            case "2061":
+                title = '日监测'
+                break;
+            case "2041":
+                title = '月监测'
+                break;
+        }
         var win= layer.open({
             type: 2
             ,id : Cid
-            ,title: '详情'
+            ,title: title+'详情'
             ,content : '../../pages/publicMng/factorDetails.html'
             ,btn: ['返回']
             ,btnAlign: 'c'
@@ -481,32 +493,92 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         layer.full(win);
     };
     var loadfactordetailss = function () {
-        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
-        var date = new Date(),//当前时间
-            interTimes = 5*60*1000;
-        interTimes=parseInt(interTimes);
-        var date1 = new Date(Date.parse(date)-interTimes);
-        var beginDate = changeTime(date1);
-        var endDate = changeTime(date);
-        var data = {
-            enterpriseId : id,
-            // beginDate : beginDate,
-            // endDate : endDate
-            beginDate : '2017-09-25 16:15:00',
-            endDate : '2017-09-25 16:20:00'
-        };
-        console.log(data)
-        $.ajax({
-            url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
-            headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type : 'get',
-            data : data,
-            success : function (result){
-
-            }
-        })
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            title =  $(window.parent.document).find('.layui-layer-title').text();
+        if(title == '实时监测详情'){
+            var date = new Date(),//当前时间
+                interTimes = 5*60*1000;
+            interTimes=parseInt(interTimes);
+            var date1 = new Date(Date.parse(date)-interTimes);
+            var beginDate = changeTime(date1);
+            var endDate = changeTime(date);
+            var data = {
+                enterpriseId : id,
+                beginDate : beginDate,
+                endDate : endDate
+            };
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+                headers : {
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                type : 'get',
+                data : data,
+                success : function (result){
+                    var head1,
+                        head2,
+                        str;
+                    var colsNum1 = $("#head1");
+                    var colsNum2 = $("#head2");
+                    console.log(result)
+                    layui.each(result,function (index,item){
+                        head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                        colsNum1.append(head1);
+                        head2 = '<th>实测值</th>'+
+                            '<th>阈值</th>';
+                        colsNum2.append(head2);
+                    });
+                    // var head1,
+                    //     head2,
+                    //     str;
+                    // var FactorData = result.FactorData,
+                    //     onlineData = result.onlineData;
+                    // var colsNum1 = $("#head1");
+                    // var colsNum2 = $("#head2");
+                    // layui.each(FactorData,function (index,item) {
+                    //     head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                    //     colsNum1.append(head1);
+                    //     head2 = '<th>实测值</th>'+
+                    //             '<th>阈值</th>';
+                    //     colsNum2.append(head2);
+                    // });
+                    // var render = function(onlineData){
+                    //     var arr = [];
+                    //     layui.each(onlineData,function (index,item) {
+                    //         str = '<tr>' +
+                    //             '<td>'+(index+1)+'</td>' +
+                    //             '<td>'+item.dataTime+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez10L+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez12N+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez02B+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez11M+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez03F+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez09K+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez04G+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez06C+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez50D+'</td>'+
+                    //             '<td></td>'+
+                    //             '<td>'+item.ez51E+'</td>'+
+                    //             '<td></td>'+
+                    //             '</tr>';
+                    //         arr.push(str);
+                    //     })
+                    //     return arr.join('');
+                    // }
+                    // $("#jiance-list").html(render(onlineData));
+                }
+            })
+        }
     };
     var obj = {
         loadChartsData : loadChartsData,

@@ -272,7 +272,7 @@ tr .align-right{width:120px;text-align: right}
 #wqs_tab1_details{float: right;font-size: 23px;color: #00a5dd;margin: 15px}
 
 #wqs{ width:1700px;height: 100%;}
-.scroll-wrapper {  -webkit-overflow-scrolling: touch;  overflow-y: scroll;}
+/*.scroll-wrapper {  -webkit-overflow-scrolling: touch;  overflow-y: scroll;}*/
 #wqs .waterBorder{ float: left }
 #wqs .waterBorder .layui-tab{ height: calc(100% - 40px); margin:0; }
 #wqs .waterBorder .layui-tab .layui-tab-content{ height: calc(100% - 60px); }

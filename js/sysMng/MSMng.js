@@ -53,6 +53,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.lat + '</td>' +
                             '<td style="text-align: center">'+
                             '<a class="auth-btn" data-authId="8" href="#" onclick="layui.MSMng.alterMSWin(\''+item.baseEnterpriseId+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="54" href="#" onclick="layui.MSMng.alarmRuleList(\'' + item.baseEnterpriseId + '\')" title="报警规则列表"><img src="../../img/mng/configure.png"></a>' +
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="7" href="#" onclick="layui.MSMng.deleteMS(\''+item.baseEnterpriseId+'\')" title="删除"><img src="../../img/mng/delete.png"></a>'+
                             '</tr>';
                         arr.push(str);
@@ -76,6 +77,24 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 })
             }
         })
+    };
+    //企业规则列表
+    var alarmRuleList = function (id) {
+        sessionStorage.setItem("company_id", id);
+        var index = layer.open({
+            title : '报警规则',
+            id : id,
+            type : 2,
+            moveOut: true,
+            area : ['1200px','700px'],
+            content : '../../pages/sysMng/alarmRuleList.html',
+            btn: [ '返回'],
+            btnAlign: 'c',
+            success : function (layero, index) {
+
+            }
+        });
+        layer.full(index);
     };
     var addMSWin = function () {
         layer.open({
@@ -231,6 +250,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
     var obj = {
         loadPage : loadPage,
         loadMSData : loadMSData,
+        alarmRuleList : alarmRuleList,
         addMSWin : addMSWin,
         alterMSWin : alterMSWin,
         loadMSDetails : loadMSDetails,

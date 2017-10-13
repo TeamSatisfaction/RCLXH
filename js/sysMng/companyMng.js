@@ -757,9 +757,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             btn: [ '返回'],
             btnAlign: 'c',
             success : function (layero, index) {
-                // var body = layer.getChildFrame('body', index);
-                // var id = $('.layui-layer-content').attr('id');
-                // loadAlarmRuleDetails(id,body,'1');
+
             }
         });
         layer.full(index);
