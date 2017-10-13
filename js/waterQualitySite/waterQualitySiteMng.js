@@ -517,17 +517,52 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 success : function (result){
                     var head1,
                         head2,
-                        str;
+                        str = '';
                     var colsNum1 = $("#head1");
                     var colsNum2 = $("#head2");
-                    console.log(result)
+                    var tbodyData = {};
+
                     layui.each(result,function (index,item){
                         head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
                         colsNum1.append(head1);
-                        head2 = '<th>实测值</th>'+
-                            '<th>阈值</th>';
-                        colsNum2.append(head2);
+                        if(item.oneThreshold){
+                            head2 = '<th>实测值</th>'+
+                                '<th>阈值</th>';
+                            colsNum2.append(head2);
+                        }else {
+                            colsNum2.append('<th colspan="2"></th>');
+                        }
+                        //onlineData 整理数据
+                        layui.each(item.onlineData,function (dataIndex,dataItem){
+                            if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
+                                tbodyData[dataItem.dataTime] = [];
+                            }
+                            tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                            if(item.oneThreshold){                              //放阈值
+                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                            }else{
+                                tbodyData[dataItem.dataTime].push(null);        //没有阈值，放null占格子
+                            }
+                        });
                     });
+                    var i = 1;
+                    for(var dataTime in tbodyData){
+                        var ta = dataTime.split(''),    //可以用正则代替，我不会
+                            time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
+                        str += '<tr>' + '<td>'+i+'</td>';                               //序号
+                        str += '<td style="white-space: nowrap">'+time+'</td>';         //时间
+                        for( var j = 0; j < tbodyData[dataTime].length; j++){           //因子
+                            if(tbodyData[dataTime][j+1] === null){                      //占两格
+                                str += '<td colspan="2">'+tbodyData[dataTime][j]+'</td>';
+                            }else if(tbodyData[dataTime][j] !== null){                  //占一格
+                                str += '<td>'+tbodyData[dataTime][j]+'</td>';
+                            }
+                        }
+                        str += '</tr>';
+                        i++;    //序号增加
+                    }
+                    $('#jiance-list').html(str);
                     // var head1,
                     //     head2,
                     //     str;
