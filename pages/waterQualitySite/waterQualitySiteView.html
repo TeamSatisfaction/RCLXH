@@ -19,103 +19,76 @@
         }).use(['waterQualitySiteMng','utils'],function () {
             layui.waterQualitySiteMng.loadMSData("1",'实时监测数据');
             layui.waterQualitySiteMng.loadChartsData();
-//            layui.waterQualitySiteMng.loadaCharts();
         }); //加载入口
     </script>
 </head>
-<body id="wqs">
-    <div class="waterBorder">
-        <div class="water_divider">监测站列表（点击查看监测详情）</div>
-        <div class="water_inner">
-            <div class="list-title title">
-                <span>序号</span>
-                <span>监测站名称</span>
+<body style="width: 100%;height: 100%">
+    <div id="wqs" class="scroll-wrapper">
+        <div class="waterBorder">
+            <div class="water_divider">监测站列表（点击查看监测详情）</div>
+            <div class="water_inner">
+                <div class="list-title title">
+                    <span>序号</span>
+                    <span>监测站名称</span>
+                </div>
+                <div class="layui-collapse" id="water_list">
+                </div>
             </div>
-            <div class="layui-collapse" id="water_list">
-            </div>
-            <!--<div class="water_bot">-->
-                <!--<h3>报表</h3>-->
-                <!--<div class="water_bot_group">-->
-                    <!--<div class="water_bot_item" onclick="layui.waterQualitySiteMng.dailyWin()">-->
-                        <!--<img src="../../img/firework/daily.png">-->
-                        <!--<p>日报</p>-->
-                    <!--</div>-->
-                    <!--<div class="water_bot_item">-->
-                        <!--<img src="../../img/firework/weekly.png">-->
-                        <!--<p>周报</p>-->
-                    <!--</div>-->
-                    <!--<div class="water_bot_item">-->
-                        <!--<img src="../../img/firework/monthly.png">-->
-                        <!--<p>月报</p>-->
-                    <!--</div>-->
-                <!--</div>-->
-            <!--</div>-->
         </div>
-    </div>
-    <div class="waterBorder">
-        <div class="water_divider">监测详情</div>
-        <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
-            <ul class="layui-tab-title" id="getType">
-                <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
-                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
-                <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
-            </ul>
-            <div class="layui-tab-content">
-                <!--实时监测数据-->
-                <div class="layui-tab-item layui-show" >
-                    <div class="layui-form" style="border-bottom: 1px solid #e2e2e2">
-                        <div class="layui-form-item">
-                            <div class="layui-inline">
-                                <label class="layui-form-label">监测类型：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search>
-                                        <option value="010">废水</option>
-                                    </select>
+        <div class="waterBorder">
+            <div class="water_divider">监测详情</div>
+            <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
+                <ul class="layui-tab-title" id="getType">
+                    <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
+                    <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
+                    <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <!--实时监测数据-->
+                    <div class="layui-tab-item layui-show" >
+                        <div class="layui-form" style="border-bottom: 1px solid #e2e2e2">
+                            <div class="layui-form-item">
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">监测类型：</label>
+                                    <div class="layui-input-block">
+                                        <select lay-verify="" lay-search>
+                                            <option value="010">废水</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">数采仪：</label>
+                                    <div class="layui-input-block">
+                                        <select lay-verify="" lay-search id="select_dauId" lay-filter="select_dauId">
+                                            <option value="">无数采仪</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">设备：</label>
+                                    <div class="layui-input-block">
+                                        <select lay-verify="" lay-search id="select_equipment" lay-filter="select_equipment">
+                                            <option value="">无设备</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-inline">
+                                    <label class="layui-form-label">监测因子：</label>
+                                    <div class="layui-input-block">
+                                        <select lay-verify="" lay-search id="select_factor">
+                                            <option value="">无监测因子</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">数采仪：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_dauId" lay-filter="select_dauId">
-                                        <option value="">无数采仪</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">设备：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_equipment" lay-filter="select_equipment">
-                                        <option value="">无设备</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="layui-inline">
-                                <label class="layui-form-label">监测因子：</label>
-                                <div class="layui-input-block">
-                                    <select lay-verify="" lay-search id="select_factor">
-                                        <option value="">无监测因子</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <!--<div class="layui-inline">-->
-                                <!--<label class="layui-form-label" style="padding-top: 3px;">对比模式：</label>-->
-                                <!--<div class="layui-input-block">-->
-                                    <!--<input type="radio" name="mode" value="趋势" title="趋势" checked>-->
-                                    <!--<input type="radio" name="mode" value="环比" title="环比">-->
-                                    <!--<input type="radio" name="mode" value="同比" title="同比">-->
-                                <!--</div>-->
-                            <!--</div>-->
                         </div>
+                        <div class="wqs_tab1_statsTitle"></div>
+                        <div id="wqs_tab1_chart"></div>
+                        <div><a id="wqs_tab1_details" href="#" onclick="layui.waterQualitySiteMng.detailsWin()"><img src="../../img/firework/click.png">查看详情</a></div>
                     </div>
-                    <div class="wqs_tab1_statsTitle"></div>
-                    <div id="wqs_tab1_chart"></div>
-                    <div><a id="wqs_tab1_details" href="#" onclick="layui.waterQualitySiteMng.detailsWin()"><img src="../../img/firework/click.png">查看详情</a></div>
                 </div>
             </div>
         </div>
     </div>
-    <!--日报-->
-    <!--周报-->
-    <!--月报-->
 </body>
 </html>

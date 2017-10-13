@@ -211,7 +211,15 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             }
         })
     };
-
+    layer.ready(function(){
+        var storage=window.localStorage;
+        var userName = getCookie("userName");
+        if(userName){
+            $("#nametext").html(userName);
+        }else{
+            window.location.href = "login.html";
+        }
+    });
 
     /*输出内容，注意顺序*/
     var obj = {

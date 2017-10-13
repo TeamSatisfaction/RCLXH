@@ -297,7 +297,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
     //初始化密码
     var initializePassword = function (id) {
         var data = {
-            password : "111111",
+            password : "e10adc3949ba59abbe56e057f20f883e",
             userId : id
         };
         var field = JSON.stringify(data);

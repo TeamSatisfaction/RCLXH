@@ -27,7 +27,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://172.16.1.102:8095/v01/htwl/lxh/login',
+            url :'http://172.16.1.10:8095/v01/htwl/lxh/login',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8'
             },

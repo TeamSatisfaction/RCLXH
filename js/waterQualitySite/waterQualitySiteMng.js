@@ -17,7 +17,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
         }
         else{
@@ -174,7 +175,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                                 style : {
                                     color: '#000000'
                                 }
-                            }
+                            },
+                            minTickInterval : 0.1
                             // ,plotLines: [{
                             //     value: 60,
                             //     dashStyle:'ShortDash',
@@ -230,7 +232,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                                     style : {
                                         color: '#000000'
                                     }
-                                }
+                                },
+                                minTickInterval : 0.1
                                 // ,plotLines: [{
                                 //     value: 60,
                                 //     dashStyle:'ShortDash',
@@ -465,8 +468,10 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     };
     //详情
     var detailsWin = function () {
+        // console.log(Cid)
         var win= layer.open({
             type: 2
+            ,id : Cid
             ,title: '详情'
             ,content : '../../pages/publicMng/factorDetails.html'
             ,btn: ['返回']
@@ -476,12 +481,30 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         layer.full(win);
     };
     var loadfactordetailss = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        var date = new Date(),//当前时间
+            interTimes = 5*60*1000;
+        interTimes=parseInt(interTimes);
+        var date1 = new Date(Date.parse(date)-interTimes);
+        var beginDate = changeTime(date1);
+        var endDate = changeTime(date);
+        var data = {
+            enterpriseId : id,
+            // beginDate : beginDate,
+            // endDate : endDate
+            beginDate : '2017-09-25 16:15:00',
+            endDate : '2017-09-25 16:20:00'
+        };
+        console.log(data)
         $.ajax({
-            url: '../../data/fsrsj.json',
-            dataType : 'json',
-            type: 'get',
-            success: function(data){
-                console.log(data)
+            url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data,
+            success : function (result){
+
             }
         })
     };

@@ -418,7 +418,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                             style : {
                                 color: '#000000'
                             }
-                        }
+                        },
+                        minTickInterval : 0.1
                         // ,plotLines: [{
                         //     value: 60,
                         //     dashStyle:'ShortDash',
