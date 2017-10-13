@@ -525,13 +525,10 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     layui.each(result,function (index,item){
                         head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
                         colsNum1.append(head1);
-                        if(item.oneThreshold){
-                            head2 = '<th>实测值</th>'+
-                                '<th>阈值</th>';
-                            colsNum2.append(head2);
-                        }else {
-                            colsNum2.append('<th colspan="2"></th>');
-                        }
+                        head2 = '<th>实测值</th>'+
+                            '<th>阈值</th>';
+                        colsNum2.append(head2);
+
                         //onlineData 整理数据
                         layui.each(item.onlineData,function (dataIndex,dataItem){
                             if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
@@ -542,7 +539,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                                 var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
                                 tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
                             }else{
-                                tbodyData[dataItem.dataTime].push(null);        //没有阈值，放null占格子
+                                tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
                             }
                         });
                     });
@@ -553,11 +550,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                         str += '<tr>' + '<td>'+i+'</td>';                               //序号
                         str += '<td style="white-space: nowrap">'+time+'</td>';         //时间
                         for( var j = 0; j < tbodyData[dataTime].length; j++){           //因子
-                            if(tbodyData[dataTime][j+1] === null){                      //占两格
-                                str += '<td colspan="2">'+tbodyData[dataTime][j]+'</td>';
-                            }else if(tbodyData[dataTime][j] !== null){                  //占一格
-                                str += '<td>'+tbodyData[dataTime][j]+'</td>';
-                            }
+                            str += '<td>'+tbodyData[dataTime][j]+'</td>';
                         }
                         str += '</tr>';
                         i++;    //序号增加
