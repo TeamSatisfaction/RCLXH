@@ -17,6 +17,7 @@
             layui.onlineAlarmRuleMng.loadEquipmentSelect();
             layui.onlineAlarmRuleMng.loadFactorSelect();
             layui.onlineAlarmRuleMng.loadRoleSelect();
+//            layui.onlineAlarmRuleMng.loadUpTime();
         }); //加载入口
     </script>
 </head>
@@ -116,17 +117,6 @@
                         <input name="two_threshold" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="" id="two_threshold">
                     </div>
                 </div>
-                <!--<div class="layui-form-item">-->
-                    <!--<div class="layui-inline" style="width: calc(90% + 20px);">-->
-                        <!--<label class="layui-form-label">报警条件关系：</label>-->
-                        <!--<div class="layui-input-inline">-->
-                            <!--<select name="is_contain"  lay-search="" id="is_contain">-->
-                                <!--<option value="1">and</option>-->
-                                <!--<option value="2">or</option>-->
-                            <!--</select>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</div>-->
                 <div class="layui-form-item">
                     <div class="layui-inline" style="width: calc(90% + 20px);">
                         <label class="layui-form-label">报警条件关系：</label>
@@ -151,12 +141,12 @@
                     <div class="layui-inline">
                         <label class="layui-form-label">一级报警角色：</label>
                         <div class="layui-input-inline">
-                            <select  lay-verify="required" lay-search="" name="oneLevelType" class="roleSelect">
+                            <select  lay-verify="" lay-search="" name="oneLevelType" class="roleSelect">
                                 <option value="">--请选择--</option>
                                 <option value="">--请选择--</option>
                             </select>
                         </div>
-                        <p class="required">*</p>
+                        <span class="required">*</span>
                     </div>
                     <div class="layui-inline">
                         <label class="layui-form-label">一级报警时间：</label>
@@ -190,7 +180,7 @@
                 <div class="layui-form-item" style="display: none">
                     <div class="layui-inline">
                         <label class="layui-form-label">三级报警类型：</label>
-                        <input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="一级报警">
+                        <input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="三级报警">
                     </div>
                 </div>
                 <div class="layui-form-item" style="margin-top: 15px">

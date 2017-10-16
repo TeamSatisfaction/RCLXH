@@ -451,29 +451,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             type : 'get',
             success : function (result){
                 var data = result.data;
-                // var qyImg = [{
-                //     "url":"../../img/data/002.png"
-                // },{
-                //     "url":"../../img/data/001.png"
-                // }
-                // ];
                 var qyImg =data.attachments;
-                //企业基本信息
-                // $("input[name='name']").val(data.name);
-                // $("input[name='legalRepresentative']").val(data.legalRepresentative);
-                // $("input[name='head']").val(data.head);
-                // $("input[name='headPhone']").val(data.headPhone);
-                // $("input[name='orgCode']").val(data.orgCode);
-                // $("input[name='controlLevel']").val(data.controlLevel);
-                // $("input[name='envHead']").val(data.envHead);
-                // $("input[name='envHeadPhone']").val(data.envHeadPhone);
-                // $("input[name='buildStatusName']").val(data.buildStatusName);
-                // $("input[name='processing']").val(data.processing);
-                // $("input[name='riverBasin']").val(data.riverBasin);
-                // $("input[name='lon']").val(data.lon);
-                // $("input[name='lat']").val(data.lat);
-                // $("input[name='expectDate']").val(data.expectDate);
-                // $("input[name='address']").val(data.address);
                 if(title == "编辑企业信息"){
                     $.each(data,function(key,value){
                         var formField = $("[name='"+key+"']");
@@ -568,7 +546,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     $("input[name='gross']").val(data.gross);
                     $("input[name='licenceType']").val(data.licenceType);
                     $("input[name='id']").val(data.id);
-                    console.log(data.pic.length)
                     if(title == '企业详情'){
                         if(data.pic.length == 0){
                             var str1 = '<span>未上传正本</span>';

@@ -12,6 +12,9 @@
     <script src="../../js/lib/wySilder.min.js" type="text/javascript"></script>
     <script src="../../js/lib/highcharts/highcharts.js"></script>
     <script src="../../js/lib/highcharts/highcharts-3d.js"></script>
+    <!--<script src="../../js/lib/easypin/jquery-2.2.0.min.js"></script>-->
+    <script src="../../js/lib/easypin/jquery.easing.min.js"></script>
+    <script src="../../js/lib/easypin/jquery.easypin.min.js"></script>
     <script>
         layui.link('../../css/style.css');
         layui.config({
@@ -23,6 +26,7 @@
             $(function(){
                 layui.jquery(".detail-form").find("input").attr("readonly", true);
                 layui.pollutionDataMng.loadData();
+                layui.pollutionDataMng.loadLicenseData();
             });
 //            layui.pollutionMng. loadaCharts();
         }); //加载入口
@@ -197,12 +201,12 @@
                                         </ul>
                                         <div class="layui-tab-content" id="pdv_pk">
                                             <!--正本-->
-                                            <div class="layui-tab-item layui-show lay-img" >
-                                                <img src="../../img/data/003.png" style="width: 600px;height: 500px">
+                                            <div class="layui-tab-item layui-show lay-img" id="zhengben">
+                                                <img src="" style="width: 600px;height: 500px">
                                             </div>
                                             <!--副本-->
-                                            <div class="layui-tab-item lay-img">
-                                                <img src="../../img/data/004.png" style="width: 600px;height: 500px">
+                                            <div class="layui-tab-item lay-img" id="fuben">
+                                                <img src="" style="width: 600px;height: 500px">
                                             </div>
                                         </div>
                                     </div>
@@ -243,9 +247,9 @@
             <!--在线监测-->
             <div class="layui-tab-item">
                 <div class="layui-btn-group">
-                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">实时监测数据</div>
-                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">小时监测数据</div>
-                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionMng.changeChart(this.innerHTML)">日监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionDataMng.changeChart(this.innerHTML)">实时监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionDataMng.changeChart(this.innerHTML)">小时监测数据</div>
+                    <div class="layui-btn layui-btn-primary" onclick="layui.pollutionDataMng.changeChart(this.innerHTML)">日监测数据</div>
                 </div>
                 <form class="layui-form" lay-filter="test" action="" style="display: none">
                     <div class="layui-form-item layui-inline">
@@ -288,30 +292,6 @@
                                 </select>
                                 </div>
                             </div>
-                            <!--<div style="margin: 10px 0">-->
-                                <!--<label class="layui-form-label">数采仪：</label>-->
-                                <!--<div class="layui-input-block">-->
-                                    <!--<select lay-verify="" lay-search id="select_dau" lay-filter="select_dau">-->
-                                        <!--<option value="">无数采仪</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div style="margin: 10px 0">-->
-                                <!--<label class="layui-form-label">设备：</label>-->
-                                <!--<div class="layui-input-block">-->
-                                    <!--<select lay-verify="" lay-search id="select_equip" lay-filter="select_equip">-->
-                                        <!--<option value="">无设备</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</div>-->
-                            <!--<div style="margin: 10px 0">-->
-                                <!--<label class="layui-form-label">监测因子：</label>-->
-                                <!--<div class="layui-input-block">-->
-                                    <!--<select lay-verify="" lay-search id="select_fac">-->
-                                        <!--<option value="">无监测因子</option>-->
-                                    <!--</select>-->
-                                <!--</div>-->
-                            <!--</div>-->
                         </form>
                     </div>
                     <div id="com_chart1">
@@ -323,14 +303,43 @@
             </div>
             <!--设备工况-->
             <div class="layui-tab-item company-equip-sit">
-                <img src="../../img/data/gongkuang1.jpg">
-                <div class="info" id="prompt">
-                    <p>流量：30</p>
-                    <p>开关量：30</p>
-                    <p>电流：30</p>
-                    <p>电压：30</p>
-                    <div class="nav nav-border"></div>
-                    <div class="nav nav-background"></div>
+                <div class="demo">
+                    <img src="../../img/data/gongkuang/huashen.jpg" width="1600" height="800" class="pin" easypin-id="demo_image_1" />
+                    <div style="display:none;" easypin-tpl>
+                        <popover>
+                            <div class="exPopoverContainer">
+                                <div class="popBg borderRadius"></div>
+                                <div class="popBody">
+                                    <div class="arrow-down" style="top: 101px;left: 10px;"></div>
+                                    <div class="popContent">
+                                        <ul>
+                                            <li>
+                                                <span>流量:</span>&nbsp;
+                                                <span>30mg/L</span>
+                                            </li>
+                                            <li>
+                                                <span>开关量:</span>&nbsp;
+                                                <span>30mg/L</span>
+                                            </li>
+                                            <li>
+                                                <span>电流:</span>&nbsp;
+                                                <span>50A</span>
+                                            </li>
+                                            <li>
+                                                <span>电压:</span>&nbsp;
+                                                <span>220V</span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </popover>
+                        <marker>
+                            <div class="marker2 element-animation">
+                                <img src="../../img/data/sport.png">
+                            </div>
+                        </marker>
+                    </div>
                 </div>
                 <fieldset class="layui-elem-field layui-field-title">
                     <legend>设备列表</legend>
@@ -352,7 +361,31 @@
                             </thead>
                             <tbody id="list1">
                             <tr>
-                                <td>聚铁加药泵</td>
+                                <td>聚水提升泵</td>
+                                <td>1253</td>
+                                <td>52</td>
+                                <td>正常运行</td>
+                            </tr>
+                            <tr>
+                                <td>污水提升泵</td>
+                                <td>1253</td>
+                                <td>52</td>
+                                <td>正常运行</td>
+                            </tr>
+                            <tr>
+                                <td>调节池提升泵</td>
+                                <td>1253</td>
+                                <td>52</td>
+                                <td>正常运行</td>
+                            </tr>
+                            <tr>
+                                <td>自厌氧污泥泵</td>
+                                <td>1253</td>
+                                <td>52</td>
+                                <td>正常运行</td>
+                            </tr>
+                            <tr>
+                                <td>罗茨风机</td>
                                 <td>1253</td>
                                 <td>52</td>
                                 <td>正常运行</td>
@@ -409,6 +442,21 @@
         </div>
     </div>
 </form>
-
+    <!--<script>-->
+        <!--$(document).ready(function(){-->
+            <!--$.ajax({-->
+                <!--url : '../../data/equipmentData.json',-->
+                <!--success: function (result){-->
+                    <!--$('.pin').easypinShow({-->
+                        <!--data : result,-->
+                        <!--popover: {-->
+                            <!--show: true,-->
+                            <!--animate: true-->
+                        <!--}-->
+                    <!--});-->
+                <!--}-->
+            <!--})-->
+        <!--});-->
+    <!--</script>-->
 </body>
 </html>

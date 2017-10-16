@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script src="../../js/lib/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="../../js/lib/wySilder.min.js" type="text/javascript"></script>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/waterQualitySite/' //你的模块目录
+        }).extend({
+            waterQualitySiteMng : 'waterQualitySiteMng'
+        }).use('waterQualitySiteMng',function () {
+//            layui.waterQualitySiteMng.loadfactordetailss();
+            layui.waterQualitySiteMng.setTime2()
+        }); //加载入口
+    </script>
+    <script type="text/javascript" language="javascript">
+        var idTmr;
+        function  getExplorer() {
+            var explorer = window.navigator.userAgent ;
+            //ie
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if(explorer.indexOf("Chrome") >= 0){
+                return 'Chrome';
+            }
+            //Opera
+            else if(explorer.indexOf("Opera") >= 0){
+                return 'Opera';
+            }
+            //Safari
+            else if(explorer.indexOf("Safari") >= 0){
+                return 'Safari';
+            }
+        }
+        function method1(tableid) {//整个表格拷贝到EXCEL中
+            if(getExplorer()=='ie')
+            {
+                var curTbl = document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+                //创建AX对象excel
+                var oWB = oXL.Workbooks.Add();
+                //获取workbook对象
+                var xlsheet = oWB.Worksheets(1);
+                //激活当前sheet
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                //把表格中的内容移到TextRange中
+                sel.select();
+                //全选TextRange中内容
+                sel.execCommand("Copy");
+                //复制TextRange中内容
+                xlsheet.Paste();
+                //粘贴到活动的EXCEL中
+                oXL.Visible = true;
+                //设置excel可见属性
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+
+                    oWB.Close(savechanges = false);
+                    //xls.visible = false;
+                    oXL.Quit();
+                    oXL = null;
+                    //结束excel进程，退出完成
+                    //window.setInterval("Cleanup();",1);
+                    idTmr = window.setInterval("Cleanup();", 1);
+                }
+
+            }
+            else
+            {
+                tableToExcel('ta');
+            }
+        }
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function() {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                    template = '<html><head><meta http-equiv="Content-Type" charset=utf-8"></head><body><table>{table}</table></body></html>',
+                    base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                    format = function(s, c) {
+                        return s.replace(/{(\w+)}/g,
+                                function(m, p) { return c[p]; }) }
+            return function(table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })();
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px;">
+    <div style="margin: 10px;min-width: 1000px">
+        <div class="layui-form-item" style="margin: 5px 0;">
+            <div class="layui-form-item layui-inline">
+                <label class="layui-form-label">选择日期：</label>
+                <input class="layui-input-inline layui-input" placeholder="" onclick="WdatePicker({dateFmt:'yyyy-MM'})" name="beginDate">
+            </div>
+            <button class="layui-btn" style="margin-left: 0;margin-top: -5px" onclick="layui.waterQualitySiteMng.loadfactordetailss()">
+                <i class="layui-icon"></i>搜索
+            </button>
+            <button class="layui-btn" style="margin-left: 0;margin-top: -5px" onclick="javascript:method1('ta')">
+                <i class="layui-icon"></i>导出
+            </button>
+        </div>
+        <table class="layui-table" lay-even="" lay-skin="row" id="ta">
+            <colgroup>
+                <col width="60">
+                <col width="160">
+            </colgroup>
+            <thead id="jiance-head">
+            <tr id="head1">
+                <th rowspan="2">序号</th>
+                <th rowspan="2">时间</th>
+            </tr>
+            <tr id="head2">
+            </tr>
+            </thead>
+            <tbody id="jiance-list">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+</body>
+</html>

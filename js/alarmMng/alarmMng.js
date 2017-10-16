@@ -69,7 +69,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             data = {
                 alarmType : alarmType,
                 startTime :startTime,
-                endTime : endTime,
+                entTime : endTime,
                 status :status,
                 pageNo : curr||1,
                 pageSize : 16

@@ -344,7 +344,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-
                 if(result == null){
                     // $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
@@ -355,7 +354,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     }
                 }
                 form.render('select');
-                loadAlarmRuleDetails();
+                loadUpTime();
             }
         })
     };
@@ -481,7 +480,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 id: id,
                 moveOut: true,
                 area: ['1000px', '600px'],
-                content: '../../pages/alarmMng/polyOnlineAlarmRule.html',
+                content: '../../pages/alarmMng/alterPolyOnlineAlarmRule.html',
                 btn: ['提交', '返回'],
                 btnAlign: 'c',
                 yes: function (index, layero) {
@@ -548,7 +547,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         }
     };
     //编辑载入规则详情
-    var loadAlarmRuleDetails = function () {
+        var loadAlarmRuleDetails = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//规则id
             title =  $(window.parent.document).find('.layui-layer-title').text();
         if(title == '修改在线报警规则'){
@@ -556,7 +555,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
                 type: 'get',
                 success: function (result) {
-                    console.log(result)
                     $('#first_layer_encoding_name').children("option").each(function(){
                         if (this.text == result.firstLayerEncodingName) {
                             this.setAttribute("selected","selected");
@@ -643,6 +641,58 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         }
     };
     //载入上报时间
+    var loadUpTime = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//规则id
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time/'+id+'',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function (result) {
+                var data = result[0];
+                console.log(result)
+                if(data){
+                    $('select[name=oneLevelType]').children("option").each(function(){
+                        if (this.value == data.oneLevelType) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('select[name=twoLevelType]').children("option").each(function(){
+                        if (this.value == data.twoLevelType) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $('[name=oneLevelTime]').val(data.oneLevelTime);
+                    $('[name=twoLevelTime]').val(data.twoLevelTime);
+                    if(data.threeLevelTime != 999999999){
+                        $('select[name=threeLevelType]').children("option").each(function(){
+                            if (this.value == data.threeLevelType) {
+                                this.setAttribute("selected","selected");
+                            }
+                        });
+                        $('[name=threeLevelTime]').val(data.threeLevelTime);
+                    }
+                    // $.each(data,function(key,value){
+                    //     var formField = $("[name='"+key+"']");
+                    //     if(formField[0] !== undefined){
+                    //         var fieldTagName = formField[0].tagName.toLowerCase();
+                    //         if(fieldTagName == 'input'){
+                    //             formField.val(value);
+                    //         }else if(fieldTagName == 'select'){
+                    //             formField.children("option").each(function () {
+                    //                 if(this.value == value){
+                    //                     this.setAttribute("selected","selected");
+                    //                 }
+                    //                 form.render('select');
+                    //             })
+                    //         }
+                    //     }
+                    // });
+                }
+            }
+        })
+    }
     //删除规则
     var deleteAlarmRule = function (id) {
         layer.msg('是否确定删除该规则', {
@@ -674,6 +724,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         alterAlarmRuleWin : alterAlarmRuleWin,
         loadAlarmRuleDetails : loadAlarmRuleDetails,
         deleteAlarmRule : deleteAlarmRule,
+        loadUpTime : loadUpTime,
         addAlarmRuleTime : addAlarmRuleTime
     };
     exports('onlineAlarmRuleMng',obj)

@@ -24,6 +24,7 @@
             layui.map.loadMonthlydata();
             layui.map.loadChartForSite();
             layui.map.loadAlardata();
+            layui.map.loadAlarmData();
         }).link('../../css/style.css'); //加载入口
     </script>
     <title>荣昌区环保物联网在线监控平台</title>
@@ -86,27 +87,18 @@
                         <div class="mapStats_divider">报警情况</div>
                         <div class="mapStats_alarmGeneral">
                             <i class="alarm-icon"></i>
-                            <span>截止当前时间为止视频类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">10</a>个，
-                                监测类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">20</a>个，
-                                工况类报警<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">11</a>个，
-                                长期未处理报警数达到<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">9</a>个。</span>
+                            <span>截止当前时间为止视频类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')" id="video_alarm_num"></a>个，
+                                监测类报警总数<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')" id="detection_alarm_num"></a>个，
+                                工况类报警<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')" id="working_alarm_num"></a>个。</span>
+                                <!--长期未处理报警数达到<a onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">0</a>个。</span>-->
                         </div>
                         <div class="mapStats_alarmNews">
                             <ul>
-                                <li>
-                                    <span>2017-08-22  08:22:00</span>
-                                    <span>水质自动站</span>
-                                    <span>COD持续超标3小时</span>
+                                <li id="alarm-list1" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
                                 </li>
-                                <li>
-                                    <span>2017-08-22  09:10:08</span>
-                                    <span>重庆昌元化工集团有限公司</span>
-                                    <span>提升泵1号设备停运时长达到24小时</span>
+                                <li id="alarm-list2" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
                                 </li>
-                                <li>
-                                    <span>2017-08-22 10:30:17</span>
-                                    <span>重庆长江装备器材有限公司</span>
-                                    <span>生化池正在爆气</span>
+                                <li id="alarm-list3" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
                                 </li>
                             </ul>
                         </div>

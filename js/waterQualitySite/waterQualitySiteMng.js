@@ -469,7 +469,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     //详情
     var detailsWin = function () {
         console.log(cn)
-        var title;
+        var title,
+            url;
         switch (cn){
             case "2011":
                 title = '实时监测'
@@ -481,11 +482,18 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                 title = '月监测'
                 break;
         }
+        if(cn == '2011'){
+            url = '../../pages/publicMng/factorDetails.html'
+        }else if(cn == '2061'){
+            url = '../../pages/publicMng/factorDayDetails.html'
+        }else if(cn == '2041'){
+            url = '../../pages/publicMng/factorMonthDetails.html'
+        }
         var win= layer.open({
             type: 2
             ,id : Cid
             ,title: title+'详情'
-            ,content : '../../pages/publicMng/factorDetails.html'
+            ,content : url
             ,btn: ['返回']
             ,btnAlign: 'c'
             ,zIndex : 1000
@@ -495,17 +503,21 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
     var loadfactordetailss = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
             title =  $(window.parent.document).find('.layui-layer-title').text();
+        console.log(id,title);
         if(title == '实时监测详情'){
             var date = new Date(),//当前时间
-                interTimes = 5*60*1000;
+                interTimes = 10*60*1000;
             interTimes=parseInt(interTimes);
             var date1 = new Date(Date.parse(date)-interTimes);
             var beginDate = changeTime(date1);
             var endDate = changeTime(date);
             var data = {
                 enterpriseId : id,
+                cn : '2011',
                 beginDate : beginDate,
                 endDate : endDate
+                // beginDate : '2017-10-14 09:40:00',
+                // endDate : '2017-10-14 10:00:00'
             };
             $.ajax({
                 url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
@@ -521,8 +533,39 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                     var colsNum1 = $("#head1");
                     var colsNum2 = $("#head2");
                     var tbodyData = {};
-
                     layui.each(result,function (index,item){
+                        switch (item.factorName){
+                            case "COD" :
+                                item.factorName = "COD(mg/L)";
+                                break;
+                            case "总磷" :
+                                item.factorName = "总磷(mg/L)";
+                                break;
+                            case "高锰酸盐" :
+                                item.factorName = "高锰酸盐(mg/L)";
+                                break;
+                            case "氨氮" :
+                                item.factorName = "氨氮(mg/L)";
+                                break;
+                            case "生物毒性" :
+                                item.factorName = "生物毒性(%)";
+                                break;
+                            case "温度" :
+                                item.factorName = "温度(℃)";
+                                break;
+                            case "浊度" :
+                                item.factorName = "浊度(FNU)";
+                                break;
+                            case "电导率" :
+                                item.factorName = "电导率(us/cm)";
+                                break;
+                            case "PH" :
+                                item.factorName = "PH(无量纲)";
+                                break;
+                            case "溶解氧" :
+                                item.factorName = "溶解氧(mg/L)";
+                                break;
+                        };
                         head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
                         colsNum1.append(head1);
                         head2 = '<th>实测值</th>'+
@@ -534,11 +577,13 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
                                 tbodyData[dataItem.dataTime] = [];
                             }
-                            tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                             if(item.oneThreshold){                              //放阈值
-                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                                var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));
+                                var comparison1 = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                                tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison1+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
                                 tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
                             }else{
+                                tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                                 tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
                             }
                         });
@@ -556,67 +601,235 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                         i++;    //序号增加
                     }
                     $('#jiance-list').html(str);
-                    // var head1,
-                    //     head2,
-                    //     str;
-                    // var FactorData = result.FactorData,
-                    //     onlineData = result.onlineData;
-                    // var colsNum1 = $("#head1");
-                    // var colsNum2 = $("#head2");
-                    // layui.each(FactorData,function (index,item) {
-                    //     head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
-                    //     colsNum1.append(head1);
-                    //     head2 = '<th>实测值</th>'+
-                    //             '<th>阈值</th>';
-                    //     colsNum2.append(head2);
-                    // });
-                    // var render = function(onlineData){
-                    //     var arr = [];
-                    //     layui.each(onlineData,function (index,item) {
-                    //         str = '<tr>' +
-                    //             '<td>'+(index+1)+'</td>' +
-                    //             '<td>'+item.dataTime+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez10L+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez12N+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez02B+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez11M+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez03F+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez09K+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez04G+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez06C+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez50D+'</td>'+
-                    //             '<td></td>'+
-                    //             '<td>'+item.ez51E+'</td>'+
-                    //             '<td></td>'+
-                    //             '</tr>';
-                    //         arr.push(str);
-                    //     })
-                    //     return arr.join('');
-                    // }
-                    // $("#jiance-list").html(render(onlineData));
+                }
+            })
+        }else if(title == '日监测详情'){
+            $("#head1").empty();
+            $("#head2").empty();
+            var date = $('input[name=beginDate]').val();
+            var beginDate = date + ' 00:00:00',
+                endDate = date + ' 24:00:00';
+            var data = {
+                enterpriseId : id,
+                cn : '2061',
+                beginDate : beginDate,
+                endDate : endDate
+            };
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+                headers : {
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                type : 'get',
+                data : data,
+                success : function (result){
+                    var head1,
+                        head2,
+                        str = '';
+                    var colsNum1 = $("#head1");
+                    var colsNum2 = $("#head2");
+                    var tbodyData = {};
+                    var headstr = '<th rowspan="2">序号</th> <th rowspan="2">时间</th>';
+                    colsNum1.append(headstr);
+                    layui.each(result,function (index,item){
+                        switch (item.factorName){
+                            case "COD" :
+                                item.factorName = "COD(mg/L)";
+                                break;
+                            case "总磷" :
+                                item.factorName = "总磷(mg/L)";
+                                break;
+                            case "高锰酸盐" :
+                                item.factorName = "高锰酸盐(mg/L)";
+                                break;
+                            case "氨氮" :
+                                item.factorName = "氨氮(mg/L)";
+                                break;
+                            case "生物毒性" :
+                                item.factorName = "生物毒性(%)";
+                                break;
+                            case "温度" :
+                                item.factorName = "温度(℃)";
+                                break;
+                            case "浊度" :
+                                item.factorName = "浊度(FNU)";
+                                break;
+                            case "电导率" :
+                                item.factorName = "电导率(us/cm)";
+                                break;
+                            case "溶解氧" :
+                                item.factorName = "溶解氧(mg/L)";
+                                break;
+                        };
+                        head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                        colsNum1.append(head1);
+                        head2 = '<th>实测值</th>'+
+                            '<th>阈值</th>';
+                        colsNum2.append(head2);
+                        //onlineData 整理数据
+                        layui.each(item.onlineData,function (dataIndex,dataItem){
+                            if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
+                                tbodyData[dataItem.dataTime] = [];
+                            }
+                            if(item.oneThreshold){                              //放阈值
+                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                                tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                            }else{
+                                tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                            }
+                        });
+                    });
+                    var i = 1;
+                    for(var dataTime in tbodyData){
+                        var ta = dataTime.split(''),    //可以用正则代替，我不会
+                            time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
+                        str += '<tr>' + '<td>'+i+'</td>';                               //序号
+                        str += '<td style="white-space: nowrap">'+time+'</td>';         //时间
+                        for( var j = 0; j < tbodyData[dataTime].length; j++){           //因子
+                            str += '<td>'+tbodyData[dataTime][j]+'</td>';
+                        }
+                        str += '</tr>';
+                        i++;    //序号增加
+                    }
+                    $('#jiance-list').html(str);
+                }
+            })
+        }else if(title == '月监测详情'){
+            $("#head1").empty();
+            $("#head2").empty();
+            var date = $('input[name=beginDate]').val();
+            var year = date.split("-");
+            var beginDate = date + '-01',
+                endDate = date + '-'+new Date(year[0],year[1],0).getDate();
+            var data = {
+                enterpriseId : id,
+                cn : '2041',
+                beginDate : beginDate,
+                endDate : endDate
+            };
+            console.log(data);
+            $.ajax({
+                url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+                headers : {
+                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                },
+                type : 'get',
+                data : data,
+                success : function (result){
+                    var head1,
+                        head2,
+                        str = '';
+                    var colsNum1 = $("#head1");
+                    var colsNum2 = $("#head2");
+                    var tbodyData = {};
+                    var headstr = '<th rowspan="2">序号</th> <th rowspan="2">时间</th>';
+                    colsNum1.append(headstr);
+                    layui.each(result,function (index,item){
+                        switch (item.factorName){
+                            case "COD" :
+                                item.factorName = "COD(mg/L)";
+                                break;
+                            case "总磷" :
+                                item.factorName = "总磷(mg/L)";
+                                break;
+                            case "高锰酸盐" :
+                                item.factorName = "高锰酸盐(mg/L)";
+                                break;
+                            case "氨氮" :
+                                item.factorName = "氨氮(mg/L)";
+                                break;
+                            case "生物毒性" :
+                                item.factorName = "生物毒性(%)";
+                                break;
+                            case "温度" :
+                                item.factorName = "温度(℃)";
+                                break;
+                            case "浊度" :
+                                item.factorName = "浊度(FNU)";
+                                break;
+                            case "电导率" :
+                                item.factorName = "电导率(us/cm)";
+                                break;
+                            case "溶解氧" :
+                                item.factorName = "溶解氧(mg/L)";
+                                break;
+                        };
+                        head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                        colsNum1.append(head1);
+                        head2 = '<th>实测值</th>'+
+                            '<th>阈值</th>';
+                        colsNum2.append(head2);
+                        //onlineData 整理数据
+                        layui.each(item.onlineData,function (dataIndex,dataItem){
+                            if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
+                                tbodyData[dataItem.dataTime] = [];
+                            }
+                            if(item.oneThreshold){                              //放阈值
+                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                                tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                            }else{
+                                tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                            }
+                        });
+                    });
+                    var i = 1;
+                    for(var dataTime in tbodyData){
+                        var ta = dataTime.split(''),    //可以用正则代替，我不会
+                            time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
+                        str += '<tr>' + '<td>'+i+'</td>';                               //序号
+                        str += '<td style="white-space: nowrap">'+time+'</td>';         //时间
+                        for( var j = 0; j < tbodyData[dataTime].length; j++){           //因子
+                            str += '<td>'+tbodyData[dataTime][j]+'</td>';
+                        }
+                        str += '</tr>';
+                        i++;    //序号增加
+                    }
+                    $('#jiance-list').html(str);
                 }
             })
         }
     };
+    //当前时间
+    var date = new Date();
+    var seperator1 = "-";
+    var seperator2 = ":";
+    var month = date.getMonth() + 1;
+    var strDate = date.getDate();
+    if (month >= 1 && month <= 9) {
+        month = "0" + month;
+    }
+    if (strDate >= 0 && strDate <= 9) {
+        strDate = "0" + strDate;
+    }
+    var dealTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
+        + " " + date.getHours() + seperator2 + date.getMinutes()
+        + seperator2 + date.getSeconds();
+    //初始化时间1
+    var setTime1 = function () {
+        var eTime =  date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        $('input[name=beginDate]').val(eTime);
+        loadfactordetailss()
+    };
+    //初始化时间2
+    var setTime2 = function () {
+        var eTime =  date.getFullYear() + seperator1 + month;
+        $('input[name=beginDate]').val(eTime);
+        loadfactordetailss()
+    };
     var obj = {
         loadChartsData : loadChartsData,
-        // searchCharts : searchCharts,
         loadaCharts : loadaCharts,
         loadMSData : loadMSData,
         loadChartForSite : loadChartForSite,
         dailyWin : dailyWin,
         detailsWin : detailsWin,
-        loadfactordetailss : loadfactordetailss
+        loadfactordetailss : loadfactordetailss,
+        setTime1 : setTime1,
+        setTime2 : setTime2
     };
     /*输出内容，注意顺序*/
     exports('waterQualitySiteMng',obj)

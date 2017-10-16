@@ -193,7 +193,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             cn : 2011
         };
         var unit;
-        // console.log(Fname);
         switch (Fname){
             case "COD" :
                 unit = "mg/L";
@@ -331,7 +330,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     /*新报警提示*/
     function showNotification() {
         $(".notification").slideDown();
-        setTimeout('layui.map.closeNotification()', 5000)
+        setTimeout('layui.map.closeNotification()', 20000)
     }
     function closeNotification() {
         $(".notification").slideUp();
@@ -639,6 +638,98 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             }
         })
     };
+    var loadAlarmData = function () {
+        // if(!alarmType){
+        //     alarmType = $('#getType').find('.layui-this')[0].innerHTML;
+        // }
+        // switch (alarmType){
+        //     case "在线监测报警":
+        //         alarmType = 'detection_alarm'
+        //         break;
+        //     case "设备工况报警":
+        //         alarmType = 'working_alarm'
+        //         break;
+        //     case "视频分析报警":
+        //         alarmType = 'video_alarm'
+        //         break;
+        // }
+        // var startTime = $('#startTime').val(),
+        //     endTime = $('#endTime').val(),
+        //     status = $('#status').val(),
+        var data1 = {
+            alarmType : 'detection_alarm',
+            pageNo : 1,
+            pageSize : 9999
+        };
+        var data2 = {
+            alarmType : 'working_alarm',
+            pageNo : 1,
+            pageSize : 9999
+        };
+        var data3 = {
+            alarmType : 'video_alarm',
+            pageNo : 1,
+            pageSize : 9999
+        };
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data1,
+            success : function (result) {
+                console.log(result);
+                var data = result.list;
+                console.log(data.length);
+                var str = '<span>'+data[0].alarmTime+'</span>' +
+                    '<span>'+data[0].enterpriseName+'</span>' +
+                    '<span>'+data[0].remark+'</span>' ;
+                $("#alarm-list1").html(str);
+                $('#detection_alarm_num').html(data.length);
+            }
+        })
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data2,
+            success : function (result) {
+                console.log(result);
+                var data = result.list;
+                console.log(data.length);
+                if(data.length > 1){
+                    var str = '<span>'+data[0].alarmTime+'</span>' +
+                        '<span>'+data[0].enterpriseName+'</span>' +
+                        '<span>'+data[0].remark+'</span>' ;
+                    $("#alarm-list2").html(str);
+                }
+                $('#working_alarm_num').html(data.length);
+            }
+        })
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data3,
+            success : function (result) {
+                console.log(result);
+                var data = result.list;
+                console.log(data.length);
+                if(data.length > 1){
+                    var str = '<span>'+data[0].alarmTime+'</span>' +
+                        '<span>'+data[0].enterpriseName+'</span>' +
+                        '<span>'+data[0].remark+'</span>' ;
+                    $("#alarm-list3").html(str);
+                }
+                $('#video_alarm_num').html(data.length);
+            }
+        })
+    };
     //输出test接口
     exports('map', {
         btnClick : btnClick,
@@ -652,7 +743,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         loadDauSelect:loadDauSelect,
         loadFactorSelect : loadFactorSelect,
         loadAlardata : loadAlardata,
-        loadMonthlydata : loadMonthlydata
+        loadMonthlydata : loadMonthlydata,
+        loadAlarmData : loadAlarmData
     });
 
 });

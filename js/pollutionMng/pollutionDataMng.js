@@ -7,158 +7,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         code,
         Fname,
         Cid,
+        cn ='2011',
         mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
-
-    // //获取企业基本信息
-    // var loadData = function () {
-    //     Cid = $(window.parent.document).find('.layui-layer-content').attr('id');
-    //     $.ajax({
-    //         url: '' + urlConfig + '/v01/htwl/lxh/enterprise/'+Cid+'',
-    //         headers: {
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         type: 'get',
-    //         success: function (result) {
-    //             // console.log(result);
-    //             // var data = result.data;
-    //             var data = {
-    //                 "name":"重庆江特表面处理有限公司",
-    //                 "legalRepresentative":"徐开贵",
-    //                 "head":"朱洪刚",
-    //                 "headPhone":"13983201027",
-    //                 "orgCode":"500226000006773",
-    //                 "controlLevel":"区控",
-    //                 "envHead":"朱洪刚",
-    //                 "envHeadPhone":"13983201027",
-    //                 "buildStatusName":"已建成",
-    //                 "运行状态":"正常运行",
-    //                 "设计处理量":"2000",
-    //                 "实际处理量":"4600",
-    //                 "行业类别":"污水处理厂",
-    //                 "建设目标":"-",
-    //                 "lon":"-",
-    //                 "lat":"-",
-    //                 "address":"重庆市荣昌区板桥工业园",
-    //                 "排污许可证信息":{
-    //                     "许可证类型":"-",
-    //                     "许可证性质":"-",
-    //                     "许可证编号":"渝（荣）环排证【2016】0134号",
-    //                     "许可证状态":"正常",
-    //                     "起始时间":"2016-09-20",
-    //                     "截至时间":"2019-09-19",
-    //                     "发证日期":"-",
-    //                     "办理人":"-",
-    //                     "正本":"../../img/data/003.png",
-    //                     "副本":"../../img/data/004.png",
-    //                     "排口列表":[{
-    //                         "排口附页编号":"10124441",
-    //                         "排污口编码":"22240004",
-    //                         "排污口名称":"外排口1",
-    //                         "排放方式":"连续稳定",
-    //                         "排放去向":"濑溪河",
-    //                         "年排放总量":"1014吨",
-    //                         "OBJECTID":"1"
-    //                     },{
-    //                         "排口附页编号":"10124442",
-    //                         "排污口编码":"22240004",
-    //                         "排污口名称":"外排口1",
-    //                         "排放方式":"连续稳定",
-    //                         "排放去向":"濑溪河",
-    //                         "年排放总量":"800吨",
-    //                         "OBJECTID":"2"
-    //                     }]
-    //                 },
-    //                 "企业处理工艺":[{
-    //                     "url":"../../img/data/005.png",
-    //                     "name":"工艺流程图"
-    //                 },{
-    //                     "url":"../../img/data/005.png",
-    //                     "name":"工艺流程图A"
-    //                 }],
-    //                 "qyphoto":[{
-    //                     "url":"../../img/data/002.png"
-    //                 },{
-    //                     "url":"../../img/data/001.png"
-    //                 }]
-    //             };
-    //             var companyDataDiv = $(".company-online-monitor").find(".layui-tab-item").eq(0);
-    //             companyDataDiv.find("input[name='qymc']").val(data.name);
-    //             companyDataDiv.find("input[name='frdb']").val(data.legalRepresentative);
-    //             companyDataDiv.find("input[name='qyfzr']").val(data.head);
-    //             companyDataDiv.find("input[name='fzrdh']").val(data.headPhone);
-    //             companyDataDiv.find("input[name='zzjgdm']").val(data.orgCode);
-    //             companyDataDiv.find("input[name='gkjb']").val(data.controlLevel);
-    //             companyDataDiv.find("input[name='lxr']").val(data.envHead);
-    //             companyDataDiv.find("input[name='lxrdh']").val(data.envHeadPhone);
-    //             companyDataDiv.find("input[name='jszt']").val(data.buildStatusName);
-    //             companyDataDiv.find("input[name='yxzt']").val(data.运行状态);
-    //             companyDataDiv.find("input[name='shejicll']").val(data.设计处理量);
-    //             companyDataDiv.find("input[name='shijicll']").val(data.实际处理量);
-    //             companyDataDiv.find("input[name='hylb']").val(data.行业类别);
-    //             companyDataDiv.find("input[name='jsmb']").val(data.建设目标);
-    //             companyDataDiv.find("input[name='jd']").val(data.lon);
-    //             companyDataDiv.find("input[name='wd']").val(data.lat);
-    //             companyDataDiv.find("input[name='dz']").val(data.address);
-    //             companyDataDiv.find("input[name='xkzlx']").val(data.排污许可证信息.许可证类型);
-    //             companyDataDiv.find("input[name='xkzxz']").val(data.排污许可证信息.许可证性质);
-    //             companyDataDiv.find("input[name='xkzbh']").val(data.排污许可证信息.许可证编号);
-    //             companyDataDiv.find("input[name='xkzzt']").val(data.排污许可证信息.许可证状态);
-    //             companyDataDiv.find("input[name='xkzqssj']").val(data.排污许可证信息.起始时间);
-    //             companyDataDiv.find("input[name='xkzjzsj']").val(data.排污许可证信息.截至时间);
-    //             companyDataDiv.find("input[name='xkzfzrq']").val(data.排污许可证信息.发证日期);
-    //             companyDataDiv.find("input[name='xkzblr']").val(data.排污许可证信息.办理人);
-    //             companyDataDiv.find("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.排污许可证信息.正本);
-    //             companyDataDiv.find("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.排污许可证信息.副本);
-    //             //排口列表
-    //             var pklist = "";
-    //             for(var i in data.排污许可证信息.排口列表){
-    //                 pklist+="<tr>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].排口附页编号+"</td>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].排污口编码+"</td>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].排污口名称+"</td>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].排放方式+"</td>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].排放去向+"</td>"+
-    //                     "<td>"+data.排污许可证信息.排口列表[i].年排放总量+"</td>"+
-    //                     "<td> <i class='layui-icon' style='font-size: 20px;' onclick='layui.companyMng.lookPk("+data.排污许可证信息.排口列表[i].OBJECTID+");'>&#xe60a;</i></td>"+
-    //                     "</tr>"
-    //             }
-    //             companyDataDiv.find("#pdv_pk").find(".layui-tab-item").eq(2).find("tbody").html(pklist);
-    //             //企业处理工艺
-    //             var clgylist = "";
-    //             for(var i in data.企业处理工艺){
-    //                 clgylist += "<div class='thumb lay-img' style=''> " +
-    //                     "<img src='"+ data.企业处理工艺[i].url +"' " +
-    //                     "style=''> " +
-    //                     "<div>"+ data.企业处理工艺[i].name +"</div> </div>"
-    //             }
-    //             companyDataDiv.find(".clgy_photos").find(".thumbs").html(clgylist);
-    //             //企业照片
-    //             var qyPhotos = "";
-    //             for(var i in data.qyphoto){
-    //                 qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ data.qyphoto[i].url +"' style='width: 600px;height: 400px'> </div>"
-    //             }
-    //             companyDataDiv.find(".silder-main").html(qyPhotos);
-    //             //图片点击
-    //             layer.photos({
-    //                 photos: '.lay-img'
-    //                 ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-    //             });
-    //
-    //             $(".js-silder").silder({
-    //                 auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-    //                 speed: 20,//轮播图运动速度
-    //                 sideCtrl: true,//是否需要侧边控制按钮
-    //                 bottomCtrl: true,//是否需要底部控制按钮
-    //                 defaultView: 0,//默认显示的索引
-    //                 interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-    //                 activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
-    //             });
-    //         }
-    //     });
-    //     loadDau(Cid);
-    // };
-    //请求企业基本信息
+    //载入污染源信息
     var loadData = function(){
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
         Cid = id;
@@ -170,58 +22,45 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             type : 'get',
             success : function (result){
                 var data = result.data;
+                var qyImg =data.attachments;
                 switch (data.controlLevel){
                     case "area_control":
-                        data.controlLevel = '区(县)控'
+                        data.controlLevel = '区(县)控';
+                        break;
+                    case "country_control":
+                        data.controlLevel = '国控';
                         break;
                 }
-                var qyImg = [{
-                        "url":"../../img/data/002.png"
-                    },{
-                        "url":"../../img/data/001.png"
-                    }],
-                    zhengben = '../../img/data/003.png',
-                    fuben = '../../img/data/004.png';
-                //企业基本信息
-                var companyDataDiv = $(".company-online-monitor").find(".layui-tab-item").eq(0);
-                companyDataDiv.find("input[name='name']").val(data.name);
-                companyDataDiv.find("input[name='legalRepresentative']").val(data.legalRepresentative);
-                companyDataDiv.find("input[name='head']").val(data.head);
-                companyDataDiv.find("input[name='headPhone']").val(data.headPhone);
-                companyDataDiv.find("input[name='orgCode']").val(data.orgCode);
-                companyDataDiv.find("input[name='controlLevel']").val(data.controlLevel);
-                companyDataDiv.find("input[name='envHead']").val(data.envHead);
-                companyDataDiv.find("input[name='envHeadPhone']").val(data.envHeadPhone);
-                companyDataDiv.find("input[name='buildStatusName']").val(data.buildStatusName);
-                companyDataDiv.find("input[name='processing']").val(data.processing);
-                companyDataDiv.find("input[name='riverBasin']").val(data.riverBasin);
-                companyDataDiv.find("input[name='lon']").val(data.lon);
-                companyDataDiv.find("input[name='lat']").val(data.lat);
-                companyDataDiv.find("input[name='expectDate']").val(data.expectDate);
-                companyDataDiv.find("input[name='address']").val(data.address);
-                $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", zhengben);
-                $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", fuben);
-                //企业照片
-                var qyPhotos = "";
-                for(var i in qyImg){
-                    qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 400px'> </div>"
-                }
-                $(".silder-main").html(qyPhotos);
-                //图片点击
-                layer.photos({
-                    photos: '.lay-img'
-                    ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                $.each(data,function(key,value){
+                    var formField = $("input[name='"+key+"']");
+                    formField.val(value);
                 });
+                if(qyImg.length>0){
+                    //企业照片
+                    var qyPhotos = "";
+                    for(var i in qyImg){
+                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>"
+                    }
+                    $(".silder-main").html(qyPhotos);
+                    //图片点击
+                    layer.photos({
+                        photos: '.lay-img'
+                        ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                    });
 
-                $(".js-silder").silder({
-                    auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-                    speed: 20,//轮播图运动速度
-                    sideCtrl: true,//是否需要侧边控制按钮
-                    bottomCtrl: true,//是否需要底部控制按钮
-                    defaultView: 0,//默认显示的索引
-                    interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-                    activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
-                });
+                    $(".js-silder").silder({
+                        auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                        speed: 20,//轮播图运动速度
+                        sideCtrl: true,//是否需要侧边控制按钮
+                        bottomCtrl: true,//是否需要底部控制按钮
+                        defaultView: 0,//默认显示的索引
+                        interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                        activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                    });
+                }else{
+                    var str = '<p style="text-align: center">未上传企业照片</p>';
+                    $(".silder-main").html(str);
+                }
             }
         })
         loadDau(id);
@@ -245,6 +84,24 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     $("input[name='gross']").val(data.gross);
                     $("input[name='licenceType']").val(data.licenceType);
                     $("input[name='id']").val(data.id);
+                    if(data.pic.length == 0){
+                        var str1 = '<span>未上传正本</span>';
+                        $('#zhengben').html(str1);
+                        var str2 = '<span>未上传副本</span>';
+                        $('#fuben').html(str2);
+                    }
+                    if(data.pic[1].attachmentAddress!='null'){
+                        $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[1].attachmentAddress);
+                    }else{
+                        var str = '<span>未上传正本</span>';
+                        $('#zhengben').html(str);
+                    }
+                    if(data.pic[0].attachmentAddress != 'null'){
+                        $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[0].attachmentAddress);
+                    }else{
+                        var str = '<span>未上传副本</span>';
+                        $('#fuben').html(str);
+                    }
                 }
             }
         })
@@ -348,12 +205,37 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             + seperator2 + seconds;
         return time;
     };
+    function changeChart(e) {
+        switch (e){
+            case "实时监测数据":
+                cn = '2011'
+                break;
+            case "小时监测数据":
+                cn = '2061'
+                break;
+            case "日监测数据":
+                cn = '2041'
+                break;
+        }
+        initChart();
+    }
     //加载曲线图
     function initChart(){
-        var date = new Date();//当前时间
-        var interTimes = 5*60*1000;
+        var date = new Date(),//当前时间
+            interTimes;
+        switch (cn){
+            case "2011" :
+                interTimes = 5*60*1000;//5min
+                break;
+            case "2061" :
+                interTimes = 10*60*60*1000;//10h
+                break;
+            case "2041" :
+                interTimes = 10*24*60*60*1000;//10d
+                break;
+        };
         interTimes=parseInt(interTimes);
-        var date1 = new Date(Date.parse(date)-interTimes);//提前5min时间
+        var date1 = new Date(Date.parse(date)-interTimes);
         var beginDate = changeTime(date1);
         var endDate = changeTime(date);
         var data = {
@@ -361,7 +243,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             endDate : endDate,
             enterpriseId  : Cid,
             factor : code,
-            cn : 2011
+            cn : cn
         };
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/online',
@@ -588,12 +470,29 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     form.on('select(select_fac)', function(data){
         console.log(data);
     });
+    layer.ready(function(){
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        console.log(id);
+        $.ajax({
+            url : '../../data/equipmentData.json',
+            success: function (result){
+                $('.pin').easypinShow({
+                    data : result,
+                    popover: {
+                        show: true,
+                        animate: true
+                    }
+                });
+            }
+        })
+    });
     /*输出内容，注意顺序*/
     var obj = {
         loadData : loadData,
         loadLicenseData : loadLicenseData,
         loadPortData : loadPortData,
-        loadChartForSite : loadChartForSite
+        loadChartForSite : loadChartForSite,
+        changeChart : changeChart
     };
     exports('pollutionDataMng',obj)
 })
