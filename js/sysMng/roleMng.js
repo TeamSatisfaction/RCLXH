@@ -244,20 +244,14 @@ layui.define(['layer','element','laypage','form'],function (exports) {
     var loadButtonData = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');//角色id
         $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/role/auth/'+id+'',
+            // url: ''+urlConfig+'/v01/htwl/lxh/role/auth/'+id+'',
+            url : '../../data/menuData.json',
             headers: {
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             type: 'get',
             success: function (result) {
-                var str = '';
-                layui.each(result, function (index, item) {
-                     str +=
-                        '<input type="checkbox" name="" title="'+item.authName+'" lay-skin="primary">';
-                });
-                $("#treeButton").html(str);
-                console.log($("#treeButton"));
-                form.render();
+                console.log(result);
             }
         })
     }

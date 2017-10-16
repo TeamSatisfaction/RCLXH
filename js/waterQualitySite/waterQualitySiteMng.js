@@ -683,11 +683,24 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
                                 tbodyData[dataItem.dataTime] = [];
                             }
+                            // if(item.oneThreshold){                              //放阈值
+                            //     var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                            //     tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                            //     tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                            // }else{
+                            //     tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                            //     tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                            // }
                             if(item.oneThreshold){                              //放阈值
-                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
-                                tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
-                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
-                            }else{
+                                var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));   //阈值1
+                                var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"==")); //阈值1判断符
+                                var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null; //阈值2
+                                var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":"==")):null;//阈值2判断符
+
+                                var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
+                                tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('或'+comparison1+item.twoThreshold):''));
+                            }else {
                                 tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                                 tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
                             }
@@ -778,11 +791,24 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
                                 tbodyData[dataItem.dataTime] = [];
                             }
+                            // if(item.oneThreshold){                              //放阈值
+                            //     var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
+                            //     tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                            //     tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                            // }else{
+                            //     tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                            //     tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                            // }
                             if(item.oneThreshold){                              //放阈值
-                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
-                                tbodyData[dataItem.dataTime].push(eval(dataItem.val+comparison+item.oneThreshold)?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
-                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
-                            }else{
+                                var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));   //阈值1
+                                var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"==")); //阈值1判断符
+                                var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null; //阈值2
+                                var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":"==")):null;//阈值2判断符
+
+                                var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
+                                tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('或'+comparison1+item.twoThreshold):''));
+                            }else {
                                 tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                                 tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
                             }
