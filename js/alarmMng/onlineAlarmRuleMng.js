@@ -7,9 +7,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         laypage = layui.laypage,
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
-    // var urlConfig1 = 'http://113.204.228.66:9702';
-    // var urlConfig1 = 'http://172.16.1.102:9702';
-    var urlConfig1 = 'http://172.16.1.10:9702';
+    var urlConfig1 = sessionStorage.getItem("urlConfig1");
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
@@ -290,7 +288,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
     var addAlarmRuleTime = function (id) {
         layer.open({
             title :'新增报警时间',
-            // id : id,
             type : 2,
             moveOut: true,
             area : ['1000px','500px'],
@@ -432,7 +429,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
                         two_threshold = body.contents().find("input[name='two_threshold']").val(),
                         is_contain = body.contents().find("input[name='is_contain']:checked").val();
-
                     var data = {
                         id: id,
                         firstLayerEncodingName: first_layer_encoding_name,
@@ -451,6 +447,22 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         twoThreshold: two_threshold,
                         isContain: is_contain
                     };
+                    var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
+                    var tId = body.contents().find("input[name='id']").val();
+                    var d={
+                        refid : id
+                    };
+                    if(tId != ''){
+                        d.id = tId;
+                    }
+                    body.contents().find("form").find('input,select').each(function(){
+                        d[this.name]=this.value
+                    });
+                    if(threeLevelTime == ""){
+                        d.threeLevelType = '1';
+                        d.threeLevelTime = "999999999";
+                    }
+                    var field = JSON.stringify(d);
                     $.ajax({
                         url: ''+urlConfig1+'/v02/htwl/alarm/rule/online',
                         headers: {
@@ -460,9 +472,54 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         data: data,
                         success: function (result) {
                             if (result.code == '1000') {
-                                layer.msg('修改成功！', {icon: 1, time: 1000}, function () {
-                                    layer.close(index); //再执行关闭
+                                layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
+                                    // layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
+                                    if(tId == ''){
+                                        $.ajax({
+                                            url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                                            headers : {
+                                                'Content-type': 'application/json;charset=UTF-8',
+                                                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                            },
+                                            type : 'post',
+                                            data : field,
+                                            success : function (result){
+                                                console.log(result)
+                                                if(result.resultcode == "2"){
+                                                    layer.msg('新增上报时间成功！', {icon: 1,time:1000}, function() {
+                                                        layer.close(index); //再执行关闭
+                                                    });
+                                                }else{
+                                                    layer.msg('新增上报时间失败！', {icon: 2,time:1000}, function() {
+                                                        layer.close(index); //再执行关闭
+                                                    });
+                                                }
+                                            }
+                                        })
+                                    }else{
+                                        $.ajax({
+                                            url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                                            headers : {
+                                                'Content-type': 'application/json;charset=UTF-8',
+                                                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                            },
+                                            type : 'put',
+                                            data : field,
+                                            success : function (result){
+                                                console.log(result)
+                                                if(result.resultcode == "2"){
+                                                    layer.msg('修改上报时间成功！', {icon: 1,time:1000}, function() {
+                                                        layer.close(index); //再执行关闭
+                                                    });
+                                                }else{
+                                                    layer.msg('修改上报时间失败！', {icon: 2,time:1000}, function() {
+                                                        layer.close(index); //再执行关闭
+                                                    });
+                                                }
+                                            }
+                                        })
+                                    }
                                 });
                             }
                         },
@@ -473,7 +530,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     })
                 }
             })
-        }else if(type == 'poly_online_alarm_rule'){
+        }else if(type == 'poly_online_alarm_rule') {
             layer.open({
                 title: '修改聚合在线报警规则',
                 type: 2,
@@ -484,7 +541,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 btn: ['提交', '返回'],
                 btnAlign: 'c',
                 yes: function (index, layero) {
-                    var body = layer.getChildFrame('body',index),
+                    var body = layer.getChildFrame('body', index),
                         first_layer_encoding_name = body.contents().find("select[name='first_layer_encoding_name']").find("option:selected").text(),
                         first_layer_encoding_type = body.contents().find("select[name='first_layer_encoding_name']").val(),
                         second_layer_encoding_name = body.contents().find("select[name='second_layer_encoding_name']").find("option:selected").text(),
@@ -503,43 +560,43 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
                         calculation_value = body.contents().find("input[name='calculation_value']").val();
                     var data = {
-                        id : id,
-                        firstLayerEncodingName : first_layer_encoding_name,
-                        firstLayerEncodingType : first_layer_encoding_type,
-                        secondLayerEncodingName : second_layer_encoding_name,
-                        secondLayerEncodingType : second_layer_encoding_type,
-                        thirdLayerEncodingName : third_layer_encoding_name,
-                        thirdLayerEncodingType : third_layer_encoding_type,
-                        fourthLayerEncodingName : fourth_layer_encoding_name,
-                        fourthLayerEncodingType : fourth_layer_encoding_type,
-                        startTime : start_time,
-                        endTime : end_time,
-                        aggregationName : aggregation_name,
-                        aggregationValue : aggregation_value,
-                        calculationName : calculation_name,
-                        calculationValue : calculation_value,
-                        conditionsName : conditions_name,
-                        conditionKey : condition_key
+                        id: id,
+                        firstLayerEncodingName: first_layer_encoding_name,
+                        firstLayerEncodingType: first_layer_encoding_type,
+                        secondLayerEncodingName: second_layer_encoding_name,
+                        secondLayerEncodingType: second_layer_encoding_type,
+                        thirdLayerEncodingName: third_layer_encoding_name,
+                        thirdLayerEncodingType: third_layer_encoding_type,
+                        fourthLayerEncodingName: fourth_layer_encoding_name,
+                        fourthLayerEncodingType: fourth_layer_encoding_type,
+                        startTime: start_time,
+                        endTime: end_time,
+                        aggregationName: aggregation_name,
+                        aggregationValue: aggregation_value,
+                        calculationName: calculation_name,
+                        calculationValue: calculation_value,
+                        conditionsName: conditions_name,
+                        conditionKey: condition_key
                     };
                     $.ajax({
-                        url :''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online',
-                        headers : {
+                        url: '' + urlConfig1 + '/v02/htwl/aggregation/alarm/rule/online',
+                        headers: {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
-                        type : 'put',
-                        data : data,
-                        success : function (result){
-                            if(result.code == '1000'){
-                                layer.msg('修改成功！', {icon: 1,time:1000}, function() {
+                        type: 'put',
+                        data: data,
+                        success: function (result) {
+                            if (result.code == '1000') {
+                                layer.msg('修改成功！', {icon: 1, time: 1000}, function () {
                                     layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
                                     // location.reload();
                                 });
                             }
                         },
-                        error: function(result) {
+                        error: function (result) {
                             var message = result.responseJSON.errors[0].defaultMessage;
-                            layer.msg(message, {icon: 2,time:1000});
+                            layer.msg(message, {icon: 2, time: 1000});
                         }
                     })
                 }
@@ -665,6 +722,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     });
                     $('[name=oneLevelTime]').val(data.oneLevelTime);
                     $('[name=twoLevelTime]').val(data.twoLevelTime);
+                    $('[name=id]').val(data.id);
                     if(data.threeLevelTime != 999999999){
                         $('select[name=threeLevelType]').children("option").each(function(){
                             if (this.value == data.threeLevelType) {
@@ -673,6 +731,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         });
                         $('[name=threeLevelTime]').val(data.threeLevelTime);
                     }
+                    form.render('select');
                     // $.each(data,function(key,value){
                     //     var formField = $("[name='"+key+"']");
                     //     if(formField[0] !== undefined){

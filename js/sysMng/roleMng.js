@@ -202,7 +202,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                // console.log(result);
+                console.log(result);
                 if(result.length > 0) {
                     var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
                     var nodes = treeObj.getNodes();

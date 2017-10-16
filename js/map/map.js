@@ -463,7 +463,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
                     for(var i in row){
-                        $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                        if(row[i].eaOrEb == 'EB'){
+                            $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                        }
                     }
                     loadFactorSelect(row[0].id);
                 }

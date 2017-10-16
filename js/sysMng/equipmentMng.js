@@ -46,7 +46,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                 , thisData = eData.concat().splice(curr * nums - nums, nums);
                             layui.each(thisData, function (index, item) {
                                 var type = item.eaOrEb;
-                                if(type == "EA"){
+                                if(type == "EB"){
                                     type = 'power_equipment'
                                 }else{
                                     type = 'instrument_sensor'
