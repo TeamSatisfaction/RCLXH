@@ -536,8 +536,9 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             }
                             tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                             if(item.oneThreshold){                              //放阈值
-                                var comparison = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"="));
-                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold)
+                                var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));
+                                var comparison1 = item.twoConditionsName?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null;
+                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?(','+comparison1+item.twoConditionsName):''));
                             }else{
                                 tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
                             }
