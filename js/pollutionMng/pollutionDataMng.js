@@ -30,6 +30,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     case "country_control":
                         data.controlLevel = '国控';
                         break;
+                    case "city_control":
+                        data.controlLevel = '市控';
+                        break;
+                    case "other_control":
+                        data.controlLevel = '其他';
+                        break;
                 }
                 $.each(data,function(key,value){
                     var formField = $("input[name='"+key+"']");

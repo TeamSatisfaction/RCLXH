@@ -45,11 +45,14 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                             var arr = []
                                 , thisData = eData.concat().splice(curr * nums - nums, nums);
                             layui.each(thisData, function (index, item) {
-                                var type = item.eaOrEb;
-                                if(type == "EB"){
-                                    type = 'power_equipment'
+                                var type = item.eaOrEb,
+                                    type_text;
+                                if(type == "EA"){
+                                    type = 'power_equipment';
+                                    type_text = '动力设备';
                                 }else{
-                                    type = 'instrument_sensor'
+                                    type = 'instrument_sensor';
+                                    type_text = '仪表仪器';
                                 }
                                 str = '<tr>' +
                                     '<td>' + (index + 1) + '</td>' +
@@ -57,8 +60,8 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     '<td>' + item.equipmentName + '</td>' +
                                     '<td>' + item.equipmentNo + '</td>' +
                                     '<td>' + item.productor + '</td>' +
-                                    '<td>' + item.classicType + '</td>' +
-                                    '<td>' + item.classicType + '</td>' +
+                                    '<td>' + type_text + '</td>' +
+                                    // '<td>' + item.classicType + '</td>' +
                                     '<td>' + item.usedDate + '</td>' +
                                     '<td>' + item.equipmentType + '</td>' +
                                     '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.equipmentMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>' +

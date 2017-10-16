@@ -287,6 +287,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         data.field.orgCode = "production_enterprise"; //这里和enterpriseRole是反的
         data.field.establishDate = '2017-9-28';
         data.field.buildStatus = "已建成";
+        data.field.expectDate = '2017';
         var field = JSON.stringify(data.field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
@@ -319,6 +320,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         data.field.areaCode = "500000-500153";
         data.field.enterpriseRole = "production_enterprise";
         data.field.baseEnterpriseId = Cid;
+        data.field.expectDate = '2017';
         var field = JSON.stringify(data.field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
@@ -490,6 +492,12 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             break;
                         case "country_control":
                             data.controlLevel = '国控';
+                            break;
+                        case "city_control":
+                            data.controlLevel = '市控';
+                            break;
+                        case "other_control":
+                            data.controlLevel = '其他';
                             break;
                     }
                     $.each(data,function(key,value){
