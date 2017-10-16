@@ -17,7 +17,7 @@
         }).extend({
             roleMng : 'roleMng'
         }).use('roleMng',function () {
-//            layui.roleMng.loadButtonData()
+            layui.roleMng.loadButtonData()
         }).link('../../css/style.css'); //加载入口
     </script>
 </head>
@@ -56,6 +56,10 @@
                             <input type="checkbox" name="" title="新增角色" lay-skin="primary" data-authId="68">
                             <input type="checkbox" name="" title="角色配置权限" lay-skin="primary" data-authId="75">
                             <input type="checkbox" name="" title="删除角色" lay-skin="primary" data-authId="76">
+                        </div>
+
+                        <div id="unMatchedAuth" style="display: none"><!-- 用来保存多余的权限 -->
+                            <!--<div>1</div>-->
                         </div>
                     </div>
                 </form>

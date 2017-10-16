@@ -202,7 +202,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if(result.length > 0) {
                     var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
                     var nodes = treeObj.getNodes();
@@ -250,13 +250,20 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                var str = '';
+                var treeButtons = $("#treeButton").find("input"),
+                    unMatchedStr = '';
                 layui.each(result, function (index, item) {
-                     str +=
-                        '<input type="checkbox" name="" title="'+item.authName+'" lay-skin="primary">';
+                    var isMatched = false;
+                    for(var i in treeButtons){
+                        if(treeButtons.eq(i).attr('data-authId')===item.authId){
+                            treeButtons[i].checked = true;
+                            isMatched = true;
+                        }
+                    }
+                    unMatchedStr+= (isMatched?'':('<div>'+item.authId+'</div>'));
                 });
-                $("#treeButton").html(str);
-                console.log($("#treeButton"));
+                $("#unMatchedAuth").empty().html(unMatchedStr);
+
                 form.render();
             }
         })
