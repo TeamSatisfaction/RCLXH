@@ -137,22 +137,39 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             yes : function (index,layero) {
                 //提交菜单权限
-                // var id = $('.layui-layer-content').attr('id'),
-                //     winFrame = layero.find("iframe")[0].contentWindow;
-                // var treeDemo = winFrame.document.getElementById("treeDemo");
-                // var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
-                // var Nodes = treeObj.getCheckedNodes(true);
-                // var arry = [{menuId:"0",roleId : id}];
-                // for(var i in Nodes){
-                //     var tId = Nodes[i].tId;
-                //     var menuId=tId.split("_")[1];
-                //     var data = {
-                //         menuId:menuId,
-                //         roleId : id
-                //     };
-                //     arry.push(data);
-                // }
-                //  console.log(arry);
+                var id = $('.layui-layer-content').attr('id'),
+                    winFrame = layero.find("iframe")[0].contentWindow;
+                var treeDemo = winFrame.document.getElementById("treeDemo");
+                var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
+                var Nodes = treeObj.getCheckedNodes(true);
+                var arry = [{menuId:"0",roleId : id}];
+                for(var i in Nodes){
+                    var tId = Nodes[i].tId;
+                    var menuId=tId.split("_")[1];
+                    var data = {
+                        menuId:menuId,
+                        roleId : id
+                    };
+                    arry.push(data);
+                }
+                 console.log(arry);
+
+                //提交按钮权限
+                var body = layer.getChildFrame('body',index),
+                    treeButton = body.contents().find('#treeButton'),
+                    unMatched = body.contents().find('#unMatchedAuth').find("div"),
+                    authArray = [];
+                treeButton.find(".layui-form-checkbox").each(function () {
+                    if($(this).hasClass("layui-form-checked")) {
+                        var index= $(this).index()-1;
+                        authArray.push({"authId": $(treeButton).children().eq(index).attr("data-authId"), "roleId": id});
+                    }
+                });
+                unMatched.each(function(){
+                    authArray.push({ "authId": $(this).html(), "roleId": id});
+                });
+                console.log(authArray);
+
                 // var field = JSON.stringify(arry);
                 // $.ajax({
                 //     url :''+urlConfig+'/v01/htwl/lxh/role/menu',
@@ -168,11 +185,6 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 //         console.log(result);
                 //     }
                 // })
-
-                //提交按钮权限
-                var body = layer.getChildFrame('body',index),
-                    treeButton = body.contents().find('#treeButton');
-                console.log(treeButton)
             }
         });
     };
