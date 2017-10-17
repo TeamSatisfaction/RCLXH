@@ -339,39 +339,28 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
 
     //企业select
     function loadCompanySelect() {
-        var data = {
-            pageNum : 1,
-            pageSize : 1000,
-            enterpriseRole : '',
-            areaCode : '500000-500153'
-        };
-        var field = JSON.stringify(data);
         $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/all',
             headers: {
-                'Content-type': 'application/json;charset=UTF-8',
                 Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
-            // async : false,
-            type: 'post',
-            data: field,
+            type: 'get',
             success: function (result) {
-                var list = result.data.list;
-                // console.log(result);
+                console.log(result)
                 $("#c_select").empty();
-                if(list == null){
+                if(result == null){
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");
                 }else {
-                    for(var i in list){
-                        if(list[i].name != '荣昌区环保局'){
-                            $("#c_select").append("<option value="+list[i].baseEnterpriseId+">"+list[i].name+"</option>");
+                    for(var i in result){
+                        if(result[i].mn){
+                            $("#c_select").append("<option value="+result[i].base_enterprise_id+">"+result[i].name+"</option>");
                         }
                     }
                 }
                 form.render('select');
-                loadDauSelect(list[0].baseEnterpriseId,list[0].name);
-                Cname = list[0].name;
-                Cid = list[0].baseEnterpriseId;
+                loadDauSelect(result[0].base_enterprise_id,result[0].name);
+                Cname = result[0].name;
+                Cid = result[0].base_enterprise_id;
                 $('.mapStats_statsTitle').html(Cname);
             }
         })

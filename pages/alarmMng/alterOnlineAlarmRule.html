@@ -28,6 +28,12 @@
             <h2 class="layui-colla-title">基本信息</h2>
             <div class="layui-colla-content layui-show" style="margin-left: 30px">
                 <div class="layui-form-item">
+                    <div class="layui-inline" style="width: calc(90% + 15px);">
+                        <label class="layui-form-label">规则名称：</label>
+                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="threeLevelKey">
+                    </div>
+                </div>
+                <div class="layui-form-item">
                     <div class="layui-inline">
                         <label class="layui-form-label">监测类型：</label>
                         <div class="layui-input-inline">
@@ -177,12 +183,12 @@
                         <span class="required">*</span>
                     </div>
                 </div>
-                <div class="layui-form-item" style="display: none">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">三级报警类型：</label>
-                        <input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="三级报警">
-                    </div>
-                </div>
+                <!--<div class="layui-form-item" style="display: none">-->
+                    <!--<div class="layui-inline">-->
+                        <!--<label class="layui-form-label">三级报警类型：</label>-->
+                        <!--<input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="三级报警">-->
+                    <!--</div>-->
+                <!--</div>-->
                 <div class="layui-form-item" style="margin-top: 15px">
                     <div class="layui-inline">
                         <label class="layui-form-label">三级报警角色：</label>

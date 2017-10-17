@@ -59,7 +59,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         return arr.join('');
                     };
                     cTobody.html(render(cData, obj.curr));
-                    // layui.utils.getBtn();
                     layui.sysMng.loadAuthen();
                 }else{
                     cTobody.html(str);
@@ -73,7 +72,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     skip: true,
                     jump: function(obj,first){
                         if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
-                            loadCompanyData(obj.curr);
+                            loadCompanyList(obj.curr);
                         }
                     }
                 });

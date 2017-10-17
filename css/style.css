@@ -269,7 +269,7 @@ tr .align-right{width:120px;text-align: right}
 .wqs_tab1_statsTitle{ font-size: 20px; font-weight: bold; text-align: center}
 #wqs_tab1_btn { width: 200px; display: block; margin: 0 auto;}
 #wqs_tab1_chart { width: 100%;  min-height: 300px; height: calc(100% - 190px)}
-#wqs_tab1_details{float: right;font-size: 23px;color: #00a5dd;margin: 15px}
+/*#wqs_tab1_details{float: right;font-size: 23px;color: #00a5dd;margin: 15px}*/
 
 #wqs{ width:100%;height: 100%;}
 /*.scroll-wrapper {  -webkit-overflow-scrolling: touch;  overflow-y: scroll;}*/

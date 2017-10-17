@@ -19,6 +19,8 @@
         }).use(['waterQualitySiteMng','utils'],function () {
             layui.waterQualitySiteMng.loadMSData("1",'实时监测数据');
             layui.waterQualitySiteMng.loadChartsData();
+            layui.waterQualitySiteMng.setTime1();
+//            layui.waterQualitySiteMng.loadfactordetailss()
         }); //加载入口
     </script>
 </head>
@@ -38,57 +40,193 @@
         <div class="waterBorder">
             <div class="water_divider">监测详情</div>
             <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="test">
-                <ul class="layui-tab-title" id="getType">
-                    <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
-                    <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
-                    <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
-                </ul>
+                <div style="text-align: center">
+                    <ul class="layui-tab-title" id="getType">
+                        <li class="layui-this" onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">实时监测数据</li>
+                        <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">小时监测数据</li>
+                        <li  onclick="layui.waterQualitySiteMng.loadMSData('1',this.innerHTML);">日监测数据</li>
+                    </ul>
+                </div>
                 <div class="layui-tab-content">
                     <!--实时监测数据-->
                     <div class="layui-tab-item layui-show" >
-                        <div class="layui-form" style="border-bottom: 1px solid #e2e2e2">
-                            <div class="layui-form-item">
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">监测类型：</label>
-                                    <div class="layui-input-block">
-                                        <select lay-verify="" lay-search>
-                                            <option value="010">废水</option>
-                                        </select>
+                        <div class="layui-tab layui-tab-brief" lay-filter="test2">
+                            <ul class="layui-tab-title">
+                                <li class="layui-this">统计表</li>
+                                <li>曲线图</li>
+                            </ul>
+                            <div class="layui-tab-content" style="overflow-y: scroll;">
+                                <div class="layui-tab-item layui-show">
+                                    <div class="layui-layout-admin" lay-filter="test" style="margin-left: -20px;margin-top: -10px">
+                                        <div style="margin: 10px;min-width: 1000px">
+                                            <div class="layui-form-item" style="margin: 5px 0;">
+                                                <div id="dayDetails" class="layui-inline">
+                                                    <div class="layui-form-item layui-inline">
+                                                        <label class="layui-form-label">选择日期：</label>
+                                                        <input class="layui-input-inline layui-input" placeholder="" onclick="WdatePicker()" name="beginDate1">
+                                                    </div>
+                                                    <button class="layui-btn" style="margin-left: 0;margin-top: -5px" onclick="layui.waterQualitySiteMng.loadfactordetailss()">
+                                                        <i class="layui-icon"></i>搜索
+                                                    </button>
+                                                </div>
+                                                <div id="monthDetails" class="layui-inline">
+                                                    <div class="layui-form-item layui-inline">
+                                                        <label class="layui-form-label">选择日期：</label>
+                                                        <input class="layui-input-inline layui-input" placeholder="" onclick="WdatePicker({dateFmt:'yyyy-MM'})" name="beginDate2">
+                                                    </div>
+                                                    <button class="layui-btn" style="margin-left: 0;margin-top: -5px" onclick="layui.waterQualitySiteMng.loadfactordetailss()">
+                                                        <i class="layui-icon"></i>搜索
+                                                    </button>
+                                                </div>
+                                                <div class="layui-inline">
+                                                    <button class="layui-btn" style="margin-left: 0;margin-top: -5px" onclick="javascript:method1('ta')">
+                                                        <i class="layui-icon"></i>导出
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <table class="layui-table" lay-even="" lay-skin="row" id="ta" style="min-width: 1600px">
+                                                <thead id="jiance-head">
+                                                <tr id="head1">
+                                                </tr>
+                                                <tr id="head2">
+                                                </tr>
+                                                </thead>
+                                                <tbody id="jiance-list">
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">数采仪：</label>
-                                    <div class="layui-input-block">
-                                        <select lay-verify="" lay-search id="select_dauId" lay-filter="select_dauId">
-                                            <option value="">无数采仪</option>
-                                        </select>
+                                <div class="layui-tab-item">
+                                    <div class="layui-form" style="border-bottom: 1px solid #e2e2e2">
+                                        <div class="layui-form-item">
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">监测类型：</label>
+                                                <div class="layui-input-block">
+                                                    <select lay-verify="" lay-search>
+                                                        <option value="010">废水</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">数采仪：</label>
+                                                <div class="layui-input-block">
+                                                    <select lay-verify="" lay-search id="select_dauId" lay-filter="select_dauId">
+                                                        <option value="">无数采仪</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">设备：</label>
+                                                <div class="layui-input-block">
+                                                    <select lay-verify="" lay-search id="select_equipment" lay-filter="select_equipment">
+                                                        <option value="">无设备</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="layui-inline">
+                                                <label class="layui-form-label">监测因子：</label>
+                                                <div class="layui-input-block">
+                                                    <select lay-verify="" lay-search id="select_factor">
+                                                        <option value="">无监测因子</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">设备：</label>
-                                    <div class="layui-input-block">
-                                        <select lay-verify="" lay-search id="select_equipment" lay-filter="select_equipment">
-                                            <option value="">无设备</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="layui-inline">
-                                    <label class="layui-form-label">监测因子：</label>
-                                    <div class="layui-input-block">
-                                        <select lay-verify="" lay-search id="select_factor">
-                                            <option value="">无监测因子</option>
-                                        </select>
-                                    </div>
+                                    <div class="wqs_tab1_statsTitle"></div>
+                                    <div id="wqs_tab1_chart"></div>
                                 </div>
                             </div>
                         </div>
-                        <div class="wqs_tab1_statsTitle"></div>
-                        <div id="wqs_tab1_chart"></div>
-                        <div><a id="wqs_tab1_details" href="#" onclick="layui.waterQualitySiteMng.detailsWin()"><img src="../../img/firework/click.png">查看详情</a></div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <script type="text/javascript" language="javascript">
+        var idTmr;
+        function  getExplorer() {
+            var explorer = window.navigator.userAgent ;
+            //ie
+            if (explorer.indexOf("MSIE") >= 0) {
+                return 'ie';
+            }
+            //firefox
+            else if (explorer.indexOf("Firefox") >= 0) {
+                return 'Firefox';
+            }
+            //Chrome
+            else if(explorer.indexOf("Chrome") >= 0){
+                return 'Chrome';
+            }
+            //Opera
+            else if(explorer.indexOf("Opera") >= 0){
+                return 'Opera';
+            }
+            //Safari
+            else if(explorer.indexOf("Safari") >= 0){
+                return 'Safari';
+            }
+        }
+        function method1(tableid) {//整个表格拷贝到EXCEL中
+            if(getExplorer()=='ie')
+            {
+                var curTbl = document.getElementById(tableid);
+                var oXL = new ActiveXObject("Excel.Application");
+                //创建AX对象excel
+                var oWB = oXL.Workbooks.Add();
+                //获取workbook对象
+                var xlsheet = oWB.Worksheets(1);
+                //激活当前sheet
+                var sel = document.body.createTextRange();
+                sel.moveToElementText(curTbl);
+                //把表格中的内容移到TextRange中
+                sel.select();
+                //全选TextRange中内容
+                sel.execCommand("Copy");
+                //复制TextRange中内容
+                xlsheet.Paste();
+                //粘贴到活动的EXCEL中
+                oXL.Visible = true;
+                //设置excel可见属性
+                try {
+                    var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+                } catch (e) {
+                    print("Nested catch caught " + e);
+                } finally {
+                    oWB.SaveAs(fname);
+                    oWB.Close(savechanges = false);
+                    //xls.visible = false;
+                    oXL.Quit();
+                    oXL = null;
+                    //结束excel进程，退出完成
+                    //window.setInterval("Cleanup();",1);
+                    idTmr = window.setInterval("Cleanup();", 1);
+                }
+            }
+            else
+            {
+                tableToExcel('ta');
+            }
+        }
+        function Cleanup() {
+            window.clearInterval(idTmr);
+            CollectGarbage();
+        }
+        var tableToExcel = (function() {
+            var uri = 'data:application/vnd.ms-excel;base64,',
+                    template = '<html><head><meta http-equiv="Content-Type" charset=utf-8"></head><body><table>{table}</table></body></html>',
+                    base64 = function(s) { return window.btoa(unescape(encodeURIComponent(s))) },
+                    format = function(s, c) {
+                        return s.replace(/{(\w+)}/g,
+                                function(m, p) { return c[p]; }) }
+            return function(table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = {worksheet: name || 'Worksheet', table: table.innerHTML}
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })();
+    </script>
 </body>
 </html>
