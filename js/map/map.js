@@ -264,7 +264,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                                 return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
                             }
                         }
-                        // categories : time
                     },
                     yAxis: {
                         title: {
@@ -451,15 +450,22 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     $("#f_select").empty();
                     $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
+                    var arry = [];
                     for(var i in row){
                         if(row[i].eaOrEb == 'EB'){
                             $("#e_select").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                            arry.push(row[i].id);
                         }
                     }
-                    loadFactorSelect(row[0].id);
+                    if(arry.length>0){
+                        loadFactorSelect(arry[0]);
+                    }else{
+                        $("#e_select").append("<option value='' selected='selected'>无设备</option>");
+                        $("#f_select").empty();
+                        $("#f_select").append("<option value='' selected='selected'>无监测因子</option>");
+                    }
+
                 }
-                // $('#e_select').find('option').eq(6).attr('selected', true)
-                // console.log($("#e_select")[6]);
                 form.render('select');
             }
         })
@@ -630,23 +636,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         })
     };
     var loadAlarmData = function () {
-        // if(!alarmType){
-        //     alarmType = $('#getType').find('.layui-this')[0].innerHTML;
-        // }
-        // switch (alarmType){
-        //     case "在线监测报警":
-        //         alarmType = 'detection_alarm'
-        //         break;
-        //     case "设备工况报警":
-        //         alarmType = 'working_alarm'
-        //         break;
-        //     case "视频分析报警":
-        //         alarmType = 'video_alarm'
-        //         break;
-        // }
-        // var startTime = $('#startTime').val(),
-        //     endTime = $('#endTime').val(),
-        //     status = $('#status').val(),
         var data1 = {
             alarmType : 'detection_alarm',
             pageNo : 1,

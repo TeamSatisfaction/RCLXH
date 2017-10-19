@@ -50,11 +50,65 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     };
     /*菜单管理*/
     var menuMng = function () {
+        // var storage=window.localStorage;
+        // var dataJson = storage.getItem("data"),
+        //     dataObject = JSON.parse(dataJson),
+        //     data = dataObject.menuList;
+        // console.log(data)
+        // var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
+        //         '<a href="#"> ' +
+        //         '<i class="layui-icon">&#xe60f;</i> ' +
+        //         '</a> ' +
+        //         '</li> ' +
+        //         '<li class="layui-nav-item layui-this menu-home"> ' +                   //首页
+        //         '<a href="#" onclick="layui.index.loadPage(\'pages/map/map.html\')">' +
+        //         '<i class="layui-icon"></i> ' +
+        //         '<cite style="padding:10px">首页</cite> ' +
+        //         '</a> ' +
+        //         '</li>';
+        //     // data = msg[0].menuList;
+        // if(data.length>0){
+        //     for(var i in data){
+        //         var d = getDataByName(data[i].menuName);
+        //         //第一级
+        //         str += '<li class="layui-nav-item '+ d.class +' layui-nav-itemed"> ' +
+        //             '<a href="#" onclick="layui.index.loadPage(\''+ d.url +'\')"> ' +
+        //             '<i class="layui-icon"></i> ' +
+        //             '<cite style="padding: 10px">'+ data[i].menuName +'</cite> ' +
+        //             '</a> ';
+        //         //第二级
+        //         if(data[i].menuList && data[i].menuList.length>0){
+        //             str += '<dl class="layui-nav-child">';
+        //
+        //             for(var j in data[i].menuList){
+        //                 var d1 = getDataByName(data[i].menuList[j].menuName);
+        //
+        //                 str += '<dd style="margin-left: 10px" class="'+d1.class+'">' +
+        //                     '<a href="#" onclick="layui.index.loadPage(\''+d1.url+'\')">' +
+        //                     '<i class="layui-icon"></i>' +
+        //                     '<cite style="margin-left: 10px">'+ data[i].menuList[j].menuName +'</cite> ' +
+        //                     '</a>' +
+        //                     '</dd>'
+        //             }
+        //             str += '</dl>'
+        //         }
+        //         str += '</li>'
+        //     }
+        //
+        //     $("#left_menu").html(str);  //写入页面
+        //     element.init();             //重新初始化element
+        //
+        //     $(".side-hider").click(function () {
+        //         $(this).toggleClass("off");
+        //         $(this).hasClass("off")?hideSidebar():showSidebar();
+        //     })
+        // }
         $.ajax({
             url: 'data/roleData.json',
             dataType : 'json',
             type: 'get',
             success: function(msg){
+                console.log(msg)
                 var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
                             '<a href="#"> ' +
                                     '<i class="layui-icon">&#xe60f;</i> ' +
@@ -212,12 +266,14 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         })
     };
     layer.ready(function(){
-        var storage=window.localStorage;
+        // var storage=window.localStorage;
+        // var data = storage.getItem("data");
+        // console.log(JSON.parse(data));
         var userName = getCookie("userName");
         if(userName){
             $("#nametext").html(userName);
         }else{
-            window.location.href = "login.html";
+            // window.location.href = "login.html";
         }
     });
 

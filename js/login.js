@@ -46,8 +46,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
                         layer.msg("该浏览器版本过低，请更换高版本的浏览器！");
                     }else{
                         var storage=window.localStorage;
-                        var data = result.authList;
-                        var d=JSON.stringify(data);
+                        var d=JSON.stringify(result);
                         storage.setItem("data",d);
                         setCookie("userName",result.userName);
                         setCookie("userId",result.userId)
@@ -74,6 +73,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         ,shade: 0
         ,id: 'login' //设定一个id，防止重复弹出
         ,moveType: 1 //拖拽模式，0或者1
+        // ,offset : ['100px','50px']
         ,success: function(layero){
             initVerify();
             /*登陆*/

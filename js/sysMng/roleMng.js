@@ -153,7 +153,20 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     arry.push(data);
                 }
                  console.log(arry);
-
+                var field = JSON.stringify(arry);
+                $.ajax({
+                    url :''+urlConfig+'/v01/htwl/lxh/role/menu',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        layer.msg('提交成功！', {icon: 1});
+                        // console.log(result);
+                    }
+                });
                 //提交按钮权限
                 var body = layer.getChildFrame('body',index),
                     treeButton = body.contents().find('#treeButton'),
@@ -168,23 +181,25 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 unMatched.each(function(){
                     authArray.push({ "authId": $(this).html(), "roleId": id});
                 });
-                console.log(authArray);
-
-                // var field = JSON.stringify(arry);
-                // $.ajax({
-                //     url :''+urlConfig+'/v01/htwl/lxh/role/menu',
-                //     headers : {
-                //         'Content-type': 'application/json;charset=UTF-8',
-                //         Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                //     },
-                //     dataType : 'json',
-                //     type : 'post',
-                //     data : field,
-                //     success : function (result){
-                //         layer.msg('提交成功！', {icon: 1});
-                //         console.log(result);
-                //     }
-                // })
+                console.log(authArray)
+                var field = JSON.stringify(authArray);
+                console.log(field)
+                $.ajax({
+                    url :''+urlConfig+'//v01/htwl/lxh/auth',
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    },
+                    type : 'post',
+                    data : field,
+                    success : function (result){
+                        console.log(result);
+                        if(result.resultcode =="2"){
+                            layer.msg('提交成功！', {icon: 1});
+                            layer.close(index); //再执行关闭
+                        }
+                    }
+                });
             }
         });
     };
@@ -202,7 +217,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         var zNodes = [
             {name:"菜单功能权限配置", open:true, children:[
                 {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"统计分析",open:true,children:[
-                    {name:"报警统计"},{name:"监测统计"}
+                    {name:"报警统计"},{name:"废水日均报表"},{name:"废水月报"},{name:"废水年报"},{name:"超标统计"}
                 ]},{name:"系统管理",open:true,children:[
                     {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
                 ]}]}
@@ -220,7 +235,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             },
             type: 'get',
             success: function (result) {
-                console.log(result);
+                // console.log(result);
                 if(result.length > 0) {
                     var treeObj = winFrame.jQuery.fn.zTree.getZTreeObj('treeDemo');
                     var nodes = treeObj.getNodes();
@@ -270,6 +285,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
             success: function (result) {
                 var treeButtons = $("#treeButton").find("input"),
                     unMatchedStr = '';
+                console.log(result)
                 layui.each(result, function (index, item) {
                     var isMatched = false;
                     for(var i in treeButtons){

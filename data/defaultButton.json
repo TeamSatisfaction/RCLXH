@@ -1,0 +1,520 @@
+{
+  "authList": [
+    {
+      "authId": "1",
+      "url": "/v01/htwl/lxh/water/add",
+      "method": "POST",
+      "description": "新增水质监控站点"
+    },
+    {
+      "authId": "2",
+      "url": "/v01/htwl/lxh/alrm/online/add",
+      "method": "POST",
+      "description": "新增在线监控报警"
+    },
+    {
+      "authId": "3",
+      "url": "/v01/htwl/lxh/alrm/online/(\\w+)",
+      "method": "DELETE",
+      "description": "删除在线监控报警"
+    },
+    {
+      "authId": "4",
+      "url": "/v01/htwl/lxh/alrm/online/modify",
+      "method": "PUT",
+      "description": "修改在线监控报警"
+    },
+    {
+      "authId": "5",
+      "url": "/v01/htwl/lxh/alrm/online/query/(\\w+)",
+      "method": "GET",
+      "description": "查询改在线监控报警详情"
+    },
+    {
+      "authId": "6",
+      "url": "/v01/htwl/lxh/alrm/online/query",
+      "method": "GET",
+      "description": "查询改在线监控报警列表"
+    },
+    {
+      "authId": "7",
+      "url": "/v01/htwl/lxh/water/(\\w+)",
+      "method": "DELETE",
+      "description": "删除水质监控站点"
+    },
+    {
+      "authId": "8",
+      "url": "/v01/htwl/lxh/water/modify",
+      "method": "PUT",
+      "description": "修改水质监控站点"
+    },
+    {
+      "authId": "9",
+      "url": "/v01/htwl/lxh/water/query/(\\w+)",
+      "method": "GET",
+      "description": "查询水质监控站点详情"
+    },
+    {
+      "authId": "10",
+      "url": "/v01/htwl/lxh/water/query",
+      "method": "GET",
+      "description": "查询水质监控站点列表"
+    },
+    {
+      "authId": "11",
+      "url": "/v01/htwl/lxh/alrm/query",
+      "method": "GET",
+      "description": "查询报警管理列表"
+    },
+    {
+      "authId": "12",
+      "url": "/v01/htwl/lxh/alrm/query/(\\w+)",
+      "method": "GET",
+      "description": "查询报警管理详情"
+    },
+    {
+      "authId": "13",
+      "url": "/v01/htwl/lxh/alrm/deal",
+      "method": "POST",
+      "description": "报警处理"
+    },
+    {
+      "authId": "14",
+      "url": "/v01/htwl/lxh/user/role/query",
+      "method": "GET",
+      "description": "查询角色列表"
+    },
+    {
+      "authId": "15",
+      "url": "/v01/htwl/lxh/user/role/(\\w+)",
+      "method": "GET",
+      "description": "根据角色查询用户列表"
+    },
+    {
+      "authId": "16",
+      "url": "/v01/htwl/lxh/alrm/report",
+      "method": "POST",
+      "description": "上报报警"
+    },
+    {
+      "authId": "18",
+      "url": "/v01/htwl/lxh/enterprise/page",
+      "method": "POST",
+      "description": "查询企业列表"
+    },
+    {
+      "authId": "24",
+      "url": "/v01/htwl/lxh/jcsjgz/dau",
+      "method": "PUT",
+      "description": "更新数采仪信息"
+    },
+    {
+      "authId": "25",
+      "url": "/v01/htwl/lxh/jcsjgz/dau/query/page",
+      "method": "POST",
+      "description": "查询数采仪列表"
+    },
+    {
+      "authId": "26",
+      "url": "/v01/htwl/lxh/jcsjgz/dau/(\\w+)",
+      "method": "GET",
+      "description": "查询数采仪"
+    },
+    {
+      "authId": "27",
+      "url": "/v01/htwl/lxh/enterprise/attachment",
+      "method": "POST",
+      "description": "添加附件"
+    },
+    {
+      "authId": "28",
+      "url": "/v01/htwl/lxh/enterprise/attachment",
+      "method": "PUT",
+      "description": "更新附件"
+    },
+    {
+      "authId": "29",
+      "url": "/v01/htwl/lxh/enterprise/attachment/(\\w+)",
+      "method": "DELETE",
+      "description": "删除附件"
+    },
+    {
+      "authId": "30",
+      "url": "/v01/htwl/lxh/enterprise/attachment/(\\w+)",
+      "method": "GET",
+      "description": "获取关联附件信息"
+    },
+    {
+      "authId": "31",
+      "url": "/v01/htwl/lxh/enterprise/license",
+      "method": "POST",
+      "description": "添加企业许可证信息"
+    },
+    {
+      "authId": "32",
+      "url": "/v01/htwl/lxh/enterprise/license",
+      "method": "PUT",
+      "description": "修改企业许可证信息"
+    },
+    {
+      "authId": "33",
+      "url": "/v01/htwl/lxh/enterprise/license",
+      "method": "DELETE",
+      "description": "删除企业许可证信息"
+    },
+    {
+      "authId": "34",
+      "url": "/v01/htwl/lxh/enterprise/license/(\\w+)",
+      "method": "GET",
+      "description": "获取企业许可证信息"
+    },
+    {
+      "authId": "35",
+      "url": "/v01/htwl/lxh/enterprise/process",
+      "method": "POST",
+      "description": "添加处理工艺信息"
+    },
+    {
+      "authId": "36",
+      "url": "/v01/htwl/lxh/enterprise/process",
+      "method": "PUT",
+      "description": "批量更新处理工艺信息"
+    },
+    {
+      "authId": "37",
+      "url": "/v01/htwl/lxh/enterprise/process",
+      "method": "DELETE",
+      "description": "删除处理工艺信息"
+    },
+    {
+      "authId": "38",
+      "url": "/v01/htwl/lxh/enterprise/process",
+      "method": "GET",
+      "description": "获取企业处理工艺信息"
+    },
+    {
+      "authId": "42",
+      "url": "/v01/htwl/lxh/jcsjgz/equipment/bydau/(\\w+)",
+      "method": "DELETE",
+      "description": "删除指定数采仪的所有设备仪器信息"
+    },
+    {
+      "authId": "43",
+      "url": "/v01/htwl/lxh/jcsjgz/equipment/query/page",
+      "method": "POST",
+      "description": "分页查询设备仪器信息"
+    },
+    {
+      "authId": "45",
+      "url": "/v01/htwl/lxh/jcsjgz/factor/(\\w+)",
+      "method": "GET",
+      "description": "获取指定id的因子信息"
+    },
+    {
+      "authId": "46",
+      "url": "/v01/htwl/lxh/jcsjgz/factor",
+      "method": "POST",
+      "description": "新增因子信息"
+    },
+    {
+      "authId": "47",
+      "url": "/v01/htwl/lxh/jcsjgz/factor",
+      "method": "PUT",
+      "description": "更新因子信息"
+    },
+    {
+      "authId": "48",
+      "url": "/v01/htwl/lxh/jcsjgz/factor/(\\w+)",
+      "method": "DELETE",
+      "description": "删除因子信息"
+    },
+    {
+      "authId": "49",
+      "url": "/v01/htwl/lxh/jcsjgz/factor/query/page",
+      "method": "POST",
+      "description": "分页查询因子信息"
+    },
+    {
+      "authId": "50",
+      "url": "/v01/htwl/lxh/alrm/rule/add",
+      "method": "POST",
+      "description": "新增企业/监测站报警规则"
+    },
+    {
+      "authId": "51",
+      "url": "/v01/htwl/lxh/alrm/rule/(\\w+)",
+      "method": "DELETE",
+      "description": "删除企业/监测站报警规则"
+    },
+    {
+      "authId": "52",
+      "url": "/v01/htwl/lxh/alrm/rule/modify",
+      "method": "PUT",
+      "description": "修改企业/监测站报警规则"
+    },
+    {
+      "authId": "53",
+      "url": "/v01/htwl/lxh/alrm/rule/(\\w+)",
+      "method": "GET",
+      "description": "查询企业/监测站报警规则详情"
+    },
+    {
+      "authId": "55",
+      "url": "/v01/htwl/lxh/alrm/statistics",
+      "method": "GET",
+      "description": "统计报警"
+    },
+    {
+      "authId": "58",
+      "url": "/v01/htwl/lxh/user/page",
+      "method": "POST",
+      "description": "分页查询用户"
+    },
+    {
+      "authId": "59",
+      "url": "/v01/htwl/lxh/user",
+      "method": "PUT",
+      "description": "修改用户信息"
+    },
+    {
+      "authId": "60",
+      "url": "/v01/htwl/lxh/alrm/newes",
+      "method": "GET",
+      "description": "查询最新告警"
+    },
+    {
+      "authId": "61",
+      "url": "/v01/htwl/lxh/online",
+      "method": "GET",
+      "description": "在线监测"
+    },
+    {
+      "authId": "62",
+      "url": "/v01/htwl/lxh/eqwork",
+      "method": "POST",
+      "description": "查询指定时间内设备工况信息"
+    },
+    {
+      "authId": "63",
+      "url": "/v01/htwl/lxh/power",
+      "method": "POST",
+      "description": "查询指定时间内设备能耗"
+    },
+    {
+      "authId": "64",
+      "url": "/v01/htwl/lxh/online/monthly",
+      "method": "GET",
+      "description": "月统计"
+    },
+    {
+      "authId": "65",
+      "url": "/v01/htwl/lxh/enterprise/year/(\\w+)/(\\w+)",
+      "method": "GET",
+      "description": "企业年报统计"
+    },
+    {
+      "authId": "66",
+      "url": "/v01/htwl/lxh/enterprise/month/(\\w+)/(\\w+)",
+      "method": "GET",
+      "description": "企业月报统计"
+    },
+    {
+      "authId": "67",
+      "url": "/v01/htwl/lxh/enterprise/day/(\\w+)/(\\w+)",
+      "method": "GET",
+      "description": "企业日报统计"
+    },
+    {
+      "authId": "69",
+      "url": "/v01/htwl/lxh/user/role",
+      "method": "POST",
+      "description": "新增用户角色"
+    },
+    {
+      "authId": "70",
+      "url": "/v01/htwl/lxh/role",
+      "method": "GET",
+      "description": "查询角色列表"
+    },
+    {
+      "authId": "71",
+      "url": "/v01/htwl/lxh/auth",
+      "method": "GET",
+      "description": "查询操作"
+    },
+    {
+      "authId": "72",
+      "url": "/v01/htwl/lxh/auth",
+      "method": "POST",
+      "description": "新增角色操作"
+    },
+    {
+      "authId": "73",
+      "url": "/v01/htwl/lxh/menu",
+      "method": "POST",
+      "description": "新增菜单"
+    },
+    {
+      "authId": "74",
+      "url": "/v01/htwl/lxh/role/menu",
+      "method": "POST",
+      "description": "新增角色菜单"
+    },
+    {
+      "authId": "77",
+      "url": "/v01/htwl/lxh/menu",
+      "method": "PUT",
+      "description": "修改菜单"
+    },
+    {
+      "authId": "78",
+      "url": "/v01/htwl/lxh/menu/(\\w+)",
+      "method": "DELETE",
+      "description": "删除菜单"
+    },
+    {
+      "authId": "79",
+      "url": "/v01/htwl/lxh/user/role",
+      "method": "DELETE",
+      "description": "删除用户角色"
+    },
+    {
+      "authId": "80",
+      "url": "/v01/htwl/lxh/role/menu",
+      "method": "DELETE",
+      "description": "删除角色菜单"
+    },
+    {
+      "authId": "81",
+      "url": "/v01/htwl/lxh/user/query/(\\w+)",
+      "method": "GET",
+      "description": "查询用户详情"
+    },
+    {
+      "authId": "82",
+      "url": "/v01/htwl/lxh/alrm/report/time/(\\w+)",
+      "method": "GET",
+      "description": "查询关联上报时间列表"
+    },
+    {
+      "authId": "83",
+      "url": "/v01/htwl/lxh/alrm/report/time",
+      "method": "POST",
+      "description": "新增关联上报时间"
+    },
+    {
+      "authId": "84",
+      "url": "/v01/htwl/lxh/alrm/report/time/(\\w+)",
+      "method": "DELETE",
+      "description": "删除关联上报时间"
+    },
+    {
+      "authId": "85",
+      "url": "/v01/htwl/lxh/alrm/report/time",
+      "method": "PUT",
+      "description": "修改关联上报时间"
+    },
+    {
+      "authId": "86",
+      "url": "/v01/htwl/lxh/alrm/statistics/total",
+      "method": "GET",
+      "description": "查询报警总数"
+    },
+    {
+      "authId": "87",
+      "url": "/v01/htwl/lxh/alrm/close/rate",
+      "method": "GET",
+      "description": "查询报警关闭率"
+    },
+    {
+      "authId": "88",
+      "url": "/v01/htwl/lxh/alrm/enterprise/statistics",
+      "method": "GET",
+      "description": "查询报警统计详情"
+    },
+    {
+      "authId": "89",
+      "url": "/v01/htwl/lxh/enterprise/discharge/port",
+      "method": "POST",
+      "description": "新增企业排扣"
+    },
+    {
+      "authId": "90",
+      "url": "/v01/htwl/lxh/enterprise/discharge/port",
+      "method": "PUT",
+      "description": "修改企业排扣"
+    },
+    {
+      "authId": "91",
+      "url": "/v01/htwl/lxh/enterprise/discharge/port/(\\w+)",
+      "method": "DELETE",
+      "description": "删除企业排扣"
+    },
+    {
+      "authId": "92",
+      "url": "/v01/htwl/lxh/enterprise/discharge/port/(\\w+)",
+      "method": "GET",
+      "description": "查询企业排扣"
+    },
+    {
+      "authId": "93",
+      "url": "/v01/htwl/lxh/configure/factor",
+      "method": "POST",
+      "description": "新增因子上报时间"
+    },
+    {
+      "authId": "94",
+      "url": "/v01/htwl/lxh/configure/factor",
+      "method": "PUT",
+      "description": "修改因子上报时间"
+    },
+    {
+      "authId": "95",
+      "url": "/v01/htwl/lxh/configure/factor/(\\w+)",
+      "method": "DELETE",
+      "description": "删除因子上报时间"
+    },
+    {
+      "authId": "96",
+      "url": "/v01/htwl/lxh/configure/factor",
+      "method": "GET",
+      "description": "查询因子上报时间列表"
+    },
+    {
+      "authId": "97",
+      "url": "/v01/htwl/lxh/role/menu/(\\w+)",
+      "method": "GET",
+      "description": "查询角色菜单"
+    },
+    {
+      "authId": "98",
+      "url": "/v01/htwl/lxh/role/auth/(\\w+)",
+      "method": "GET",
+      "description": "查询角色权限"
+    },
+    {
+      "authId": "99",
+      "url": "/v01/htwl/lxh/jcsjgz/all/equipment",
+      "method": "GET",
+      "description": "查询全部设备"
+    },
+    {
+      "authId": "100",
+      "url": "/v01/htwl/lxh/jcsjgz/all/factor",
+      "method": "GET",
+      "description": "查询全部因子"
+    },
+    {
+      "authId": "101",
+      "url": "/v01/htwl/lxh/online/monitor",
+      "method": "GET",
+      "description": "水质监测站详情在线统计"
+    },
+    {
+      "authId": "102",
+      "url": "/v01/htwl/lxh/statistics/daily/wastewater",
+      "method": "GET",
+      "description": "废水日均值报表"
+    }
+  ]
+}

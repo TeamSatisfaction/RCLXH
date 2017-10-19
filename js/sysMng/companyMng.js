@@ -93,6 +93,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         thumb.removeClass("thumb-input").prepend(str).show();
         getImgLicence(input);
     };
+    //http://172.16.1.20:9564/v01/htwl/file/upload
     /*多选图片*/
     var imgSelect = function (input) {
         /*创建图片路径*/
@@ -115,7 +116,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         var fileId = thumb.find("img").attr("data-id");
         $.ajax({
             url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
-            post : 'delete',
+            type : 'delete',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -123,7 +124,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 if(result.code == 1000){
                     $.ajax({
                         url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
-                        post : 'delete',
+                        type : 'delete',
                         headers : {
                             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                         },
@@ -145,9 +146,11 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     var imgDelete = function (i) {
         var thumb = $(i).parent(".thumb"),
             fileId = thumb.find("img").attr("data-id");
+        console.log(fileId)
         $.ajax({
-            url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
-            post : 'delete',
+            // url : 'http://39.108.112.173:9021/v03/htwl/file/'+fileId+'',
+            url : 'http://172.16.1.20:9564/v01/htwl/file/delete/'+fileId+'',
+            type : 'delete',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -155,7 +158,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 if(result.code == 1000){
                     $.ajax({
                         url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
-                        post : 'delete',
+                        type : 'delete',
                         headers : {
                             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                         },
@@ -168,27 +171,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             }
         })
     };
-    // /*处理工艺的图片事件*/
-    // var clgyImgSelect = function (input) {
-    //     /*创建图片路径*/
-    //     var src = window.URL.createObjectURL(input.files[0]),
-    //         thumb =  $(input).parent(".thumb"),
-    //         thisContent = thumb[0].outerHTML;
-    //     /*写HTML*/
-    //     var str =
-    //         '<img src="' + src + '"> ' +
-    //         '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> '+
-    //         '<div>' + ($(".clgy_item").find("input[name='gylx']").val()) + '</div>';    //工艺类型
-    //     $(input).removeAttr("onchange").hide();
-    //     thumb.find("img").remove();
-    //     thumb.removeClass("thumb-input").prepend(str).show();
-    //     thumb.after(thisContent);
-    //     getImgSelection(input);
-    // };
-    // //定义上传按钮事件
-    // $('#clgy_upload').click(function () {
-    //     $(".clgy_photos").find(".thumb-input").find("input").click()
-    // });
     /*获取所有图片的方法
     * urls: 图片的本地路径，若为C://fakepath/ 是被浏览器保护了
     * formData: 文件转为formData格式，在非IE浏览器可以用ajax的POST上传formData中文件
@@ -204,7 +186,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             formData.append(input.value, input.files[0]);
         /*formData打印不出来的，需要有接口才能测试*/
         $.ajax({
-            url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
+            // url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
+            url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
             type: 'POST',           //必须是post
             data: formData,         //参数为formData
             contentType: false,  	//必要
@@ -213,13 +196,13 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             success : function (result){
-                var data = result.data[0],
+                var data = result[0],
                     field = {
                         attachmentName : data.fileName,
-                        attachmentAddress : data.uri,
+                        attachmentAddress : data.fileUrl,
                         attachmentGroup : 'enterprise',
                         majorKey : Cid,
-                        createUser: 'admin'
+                        createUser: 'data.fileId'
                     };
                 console.log(data);
                 var thumb = $(input).parent(".thumb");
@@ -236,7 +219,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     data : field,
                     success : function (result){
                         console.log(result);
-                        layui.msg('上传成功!',{icon:1})
+                        layer.msg('上传成功!',{icon:1})
                     }
                 })
             }
@@ -249,7 +232,8 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         formData.append(input.value, input.files[0]);
         /*formData打印不出来的，需要有接口才能测试*/
         $.ajax({
-            url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
+            // url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
+            url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
             type: 'POST',           //必须是post
             data: formData,         //参数为formData
             contentType: false,  	//必要
@@ -258,9 +242,9 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
             success : function (result){
-                var data = result.data[0];
+                var data = result[0];
                 thumb.find("img").attr("data-id",data.fileId);
-                thumb.find("img").attr("data-address",data.uri);
+                thumb.find("img").attr("data-address",data.fileUrl);
             }
         })
     };
@@ -478,7 +462,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                         layui.each(attach, function (index, item){
                             var str =
                                 '<div class="thumb">'+
-                                '<img src="' + item.attachmentAddress + '"> ' +
+                                '<img src="' + item.attachmentAddress + '" data-id="'+item.id+'"> ' +
                                 '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
                                 '</div>';
                             thumb.before(str).show();

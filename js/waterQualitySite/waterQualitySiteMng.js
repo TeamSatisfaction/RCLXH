@@ -589,11 +589,14 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                         case "浊度" :
                             item.factorName = "浊度(FNU)";
                             break;
+                        case "PH" :
+                            item.factorName = "PH(无量纲)";
+                            break;
                         case "电导率" :
-                            item.factorName = "电导率(us/cm)";
+                            item.factorName = "电导率(μS/cm)";
                             break;
                         case "溶解氧" :
-                            item.factorName = "溶解氧(mg/L)";
+                            item.factorName = "溶解氧(NTU)";
                             break;
                     };
                     head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
@@ -614,7 +617,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
 
                             var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
                             tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
-                            tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('或'+comparison1+item.twoThreshold):''));
+                            tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('，'+comparison1+item.twoThreshold):''));
                         }else {
                             tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
                             tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
@@ -752,7 +755,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         var eTime =  date.getFullYear() + seperator1 + month + seperator1 + strDate;
         $('input[name=beginDate1]').val(eTime);
         var eTime1 =  date.getFullYear() + seperator1 + month;
-        $('input[name=beginDate2').val(eTime1);
+        $('input[name=beginDate2]').val(eTime1);
         // loadfactordetailss()
     };
     //初始化时间2

@@ -11,34 +11,35 @@
         layui.config({
             base: '../../js/statisticsMng/' //你的模块目录
         }).extend({
-            monitorStatistics : 'monitorStatistics'
-        }).use('monitorStatistics',function () {
+            waterDaily : 'waterDaily'
+        }).use('waterDaily',function () {
+            layui.waterDaily.loadList()
 //            layui.monitorStatistics.loadDailyList()
         })
                 .link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body>
-<div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+<div class="layui-layout-admin" style="margin-top: 2px">
     <div style="margin: 10px">
-        <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+        <div class="layui-form" style="margin: 5px 0 0 0;">
             <div class="layui-form-item layui-inline" style="margin-bottom: 0">
                 <label class="layui-form-label">企业名称：</label>
-                <input  class="layui-input  layui-input-inline"  name="">
+                <input  class="layui-input  layui-input-inline"  name="eName">
             </div>
             <div class="layui-form-item layui-inline" style="margin-bottom: 0">
                 <label class="layui-form-label">日期：</label>
-                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="">
+                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="time">
             </div>
-            <div class="layui-btn layui-btn-normal">
+            <button class="layui-btn layui-btn-normal" onclick="layui.waterDaily.loadList()">
                 <i class="layui-icon">&#xe615;</i>
                 查询
-            </div>
-            <div class="layui-btn">
-                <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
-                导出
-            </div>
-        </form>
+            </button>
+            <!--<div class="layui-btn">-->
+                <!--<i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>-->
+                <!--导出-->
+            <!--</div>-->
+        </div>
         <table class="layui-table" lay-even="" lay-skin="row">
             <colgroup>
                 <col width="60">

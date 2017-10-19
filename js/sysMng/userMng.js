@@ -42,6 +42,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         data.field.orgId = "lxh_user";
         data.field.isDel = "0";
         data.field.status = "1";
+        data.field.password = hex_md5(data.field.password);
         var field = JSON.stringify(data.field);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/user',
@@ -106,7 +107,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td style="text-align: center">'+
                             '<a class="auth-btn" data-authId="59" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="用户编辑"><img src="../../img/mng/alter.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="81" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="分配角色"><img src="../../img/mng/configure.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="57" href="#" onclick="layui.userMng.initializePassword(\''+item.id+'\')" title="初始化密码"><img src="../../img/mng/password.png"></a></td>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="57" href="#" onclick="layui.userMng.initializePassword(\''+item.id+'\')" title="初始化密码"><img src="../../img/mng/password.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="17" href="#" onclick="layui.userMng.deleteUser(\''+item.id+'\')" title="删除用户"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
                         arr.push(str);
                     });
@@ -140,6 +142,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         }
     };
+    //权限配置
     var userRoleMngWin = function (id) {
         var index = layer.open({
             title : '权限配置',
@@ -301,7 +304,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             userId : id
         };
         var field = JSON.stringify(data);
-        layer.msg('是否初始化密码', {
+        layer.msg('是否初始化密码为123456', {
             icon: 3,
             time: 20000, //20s后自动关闭
             btn: ['确定', '取消'],
@@ -321,11 +324,16 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
+    //删除用户
+    var deleteUser = function (id) {
+
+    };
     var obj = {
         loadPage : loadPage,
         addUserWin : addUserWin,
         loadUserData : loadUserData,
         passwordJudge : passwordJudge,
+        deleteUser :  deleteUser,
         userRoleMngWin : userRoleMngWin,
         userAddRole : userAddRole,
         userDeleteRole : userDeleteRole,

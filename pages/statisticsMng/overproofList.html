@@ -11,39 +11,36 @@
         layui.config({
             base: '../../js/statisticsMng/' //你的模块目录
         }).extend({
-            monitorStatistics : 'monitorStatistics'
-        }).use('monitorStatistics')
-                .link('../../css/style.css'); //加载入口
+            overproofList : 'overproofList'
+        }).use('overproofList',function () {
+            layui.overproofList.loadList();
+        }).link('../../css/style.css'); //加载入口
     </script>
 </head>
 <body>
-<div class="layui-layout-admin" lay-filter="test" style="margin-top: 2px">
+<div class="layui-layout-admin" style="margin-top: 2px">
     <div style="margin: 10px">
-        <form class="layui-form" lay-filter="test" action="" style="margin: 5px 0 0 0;">
+        <div class="layui-form" style="margin: 5px 0 0 0;">
+            <div class="layui-form-item layui-inline" style="margin-bottom: 0">
+                <label class="layui-form-label">企业名称：</label>
+                <input  class="layui-input  layui-input-inline"  name="eName">
+            </div>
             <div class="layui-form-item layui-inline" style="margin-bottom: 0">
                 <label class="layui-form-label">开始时间：</label>
-                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="">
+                <input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'})" name="beginTime">
             </div>
             <div class="layui-form-item layui-inline" style="margin-bottom: 0">
                 <label class="layui-form-label">结束时间：</label>
-                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="">
+                <input  class="layui-input  layui-input-inline" onClick="WdatePicker()" name="endTime">
             </div>
-            <div class="layui-btn layui-btn-normal">
+            <button class="layui-btn layui-btn-normal" onclick="layui.overproofList.loadList()">
                 <i class="layui-icon">&#xe615;</i>
                 查询
-            </div>
-            <div class="layui-btn">
-                <i class="layui-icon"><img src="../../img/mng/excle.png" style="margin-top: 4px"></i>
-                导出
-            </div>
-        </form>
+            </button>
+        </div>
         <table class="layui-table" lay-even="" lay-skin="row">
             <colgroup>
                 <col width="60">
-                <col>
-                <col>
-                <col>
-                <col>
                 <col>
                 <col>
                 <col>
@@ -54,20 +51,20 @@
             <tr>
                 <th>序号</th>
                 <th>企业名称</th>
-                <th>监测点名称</th>
-                <th>时间</th>
-                <th>流量(mg/L)</th>
-                <th>COD(mg/L)</th>
+                <th>开始时间</th>
+                <th>结束时间</th>
+                <th>报警设备</th>
+                <th>报警值</th>
             </tr>
             </thead>
             <tbody id="111-list">
             <tr>
                 <td>1</td>
-                <td>重庆华森制药股份有限公司</td>
-                <td>重庆华森制药股份有限公司</td>
-                <td>2017-9-25</td>
-                <td>523</td>
-                <td>30</td>
+                <td>濑溪河流域水质自动监测站</td>
+                <td>2017-10-13 07:18:03</td>
+                <td>2017-10-13 07:24:27</td>
+                <td>污水工艺过程COD仪</td>
+                <td>23.7</td>
             </tr>
             </tbody>
         </table>

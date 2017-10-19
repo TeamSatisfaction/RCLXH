@@ -156,11 +156,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             content : '../../pages/alarmMng/alarmDataView.html',
             btn: ['返回'],
             btnAlign: 'c'
-            // success : function (index, layero) {
-            //     var body = layer.getChildFrame('body', layero);
-            //     var id = $('.layui-layer-content').attr('id');
-            //     loadAlarmDetails(id,body);
-            // }
         })
         layer.full(index);
     };
@@ -240,7 +235,10 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 }
                 $("#trail-result").html(render(list));
                 if( result.alarmType == '在线监控报警'){
-                    var remark = result.remark;
+                    var pattern = /\[(.+?)\]/g;
+                    var remark = result.remark,
+                        e = remark.match(pattern)[0];
+                    var code = e.replace(/\[|]/g,''); //因子code
                     var time = result.alarmTime;
                     var interTimes = 2*60*1000;
                     interTimes=parseInt(interTimes);
@@ -253,10 +251,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         beginDate : beginDate,
                         endDate : endDate,
                         enterpriseId  : result.enterpriseId,
-                        factor : 'e202B01',
+                        factor : code,
                         cn : 2011
                     };
-                    loadaCharts();
                     $.ajax({
                         url: ''+urlConfig+'/v01/htwl/lxh/online',
                         headers: {
@@ -266,88 +263,22 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         type: 'get',
                         data: data,
                         success: function (result) {
-                            console.log(result)
+                            var arr = [],
+                                i;
+                            if(result.onlineData != null){
+                                var time = result.onlineTime,
+                                    onlineData = result.onlineData.data[0].online;
+                                for(i=0;i<time.length;i++){
+                                    arr.push([
+                                        time[i],
+                                        onlineData[i]
+                                    ])
+                                }
+                            }
+                            console.log(arr);
+                            loadaCharts(code,arr);
                         }
                     })
-                    //         var arr = [],
-                    //             i;
-                    //         if(result.onlineData != null){
-                    //             var time = result.onlineTime,
-                    //                 onlineData = result.onlineData.data[0].online;
-                    //             for(i=0;i<time.length;i++){
-                    //                 arr.push([
-                    //                     time[i],
-                    //                     onlineData[i]
-                    //                 ])
-                    //             }
-                    //         }
-                    //         var option = {
-                    //             chart: {
-                    //                 type: 'spline',
-                    //                 backgroundColor: 'rgba(0,0,0,0)'
-                    //             },
-                    //             title: {
-                    //                 text: Fname
-                    //             },
-                    //             credits : {
-                    //                 enabled: false
-                    //             },
-                    //             xAxis: {
-                    //                 type: 'category',
-                    //                 dateTimeLabelFormats: {
-                    //                     day: '%H:%M:%S'
-                    //                 },
-                    //                 labels : {
-                    //                     formatter : function () {
-                    //                         return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
-                    //                     }
-                    //                 }
-                    //                 // categories : time
-                    //             },
-                    //             yAxis: {
-                    //                 title: {
-                    //                     text: unit,
-                    //                     style : {
-                    //                         color: '#000000'
-                    //                     }
-                    //                 },
-                    //                 labels : {
-                    //                     style : {
-                    //                         color: '#000000'
-                    //                     }
-                    //                 }
-                    //                 // ,plotLines: [{
-                    //                 //     value: 26.6,
-                    //                 //     dashStyle:'ShortDash',
-                    //                 //     width: 3,
-                    //                 //     color: 'red',
-                    //                 //     label: {
-                    //                 //         text: '阈值',
-                    //                 //         align: 'center',
-                    //                 //         style: {
-                    //                 //             color: 'gray'
-                    //                 //         }
-                    //                 //     }
-                    //                 // }]
-                    //             },
-                    //             tooltip: {
-                    //                 valueSuffix: unit
-                    //             },
-                    //             legend: {
-                    //                 enabled: false
-                    //             },
-                    //             series: [{
-                    //                 name: Fname,
-                    //                 data: arr,
-                    //                 marker: {
-                    //                     enabled: true
-                    //                 }
-                    //             }]
-                    //         };
-                    //         chart = new Highcharts.chart('mapStats_Line', option);
-                    //     }
-                    // })
-                // }else if(result.alarmType == '在线监控报警'){
                 }else if(result.alarmType = '视频报警'){
                     var qyImg = [{
                         "url":"../../img/data/002.png"
@@ -580,34 +511,68 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             }
         })
     });
-    var loadaCharts = function () {
+    var loadaCharts = function (code,arr) {
         var option = {
             chart: {
-                type : 'line'
+                type: 'spline',
+                backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
-                text: '实时监测数据'
+                text: code
+            },
+            credits : {
+                enabled: false
             },
             xAxis: {
-                categories : ["22:34:01","22:34:11","22:34:21","22:34:31"]
-            },
-            tooltip: {
-                valueSuffix: 'mg/L'
+                type: 'category',
+                dateTimeLabelFormats: {
+                    day: '%H:%M:%S'
+                },
+                labels : {
+                    formatter : function () {
+                        return layui.utils.dateFormat('HH:mm:ss',new Date(this.value))
+                    }
+                }
             },
             yAxis: {
                 title: {
-                    text: 'mg/L'
-                }
+                    text: '实时值',
+                    style : {
+                        color: '#000000'
+                    }
+                },
+                labels : {
+                    style : {
+                        color: '#000000'
+                    }
+                },
+                minTickInterval : 0.1
+                // ,plotLines: [{
+                //     value: 26.6,
+                //     dashStyle:'ShortDash',
+                //     width: 3,
+                //     color: 'red',
+                //     label: {
+                //         text: '阈值',
+                //         align: 'center',
+                //         style: {
+                //             color: 'gray'
+                //         }
+                //     }
+                // }]
             },
+            // tooltip: {
+            //     valueSuffix: unit
+            // },
             legend: {
-                layout: 'vertical',
-                align: 'right',
-                verticalAlign: 'middle',
-                borderWidth: 0
+                enabled: false
             },
             series: [{
-                name: 'COD',
-                data: [6,6.5,6.7,5.2]
+                name: code,
+                data: arr,
+                marker: {
+                    enabled: true
+                }
             }]
         };
         var chart = new Highcharts.chart('alarmChart', option);
