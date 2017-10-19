@@ -69,8 +69,10 @@ layui.define(['layer', 'form', 'element'], function(exports){
         content : $('#login_container')
         ,title: false //不显示标题栏
         ,closeBtn: false
-        ,area: '450px;'
+        ,area: '470px'
+        ,offset: [($(window).height()/2 - 250 )+ 'px', ($(window).width()-500)+'px']
         ,shade: 0
+        ,resizing: true
         ,id: 'login' //设定一个id，防止重复弹出
         ,moveType: 1 //拖拽模式，0或者1
         // ,offset : ['100px','50px']
