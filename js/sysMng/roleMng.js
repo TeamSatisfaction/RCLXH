@@ -216,7 +216,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
         var zNodes = [
             {name:"菜单功能权限配置", open:true, children:[
-                {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"}, {name:"统计分析",open:true,children:[
+                {name:"污染源"}, {name:"报警管理"}, {name:"水质自动监测站"},{name:"无人机管理"}, {name:"统计分析",open:true,children:[
                     {name:"报警统计"},{name:"废水日均报表"},{name:"废水月报"},{name:"废水年报"},{name:"超标统计"}
                 ]},{name:"系统管理",open:true,children:[
                     {name:'企业管理'}, {name:'监测站管理'}, {name:'设备管理'},{name:'联网管理'},{name:'用户管理'},{name:'角色管理'}
@@ -301,7 +301,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 form.render();
             }
         })
-    }
+    };
     var obj = {
         loadRoleData : loadRoleData,
         addRoleWin : addRoleWin,

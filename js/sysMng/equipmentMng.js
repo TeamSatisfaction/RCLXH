@@ -51,7 +51,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     type = 'power_equipment';
                                     type_text = '动力设备';
                                 }else{
-                                    type = 'instrument_sensor';
+                                    type = 'wmf';
                                     type_text = '仪表仪器';
                                 }
                                 str = '<tr>' +
@@ -403,6 +403,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         var type = $(window.parent.document).find('.layui-layer-content').attr('id'),
             i = type.split(',');
         $.ajax({
+            // url :'http://39.108.112.173:9002/v03/htwl/dic/parent/wmf',
             url :'http://39.108.112.173:9002/v03/htwl/dic/parent/'+i[0]+'',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'

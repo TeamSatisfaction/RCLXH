@@ -25,7 +25,13 @@ layui.define(['layer', 'element','form'],function (exports) {
     };
 
     function loadAuthen(){
-        var authList = JSON.parse(localStorage.getItem('authList'));
+
+        var storage=window.localStorage;
+        var data = JSON.parse(storage.getItem("data"));
+        // console.log(JSON.parse(data));
+        var authList = data.authList;
+        console.log(authList)
+        // var authList = JSON.parse(localStorage.getItem('authList'));
         $(".auth-btn").each(function(){
             var flag = false;
             for(var i in authList){

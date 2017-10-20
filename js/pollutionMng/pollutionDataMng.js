@@ -143,13 +143,15 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         })
     };
     //请求实时数据
-    var loadChartForSite = function(){
+    var loadChartForSite = function(arry){
+        if(arry){
+            console.log(arry);
+        }
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
-            websocket = new WebSocket("ws://172.16.1.10:8095:8095/websocket");
+            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -173,13 +175,18 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            if(obj.mn == mn&&obj.xcode == code){
-                if(code == "ez52Z01"||code == "ez52Z02"){
-                    drawLine(obj.xcum);
-                }else {
-                    drawLine(obj.xrtd);
+            // if(obj.mn == mn&&obj.xcode == code){
+            //     if(code == "ez52Z01"||code == "ez52Z02"){
+            //         drawLine(obj.xcum);
+            //     }else {
+            //         drawLine(obj.xrtd);
+            //     }
+            // }
+            layui.each(arry,function (index,item) {
+                if(obj.mn == item&&obj.code == "ez01a"){
+                    console.log(obj.equipmentType);
                 }
-            }
+            })
         }
     };
     //转换时间格式
@@ -478,7 +485,34 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     });
     layer.ready(function(){
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
-        console.log(id);
+        var data = {
+            pageNumber : 1,
+            pageSize : 1000,
+            dauMap : {
+                epId : id
+            }
+        };
+        var field = JSON.stringify(data);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
+            headers: {
+                'Content-type': 'application/json;charset=UTF-8',
+                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'post',
+            data: field,
+            success: function (result){
+                console.log(result);
+                var arry = [];
+                if(result.data.rows){
+                    var rows = result.data.rows;
+                    layui.each(rows,function (index,item) {
+                        arry.push(item.mn)
+                    })
+                    loadChartForSite(arry);
+                }
+            }
+        })
         $.ajax({
             url : '../../data/equipmentData.json',
             success: function (result){

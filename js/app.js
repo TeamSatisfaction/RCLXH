@@ -3,10 +3,10 @@
  以依赖Layui的layer和form模块为例
  **/
 // sessionStorage.setItem("urlConfig", 'http://113.204.228.66:8095');
-sessionStorage.setItem("urlConfig", 'http://172.16.1.10:8095');
-// sessionStorage.setItem("urlConfig", 'http://172.16.1.102:8095');
-sessionStorage.setItem("urlConfig1", 'http://172.16.1.10:9702');
-// sessionStorage.setItem("urlConfig1", 'http://172.16.1.102:9702');
+// sessionStorage.setItem("urlConfig", 'http://172.16.1.10:8095');
+sessionStorage.setItem("urlConfig", 'http://172.21.92.236:8095');
+// sessionStorage.setItem("urlConfig1", 'http://172.16.1.10:9702');
+sessionStorage.setItem("urlConfig1", 'http://172.21.92.236:9702');
 // var urlConfig1 = 'http://113.204.228.66:9702';
 // var urlConfig1 = 'http://172.16.1.102:9702';
 // 113.204.228.66
@@ -31,7 +31,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
     ], function () {
         layui.index.init();
         layui.index.menuMng();
-        layui.index.buttonMng();
+        // layui.index.buttonMng();
     });
 
     /*导航栏方法*/

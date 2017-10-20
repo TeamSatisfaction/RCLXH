@@ -136,7 +136,6 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            // console.log(obj);
             if(obj.mn == mn&&obj.xcode == code){
                 if(code == "ez52Z01"){
                     console.log(obj)
