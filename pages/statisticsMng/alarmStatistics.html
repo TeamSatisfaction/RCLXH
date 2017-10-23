@@ -14,8 +14,9 @@
         }).extend({
             alarmStatistics : 'alarmStatistics'
         }).use('alarmStatistics',function () {
-            layui.alarmStatistics.loadPie();
-            layui.alarmStatistics.loadaCharts();
+            layui.alarmStatistics.loadAlarmStatistics();
+            layui.alarmStatistics.loadAlarmTrend();
+            layui.alarmStatistics.loadAlarmClose();
         })
                 .link('../../css/style.css'); //加载入口
     </script>
@@ -25,10 +26,11 @@
         <div class="panel col">
             <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon">
+                    <!--<i class="layui-icon">&#xe647;</i>-->
                     <i class="layui-icon">&nbsp;</i>
                 </div>
                 <div class="panel_word newMessage">
-                    <span>5</span>
+                    <span id="total"></span>
                     <cite>报警总数</cite>
                 </div>
             </a>
@@ -36,10 +38,10 @@
         <div class="panel col">
             <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#FF5722;">
-                    <i class="layui-icon" data-icon="">&nbsp;</i>
+                    <i class="layui-icon">&nbsp;</i>
                 </div>
                 <div class="panel_word userAll">
-                    <span>3</span>
+                    <span id="closetotal"></span>
                     <cite>已关闭报警总数</cite>
                 </div>
             </a>
@@ -47,10 +49,10 @@
         <div class="panel col">
             <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#009688;">
-                    <i class="layui-icon" data-icon="">&nbsp;</i>
+                    <i class="layui-icon">&nbsp;</i>
                 </div>
                 <div class="panel_word userAll">
-                    <span>3</span>
+                    <span id="thisMonth"></span>
                     <cite>本月新增报警总数</cite>
                 </div>
             </a>
@@ -58,10 +60,10 @@
         <div class="panel col max_panel">
             <a href="javascript:;" onclick="layui.alarmStatistics.alarmListWin()">
                 <div class="panel_icon" style="background-color:#2F4056;">
-                    <i class="layui-icon" data-icon="">&nbsp;</i>
+                    <i class="layui-icon">&nbsp;</i>
                 </div>
                 <div class="panel_word allNews">
-                    <span>30</span>
+                    <span id="untreated"></span>
                     <cite>长期未处理报警总数</cite>
                 </div>
             </a>

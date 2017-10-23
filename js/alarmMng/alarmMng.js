@@ -32,13 +32,37 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     };
     //上传文件
     layui.upload({
-        url : 'http://api.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
-        // url : 'http://login.cqhtwl.com.cn/v01/htwl/file/upload?access_token='+access_token+'',
+        url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
+        elem: '#s-alarm',
+        headers : {
+            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        },
         method : 'post',
         success: function(res){
             console.log(res);
+            return false;
         }
     });
+    /*上传图片*/
+    var imgSelect = function (input) {
+        var formData = new FormData();
+        formData.append(input.value, input.files[0]);
+        /*formData打印不出来的，需要有接口才能测试*/
+        $.ajax({
+            url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
+            type: 'POST',           //必须是post
+            data: formData,         //参数为formData
+            contentType: false,  	//必要
+            processData: false,  	//必要，防止ajax处理文件流
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            success : function (result){
+                $("input[name=nonefiles]").val(result[0].fileUrl);
+                // console.log($("#files"))
+            }
+        })
+    };
     //初始化时间
     var setTime = function () {
         var sTime = date.getFullYear()+"-01-01",
@@ -352,13 +376,14 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             btnAlign: 'c',
             yes: function(index){
                 var alarmId = sessionStorage.getItem("AlarmId"),
-                    userId = $('#select_role').val(),
+                    roleId = $('#select_role').val(),
                     dealRemark = $('#desc').val(),
-                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                    attachment = $("input[name=nonefiles]").val();
+                    // attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
                 console.log(dealTime);
                 var data = {
                     alarmId : alarmId,
-                    userId : userId,
+                    roleId : roleId,
                     dealTime : dealTime,
                     dealRemark : dealRemark,
                     attachment : attachment
@@ -366,6 +391,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 var field = JSON.stringify(data);
                 $.ajax({
                     url: ""+urlConfig+"/v01/htwl/lxh/alrm/report",
+                    // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/report",
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
                         Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
@@ -375,9 +401,10 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     success: function (result){
                         console.log(result);
                         if(result.resultdesc == '成功'){
-                            layer.msg('提交成功！', {icon: 1});
-                            layer.close(index);
-                            parent.location.reload(); // 父页面刷新
+                            layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
                         }
                     }
                 })
@@ -398,7 +425,8 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             yes: function(index){
                 var alarmId = sessionStorage.getItem("AlarmId"),
                     dealRemark = $('#desc1').val(),
-                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                    attachment = $("input[name=nonefiles]").val();
+                    // attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
                 var data = {
                     alarmId : alarmId,
                     dealTime : dealTime,
@@ -440,32 +468,45 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             yes: function(index){
                 var alarmId = sessionStorage.getItem("AlarmId"),
                     dealRemark = $('#desc1').val(),
-                    attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
-                var data = {
-                    alarmId : alarmId,
-                    dealTime : dealTime,
-                    dealRemark : dealRemark,
-                    attachment : attachment,
-                    status  : '2'
-                };
-                var field = JSON.stringify(data);
-                $.ajax({
-                    url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
-                    headers : {
-                        'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                    },
-                    data : field,
-                    type : 'post',
-                    success: function (result){
-                        console.log(result);
-                        if(result.resultdesc == '成功'){
-                            layer.msg('处理成功！', {icon: 1});
-                            layer.close(index);
-                            parent.location.reload(); // 父页面刷新
+                    attachment = $("input[name=nonefiles]").val();
+                    // attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
+                if(attachment == ''){
+                    layer.msg('上传附件失败！', {icon: 2});
+                }else{
+                    var data = {
+                        alarmId : alarmId,
+                        dealTime : dealTime,
+                        dealRemark : dealRemark,
+                        attachment : attachment,
+                        status  : '2'
+                    };
+                    var field = JSON.stringify(data);
+                    console.log(data);
+                    $.ajax({
+                        url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
+                        // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/deal",
+                        headers : {
+                            'Content-type': 'application/json;charset=UTF-8',
+                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        data : field,
+                        type : 'post',
+                        success: function (result){
+                            console.log(result);
+                            if(result.resultdesc == '成功'){
+                                layer.msg('处理成功！', {icon: 1,time:1000},function () {
+                                    layer.close(index);
+                                    parent.location.reload(); // 父页面刷新
+                                });
+                            }else{
+                                layer.msg('处理失败！', {icon: 2,time:1000},function () {
+                                    layer.close(index);
+                                    parent.location.reload(); // 父页面刷新
+                                });
+                            }
                         }
-                    }
-                })
+                    })
+                }
             }
         });
     };
@@ -488,29 +529,29 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             }
         })
     };
-    //角色select点击事件
-    form.on('select(select_role)', function(data){
-        $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/user/role/'+data.value+'',
-            headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-            },
-            type: 'get',
-            success: function (result){
-                console.log(result);
-                $("#select_user").empty();
-                for(var i=0;i<=result.length;i++){
-                    if(result.length = 0){
-                        $("#select_user").append("<option value='' selected='selected'>无用户</option>");
-                    }else{
-                        console.log(result[i].userId);
-                        $("#select_user").append("<option value="+result[i].userId+">"+result[i].userName+"</option>");
-                    }
-                }
-                form.render('select');
-            }
-        })
-    });
+    // //角色select点击事件
+    // form.on('select(select_role)', function(data){
+    //     $.ajax({
+    //         url: ''+urlConfig+'/v01/htwl/lxh/user/role/'+data.value+'',
+    //         headers: {
+    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //         },
+    //         type: 'get',
+    //         success: function (result){
+    //             console.log(result);
+    //             $("#select_user").empty();
+    //             for(var i in result){
+    //                 if(result.length == 0){
+    //                     $("#select_user").append("<option value='' selected='selected'>无用户</option>");
+    //                 }else{
+    //                     console.log(result[i].userId);
+    //                     $("#select_user").append("<option value="+result[i].userId+">"+result[i].userName+"</option>");
+    //                 }
+    //             }
+    //             form.render('select');
+    //         }
+    //     })
+    // });
     var loadaCharts = function (code,arr) {
         var option = {
             chart: {
@@ -547,23 +588,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     }
                 },
                 minTickInterval : 0.1
-                // ,plotLines: [{
-                //     value: 26.6,
-                //     dashStyle:'ShortDash',
-                //     width: 3,
-                //     color: 'red',
-                //     label: {
-                //         text: '阈值',
-                //         align: 'center',
-                //         style: {
-                //             color: 'gray'
-                //         }
-                //     }
-                // }]
             },
-            // tooltip: {
-            //     valueSuffix: unit
-            // },
             legend: {
                 enabled: false
             },
@@ -579,6 +604,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     };
     var obj = {
         loadPage : loadPage,
+        imgSelect : imgSelect,
         loadAlarmData : loadAlarmData,
         alarmDetailsWin : alarmDetailsWin,
         loadAlarmDetails : loadAlarmDetails,

@@ -1,3 +1,6 @@
+/**
+ * Created by Administrator on 2017/10/23.
+ */
 layui.define(['layer','element','layedit','laypage'], function(exports) {
     var $ = layui.jquery,
         layer = layui.layer,
@@ -12,15 +15,15 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
     if (month >= 1 && month <= 9) {
         month = "0" + month;
     }
-    if (strDate >= 0 && strDate <= 9) {
-        strDate = "0" + strDate;
-    }
+    // if (strDate >= 0 && strDate <= 9) {
+    //     strDate = "0" + strDate;
+    // }
     // var dealTime = date.getFullYear() + seperator1 + month + seperator1 + strDate
     //     + " " + date.getHours() + seperator2 + date.getMinutes()
     //     + seperator2 + date.getSeconds();
     //初始化时间
     var setTime = function () {
-        var eTime =  date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        var eTime =  date.getFullYear() + seperator1 + month;
         $('input[name=time]').val(eTime);
         loadList()
     };
@@ -28,8 +31,8 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         var ename = $("input[name=eName]").val(),
             queryDate = $("input[name=time]").val();
         if(queryDate){
-            var beginDate =  queryDate + " 00:00:00",
-                endDate = queryDate + " 23:59:59";
+            var beginDate =  queryDate + "00:00:00",
+                endDate = queryDate + "23:59:59";
         }else{
             var beginDate =  "2017-10-18 00:00:00",
                 endDate = "2017-10-18 23:59:59";
@@ -57,7 +60,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
                 //模拟渲染
                 var render = function(result, curr) {
                     var arr = [];
-                        // , thisData = result.concat().splice(curr * nums - nums, nums);
+                    // , thisData = result.concat().splice(curr * nums - nums, nums);
                     layui.each(result, function(index, item){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
@@ -94,5 +97,5 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         loadList : loadList
     };
     /*输出内容，注意顺序*/
-    exports('waterDaily',obj)
+    exports('waterMonthly',obj)
 })

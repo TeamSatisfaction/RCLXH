@@ -1,13 +1,67 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="height: 100%">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../js/lib/easypin/jquery-2.2.0.min.js"></script>
     <script src="../../layUi/layui.js"></script>
-</head>
-<body>
+    <script type="text/javascript" src="../../js/lib/ckplayer/ckplayer.js" charset="utf-8"></script>
+    <style type="text/css">
+        body{height: 100%}
+        .uavbody{height: 100%;}
+        .uavlist{width: 300px;height:97%;float: left;margin: 10px;border-color:grey;border-style:solid; border-width:1px;}
+        .uavvideo{width: calc(100% - 335px);height:97%;float: right;margin: 10px 10px 10px 0;border-color:grey;border-style:solid; border-width:1px;}
+        .uav_divider{ background-color: white; padding: 7px; margin: 1px 0; color: #666666}
+        .uav_inner{}
+    </style>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/' //你的模块目录
+        }).extend({
+            utils : 'utils',
+            UAVMng : 'UAVMng/UAVMng'
+        }).use(['UAVMng','utils'],function () {
 
+        }); //加载入口
+    </script>
+</head>
+<body >
+    <div class="uavbody">
+        <div class="uavlist">
+            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
+                <ul class="layui-tab-title">
+                    <li class="layui-this">历史视频</li>
+                    <li>实时视频</li>
+                </ul>
+                <div class="layui-tab-content">
+                    <div class="uav_divider">视频列表（点击查看视频）</div>
+                    <div class="uav_inner">
+                        <img src="http://www.ckplayer.com/static/images/cqdw.jpg" width="250">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="uavvideo">
+            <div id="a1"></div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var width  = $(".uavvideo").width(),
+            height  = $(".uavvideo").height();
+        console.log(width,height);
+        var flashvars={
+            c:0,//是否读取文本配置,0不是，1是
+            p:0,//视频默认0是暂停，1是播放，2是不加载视频
+            e:1,//视频结束后的动作，0是调用js函数，1是循环播放，2是暂停播放并且不调用广告，3是调用视频推荐列表的插件，4是清除视频流并调用js功能和1差不多，5是暂停播放并且调用暂停广告
+            i:'http://www.ckplayer.com/static/images/cqdw.jpg'//初始图片地址
+        };
+        var video=['http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4->video/mp4'];
+        var support=['all'];
+        CKobject.embedHTML5('a1','ckplayer_a1',width,height,video,flashvars,support);
+//        var video = ['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
+    </script>
 </body>
 </html>

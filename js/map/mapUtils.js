@@ -15,8 +15,8 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         center: center_point,
         slider: false,
         logo: false,
-        zoom: 11,//地图大小级别
-        minZoom: 0,//地图缩放的小级别
+        zoom: 13,//地图大小级别
+        minZoom: 9,//地图缩放的小级别
         maxZoom: 16//地图缩放的最大级别
     });
     var basemap = new esri.layers.ArcGISTiledMapServiceLayer(mapServer);
@@ -39,13 +39,6 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         // map.addLayer(graphicLayer);
 
     };
-    // var addRandomPoint = function (){
-    //     var lat = lat0 + Math.random()-0.5,
-    //         lgt = lgt0 + Math.random()-0.5,
-    //         pt = new esri.geometry.Point(lat, lgt, new esri.SpatialReference(4326)),
-    //         type = Math.random()>0.5?"factory":"monistation";
-    //     addPoint(pt, type, true, {});
-    // };
     //请求企业信息
     function loadCompanydata () {
         var data = {
@@ -87,27 +80,44 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     };
     /*infoWindow*/
     var infoWin = function(e) {
-        var attr = e.graphic.attributes,
-            point = e.graphic.geometry,
-            symbolUrl = e.graphic.symbol.url,
-            contentHtml = "",
-            titleHtml = "";
-        // console.log(e.graphic);
-        if (symbolUrl.indexOf("qiye") != -1) {
-            titleHtml = attr.name;
-            contentHtml += "<p>企业名称：<span>"+attr.name+"</span></p>"
-                +"<p>企业地址：<span>"+attr.address+"</span></p>"
-                // +"<p>行业类别：<span>医药制造业</span></p>"
-                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>12个</a></p>";
-        } else if (symbolUrl.indexOf("mn") != -1) {
-            titleHtml = attr.name;
-            contentHtml += "<p>名称：<span>"+attr.name+"</span></p>"
-                +"<p>地址：<span>荣昌县广顺镇曾家山矿区</span></p>"
-                +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>0个</a></p>";
-        }
-        map.infoWindow.setTitle(titleHtml)
-        map.infoWindow.setContent(contentHtml);
-        map.infoWindow.show(point);
+        $.ajax({
+            url: ''+urlConfig+'/v01/htwl/lxh/alrm/enterprise/statistics',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type: 'get',
+            success: function(result){
+                console.log(result)
+                var attr = e.graphic.attributes,
+                    point = e.graphic.geometry,
+                    symbolUrl = e.graphic.symbol.url,
+                    contentHtml = "",
+                    titleHtml = "";
+                for(var i in result){
+                    if(result[i].enterpriseName == attr.name){
+                        attr.num = result[i].count;
+                    }else{
+                        attr.num = "0";
+                    }
+                }
+                console.log(attr);
+                if (symbolUrl.indexOf("qiye") != -1) {
+                    titleHtml = attr.name;
+                    contentHtml += "<p>企业名称：<span>"+attr.name+"</span></p>"
+                        +"<p>企业地址：<span>"+attr.address+"</span></p>"
+                        // +"<p>行业类别：<span>医药制造业</span></p>"
+                        +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>"+attr.num+"</a></p>";
+                } else if (symbolUrl.indexOf("mn") != -1) {
+                    titleHtml = attr.name;
+                    contentHtml += "<p>名称：<span>"+attr.name+"</span></p>"
+                        +"<p>地址：<span>"+attr.address+"</span></p>"
+                        +"<p>报警总数：<a onclick='layui.map.loadPage(\"pages/alarmMng/alarmMng.html\")'>"+attr.num+"</a></p>";
+                }
+                map.infoWindow.setTitle(titleHtml)
+                map.infoWindow.setContent(contentHtml);
+                map.infoWindow.show(point);
+            }
+        });
     };
 
     /*地图加载*/
@@ -128,7 +138,6 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         map:map,
         addPoint: addPoint,
         clearMap:clearMap,
-        // addRandomPoint:addRandomPoint, //添加随机点位，测试用
         loadCompanydata : loadCompanydata
     };
     //输出test接口

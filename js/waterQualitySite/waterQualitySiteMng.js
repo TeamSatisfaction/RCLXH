@@ -17,8 +17,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
-            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
-            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
             // websocket = new WebSocket("ws://172.21.92.170:8095/websocket");
         }
         else{

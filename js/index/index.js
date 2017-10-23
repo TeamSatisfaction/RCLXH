@@ -186,7 +186,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
                 "class": "menu-equipment"
             },
             "无人机管理": {
-                "url": "pages/waterQualitySite/waterQualitySiteView.html",
+                "url": "pages/UAVMng/UAVView.html",
                 "class": "wrjmng"
             },
             "统计分析": {
@@ -283,7 +283,7 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         if(userName){
             $("#nametext").html(userName);
         }else{
-            // window.location.href = "login.html";
+            window.location.href = "login.html";
         }
     });
 

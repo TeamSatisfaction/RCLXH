@@ -122,6 +122,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             },
             type : 'get',
             success : function (result){
+                console.log(result)
                 var render = function(result) {
                     var arr = [],
                         str = '';
@@ -151,7 +152,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
         }
         else{
             alert('Not support websocket')
@@ -175,18 +176,21 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            // if(obj.mn == mn&&obj.xcode == code){
-            //     if(code == "ez52Z01"||code == "ez52Z02"){
-            //         drawLine(obj.xcum);
-            //     }else {
-            //         drawLine(obj.xrtd);
-            //     }
-            // }
-            layui.each(arry,function (index,item) {
-                if(obj.mn == item&&obj.code == "ez01a"){
-                    console.log(obj.equipmentType);
+            console.log(obj)
+            if(obj.mn == mn&&obj.xcode == code){
+                if(code == "ez52Z01"||code == "ez52Z02"){
+                    drawLine(obj.xcum);
+                }else {
+                    drawLine(obj.xrtd);
                 }
-            })
+            }
+            if(arry){
+                layui.each(arry,function (index,item) {
+                    if(obj.mn == item&&obj.code == "ez01a"){
+                        console.log(obj.equipmentType);
+                    }
+                })
+            }
         }
     };
     //转换时间格式

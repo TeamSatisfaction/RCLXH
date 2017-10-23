@@ -45,9 +45,9 @@ layui.define(['layer', 'form', 'element'], function(exports){
                     if(!window.localStorage){
                         layer.msg("该浏览器版本过低，请更换高版本的浏览器！");
                     }else{
-                        var storage=window.localStorage;
-                        var d=JSON.stringify(result);
-                        storage.setItem("data",d);
+                        // var storage=window.localStorage;
+                        // var d=JSON.stringify(result);
+                        // storage.setItem("data",d);
                         setCookie("userName",result.userName);
                         setCookie("userId",result.userId)
                         window.location.href="index.html";

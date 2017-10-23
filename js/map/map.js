@@ -111,8 +111,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
             // websocket = new WebSocket("ws://172.16.1.102:8095/websocket");
-            // websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
-            websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
+            websocket = new WebSocket("ws://113.204.228.66:8095/websocket");
+            // websocket = new WebSocket("ws://172.16.1.10:8095/websocket");
         }
         else{
             alert('Not support websocket')

@@ -13,6 +13,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
+    //遮罩
+    function ityzl_SHOW_LOAD_LAYER(){
+        return layer.msg('加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '0px', time:100000}) ;
+    }
     var Tname = "实时监测数据";
     //加载污染源列表
     var loadCompanyData = function (curr) {
@@ -24,7 +28,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 enterpriseRole : 'production_enterprise',
                 areaCode : '500000-500153'
                 // areaId : 500153
-            };
+            },
+            i;
         var field = JSON.stringify(data);
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
@@ -34,7 +39,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             },
             type : 'post',
             data : field,
+            beforeSend: function () {
+                i = ityzl_SHOW_LOAD_LAYER();
+            },
             success : function (result) {
+                layer.close(i);
+                layer.msg('加载完成！',{time: 1000,offset: '10px'});
                 // console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染

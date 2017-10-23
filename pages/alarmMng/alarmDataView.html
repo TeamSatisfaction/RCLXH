@@ -123,17 +123,21 @@
                 </select>
             </div>
         </div>
+        <!--<div class="layui-form-item">-->
+            <!--<label class="layui-form-label">用户名称：</label>-->
+            <!--<div class="layui-input-block">-->
+                <!--<select name="upload_user" lay-verify="" lay-search id="select_user">-->
+                    <!--<option value="">请先选择角色</option>-->
+                <!--</select>-->
+            <!--</div>-->
+        <!--</div>-->
         <div class="layui-form-item">
-            <label class="layui-form-label">用户名称：</label>
-            <div class="layui-input-block">
-                <select name="upload_user" lay-verify="" lay-search id="select_user">
-                    <option value="">请先选择角色</option>
-                </select>
-            </div>
+            <label class="layui-form-label" style="margin-right: 30px">附件：</label>
+            <input name="file" type="file" onchange="layui.alarmMng.imgSelect(this);">
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label" style="margin-right: 30px">附件：</label>
-            <input name="file" lay-type="file" class="layui-upload-file" type="file">
+            <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="nonefiles">
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述：</label>
@@ -146,7 +150,12 @@
     <form id="deal_Alarm" style="display: none;padding: 10px 20px 10px 0" class="layui-form" method="post" enctype ="multipart/form-data">
         <div class="layui-form-item">
             <label class="layui-form-label" style="margin-right: 30px">附件：</label>
-            <input name="file" lay-type="file" class="layui-upload-file" type="file">
+            <!--<input name="file" lay-type="file" class="layui-upload-file" type="file" id="s-alarm">-->
+            <input name="file" type="file" onchange="layui.alarmMng.imgSelect(this);">
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label" style="margin-right: 30px">附件：</label>
+            <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="nonefiles">
         </div>
         <div class="layui-form-item">
             <label class="layui-form-label">描述：</label>

@@ -7,13 +7,73 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         laypage = layui.laypage,
         form = layui.form(),
         aTobody = $('#alarm-result');
+    var urlConfig = sessionStorage.getItem("urlConfig");
     //页面跳转
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
+    //载入报警统计总数
+    var loadAlarmStatistics = function () {
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/statistics/total',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                $("#total").html(result.total);
+                $("#closetotal").html(result.closetotal);
+                $("#thisMonth").html(result.thisMonth);
+                $("#untreated").html(result.untreated);
+            }
+        })
+    };
+    //载入报警趋势
+    var loadAlarmTrend = function () {
+        var data = {
+            startTime : "2017-08-01 00:00:00",
+            entTime  : "2017-10-20 23:59:59"
+        };
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/statistics',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            data : data,
+            type : 'get',
+            success : function (result){
+                // console.log(result)
+                loadaCharts(result);
+            }
+        })
+    }
+    //载入报警关闭率
+    var loadAlarmClose = function () {
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/alrm/close/rate',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            success : function (result){
+                // console.log(result)
+                loadPie(result);
+            }
+        })
+    }
     //月报警趋势图
-    var loadaCharts = function (onlineTime,onlineData,text) {
+    var loadaCharts = function (r) {
+        var categories = [],
+            data1 = [],
+            data2 = [],
+            data3 = [];
+        layui.each(r,function (index,item) {
+            categories.push(item.month);
+            data1.push(item.detection_alarm);
+            data2.push(item.video_alarm);
+            data3.push(item.working_alarm);
+        })
         var option = {
             chart: {
                 type : 'line'
@@ -26,7 +86,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
             },
             colors: [ '#1aadce', '#fda400', '#ff5722'],
             xAxis: {
-                categories : ['3月','4月','5月','6月','7月']
+                categories : categories
             },
             tooltip: {
                 valueSuffix: '个'
@@ -44,18 +104,19 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
             },
             series: [{
                 name: '在线监测',
-                data: [128,95,117,161,201]
+                data: data1
             },{
                 name: '视频分析',
-                data: [60,42,45,75,50]
+                data: data2
             },{
                 name: '设备工况',
-                data: [14,24,17,20,18]
+                data: data3
             }]
         };
         Highcharts.chart('alarm_chart', option);
     };
-    var loadPie = function () {
+    var loadPie = function (r) {
+            var data = [['在线监测',r.onilneCloseRate], ['视频分析',r.videoCloseRate], ['设备工况',r.workingCloseRate]];
         var option = {
             chart: {
                 plotBackgroundColor: null,
@@ -90,11 +151,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
             series: [{
                 type: 'pie',
                 name: '报警关闭率',
-                data: [
-                    ['在线监测',40],
-                    ['视频分析',40],
-                    ['设备工况',20]
-                ]
+                data: data
             }]
         };
         Highcharts.chart('alarm_pie', option);
@@ -115,26 +172,36 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         layer.full(index);
     };
     var loadAlarmlist = function () {
-        var curr = 1,
+        var enterpriseName = $("input[name=name]").val(),
+            curr = 1,
             nums = 16,
             str = '';
+        var data = {
+            enterpriseName : enterpriseName
+        };
         $.ajax({
-            url: '../../data/baojing.json',
-            dataType : 'json',
+            url: ''+urlConfig+'/v01/htwl/lxh/alrm/enterprise/statistics',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            data : data,
             type: 'get',
             success: function(data){
+                console.log(data)
                 var render = function(data, curr) {
                     var arr = []
+                        ,gbl
                         , thisData = data.concat().splice(curr * nums - nums, nums);
                     layui.each(data, function(index, item){
+                        gbl = Math.round(item.closetotal / item.count * 10000) / 100.00 + "%";
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.name + '</td>' +
-                            '<td>' + item.zs + '</td>' +
-                            '<td>' + item.gb+ '</td>' +
-                            '<td>' + item.xz + '</td>'+
-                            '<td>' + item.dd + '</td>'+
-                            '<td>' + item.gbl + '</td>'+
+                            '<td>' + item.enterpriseName + '</td>' +
+                            '<td>' + item.count + '</td>' +
+                            '<td>' + item.closetotal+ '</td>' +
+                            '<td>' + item.thisMonth + '</td>'+
+                            '<td>' + item.untreated + '</td>'+
+                            '<td>' + gbl + '</td>'+
                         '</tr>';
                         arr.push(str);
                     });
@@ -146,6 +213,9 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
     };
     var obj = {
         loadPage : loadPage,
+        loadAlarmStatistics : loadAlarmStatistics,
+        loadAlarmTrend : loadAlarmTrend,
+        loadAlarmClose : loadAlarmClose,
         loadaCharts : loadaCharts,
         loadPie : loadPie,
         alarmListWin : alarmListWin,

@@ -6,8 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <title>title</title>
     <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <link href="../../zTree/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
     <script src="../../layUi/layui.js"></script>
     <script src="../../js/lib/My97DatePicker/WdatePicker.js" type="text/javascript"></script>
+    <script src="../../zTree/js/jquery-1.4.4.min.js"></script>
+    <script src="../../zTree/js/jquery.ztree.core.js"></script>
+    <script src="../../zTree/js/jquery.ztree.excheck.js"></script>
     <script>
         layui.link('../../css/style.css');
         layui.config({
@@ -16,6 +20,61 @@
             companyMng : 'companyMng'
         }).use('companyMng')
          //加载入口
+    </script>
+    <script type="text/javascript">
+        var  zTreeObj; //zTree对象
+        $(document).ready(function(){
+            var data = {
+                operateId:"d"
+            };
+            $.ajax({
+                url : 'http://39.108.112.173:9502/v03/htwl/industry/tree',
+                data : data,
+                type : 'post',
+                success : function (result){
+                    var setting = {
+                        check: {
+                            enable: true,
+                            chkStyle: "radio",  //单选框
+                            radioType: "all",   //对所有节点设置单选
+                            chkboxType: {"Y":"", "N":""}
+                        },
+
+                        data: {
+                            simpleData: {
+                                enable: true
+                            },
+                            key: {
+                                name: "industryName"
+                            }
+                        },
+                        view:{
+                            dblClickExpand:false
+                        },
+                        callback: {
+                            onCheck: onCheck
+                        }
+                    };
+                    var zNodes = result.data;
+//                    // zTree 的数据属性，深入使用请参考 API 文档（zTreeNode 节点数据详解）
+                    zTreeObj = $.fn.zTree.init($("#tree-hangye1"), setting, zNodes);
+                },
+                error : function () {
+
+                }
+            })
+        });
+        function onCheck(e, treeId, treeNode) {
+            var zTree = $.fn.zTree.getZTreeObj("tree-hangye1"),
+                    nodes = zTree.getCheckedNodes(true),
+                    v = "",
+                    a='';
+            if(nodes.length>0){
+                $("input[name=industryCodes]").val(nodes[0].industryName+"-"+nodes[0].industryCode)
+            }else {
+                $("input[name=industryCodes]").val("")
+            }
+        }
     </script>
 </head>
 <body>
@@ -81,24 +140,23 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">行业类别：</label>
-                    <div class="layui-input-inline">
-                        <select name="industryCodes" lay-verify="required" lay-search="">
-                            <option value="C338">金属制日用品制造</option>
-                            <option value="C3389">其他金属制日用品制造</option>
-                        </select>
-                    </div>
+                    <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="industryCodes" lay-verify="required">
+                    <!--<div class="layui-input-inline">-->
+                        <!--<select name="industryCodes" lay-verify="required" lay-search="">-->
+                            <!--<option value="C338">金属制日用品制造</option>-->
+                            <!--<option value="C3389">其他金属制日用品制造</option>-->
+                        <!--</select>-->
+                    <!--</div>-->
                     <span class="required">*</span>
                 </div>
-                <!--<div class="layui-inline">-->
-                    <!--<label class="layui-form-label">预计建成时间：</label>-->
-                    <!--<input  class="layui-input  layui-input-inline" onClick="WdatePicker({dateFmt:'yyyy'})" name="expectDate">-->
-                    <!--<span class="required">*</span>-->
-                <!--</div>-->
                 <div class="layui-inline">
                     <label class="layui-form-label">地址：</label>
                     <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="address" lay-verify="required">
                     <span class="required">*</span>
                 </div>
+            </div>
+            <div class="layui-form-item">
+                <ul id="tree-hangye1" class="ztree" style="margin: -30px 0 0 150px"></ul>
             </div>
             <div class="layui-form-item">
                 <div class="layui-inline">
