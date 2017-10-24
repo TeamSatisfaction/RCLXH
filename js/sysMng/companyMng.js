@@ -570,33 +570,33 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             var str2 = '<span>未上传副本</span>';
                             $('#fuben').html(str2);
                         }
-                        if(data.pic[1].attachmentAddress!='null'){
-                            $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[1].attachmentAddress);
+                        if(data.pic[0].attachmentAddress!='null'){
+                            $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[0].attachmentAddress);
                         }else{
                             var str = '<span>未上传正本</span>';
                             $('#zhengben').html(str);
                         }
-                        if(data.pic[0].attachmentAddress != 'null'){
-                            $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[0].attachmentAddress);
+                        if(data.pic[1].attachmentAddress != 'null'){
+                            $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[1].attachmentAddress);
                         }else{
                             var str = '<span>未上传副本</span>';
                             $('#fuben').html(str);
                         }
                     }else if(title == '编辑企业信息'){
                         console.log(data)
-                        if(data.pic[1].attachmentAddress != 'null'&&data.pic[1].attachmentAddress){
+                        if(data.pic[0].attachmentAddress != 'null'&&data.pic[0].attachmentAddress){
                             var thumb1 =  $('#thumb1');
                             var str1 =
-                                '<img src="' + data.pic[1].attachmentAddress + '" data-address="'+data.pic[1].attachmentAddress+'" data-id="'+data.pic[1].id+'"> ' +
+                                '<img src="' + data.pic[0].attachmentAddress + '" data-address="'+data.pic[0].attachmentAddress+'" data-id="'+data.pic[0].id+'"> ' +
                                 '<i class="layui-icon" onclick="layui.companyMng.imgDelete1(this);">&#x1007;</i> ';
                             thumb1.find("input").removeAttr("onchange").hide();
                             thumb1.find("img").remove();
                             thumb1.removeClass("thumb-input").prepend(str1).show();
                         }
-                        if(data.pic[0].attachmentAddress != 'null'&&data.pic[0].attachmentAddress){
+                        if(data.pic[1].attachmentAddress != 'null'&&data.pic[1].attachmentAddress){
                             var thumb2 =  $('#thumb2');
                             var str2 =
-                                '<img src="' + data.pic[0].attachmentAddress + '" data-address="'+data.pic[0].attachmentAddress+'" data-id="'+data.pic[0].id+'"> ' +
+                                '<img src="' + data.pic[1].attachmentAddress + '" data-address="'+data.pic[1].attachmentAddress+'" data-id="'+data.pic[1].id+'"> ' +
                                 '<i class="layui-icon" onclick="layui.companyMng.imgDelete1(this);">&#x1007;</i> ';
                             thumb2.find("input").removeAttr("onchange").hide();
                             thumb2.find("img").remove();

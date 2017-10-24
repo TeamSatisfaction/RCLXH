@@ -661,10 +661,12 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 console.log(result);
                 var data = result.list;
                 console.log(data.length);
-                var str = '<span>'+data[0].alarmTime+'</span>' +
-                    '<span>'+data[0].enterpriseName+'</span>' +
-                    '<span>'+data[0].remark+'</span>' ;
-                $("#alarm-list1").html(str);
+                if(data.length > 0){
+                    var str = '<span>'+data[0].alarmTime+'</span>' +
+                        '<span>'+data[0].enterpriseName+'</span>' +
+                        '<span>'+data[0].remark+'</span>' ;
+                    $("#alarm-list1").html(str);
+                }
                 $('#detection_alarm_num').html(data.length);
             }
         })
@@ -679,7 +681,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 console.log(result);
                 var data = result.list;
                 console.log(data.length);
-                if(data.length > 1){
+                if(data.length > 0){
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
                         '<span>'+data[0].remark+'</span>' ;
@@ -699,7 +701,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 console.log(result);
                 var data = result.list;
                 console.log(data.length);
-                if(data.length > 1){
+                if(data.length > 0){
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
                         '<span>'+data[0].remark+'</span>' ;

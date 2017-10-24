@@ -16,12 +16,12 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //载入联网列表
     var loadNetWorkData = function (curr) {
-        var address = $('#mnName').val(),
+        var aname = $('#mnName').val(),
             data = {
                 pageNumber : curr||1,
                 pageSize : 16,
                 dauMap : {
-                    address : address
+                    aname : aname
                 }
             };
         var field = JSON.stringify(data);
@@ -161,7 +161,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                                 layer.close(index);
                             });
                         }else{
-                            layer.msg('提交失败！', {icon: 2,time:2000});
+                            layer.msg(result.message, {icon: 2,time:2000});
                         }
                     }
                 })
@@ -323,23 +323,23 @@ layui.define(['layer','element','laypage','form'],function (exports){
         var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
         parent.layer.close(index); //再执行关闭
     };
-    //新增设备窗口
-    var addEquipmentWin = function () {
-        var index = layer.open({
-            title : '新增设备',
-            type : 2,
-            moveOut: true,
-            area : ['1000px','600px'],
-            content : '../../pages/sysMng/addEquipmentView.html',
-            btn: ['提交', '返回'],
-            btnAlign: 'c',
-            yes : function (index) {
-                layer.msg('提交成功！', {icon: 1});
-                layer.close(index);
-            }
-        });
-        layer.full(index);
-    };
+    // //新增设备窗口
+    // var addEquipmentWin = function () {
+    //     var index = layer.open({
+    //         title : '新增设备',
+    //         type : 2,
+    //         moveOut: true,
+    //         area : ['1000px','600px'],
+    //         content : '../../pages/sysMng/addEquipmentView.html',
+    //         btn: ['提交', '返回'],
+    //         btnAlign: 'c',
+    //         yes : function (index) {
+    //             layer.msg('提交成功！', {icon: 1});
+    //             layer.close(index);
+    //         }
+    //     });
+    //     layer.full(index);
+    // };
     //编辑设备窗口
     var alterEquipmentWin = function (id) {
         var index = layer.open({
@@ -465,6 +465,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 body.contents().find("input[name='dauId']").val(id);
             }
         });
+        layer.full(index);
     };
     //修改设备窗口
     var alterEquipmentDataWin = function (id) {
@@ -600,7 +601,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         bindCompanyWin : bindCompanyWin,
         loadCompanySelect : loadCompanySelect,
         equipmentDataWin : equipmentDataWin,
-        addEquipmentWin : addEquipmentWin,
+        // addEquipmentWin : addEquipmentWin,
         alterEquipmentDataWin : alterEquipmentDataWin,
         deleteEquipment : deleteEquipment,
         alterEquipmentWin : alterEquipmentWin,

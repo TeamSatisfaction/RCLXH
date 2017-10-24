@@ -54,6 +54,10 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     type = 'wmf';
                                     type_text = '仪表仪器';
                                 }
+                                if(item.usedDate == null){
+                                    item.usedDate = "";
+                                }
+                                console.log(item.usedDate)
                                 str = '<tr>' +
                                     '<td>' + (index + 1) + '</td>' +
                                     '<td>' + item.equipmentCode + '</td>' +
@@ -61,7 +65,6 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     '<td>' + item.equipmentNo + '</td>' +
                                     '<td>' + item.productor + '</td>' +
                                     '<td>' + type_text + '</td>' +
-                                    // '<td>' + item.classicType + '</td>' +
                                     '<td>' + item.usedDate + '</td>' +
                                     '<td>' + item.equipmentType + '</td>' +
                                     '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.equipmentMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>' +
@@ -254,38 +257,38 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 type : 'get',
                 success : function (result){
                     console.log(result.data);
-                    var qyImg = [{
-                        "url":"../../img/data/002.png"
-                    },{
-                        "url":"../../img/data/001.png"
-                    }
-                    ];
+                    // var qyImg = [{
+                    //     "url":"../../img/data/002.png"
+                    // },{
+                    //     "url":"../../img/data/001.png"
+                    // }
+                    // ];
                     if(title == "设备详情"){
                         $.each(result.data,function(key,value){
                             var formField = $("input[name='"+key+"']");
                             formField.val(value);
                         });
-                        //设备照片
-                        var qyPhotos = "";
-                        for(var i in qyImg){
-                            qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 400px'> </div>"
-                        }
-                        $(".silder-main").html(qyPhotos);
-                        //图片点击
-                        layer.photos({
-                            photos: '.lay-img'
-                            ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
-                        });
-
-                        $(".js-silder").silder({
-                            auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-                            speed: 20,//轮播图运动速度
-                            sideCtrl: true,//是否需要侧边控制按钮
-                            bottomCtrl: true,//是否需要底部控制按钮
-                            defaultView: 0,//默认显示的索引
-                            interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
-                            activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
-                        });
+                        // //设备照片
+                        // var qyPhotos = "";
+                        // for(var i in qyImg){
+                        //     qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 400px'> </div>"
+                        // }
+                        // $(".silder-main").html(qyPhotos);
+                        // //图片点击
+                        // layer.photos({
+                        //     photos: '.lay-img'
+                        //     ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
+                        // });
+                        //
+                        // $(".js-silder").silder({
+                        //     auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                        //     speed: 20,//轮播图运动速度
+                        //     sideCtrl: true,//是否需要侧边控制按钮
+                        //     bottomCtrl: true,//是否需要底部控制按钮
+                        //     defaultView: 0,//默认显示的索引
+                        //     interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                        //     activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
+                        // });
                     }else if(title == "修改设备"){
                         $.each(result.data,function(key,value){
                             var formField = $("[name='"+key+"']");
@@ -303,18 +306,18 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                 }
                             }
                         });
-                        if(qyImg.length > 0){
-                            /*创建图片路径*/
-                            var thumb =  $("#thumbs7").find(".thumb");
-                            layui.each(qyImg, function (index, item){
-                                var str =
-                                    '<div class="thumb">'+
-                                    '<img src="' + item.url + '"> ' +
-                                    '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
-                                    '</div>';
-                                thumb.before(str).show();
-                            })
-                        }
+                        // if(qyImg.length > 0){
+                        //     /*创建图片路径*/
+                        //     var thumb =  $("#thumbs7").find(".thumb");
+                        //     layui.each(qyImg, function (index, item){
+                        //         var str =
+                        //             '<div class="thumb">'+
+                        //             '<img src="' + item.url + '"> ' +
+                        //             '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
+                        //             '</div>';
+                        //         thumb.before(str).show();
+                        //     })
+                        // }
                     }
                 }
             })

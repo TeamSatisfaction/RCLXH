@@ -27,7 +27,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url :'http://172.21.92.236:8095/v01/htwl/lxh/login',
+            url :'http://113.204.228.66:8095/v01/htwl/lxh/login',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8'
             },
@@ -45,9 +45,10 @@ layui.define(['layer', 'form', 'element'], function(exports){
                     if(!window.localStorage){
                         layer.msg("该浏览器版本过低，请更换高版本的浏览器！");
                     }else{
+                        // console.log(result)
                         // var storage=window.localStorage;
-                        // var d=JSON.stringify(result);
-                        // storage.setItem("data",d);
+                        // var d=JSON.stringify(result.authList);
+                        // storage.setItem("authList",d);
                         setCookie("userName",result.userName);
                         setCookie("userId",result.userId)
                         window.location.href="index.html";

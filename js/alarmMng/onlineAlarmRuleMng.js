@@ -71,11 +71,11 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                 success: function (result) {
                                     if(result.length>0){
                                         ruleName = result[0].threeLevelKey;
-                                        console.log(ruleName)
+                                        // console.log(ruleName)
                                     }
                                 }
                             });
-                            console.log(ruleName)
+                            // console.log(ruleName)
                             str = '<tr>' +
                                 '<td>'+(index+1)+'</td>' +
                                 '<td>' + ruleName + '</td>' +
@@ -273,6 +273,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                 layer.msg('新增成功！', {icon: 1,time:1000}, function() {
                                     layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
+                                    addAlarmRuleTime(result.param.id,threeLevelKey);
                                     // location.reload();
                                 });
                             }
@@ -476,13 +477,17 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     };
                     var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
                     var threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
-                    var tId = body.contents().find("input[name='id']").val();
+                    var tId = body.contents().find("input[name='id']").val(),
+                        type;
                     var d={
                         refid : id,
                         threeLevelKey : threeLevelKey
                     };
                     if(tId != ''){
                         d.id = tId;
+                        type = "put"
+                    }else{
+                        type = "post"
                     }
                     body.contents().find("form").find('input,select').each(function(){
                         d[this.name]=this.value
@@ -502,7 +507,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         success: function (result) {
                             if (result.code == '1000') {
                                 layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
-                                    // layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
                                     $.ajax({
                                         url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
@@ -510,7 +514,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                             'Content-type': 'application/json;charset=UTF-8',
                                             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
                                         },
-                                        type : 'put',
+                                        type : type,
                                         data : field,
                                         success : function (result){
                                             console.log(result)
@@ -609,7 +613,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         }
     };
     //编辑载入规则详情
-        var loadAlarmRuleDetails = function () {
+    var loadAlarmRuleDetails = function () {
         var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//规则id
             title =  $(window.parent.document).find('.layui-layer-title').text();
         if(title == '修改在线报警规则'){
@@ -678,7 +682,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                             this.setAttribute("selected","selected");
                         }
                     });
-
                     $('#start_time').val(result.startTime);
                     $('#end_time').val(result.endTime);
                     $('#conditions_name').children("option").each(function(){

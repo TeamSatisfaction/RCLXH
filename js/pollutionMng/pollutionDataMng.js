@@ -96,14 +96,14 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                         var str2 = '<span>未上传副本</span>';
                         $('#fuben').html(str2);
                     }
-                    if(data.pic[1].attachmentAddress!='null'){
-                        $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[1].attachmentAddress);
+                    if(data.pic[0].attachmentAddress!='null'){
+                        $("#pdv_pk").find(".layui-tab-item").eq(0).find("img").attr("src", data.pic[0].attachmentAddress);
                     }else{
                         var str = '<span>未上传正本</span>';
                         $('#zhengben').html(str);
                     }
-                    if(data.pic[0].attachmentAddress != 'null'){
-                        $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[0].attachmentAddress);
+                    if(data.pic[1].attachmentAddress != 'null'){
+                        $("#pdv_pk").find(".layui-tab-item").eq(1).find("img").attr("src", data.pic[1].attachmentAddress);
                     }else{
                         var str = '<span>未上传副本</span>';
                         $('#fuben').html(str);
@@ -176,7 +176,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            console.log(obj)
             if(obj.mn == mn&&obj.xcode == code){
                 if(code == "ez52Z01"||code == "ez52Z02"){
                     drawLine(obj.xcum);
@@ -235,6 +234,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 break;
         }
         initChart();
+        loadfactordetailss();
     }
     //加载曲线图
     function initChart(){
@@ -487,6 +487,140 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     form.on('select(select_fac)', function(data){
         console.log(data);
     });
+    //在线监测
+    var loadfactordetailss = function () {
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        // var title = $("#getType").find("li.layui-this");
+        console.log(cn)
+        $("#head1").empty();
+        $("#head2").empty();
+        if(cn == '2011') {
+            console.log(Cid)
+            var date = new Date(),//当前时间
+                interTimes = 10 * 60 * 1000;
+            interTimes = parseInt(interTimes);
+            var date1 = new Date(Date.parse(date) - interTimes);
+            var beginDate = changeTime(date1);
+            var endDate = changeTime(date);
+            $("#dayDetails").hide();
+            $("#monthDetails").hide();
+            var colsNum1 = $("#head1");
+            var headstr = '<th rowspan="2">序号</th> <th rowspan="2">时间</th>';
+            colsNum1.append(headstr);
+        }else if(cn == '2061'){
+            var date = $('input[name=beginDate1]').val();
+            var beginDate = date + ' 00:00:00',
+                endDate = date + ' 24:00:00';
+            $("#dayDetails").show();
+            $("#monthDetails").hide();
+            var colsNum1 = $("#head1");
+            var headstr = '<th rowspan="2">序号</th> <th rowspan="2">时间</th>';
+            colsNum1.append(headstr);
+        }else if(cn == '2041'){
+            var date = $('input[name=beginDate2]').val();
+            var year = date.split("-");
+            var beginDate = date + '-01',
+                endDate = date + '-'+new Date(year[0],year[1],0).getDate();
+            $("#monthDetails").show();
+            $("#dayDetails").hide();
+            var colsNum1 = $("#head1");
+            var headstr = '<th rowspan="2">序号</th> <th rowspan="2">时间</th>';
+            colsNum1.append(headstr);
+        }
+        var data = {
+            enterpriseId : id,
+            cn : cn,
+            beginDate : beginDate,
+            endDate : endDate
+        };
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+            headers : {
+                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            },
+            type : 'get',
+            data : data,
+            success : function (result){
+                var head1,
+                    head2,
+                    str = '';
+                var colsNum1 = $("#head1");
+                var colsNum2 = $("#head2");
+                var tbodyData = {};
+                layui.each(result,function (index,item){
+                    switch (item.factorName){
+                        case "COD" :
+                            item.factorName = "COD(mg/L)";
+                            break;
+                        case "总磷" :
+                            item.factorName = "总磷(mg/L)";
+                            break;
+                        case "高锰酸盐" :
+                            item.factorName = "高锰酸盐(mg/L)";
+                            break;
+                        case "氨氮" :
+                            item.factorName = "氨氮(mg/L)";
+                            break;
+                        case "生物毒性" :
+                            item.factorName = "生物毒性(%)";
+                            break;
+                        case "温度" :
+                            item.factorName = "温度(℃)";
+                            break;
+                        case "浊度" :
+                            item.factorName = "浊度(FTU)";
+                            break;
+                        case "PH" :
+                            item.factorName = "PH(无量纲)";
+                            break;
+                        case "电导率" :
+                            item.factorName = "电导率(μS/cm)";
+                            break;
+                        case "溶解氧" :
+                            item.factorName = "溶解氧(mg/L)";
+                            break;
+                    };
+                    head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                    colsNum1.append(head1);
+                    head2 = '<th>实测值</th>'+
+                        '<th>阈值</th>';
+                    colsNum2.append(head2);
+                    //onlineData 整理数据
+                    layui.each(item.onlineData,function (dataIndex,dataItem){
+                        if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
+                            tbodyData[dataItem.dataTime] = [];
+                        }
+                        if(item.oneThreshold){                              //放阈值
+                            var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));   //阈值1
+                            var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"==")); //阈值1判断符
+                            var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null; //阈值2
+                            var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":"==")):null;//阈值2判断符
+
+                            var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
+                            tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                            tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('，'+comparison1+item.twoThreshold):''));
+                        }else {
+                            tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                            tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                        }
+                    });
+                });
+                var i = 1;
+                for(var dataTime in tbodyData){
+                    var ta = dataTime.split(''),    //可以用正则代替，我不会
+                        time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
+                    str += '<tr>' + '<td>'+i+'</td>';                               //序号
+                    str += '<td style="white-space: nowrap">'+time+'</td>';         //时间
+                    for( var j = 0; j < tbodyData[dataTime].length; j++){           //因子
+                        str += '<td>'+tbodyData[dataTime][j]+'</td>';
+                    }
+                    str += '</tr>';
+                    i++;    //序号增加
+                }
+                $('#jiance-list').html(str);
+            }
+        })
+    };
     layer.ready(function(){
         var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
         var data = {
@@ -536,6 +670,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         loadLicenseData : loadLicenseData,
         loadPortData : loadPortData,
         loadChartForSite : loadChartForSite,
+        loadfactordetailss :  loadfactordetailss,
         changeChart : changeChart
     };
     exports('pollutionDataMng',obj)

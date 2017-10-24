@@ -58,7 +58,9 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
             },
             type : 'get',
             success : function (msg) {
-                console.log(msg)
+                // console.log(msg)
+                var authList = msg.authList;
+                localStorage.setItem('authList', JSON.stringify(authList));
                 var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
                         '<a href="#"> ' +
                         '<i class="layui-icon">&#xe60f;</i> ' +

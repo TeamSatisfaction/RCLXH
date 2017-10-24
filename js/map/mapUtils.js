@@ -87,20 +87,22 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             },
             type: 'get',
             success: function(result){
-                console.log(result)
                 var attr = e.graphic.attributes,
                     point = e.graphic.geometry,
                     symbolUrl = e.graphic.symbol.url,
                     contentHtml = "",
                     titleHtml = "";
-                for(var i in result){
-                    if(result[i].enterpriseName == attr.name){
-                        attr.num = result[i].count;
-                    }else{
-                        attr.num = "0";
+                if(result.length>0){
+                    for(var i in result){
+                        if(result[i].enterpriseName == attr.name){
+                            attr.num = result[i].count;
+                        }else{
+                            attr.num = "0";
+                        }
                     }
+                }else{
+                    attr.num = "0";
                 }
-                console.log(attr);
                 if (symbolUrl.indexOf("qiye") != -1) {
                     titleHtml = attr.name;
                     contentHtml += "<p>企业名称：<span>"+attr.name+"</span></p>"
