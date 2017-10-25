@@ -41,6 +41,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     var formField = $("input[name='"+key+"']");
                     formField.val(value);
                 });
+                $("input[name=industryCodes]").val(data.industrys[0].industryName+"-"+data.industrys[0].industryCode);
                 if(qyImg.length>0){
                     //企业照片
                     var qyPhotos = "";
@@ -163,7 +164,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         };
         //连接成功建立的回调方法
         websocket.onopen = function(event){
-            setMessageInnerHTML("open");
+            // setMessageInnerHTML("open");
         }
         //接收到消息的回调方法
         websocket.onmessage = function(event){
@@ -243,12 +244,15 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         switch (cn){
             case "2011" :
                 interTimes = 5*60*1000;//5min
+                $("#chart_title").html("实时监测数据");
                 break;
             case "2061" :
                 interTimes = 10*60*60*1000;//10h
+                $("#chart_title").html("小时监测数据");
                 break;
             case "2041" :
                 interTimes = 10*24*60*60*1000;//10d
+                $("#chart_title").html("日监测数据");
                 break;
         };
         interTimes=parseInt(interTimes);
@@ -640,7 +644,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             type: 'post',
             data: field,
             success: function (result){
-                console.log(result);
                 var arry = [];
                 if(result.data.rows){
                     var rows = result.data.rows;
@@ -654,11 +657,22 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         $.ajax({
             url : '../../data/equipmentData.json',
             success: function (result){
-                $('.pin').easypinShow({
-                    data : result,
-                    popover: {
-                        show: true,
-                        animate: true
+                var data;
+                $.each(result,function (index,item) {
+                    console.log(id)
+                    if(item.id == id){
+                        data = item.data;
+                        console.log(item)
+                        $('#demo_image_1').attr('src',item.img);
+                        $('#demo_image_1').attr('width',item.data.demo_image_1.canvas.width);
+                        $('#demo_image_1').attr('height',item.data.demo_image_1.canvas.height);
+                        $('.pin').easypinShow({
+                            data : data,
+                            popover: {
+                                show: true,
+                                animate: true
+                            }
+                        });
                     }
                 });
             }

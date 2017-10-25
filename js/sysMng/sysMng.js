@@ -27,6 +27,7 @@ layui.define(['layer', 'element','form'],function (exports) {
     function loadAuthen(){
         var storage=window.localStorage;
         var authList = JSON.parse(storage.getItem("authList"));
+        console.log(authList)
         $(".auth-btn").each(function(){
             var flag = false;
             for(var i in authList){

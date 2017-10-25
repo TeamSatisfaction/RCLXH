@@ -14,7 +14,8 @@
         }).extend({
             networkMng : 'networkMng',
             equipmentMng : 'equipmentMng'
-        }).use('networkMng','equipmentMng', function () {
+        }).use(['networkMng','equipmentMng'], function () {
+           layui.networkMng.loadEquipmentList();
         }); //加载入口
     </script>
 </head>
@@ -25,24 +26,19 @@
                 <button class="layui-btn" style="margin-left: 0" onclick="layui.networkMng.addEquipmentWin()">
                     <i class="layui-icon">&#xe608;</i>新增
                 </button>
-                <!--<div class="layui-input-inline" style="float: right">-->
-                    <!--<input id="equipmentName" name="name"  autocomplete="off" placeholder="请输入设备名称" class="layui-input" type="text">-->
-                    <!--<div class="search" onclick="layui.networkMng.loadEquipmentData()"></div>-->
-                <!--</div>-->
             </div>
         </div>
         <table class="layui-table" lay-even="" lay-skin="row" style="margin-top: 0">
             <colgroup>
                 <col width="60">
                 <col width="150">
-                <col>
+                <col width="200">
                 <col width="150">
-                <col>
+                <col width="200">
                 <col width="120">
                 <col width="120">
                 <col width="120">
-                <col width="120">
-                <col width="190">
+                <col width="160">
             </colgroup>
             <thead>
             <tr>
@@ -52,7 +48,7 @@
                 <th>设备型号</th>
                 <th>生产厂家</th>
                 <th>设备类型</th>
-                <th>设备分类类型</th>
+                <!--<th>设备分类类型</th>-->
                 <th>投入使用时间</th>
                 <th>是否关键设备</th>
                 <th style="text-align: center">操作</th>

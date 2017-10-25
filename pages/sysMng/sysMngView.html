@@ -21,6 +21,7 @@
             roleMng : 'sysMng/roleMng',
             networkMng : 'sysMng/networkMng'
         }).use(['utils', 'sysMng','MSMng','companyMng','userMng','equipmentMng','roleMng','networkMng'],function () {
+            layui.sysMng.loadAuthen();
             layui.sysMng.getTab();
             layui.equipmentMng.loadMnSelect();
             layui.utils.getBtn();
@@ -156,7 +157,6 @@
                             <col width="150">
                             <col width="200">
                             <col width="120">
-                            <!--<col width="120">-->
                             <col width="120">
                             <col width="120">
                             <col width="160">

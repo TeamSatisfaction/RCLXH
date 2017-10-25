@@ -136,6 +136,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
+            console.log(obj)
             if(obj.mn == mn&&obj.xcode == code){
                 if(code == "ez52Z01"){
                     console.log(obj)
@@ -326,14 +327,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     }
 
     /*新报警提示*/
-    function showNotification() {
-        $(".notification").slideDown();
-        setTimeout('layui.map.closeNotification()', 20000)
-    }
-    function closeNotification() {
-        $(".notification").slideUp();
-    }
-    setInterval('layui.map.showNotification()', 10000);
+    // function showNotification() {
+    //     $(".notification").slideDown();
+    //     setTimeout('layui.map.closeNotification()', 20000)
+    // }
+    // function closeNotification() {
+    //     $(".notification").slideUp();
+    // }
+    // setInterval('layui.map.showNotification()', 10000);
 
     //企业select
     function loadCompanySelect() {
@@ -678,9 +679,9 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type : 'get',
             data : data2,
             success : function (result) {
-                console.log(result);
+                // console.log(result);
                 var data = result.list;
-                console.log(data.length);
+                // console.log(data.length);
                 if(data.length > 0){
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
@@ -716,8 +717,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         btnClick : btnClick,
         loadPage: loadPage,
         close: close,
-        showNotification:showNotification,
-        closeNotification:closeNotification,
+        // showNotification:showNotification,
+        // closeNotification:closeNotification,
         // searchCharts : searchCharts,
         loadChartForSite : loadChartForSite,
         loadCompanySelect : loadCompanySelect,

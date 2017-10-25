@@ -1,38 +1,301 @@
-{
-  "demo_image_1": {
-    "0": {
-      "coords": {
-        "lat": "470",
-        "long": "72"
+[{
+  "id" : "402880945e18aa5c015e280d51190003",
+  "name" : "华森",
+  "img" : "../../img/data/gongkuang/402880945e18aa5c015e280d51190003.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "470",
+          "long": "72"
+        }
+      },
+      "1": {
+        "coords": {
+          "lat": "620",
+          "long": "72"
+        }
+      },
+      "2": {
+        "coords": {
+          "lat": "870",
+          "long": "72"
+        }
+      },
+      "3": {
+        "coords": {
+          "lat": "1230",
+          "long": "72"
+        }
+      },
+      "4": {
+        "coords": {
+          "lat": "1000",
+          "long": "595"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
       }
-    },
-    "1": {
-      "coords": {
-        "lat": "620",
-        "long": "72"
-      }
-    },
-    "2": {
-      "coords": {
-        "lat": "870",
-        "long": "72"
-      }
-    },
-    "3": {
-      "coords": {
-        "lat": "1230",
-        "long": "72"
-      }
-    },
-    "4": {
-      "coords": {
-        "lat": "1000",
-        "long": "595"
-      }
-    },
-    "canvas": {
-      "width": "1600",
-      "height": "800"
     }
   }
-}
+},{
+  "id" : "4028808d5d62f005015e04bb56c600e9",
+  "name" : "江特",
+  "img" : "../../img/data/gongkuang/4028808d5d62f005015e04bb56c600e9.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "1": {
+        "coords": {
+          "lat": "1410",
+          "long": "138"
+        }
+      },
+      "2": {
+        "coords": {
+          "lat": "250",
+          "long": "590"
+        }
+      },
+      "3": {
+        "coords": {
+          "lat": "1230",
+          "long": "72"
+        }
+      },
+      "4": {
+        "coords": {
+          "lat": "1000",
+          "long": "595"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "1800"
+      }
+    }
+  }
+},{
+  "id" : "108cfe0348e54f188cdfa80d71f4595f",
+  "name" : "荣昌人民医院",
+  "img" : "../../img/data/gongkuang/108cfe0348e54f188cdfa80d71f4595f.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "600"
+      }
+    }
+  }
+},{
+  "id" : "6add434ec869475c91ef703f18ff2f3d",
+  "name" : "广顺污水处理厂",
+  "img" : "../../img/data/gongkuang/6add434ec869475c91ef703f18ff2f3d.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "ec4da042483141aaab5894d812081d76",
+  "name" : "板桥工业园区",
+  "img" : "../../img/data/gongkuang/ec4da042483141aaab5894d812081d76.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
+      }
+    }
+  }
+},{
+  "id" : "a9b26b9f3df046f0a470ff289baf3d05",
+  "name" : "蓝洁广顺净水",
+  "img" : "../../img/data/gongkuang/a9b26b9f3df046f0a470ff289baf3d05.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "600"
+      }
+    }
+  }
+},{
+  "id" : "411b41aab48d4ca0a801c89c8134584c",
+  "name" : "昌元镇生猪屠宰场",
+  "img" : "../../img/data/gongkuang/411b41aab48d4ca0a801c89c8134584c.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "600"
+      }
+    }
+  }
+},{
+  "id" : "2430f7a380604c9b8a4ffa05a8f6ea88",
+  "name" : "长江特种",
+  "img" : "../../img/data/gongkuang/2430f7a380604c9b8a4ffa05a8f6ea88.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "600"
+      }
+    }
+  }
+},{
+  "id" : "189b5d29e9d042ecba45e262e610bce4",
+  "name" : "荣隆镇污水处理厂",
+  "img" : "../../img/data/gongkuang/189b5d29e9d042ecba45e262e610bce4.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
+      }
+    }
+  }
+},{
+  "id" : "b50a187b67264be988fb206d76e7ff90",
+  "name" : "双河镇污水处理厂",
+  "img" : "../../img/data/gongkuang/b50a187b67264be988fb206d76e7ff90.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
+      }
+    }
+  }
+},{
+  "id" : "664a6d1d8de343c5bc2bf99deb8973dd",
+  "name" : "万灵镇污水处理厂",
+  "img" : "../../img/data/gongkuang/664a6d1d8de343c5bc2bf99deb8973dd.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
+      }
+    }
+  }
+},{
+  "id" : "596954d706a947f7a57b5328482dfc68",
+  "name" : "昌元化工集团",
+  "img" : "../../img/data/gongkuang/596954d706a947f7a57b5328482dfc68.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "800"
+      }
+    }
+  }
+},{
+  "id" : "33f18199e2a745df9ff9a424e44f7e8b",
+  "name" : "凯歌",
+  "img" : "../../img/data/gongkuang/33f18199e2a745df9ff9a424e44f7e8b.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "950"
+      }
+    }
+  }
+},{
+  "id" : "398531a00ff74cb0823440b266532f7a",
+  "name" : "荣清净水",
+  "img" : "../../img/data/gongkuang/398531a00ff74cb0823440b266532f7a.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+}]

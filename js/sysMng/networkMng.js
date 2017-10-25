@@ -43,6 +43,10 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     var arr = []
                         , thisData = rows.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
+                        if(item.epName == null){
+                            console.log(item.epName);
+                            item.epName = "";
+                        }
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.aname + '</td>' +
@@ -353,16 +357,16 @@ layui.define(['layer','element','laypage','form'],function (exports){
             btnAlign: 'c',
             success : function (layero,index) {
                 var body = layer.getChildFrame('body', index);
-                loadEquipmentData(id,body,"1");
             }
         });
         layer.full(index);
     };
     //载入设备
-    var loadEquipmentData = function (id,body,curr) {
-        var eTobody = body.contents().find('#equipment-results');
+    var loadEquipmentList = function (curr) {
+        console.log("1")
+        var eTobody = $('#equipment-results'),
+            id = $(window.parent.document).find('.layui-layer-content').attr('id');//数采仪id
         var data = {
-                // pageNumber : 1,
                 pageNumber : curr||1,
                 pageSize : 16,
                 equipmentMap : {
@@ -370,6 +374,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 }
             };
         var field = JSON.stringify(data);
+        console.log(data)
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers : {
@@ -379,21 +384,25 @@ layui.define(['layer','element','laypage','form'],function (exports){
             type : 'post',
             data : field,
             success : function (result) {
-                console.log(result);
                 var nums = 16; //每页出现的数据量
                 //模拟渲染
                 var eData = result.data.rows,
                     pages = result.data.totalPage,
                     str = "";
                 var render = function(eData, curr) {
-                    var arr = []
-                        , thisData = eData.concat().splice(curr * nums - nums, nums);
-                    layui.each(thisData, function(index, item){
-                        var type = item.eaOrEb;
+                    var arr = [];
+                    layui.each(eData, function(index, item){
+                        var type = item.eaOrEb,
+                            type_text;
                         if(type == "EA"){
-                            type = 'power_equipment'
+                            type = 'power_equipment';
+                            type_text = '动力设备';
                         }else{
-                            type = 'instrument_sensor'
+                            type = 'wmf';
+                            type_text = '仪表仪器';
+                        }
+                        if(item.usedDate == null){
+                            item.usedDate = "";
                         }
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
@@ -401,8 +410,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.equipmentName + '</td>' +
                             '<td>' + item.equipmentNo+ '</td>' +
                             '<td>' + item.productor + '</td>' +
-                            '<td>' + item.classicType + '</td>' +
-                            '<td>' + item.classicType + '</td>' +
+                            '<td>' + type_text + '</td>' +
+                            // '<td>' + item.classicType + '</td>' +
                             '<td>' + item.usedDate + '</td>' +
                             '<td>' + item.equipmentType + '</td>' +
                             '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.networkMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+
@@ -415,7 +424,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     return arr.join('');
                 };
                 eTobody.html(render(eData, obj.curr));
-                layui.sysMng.loadAuthen();
+                // layui.sysMng.loadAuthen();
                 //调用分页
                 laypage({
                     cont: 'demo3',
@@ -425,7 +434,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     skip: true,
                     jump: function(obj,first){
                         if (!first) {//点击跳页触发函数自身，并传递当前页：obj.curr
-                            loadEquipmentData(id,body,obj.curr);
+                            loadEquipmentList(obj.curr);
                         }
                     }
                 })
@@ -484,33 +493,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
         });
         layer.full(index);
     };
-    // form.on('submit(equipment-save)', function(data){
-    //     var field = JSON.stringify(data.field);
-    //     console.log(field);
-    //     $.ajax({
-    //         url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment',
-    //         headers : {
-    //             'Content-type': 'application/json;charset=UTF-8',
-    //             Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
-    //         },
-    //         dataType : 'json',
-    //         type : 'post',
-    //         data : field,
-    //         success : function (result){
-    //             console.log(result);
-    //             if(result.code == '1000'){
-    //                 layer.msg('提交成功！', {icon: 1,time:1000},function () {
-    //                     var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
-    //                     parent.layer.close(index); //再执行关闭
-    //                     parent.location.reload();
-    //                 });
-    //             }else {
-    //                 layer.msg('提交失败！', {icon: 2,time:1000});
-    //             }
-    //         }
-    //     });
-    //     return false;
-    // });
     //删除设备
     var deleteEquipment = function (id) {
         layer.msg('是否确定删除该设备', {
@@ -605,7 +587,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         alterEquipmentDataWin : alterEquipmentDataWin,
         deleteEquipment : deleteEquipment,
         alterEquipmentWin : alterEquipmentWin,
-        loadEquipmentData : loadEquipmentData,
+        loadEquipmentList : loadEquipmentList,
         addEquipmentWin : addEquipmentWin,
         equipmentFactorWin : equipmentFactorWin
     };

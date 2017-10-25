@@ -12,6 +12,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
     });
+    //遮罩
+    function ityzl_SHOW_LOAD_LAYER(){
+        return layer.msg('加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '0px', time:100000}) ;
+    }
     //加载报警规则列表
     var loadAlarmRuleList = function (curr) {
         var ruleTobody = $("#rule-result"),
@@ -20,13 +24,14 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
             url = '',
             col = '',
-            head = '';
-        var data = {
-            epId : id,
-            pageNo : curr||1,
-            pageSize : 16
-        };
+            head = '',
+            i;
         if(type == 'online_alarm_rule'||type == 'poly_online_alarm_rule'){
+            var data = {
+                epId : id,
+                pageNo : curr||1,
+                pageSize : 16
+            };
             col  = '<col width="60">'+
                 '<col width="350">'+
                 '<col>'+
@@ -52,7 +57,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 url :url,
                 type : 'get',
                 data : data,
+                beforeSend: function () {
+                    i = ityzl_SHOW_LOAD_LAYER();
+                },
                 success : function (result){
+                    layer.close(i);
+                    layer.msg('加载完成！',{time: 1000,offset: '10px'});
                     var list = result.list,
                         str = "",
                         nums = 16; //每页出现的数据量
@@ -75,7 +85,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                     }
                                 }
                             });
-                            // console.log(ruleName)
                             str = '<tr>' +
                                 '<td>'+(index+1)+'</td>' +
                                 '<td>' + ruleName + '</td>' +
@@ -93,22 +102,33 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     ruleTobody.html(render(list, obj.curr));
                 }
             })
-        }else if(type == 'licence_alarm_rule'){
+        }else if(type == 'licence_alarm_rule'||type == 'biggest_alarm_rule'||type == 'total_alarm_rule'){
+            var data = {
+                enterpriseId : id,
+                pageNo : curr||1,
+                pageSize : 16
+            };
             col  = '<col width="60">'+
-                '<col width="100">'+
-                '<col width="100">'+
+                '<col width="150">'+
+                '<col width="150">'+
                 '<col>'+
                 '<col width="100">';
             head = '<tr>'+
                 '<th>序号</th>'+
                 '<th>规则类型</th>'+
-                '<th>是否删除</th>'+
+                '<th>触发时间(天)</th>'+
                 '<th>报警规则描述</th>'+
                 '<th style="text-align: center">操作</th>'+
                 '</tr>';
             $("#rule-col").html(col);
             $("#rule-head").html(head);
-            url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
+            if(type == 'licence_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
+            }else if(type == 'biggest_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest'
+            }else if(type == 'total_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total'
+            }
             $.ajax({
                 url :url,
                 type : 'get',
@@ -125,8 +145,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                             str = '<tr>' +
                                 '<td>'+(index+1)+'</td>' +
                                 '<td>' + text + '</td>' +
-                                '<td></td>' +
-                                '<td></td>' +
+                                '<td>'+item.rules+'</td>' +
+                                '<td>'+item.remark+'</td>' +
                                 '<td style="text-align: center">' +
                                 '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
                                 '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
@@ -241,7 +261,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         aggregation_name = body.contents().find("select[name='aggregation_name']").find("option:selected").text(),
                         aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
                         calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
-                        calculation_value = body.contents().find("input[name='calculation_value']").val();
+                        calculation_value = body.contents().find("input[name='calculation_value']").val(),
+
+                        threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
                     var data = {
                         epId : id,
                         firstLayerEncodingName : first_layer_encoding_name,
@@ -296,7 +318,87 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 btn: [ '提交','返回'],
                 btnAlign: 'c',
                 yes  : function (index,layero) {
-                    var body = layer.getChildFrame('body',index);
+                    var body = layer.getChildFrame('body',index),
+                        rulesType = body.contents().find("#rulesType").val(),
+                        rules = body.contents().find("#rules").val(),
+                        remark = body.contents().find("#remark").val();
+                    var data = {
+                        enterpriseId : id,
+                        rulesType : rulesType,
+                        rules : rules,
+                        isDel : "0",
+                        remark : remark
+                    };
+                    $.ajax({
+                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/license',
+                        headers: {
+                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        data : data,
+                        type: 'post',
+                        success: function (result) {
+                            console.log(result);
+                            if(result.code == "1000"){
+                                layer.msg('新增规则成功！',{icon:1,time:1000},function () {
+                                    // layer.close();
+                                    layer.close(index); //再执行关闭
+                                    loadAlarmRuleList();
+                                    addAlarmRuleTime(result.param.id,remark)
+                                })
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == 'biggest_alarm_rule'){
+            layer.open({
+                title :'新增排污最大流量报警规则',
+                id : id,
+                type : 2,
+                moveOut: true,
+                area : ['1000px','300px'],
+                content : '../../pages/alarmMng/licenceAlarmRule.html',
+                btn: [ '提交','返回'],
+                btnAlign: 'c',
+                yes  : function (index,layero) {
+                    var body = layer.getChildFrame('body',index),
+                        rulesType = body.contents().find("#rulesType").val(),
+                        rules = body.contents().find("#rules").val(),
+                        remark = body.contents().find("#remark").val();
+                    var data = {
+                        enterpriseId : id,
+                        rulesType : rulesType,
+                        rules : rules,
+                        isDel : "0",
+                        remark : remark
+                    };
+                    $.ajax({
+                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/biggest',
+                        headers: {
+                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        },
+                        data : data,
+                        type: 'post',
+                        success: function (result) {
+                            console.log(result);
+                            if(result.code == "1000"){
+                                layer.msg('新增规则成功！',{icon:1,time:1000},function () {
+                                    // layer.close();
+                                    layer.close(index); //再执行关闭
+                                    loadAlarmRuleList();
+                                    addAlarmRuleTime(result.param.id,remark)
+                                })
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
                 }
             })
         }
@@ -568,6 +670,29 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
                         calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
                         calculation_value = body.contents().find("input[name='calculation_value']").val();
+
+                    var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
+                    var threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
+                    var tId = body.contents().find("input[name='id']").val(),
+                        type;
+                    var d={
+                        refid : id,
+                        threeLevelKey : threeLevelKey
+                    };
+                    if(tId != ''){
+                        d.id = tId;
+                        type = "put"
+                    }else{
+                        type = "post"
+                    }
+                    body.contents().find("form").find('input,select').each(function(){
+                        d[this.name]=this.value
+                    });
+                    if(threeLevelTime == ""){
+                        d.threeLevelType = '1';
+                        d.threeLevelTime = "999999999";
+                    }
+                    var field = JSON.stringify(d);
                     var data = {
                         id: id,
                         firstLayerEncodingName: first_layer_encoding_name,
@@ -596,10 +721,106 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         data: data,
                         success: function (result) {
                             if (result.code == '1000') {
-                                layer.msg('修改成功！', {icon: 1, time: 1000}, function () {
-                                    layer.close(index); //再执行关闭
+                                layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
                                     loadAlarmRuleList();
-                                    // location.reload();
+                                    $.ajax({
+                                        url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                                        headers : {
+                                            'Content-type': 'application/json;charset=UTF-8',
+                                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                        },
+                                        type : type,
+                                        data : field,
+                                        success : function (result){
+                                            console.log(result)
+                                            if(result.resultcode == "2"){
+                                                layer.msg('修改上报时间成功！', {icon: 1,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }else{
+                                                layer.msg('修改上报时间失败！', {icon: 2,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }
+                                        }
+                                    })
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2, time: 1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == 'licence_alarm_rule'){
+            layer.open({
+                title: '修改许可证报警规则',
+                type: 2,
+                id: id,
+                moveOut: true,
+                area: ['1000px', '600px'],
+                content: '../../pages/alarmMng/alterLicenceAlarmRule.html',
+                btn: ['提交', '返回'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var body = layer.getChildFrame('body', index);
+                    var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
+                    var tId = body.contents().find("input[name='id']").val(),
+                        type;
+                    var data1={id : id},
+                        data2={id : id};
+                    if(tId != ''){
+                        data2.id = tId;
+                        type = "put"
+                    }else{
+                        type = "post"
+                    }
+                    body.contents().find("form").find("#basicData").find('input,select,textarea').each(function(){
+                        data1[this.name]=this.value
+                    });
+                    body.contents().find("form").find("#upTime").find('input,select').each(function(){
+                        data2[this.name]=this.value
+                    });
+                    if(threeLevelTime == ""){
+                        data2.threeLevelType = '1';
+                        data2.threeLevelTime = "999999999";
+                    }
+                    var field = JSON.stringify(data2);
+                    console.log(data1,data2)
+                    $.ajax({
+                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/license',
+                        headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type: 'put',
+                        data: data1,
+                        success: function (result) {
+                            if (result.code == '1000') {
+                                layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
+                                    loadAlarmRuleList();
+                                    $.ajax({
+                                        url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                                        headers : {
+                                            'Content-type': 'application/json;charset=UTF-8',
+                                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                        },
+                                        type : type,
+                                        data : field,
+                                        success : function (result){
+                                            console.log(result)
+                                            if(result.resultcode == "2"){
+                                                layer.msg('修改上报时间成功！', {icon: 1,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }else{
+                                                layer.msg('修改上报时间失败！', {icon: 2,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }
+                                        }
+                                    })
                                 });
                             }
                         },
@@ -703,6 +924,45 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     form.render('select');
                 }
             })
+        }else if(title == '修改许可证报警规则'){
+            $.ajax({
+                url :''+urlConfig1+'/v02/htwl/alarm/rule/license/'+id+'',
+                type: 'get',
+                success : function (result) {
+                    var data = result.data;
+                    $('#rules').val(data.rules);
+                    $('#remark').val(data.remark);
+                    $('#rulesType').children("option").each(function(){
+                        switch (this.value){
+                            case 0:
+                                this.value=false;
+                                break;
+                            case 1:
+                                this.value=true;
+                                break;
+                        }
+                        if (this.value == data.rulesType) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    // $.each(data,function(key,value){
+                    //     var formField = $("[name='"+key+"']");
+                    //     if(formField[0] !== undefined){
+                    //         var fieldTagName = formField[0].tagName.toLowerCase();
+                    //         if(fieldTagName == 'input'){
+                    //             formField.val(value);
+                    //         }else if(fieldTagName == 'select'){
+                    //             formField.children("option").each(function () {
+                    //                 if(this.value == value){
+                    //                     this.setAttribute("selected","selected");
+                    //                 }
+                    //                 form.render('select');
+                    //             })
+                    //         }
+                    //     }
+                    // });
+                }
+            })
         }
     };
     //载入上报时间
@@ -741,35 +1001,28 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         $('[name=threeLevelTime]').val(data.threeLevelTime);
                     }
                     form.render('select');
-                    // $.each(data,function(key,value){
-                    //     var formField = $("[name='"+key+"']");
-                    //     if(formField[0] !== undefined){
-                    //         var fieldTagName = formField[0].tagName.toLowerCase();
-                    //         if(fieldTagName == 'input'){
-                    //             formField.val(value);
-                    //         }else if(fieldTagName == 'select'){
-                    //             formField.children("option").each(function () {
-                    //                 if(this.value == value){
-                    //                     this.setAttribute("selected","selected");
-                    //                 }
-                    //                 form.render('select');
-                    //             })
-                    //         }
-                    //     }
-                    // });
                 }
             }
         })
     }
     //删除规则
     var deleteAlarmRule = function (id) {
+        var text = $('#alarmRule').find("option:selected").text(),
+            url;
+        if(text == "在线报警规则"){
+            url =''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'';
+        }else if(text == "聚合在线报警规则"){
+           url =''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online/'+id+'';
+        }else if(text == "许可证报警规则"){
+            url =''+urlConfig1+'/v02/htwl/alarm/rule/license/'+id+'';
+        }
         layer.msg('是否确定删除该规则', {
             icon: 3,
             time: 20000, //20s后自动关闭
             btn: ['确定', '取消'],
             yes : function (index,layero) {
                 $.ajax({
-                    url :''+urlConfig1+'/v02/htwl/alarm/rule/online/'+id+'',
+                    url :url,
                     type : 'delete',
                     success : function (result){
                         layer.msg('删除成功！', {icon: 1,time:1000}, function() {

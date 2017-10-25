@@ -13,10 +13,14 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
+    //遮罩
+    function ityzl_SHOW_LOAD_LAYER(){
+        return layer.msg('加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '0px', time:100000}) ;
+    }
     //载入设备
     var loadEquipmentData = function (curr) {
-        layui.sysMng.loadAuthen();
         var dauId = $('#dau').val(),
+            i,
             data = {
                 pageNumber : curr||1,
                 pageSize : 16,
@@ -24,6 +28,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     dauId : dauId
                 }
             };
+            console.log(dauId)
         var field = JSON.stringify(data);
         if(dauId != '') {
             $.ajax({
@@ -34,7 +39,12 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                 },
                 type: 'post',
                 data: field,
-                success: function (result) {
+                beforeSend: function () {
+                    i = ityzl_SHOW_LOAD_LAYER();
+                },
+                success : function (result) {
+                    layer.close(i);
+                    layer.msg('加载完成！',{time: 1000,offset: '10px'});
                     var nums = 16; //每页出现的数据量
                     //模拟渲染
                     var eData = result.data.rows,
@@ -116,8 +126,8 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
             type: 'post',
             success: function (result) {
                 var row = result.data.rows;
+                $("#dau").empty();
                 if(row == null){
-                    $("#dau").empty();
                     $("#dau").append("<option value='' selected='selected'>无数采仪</option>");
                 }else{
                     for(var i in row){
@@ -125,6 +135,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     }
                 }
                 form.render('select');
+                loadEquipmentData();
             }
         })
     };
@@ -180,6 +191,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭
                             parent.location.reload();
+                            // loadEquipmentData();
                         });
                     }else {
                         layer.msg('修改失败！', {icon: 2,time:1000});
@@ -204,6 +216,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                             var index = parent.layer.getFrameIndex(window.name); //先得到当前iframe层的索引
                             parent.layer.close(index); //再执行关闭
                             parent.location.reload();
+                            // loadEquipmentData();
                         });
                     }else {
                         layer.msg('新增失败！', {icon: 2,time:1000});

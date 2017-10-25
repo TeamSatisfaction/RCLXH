@@ -44,6 +44,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         };
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/statistics/daily/wastewater',
+            url :'http://172.21.92.236:8095/v01/htwl/lxh/statistics/daily/wastewater',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -52,12 +53,22 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
             data : data,
             success : function (result){
                 console.log(result)
-                var str = "",
+                var arry = [],
+                    avgList = {},
+                    str = "",
                     nums = 16; //每页出现的数据量
+                // if(result.length > 0){
+                //     layui.each(result,function (index,item) {
+                //         layui.each(item.avgList,function (avgIndex,avgItem) {
+                //             if(avgItem.codeName){
+                //                 // avgList.
+                //             }
+                //         })
+                //     })
+                // }
                 //模拟渲染
                 var render = function(result, curr) {
                     var arr = [];
-                        // , thisData = result.concat().splice(curr * nums - nums, nums);
                     layui.each(result, function(index, item){
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +

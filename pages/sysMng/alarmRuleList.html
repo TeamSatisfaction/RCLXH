@@ -25,16 +25,15 @@
     <div style="margin: 10px">
         <div class="layui-form" style="padding: 2px;margin-bottom: 0">
             <div class="layui-form-item" style="margin: 5px 0;">
-                <!--<label class="layui-form-label">规则名称：</label>-->
-                <!--<div class="layui-input-inline">-->
-                    <!--<input id="name" name="name"  autocomplete="off" placeholder="请输入规则名称" class="layui-input" type="text">-->
-                <!--</div>-->
                 <label class="layui-form-label">规则名称：</label>
                 <div class="layui-input-inline">
                     <select name="alarmRule" lay-verify="" lay-search id="alarmRule" lay-filter="alarmRule">
                         <option value="online_alarm_rule">在线报警规则</option>
                         <option value="poly_online_alarm_rule">聚合在线报警规则</option>
                         <option value="licence_alarm_rule">许可证报警规则</option>
+                        <option value="biggest_alarm_rule">排污最大流量报警规则</option>
+                        <option value="total_alarm_rule">排污总量报警规则</option>
+                        <option value="stop_alarm_rule">设备停运报警规则</option>
                     </select>
                 </div>
                 <!--<button class="layui-btn"  style="margin-left: 10px" onclick="layui.onlineAlarmRuleMng.addAlarmRuleTime()">-->

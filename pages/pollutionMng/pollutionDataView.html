@@ -35,7 +35,7 @@
     </script>
 </head>
 <body>
-    <div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 100%">
+<div class="layui-tab layui-layout-admin layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 100%">
         <ul class="layui-tab-title">
             <li class="layui-this" lay-id="企业管理" >企业基本详情</li>
             <li lay-id="在线监测">在线监测</li>
@@ -104,7 +104,7 @@
                                 <div class="layui-form-item">
                                     <div class="layui-inline">
                                         <label class="layui-form-label">行业类别：</label>
-                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text">
+                                        <input autocomplete="off" class="layui-input layui-input-inline" type="text" name="industryCodes">
                                     </div>
                                     <div class="layui-inline">
                                         <label class="layui-form-label">设计处理量(吨/天)：</label>
@@ -242,7 +242,7 @@
                     <div class="layui-tab-content" style="overflow-y: scroll;">
                         <div class="layui-tab-item layui-show">
                             <div class="layui-layout-admin" lay-filter="test" style="margin-left: -20px;margin-top: -10px">
-                                <div style="margin: 10px;min-width: 1000px">
+                                <div style="margin: 10px">
                                     <div class="layui-form-item" style="margin: 5px 0;">
                                         <div id="dayDetails" class="layui-inline">
                                             <div class="layui-form-item layui-inline">
@@ -312,7 +312,7 @@
                                     </form>
                                 </div>
                                 <div id="com_chart1">
-                                    <div class="chart_title" style="font-size: 20px; font-weight: bold; text-align: center">实时监测数据</div>
+                                    <div id="chart_title" style="font-size: 20px; font-weight: bold; text-align: center"></div>
                                     <div id="com_chart2"></div>
                                 </div>
                             </div>
@@ -323,7 +323,7 @@
             <!--设备工况-->
             <div class="layui-tab-item company-equip-sit">
                 <div class="demo">
-                    <img src="../../img/data/gongkuang/huashen.jpg" width="1600" height="800" class="pin" easypin-id="demo_image_1" />
+                    <img src="" class="pin" easypin-id="demo_image_1" id="demo_image_1"/>
                     <div style="display:none;" easypin-tpl>
                         <popover>
                             <div class="exPopoverContainer">
@@ -461,21 +461,5 @@
         </div>
     </div>
 </form>
-    <!--<script>-->
-        <!--$(document).ready(function(){-->
-            <!--$.ajax({-->
-                <!--url : '../../data/equipmentData.json',-->
-                <!--success: function (result){-->
-                    <!--$('.pin').easypinShow({-->
-                        <!--data : result,-->
-                        <!--popover: {-->
-                            <!--show: true,-->
-                            <!--animate: true-->
-                        <!--}-->
-                    <!--});-->
-                <!--}-->
-            <!--})-->
-        <!--});-->
-    <!--</script>-->
 </body>
 </html>

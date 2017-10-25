@@ -71,7 +71,7 @@ layui.define(['layer', 'form', 'element'], function(exports){
         ,title: false //不显示标题栏
         ,closeBtn: false
         ,area: '470px'
-        ,offset: [($(window).height()/2 - 250 )+ 'px', ($(window).width()-500)+'px']
+        ,offset: [($(window).height()/2 - 250 )+ 'px', ($(window).width()-550)+'px']
         ,shade: 0
         ,resizing: true
         ,id: 'login' //设定一个id，防止重复弹出
