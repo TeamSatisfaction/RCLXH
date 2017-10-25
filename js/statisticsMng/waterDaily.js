@@ -27,13 +27,15 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
     var loadList = function (curr) {
         var ename = $("input[name=eName]").val(),
             queryDate = $("input[name=time]").val();
-        if(queryDate){
-            var beginDate =  queryDate + " 00:00:00",
-                endDate = queryDate + " 23:59:59";
-        }else{
-            var beginDate =  "2017-10-18 00:00:00",
-                endDate = "2017-10-18 23:59:59";
-        }
+        // if(queryDate){
+        //     var beginDate =  queryDate + " 00:00:00",
+        //         endDate = queryDate + " 23:59:59";
+        // }else{
+        //     var beginDate =  "2017-10-18 00:00:00",
+        //         endDate = "2017-10-18 23:59:59";
+        // }
+        var beginDate =  "2017-10-18 00:00:00",
+            endDate = "2017-10-18 23:59:59";
         var data = {
             pageNum : curr||1,
             pageSize : 16,
@@ -44,7 +46,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         };
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/statistics/daily/wastewater',
-            url :'http://172.21.92.236:8095/v01/htwl/lxh/statistics/daily/wastewater',
+            // url :'http://172.21.92.236:8095/v01/htwl/lxh/statistics/daily/wastewater',
             headers : {
                 Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
             },
@@ -53,19 +55,26 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
             data : data,
             success : function (result){
                 console.log(result)
-                var arry = [],
+                var avgArry = ["化学需氧量","氨氮","总磷","PH","六价铬","总镍","生物毒性","温度","高锰酸盐","浊度","电导率","溶解氧","总电量"],
                     avgList = {},
+                    arry = [],
                     str = "",
+                    str1,
                     nums = 16; //每页出现的数据量
-                // if(result.length > 0){
-                //     layui.each(result,function (index,item) {
-                //         layui.each(item.avgList,function (avgIndex,avgItem) {
-                //             if(avgItem.codeName){
-                //                 // avgList.
-                //             }
-                //         })
-                //     })
-                // }
+                if(result.length > 0){
+                    layui.each(result,function (index,item) {
+                        layui.each(item.avgList,function (avgIndex,avgItem) {
+                            for(var avgIndex in avgArry){
+                                if(avgArry[avgIndex] == avgItem.codeName){
+                                    arry.push(avgArry[avgIndex]+":"+avgItem.avg);
+                                }else{
+                                    arry.push(avgArry[avgIndex]+":'-'");
+                                }
+                            }
+                        })
+                    })
+                }
+                console.log(arry)
                 //模拟渲染
                 var render = function(result, curr) {
                     var arr = [];
@@ -73,7 +82,6 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
                         str = '<tr>' +
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.name + '</td>' +
-                            // '<td>' + item.address + '</td>' +
                             // '<td>' + item.head + '</td>' +
                             // '<td>' + item.headPhone+ '</td>' +
                             // '<td>' + item.lon + '</td>' +

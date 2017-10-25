@@ -58,7 +58,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td style="text-align: center">'+
                             '<a class="auth-btn" data-authId="24" href="#" onclick="layui.networkMng.alterNetworkWin(\''+item.id+'\')" title="修改"><img src="../../img/mng/alter.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="24" href="#" onclick="layui.networkMng.bindCompanyWin(\''+item.id+'\')" title="绑定企业"><img src="../../img/mng/company.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="25" href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
+                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="39" href="#" onclick="layui.networkMng.alterEquipmentWin(\''+item.id+'\')" title="配置设备"><img src="../../img/mng/configure.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="23" href="#" onclick="layui.networkMng.deleteNetWork(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
                         arr.push(str);

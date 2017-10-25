@@ -109,14 +109,14 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 pageSize : 16
             };
             col  = '<col width="60">'+
-                '<col width="150">'+
+                '<col width="200">'+
                 '<col width="150">'+
                 '<col>'+
                 '<col width="100">';
             head = '<tr>'+
                 '<th>序号</th>'+
                 '<th>规则类型</th>'+
-                '<th>触发时间(天)</th>'+
+                '<th>触发条件</th>'+
                 '<th>报警规则描述</th>'+
                 '<th style="text-align: center">操作</th>'+
                 '</tr>';
@@ -307,9 +307,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     })
                 }
             })
-        }else if(type == 'licence_alarm_rule'){
+        }else if(type == 'licence_alarm_rule'||type == 'biggest_alarm_rule'||type == 'total_alarm_rule'){
+            var url,title;
+            if(type == 'licence_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/license';
+                title='新增许可证报警规则';
+            }else if(type == 'biggest_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/biggest';
+                title='新增排污最大流量报警规则';
+            }else if(type == 'total_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/total';
+                title='新增排污总量报警规则';
+            }
             layer.open({
-                title :'新增许可证报警规则',
+                title :title,
                 id : id,
                 type : 2,
                 moveOut: true,
@@ -330,54 +341,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         remark : remark
                     };
                     $.ajax({
-                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/license',
-                        headers: {
-                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
-                        },
-                        data : data,
-                        type: 'post',
-                        success: function (result) {
-                            console.log(result);
-                            if(result.code == "1000"){
-                                layer.msg('新增规则成功！',{icon:1,time:1000},function () {
-                                    // layer.close();
-                                    layer.close(index); //再执行关闭
-                                    loadAlarmRuleList();
-                                    addAlarmRuleTime(result.param.id,remark)
-                                })
-                            }
-                        },
-                        error: function(result) {
-                            var message = result.responseJSON.errors[0].defaultMessage;
-                            layer.msg(message, {icon: 2,time:1000});
-                        }
-                    })
-                }
-            })
-        }else if(type == 'biggest_alarm_rule'){
-            layer.open({
-                title :'新增排污最大流量报警规则',
-                id : id,
-                type : 2,
-                moveOut: true,
-                area : ['1000px','300px'],
-                content : '../../pages/alarmMng/licenceAlarmRule.html',
-                btn: [ '提交','返回'],
-                btnAlign: 'c',
-                yes  : function (index,layero) {
-                    var body = layer.getChildFrame('body',index),
-                        rulesType = body.contents().find("#rulesType").val(),
-                        rules = body.contents().find("#rules").val(),
-                        remark = body.contents().find("#remark").val();
-                    var data = {
-                        enterpriseId : id,
-                        rulesType : rulesType,
-                        rules : rules,
-                        isDel : "0",
-                        remark : remark
-                    };
-                    $.ajax({
-                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/biggest',
+                        url: url,
                         headers: {
                             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
                         },
@@ -754,9 +718,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     })
                 }
             })
-        }else if(type == 'licence_alarm_rule'){
+        }else if(type == 'licence_alarm_rule'||type == 'biggest_alarm_rule'||type == 'total_alarm_rule'){
+            var url,title;
+            if(type == 'licence_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/license';
+                title='修改许可证报警规则';
+            }else if(type == 'biggest_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/biggest';
+                title='修改排污最大流量报警规则';
+            }else if(type == 'total_alarm_rule'){
+                url='' + urlConfig1 + '/v02/htwl/alarm/rule/sewage/total';
+                title='修改排污总量报警规则';
+            }
             layer.open({
-                title: '修改许可证报警规则',
+                title: title,
                 type: 2,
                 id: id,
                 moveOut: true,
@@ -790,7 +765,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     var field = JSON.stringify(data2);
                     console.log(data1,data2)
                     $.ajax({
-                        url: '' + urlConfig1 + '/v02/htwl/alarm/rule/license',
+                        url:url,
                         headers: {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -924,9 +899,17 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     form.render('select');
                 }
             })
-        }else if(title == '修改许可证报警规则'){
+        }else if(title == '修改许可证报警规则'||title == '修改排污最大流量报警规则'||title == '修改排污总量报警规则'){
+            var url;
+            if(title == '修改许可证报警规则'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/license/'+id+'';
+            }else if(title == '修改排污最大流量报警规则'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest/'+id+'';
+            }else if(title == '修改排污总量报警规则'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total/'+id+'';
+            }
             $.ajax({
-                url :''+urlConfig1+'/v02/htwl/alarm/rule/license/'+id+'',
+                url :url,
                 type: 'get',
                 success : function (result) {
                     var data = result.data;

@@ -146,9 +146,9 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
     };
     //请求实时数据
     var loadChartForSite = function(arry){
-        if(arry){
-            console.log(arry);
-        }
+        // if(arry){
+        //     console.log(arry);
+        // }
         var websocket = null;
         //判断当前浏览器是否支持WebSocket
         if('WebSocket' in window){
@@ -186,8 +186,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             }
             if(arry){
                 layui.each(arry,function (index,item) {
-                    if(obj.mn == item&&obj.code == "ez01a"){
-                        console.log(obj.equipmentType);
+                    if(obj.mn == item){
+                        loadTechnologyList(obj);
                     }
                 })
             }
@@ -654,30 +654,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                 }
             }
         })
-        $.ajax({
-            url : '../../data/equipmentData.json',
-            success: function (result){
-                var data;
-                $.each(result,function (index,item) {
-                    console.log(id)
-                    if(item.id == id){
-                        data = item.data;
-                        console.log(item)
-                        $('#demo_image_1').attr('src',item.img);
-                        $('#demo_image_1').attr('width',item.data.demo_image_1.canvas.width);
-                        $('#demo_image_1').attr('height',item.data.demo_image_1.canvas.height);
-                        $('.pin').easypinShow({
-                            data : data,
-                            popover: {
-                                show: true,
-                                animate: true
-                            }
-                        });
-                    }
-                });
-            }
-        })
     });
+    //设备列表
+    var loadTechnologyList = function (obj) {
+        //查询设备
+
+    };
     /*输出内容，注意顺序*/
     var obj = {
         loadData : loadData,

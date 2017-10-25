@@ -326,7 +326,7 @@ tr .align-right{width:120px;text-align: right}
 
 
 /*企业信息-设备工况*/
-.company-equip-sit .demo{width:100%;margin:50px auto 10px auto;padding:10px;}
+/*.company-equip-sit .demo{width:100%;margin:50px auto 10px auto;padding:10px;}*/
 .company-equip-sit .demo p{line-height:30px;text-indent:2em}
 /*.company-equip-sit .demo img{width: 1600px;height: 800px;}*/
 .company-equip-sit .exPopoverContainer {width:150px;height:100px;position: relative;color:#2F0200;bottom:30px!important;left:-3px;}
