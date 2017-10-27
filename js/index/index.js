@@ -6,6 +6,8 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
     var $ = layui.jquery,
         element = layui.element();
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
+    // console.log(Authorization);
     function hideSidebar() {
         $(".side").find("li").find("a").find(".layui-nav-more").show();
         $(".side").animate({width : "70"}, 200, function () {
@@ -54,11 +56,10 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/user/query/'+userId+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (msg) {
-                // console.log(msg)
                 var authList = msg.authList;
                 localStorage.setItem('authList', JSON.stringify(authList));
                 var str = '<li class="side-hider" style="border-bottom:1px solid #fff"> ' +     //缩放按钮
@@ -73,11 +74,10 @@ layui.define(['layer','element'], function(exports){ //提示：模块也可以�
                         '</a> ' +
                         '</li>',
                     data = msg.menuList[0].menuList;
-                console.log(data)
+                // console.log(data)
                 if(data.length>0){
                     for(var i in data){
                         var d = getDataByName(data[i].menuName);
-                        console.log(d)
                         //第一级
                         str += '<li class="layui-nav-item '+ d.class +' layui-nav-itemed"> ' +
                             '<a href="#" onclick="layui.index.loadPage(\''+ d.url +'\')"> ' +

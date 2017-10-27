@@ -8,8 +8,8 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         upload = layui.upload(),
         form = layui.form(),
         aTobody = $('#alarm-result');
-    var access_token = sessionStorage.getItem("access_token");
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //当前时间
     var date = new Date();
     var seperator1 = "-";
@@ -35,7 +35,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
         elem: '#s-alarm',
         headers : {
-            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+            Authorization:Authorization
         },
         method : 'post',
         success: function(res){
@@ -55,7 +55,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             contentType: false,  	//必要
             processData: false,  	//必要，防止ajax处理文件流
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             success : function (result){
                 $("input[name=nonefiles]").val(result[0].fileUrl);
@@ -86,14 +86,17 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             case "视频分析报警":
                 alarmType = 'video_alarm'
                 break;
+            case "其他报警":
+                alarmType = 'other_alarm'
+                break;
         }
         var startTime = $('#startTime').val(),
             endTime = $('#endTime').val(),
             status = $('#status').val(),
             data = {
                 alarmType : alarmType,
-                startTime :startTime,
-                entTime : endTime,
+                startTime :startTime + "00:00:00",
+                entTime : endTime + "23:59:59",
                 status :status,
                 pageNo : curr||1,
                 pageSize : 16
@@ -101,7 +104,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data,
@@ -115,6 +118,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     var arr = []
                         , thisData = aData.concat().splice(curr * nums - nums, nums);
                     layui.each(thisData, function(index, item){
+                        var remark = item.remark,
+                            res = remark.replace(/\[.*?\]/g,''),
+                            res1 = res.replace(/\{|}/g,'');
                         switch (item.alarmType){
                             case "detection_alarm":
                                 item.alarmType = '在线监测报警'
@@ -144,7 +150,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             '<td>'+(index+1)+'</td>' +
                             '<td>' + item.enterpriseName + '</td>' +
                             '<td>' + item.alarmTime + '</td>' +
-                            '<td>' + item.remark + '</td>' +
+                            '<td>' + res1 + '</td>' +
                             '<td>' + item.alarmType+ '</td>' +
                             '<td>' + item.status + '</td>' +
                             // '<td style="text-align: center"><button type="button" class="layui-btn layui-btn-normal layui-btn-mini" onclick="layui.alarmMng.alarmDetailsWin(\''+item.alarmId+'\')">详情</button></td>' +
@@ -190,20 +196,26 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         $.ajax({
             url : ''+urlConfig+'/v01/htwl/lxh/alrm/query/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
                 console.log(result)
+                var remark = result.remark,
+                    res = remark.replace(/\[.*?\]/g,''),
+                    res1 = res.replace(/\{|}/g,'');
                 switch (result.alarmType){
                     case "detection_alarm":
                         result.alarmType = '在线监控报警'
                         break;
                     case "video_alarm":
-                        result.alarmType = '视频报警'
+                        result.alarmType = '视频分析报警'
                         break;
                     case "working_alarm":
-                        result.alarmType = '工况报警'
+                        result.alarmType = '设备工况报警'
+                        break;
+                    case "working_alarm":
+                        result.alarmType = '其他报警'
                         break;
                 }
                 switch (result.status){
@@ -228,7 +240,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 $("#alarmLevel1").html(result.alarmLevel+'级');
                 $("#alarmTime1").html(result.alarmTime);
                 $("#enterpriseName1").html(result.enterpriseName);
-                $("#remark1").html(result.remark);
+                $("#remark1").html(res1);
                 $("#status1").html(result.status);
                 var list = result.alarmLogs,
                     str = '',
@@ -259,10 +271,14 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 }
                 $("#trail-result").html(render(list));
                 if( result.alarmType == '在线监控报警'){
-                    var pattern = /\[(.+?)\]/g;
+                    var pattern = /\[(.+?)\]/g,
+                        pattern1 = /\{(.+?)\}/g;
                     var remark = result.remark,
-                        e = remark.match(pattern)[0];
-                    var code = e.replace(/\[|]/g,''); //因子code
+                        e = remark.match(pattern)[0],
+                        e1 = remark.match(pattern1)[0];
+                    var code = e.replace(/\[|]/g,''), //因子code
+                        codeName = e1.replace(/\{|}/g,'');
+                    console.log(codeName,code)
                     var time = result.alarmTime;
                     var interTimes = 2*60*1000;
                     interTimes=parseInt(interTimes);
@@ -282,7 +298,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         url: ''+urlConfig+'/v01/htwl/lxh/online',
                         headers: {
                             'Content-type': 'application/json;charset=UTF-8',
-                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                           Authorization:Authorization
                         },
                         type: 'get',
                         data: data,
@@ -299,8 +315,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                                     ])
                                 }
                             }
-                            console.log(arr);
-                            loadaCharts(code,arr);
+                            loadaCharts(code,codeName,arr);
                         }
                     })
                 }else if(result.alarmType = '视频报警'){
@@ -394,7 +409,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/report",
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     data : field,
                     type : 'post',
@@ -439,7 +454,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     data : field,
                     type : 'post',
@@ -478,7 +493,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         dealTime : dealTime,
                         dealRemark : dealRemark,
                         attachment : attachment,
-                        status  : '2'
+                        status  : '1'
                     };
                     var field = JSON.stringify(data);
                     console.log(data);
@@ -487,7 +502,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/deal",
                         headers : {
                             'Content-type': 'application/json;charset=UTF-8',
-                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                            Authorization:Authorization
                         },
                         data : field,
                         type : 'post',
@@ -515,7 +530,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -534,7 +549,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     //     $.ajax({
     //         url: ''+urlConfig+'/v01/htwl/lxh/user/role/'+data.value+'',
     //         headers: {
-    //             Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+    //            Authorization:Authorization
     //         },
     //         type: 'get',
     //         success: function (result){
@@ -552,14 +567,44 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
     //         }
     //     })
     // });
-    var loadaCharts = function (code,arr) {
+    var loadaCharts = function (code,codeName,arr) {
+        var unit ;
+        switch (codeName){
+            case "COD" :
+                unit = "mg/L";
+                break;
+            case "总磷" :
+                unit = "mg/L";
+                break;
+            case "高锰酸盐" :
+                unit = "mg/L";
+                break;
+            case "氨氮" :
+                unit = "mg/L";
+                break;
+            case "生物毒性" :
+                unit = "%";
+                break;
+            case "温度" :
+                unit = "℃";
+                break;
+            case "浊度" :
+                unit = "FTU";
+                break;
+            case "电导率" :
+                unit = "μS/cm";
+                break;
+            case "溶解氧" :
+                unit = "mg/L";
+                break;
+        };
         var option = {
             chart: {
                 type: 'spline',
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             title: {
-                text: code
+                text: codeName
             },
             credits : {
                 enabled: false
@@ -577,7 +622,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             },
             yAxis: {
                 title: {
-                    text: '实时值',
+                    text: unit,
                     style : {
                         color: '#000000'
                     }
@@ -589,11 +634,14 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 },
                 minTickInterval : 0.1
             },
+            tooltip: {
+                valueSuffix: unit
+            },
             legend: {
                 enabled: false
             },
             series: [{
-                name: code,
+                name: codeName,
                 data: arr,
                 marker: {
                     enabled: true
@@ -602,6 +650,57 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         };
         var chart = new Highcharts.chart('alarmChart', option);
     };
+    //获取Cookie
+    function getCookie(name)
+    {
+        var arr,reg=new RegExp("(^| )"+name+"=([^;]*)(;|$)");
+        if(arr=document.cookie.match(reg))
+            return unescape(arr[2]);
+        else
+            return null;
+    };
+    layer.ready(function(){
+        $("#getType").find("li").each(function () {
+            $(this).hide();
+        });
+        var userId = getCookie("userId");
+        $.ajax({
+            url :''+urlConfig+'/v01/htwl/lxh/user/query/'+userId+'',
+            headers : {
+                Authorization:Authorization
+            },
+            type : 'get',
+            success : function (msg) {
+                var authList = msg.authList;
+                console.log(authList)
+                layui.each(authList,function (index,item) {
+                    if(item.authId == "11"){
+                        $("#getType").find("li:eq(0)").show();
+                    }else if(item.authId == "107"){
+                        $("#getType").find("li:eq(1)").show();
+                    }else if(item.authId == "108"){
+                        $("#getType").find("li:eq(2)").show();
+                    }else if(item.authId == "109"){
+                        $("#getType").find("li:eq(3)").show();
+                    }
+                })
+                if($("#getType").find("li:eq(0)").is(":hidden")&&$("#getType").find("li:eq(1)").is(":visible")){
+                    $("#getType").find("li:eq(1)").attr("class","layui-this")
+                    loadAlarmData();
+                }else if($("#getType").find("li:eq(0)").is(":hidden") && $("#getType").find("li:eq(1)").is(":hidden")&&$("#getType").find("li:eq(2)").is(":visible")){
+                    console.log("1");
+                    $("#getType").find("li:eq(2)").attr("class","layui-this")
+                    loadAlarmData();
+                }else if($("#getType").find("li:eq(0)").is(":hidden")&&$("#getType").find("li:eq(1)").is(":hidden")&&$("#getType").find("li:eq(2)").is(":hidden")){
+                    $("#getType").find("li:eq(3)").attr("class","layui-this")
+                    loadAlarmData();
+                }else{
+                    $("#getType").find("li:eq(0)").attr("class","layui-this")
+                    loadAlarmData();
+                }
+            }
+        })
+    });
     var obj = {
         loadPage : loadPage,
         imgSelect : imgSelect,

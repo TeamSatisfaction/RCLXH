@@ -20,7 +20,6 @@ layui.define(['layer', 'form', 'element'], function(exports){
             layer.msg("请输入用户名");
         else if(!password)
             layer.msg("请输入密码");
-        console.log(username, password)
         var data = {
             userName : username,
             password : hex_md5(password)
@@ -45,10 +44,8 @@ layui.define(['layer', 'form', 'element'], function(exports){
                     if(!window.localStorage){
                         layer.msg("该浏览器版本过低，请更换高版本的浏览器！");
                     }else{
-                        // console.log(result)
-                        // var storage=window.localStorage;
-                        // var d=JSON.stringify(result.authList);
-                        // storage.setItem("authList",d);
+                        var Authorization  = username+','+hex_md5(password);
+                        sessionStorage.setItem("Authorization",Authorization);
                         setCookie("userName",result.userName);
                         setCookie("userId",result.userId)
                         window.location.href="index.html";

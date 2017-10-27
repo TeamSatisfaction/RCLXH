@@ -8,6 +8,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         form = layui.form(),
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -32,7 +33,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'post',
             data : field,
@@ -103,7 +104,6 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         thumb.removeClass("thumb-input").prepend(str).show();
         getImgLicence(input);
     };
-    //http://172.16.1.20:9564/v01/htwl/file/upload
     /*多选图片*/
     var imgSelect = function (input) {
         /*创建图片路径*/
@@ -129,7 +129,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             // url :' http://172.16.1.10:8095/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
             type : 'delete',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             success : function (result){
                 thumb.empty();
@@ -151,7 +151,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             // url :' http://172.16.1.10:8095/v01/htwl/lxh/enterprise/attachment/'+fileId+'',
             type : 'delete',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             success : function (result){
                 // layer.msg('删除成功!',{icon:1})
@@ -170,26 +170,32 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
     * */
     //提交企业附件
     var getImgSelection = function (input) {
-        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        var Cid = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            divName = $(input).attr("name"),
+            attachmentGroup;
         var formData = new FormData();
             formData.append(input.value, input.files[0]);
+        if(divName == "thumb3"){
+            attachmentGroup = "enterprise"
+        }else if(divName == "thumb4"){
+            attachmentGroup = "equipment"
+        }
         /*formData打印不出来的，需要有接口才能测试*/
         $.ajax({
-            // url : 'http://39.108.112.173:9021/v03/htwl/file/upload',
             url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
             type: 'POST',           //必须是post
             data: formData,         //参数为formData
             contentType: false,  	//必要
             processData: false,  	//必要，防止ajax处理文件流
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             success : function (result){
                 var data = result[0],
                     field = {
                         attachmentName : data.fileName,
                         attachmentAddress : data.fileUrl,
-                        attachmentGroup : 'enterprise',
+                        attachmentGroup : attachmentGroup,
                         majorKey : Cid,
                         createUser: 'data.fileId'
                     };
@@ -201,7 +207,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     url :''+urlConfig+'/v01/htwl/lxh/enterprise/attachment',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     dataType : 'json',
                     type : 'post',
@@ -228,7 +234,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             contentType: false,  	//必要
             processData: false,  	//必要，防止ajax处理文件流
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             success : function (result){
                 var data = result[0];
@@ -267,7 +273,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             // dataType : 'json',
             type : 'post',
@@ -303,7 +309,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/enterprise',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             // dataType : 'json',
             type : 'put',
@@ -328,13 +334,13 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'delete',
                     success : function (result){
                         if(result.code == '1000'){
                             layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 },function () {
-                                layer.close(index);
+                                // layer.close(index);
                                 location.reload(); // 页面刷新
                             });
                         }else {
@@ -382,7 +388,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
                 headers : {
                     'Content-type': 'application/json;charset=UTF-8',
-                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    Authorization:Authorization
                 },
                 async : false,
                 type : 'post',
@@ -402,7 +408,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 url :''+urlConfig+'/v01/htwl/lxh/enterprise/license',
                 headers : {
                     'Content-type': 'application/json;charset=UTF-8',
-                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                    Authorization:Authorization
                 },
                 async : false,
                 type : 'put',
@@ -426,7 +432,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             beforeSend: function () {
@@ -439,18 +445,20 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 var qyImg =data.attachments;
                 if(title == "编辑企业信息"){
                     $.each(data,function(key,value){
-                        var formField = $("[name='"+key+"']");
-                        if(formField[0] !== undefined){
-                            var fieldTagName = formField[0].tagName.toLowerCase();
-                            if(fieldTagName == 'input'){
-                                formField.val(value);
-                            }else if(fieldTagName == 'select'){
-                                formField.children("option").each(function () {
-                                    if(this.value == value){
-                                        this.setAttribute("selected","selected");
-                                    }
-                                    form.render('select');
-                                })
+                        if(key != "industryCodes"){
+                            var formField = $("[name='"+key+"']");
+                            if(formField[0] !== undefined){
+                                var fieldTagName = formField[0].tagName.toLowerCase();
+                                if(fieldTagName == 'input'){
+                                    formField.val(value);
+                                }else if(fieldTagName == 'select'){
+                                    formField.children("option").each(function () {
+                                        if(this.value == value){
+                                            this.setAttribute("selected","selected");
+                                        }
+                                        form.render('select');
+                                    })
+                                }
                             }
                         }
                     });
@@ -458,15 +466,27 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                     var attach = data.attachments;
                     if(attach.length > 0){
                         /*创建图片路径*/
-                        var thumb =  $("#thumbs3").find(".thumb"),
-                            thisContent = thumb[0].outerHTML;
+                        var thumb3 =  $("#thumbs3").find(".thumb"),
+                            thisConten3 = thumb3[0].outerHTML,
+                            thumb4 =  $("#thumbs4").find(".thumb"),
+                            thisContent4 = thumb4[0].outerHTML;
                         layui.each(attach, function (index, item){
-                            var str =
-                                '<div class="thumb">'+
-                                '<img src="' + item.attachmentAddress + '" data-id="'+item.id+'"> ' +
-                                '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
-                                '</div>';
-                            thumb.before(str).show();
+                            if(item.attachmentGroup == "enterprise"){
+                                console.log(attach)
+                                var str =
+                                    '<div class="thumb">'+
+                                    '<img src="' + item.attachmentAddress + '" data-id="'+item.id+'"> ' +
+                                    '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
+                                    '</div>';
+                                thumb3.before(str).show();
+                            }else if(item.attachmentGroup == "equipment"){
+                                var str =
+                                    '<div class="thumb">'+
+                                    '<img src="' + item.attachmentAddress + '" data-id="'+item.id+'"> ' +
+                                    '<i class="layui-icon" onclick="layui.companyMng.imgDelete(this);">&#x1007;</i> ' +
+                                    '</div>';
+                                thumb4.before(str).show();
+                            }
                         })
                     }
                 }else{
@@ -485,35 +505,42 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                             break;
                     }
                     $.each(data,function(key,value){
-                        var formField = $("input[name='"+key+"']");
-                        formField.val(value);
+                        if(key != "industryCodes"){
+                            var formField = $("input[name='"+key+"']");
+                            formField.val(value);
+                        }
                     });
                     $("input[name=industryCodes]").val(data.industrys[0].industryName+"-"+data.industrys[0].industryCode);
                     if(qyImg.length>0){
                         //企业照片
-                        var qyPhotos = "";
-                        for(var i in qyImg){
-                            qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>"
-                        }
-                        $(".silder-main").html(qyPhotos);
+                        var qyPhotos1 = "",
+                            qyPhotos2 = "";
+                            for(var i in qyImg){
+                                if(qyImg[i].attachmentGroup == "enterprise"){
+                                    qyPhotos1 += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>";
+                                }else if(qyImg[i].attachmentGroup == "equipment"){
+                                    qyPhotos2 += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>";
+                                }
+                            }
+                            $("#silder1").html(qyPhotos1);
+                            $("#silder2").html(qyPhotos2);
                         //图片点击
                         layer.photos({
                             photos: '.lay-img'
                             ,anim: 5 //0-6的选择，指定弹出图片动画类型，默认随机（请注意，3.0之前的版本用shift参数）
                         });
-
                         $(".js-silder").silder({
-                            auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
-                            speed: 20,//轮播图运动速度
+                            auto: false,//自动播放，传入任何可以转化为true的值都会自动轮播
+                            speed: 30,//轮播图运动速度
                             sideCtrl: true,//是否需要侧边控制按钮
                             bottomCtrl: true,//是否需要底部控制按钮
                             defaultView: 0,//默认显示的索引
-                            interval: 3000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
+                            interval: 5000,//自动轮播的时间，以毫秒为单位，默认3000毫秒
                             activeClass: "active"//小的控制按钮激活的样式，不包括作用两边，默认active
                         });
                     }else{
                         var str = '<p style="text-align: center">未上传企业照片</p>';
-                        $(".silder-main").html(str);
+                        $("#silder1").html(str);
                     }
                 }
             }
@@ -550,7 +577,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/license/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -619,7 +646,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -683,7 +710,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'post',
             data : field,
@@ -708,7 +735,7 @@ layui.define(['layer', 'element','laypage','form','upload'],function (exports){
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'delete',
                     success : function (result){

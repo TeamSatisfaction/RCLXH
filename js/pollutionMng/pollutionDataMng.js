@@ -10,17 +10,28 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         cn ='2011',
         mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
+    //遮罩
+    function ityzl_SHOW_LOAD_LAYER(){
+        return layer.msg('加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '0px', time:100000}) ;
+    }
     //载入污染源信息
     var loadData = function(){
-        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id'),//企业id
+            i;
         Cid = id;
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
-            success : function (result){
+            beforeSend: function () {
+                i = ityzl_SHOW_LOAD_LAYER();
+            },
+            success : function (result) {
+                layer.close(i);
+                layer.msg('加载完成！',{time: 1000,offset: '10px'});
                 var data = result.data;
                 var qyImg =data.attachments;
                 switch (data.controlLevel){
@@ -38,17 +49,26 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                         break;
                 }
                 $.each(data,function(key,value){
-                    var formField = $("input[name='"+key+"']");
-                    formField.val(value);
+                    if(key != 'industryCodes'){
+                        var formField = $("input[name='"+key+"']");
+                        formField.val(value);
+                    }
                 });
                 $("input[name=industryCodes]").val(data.industrys[0].industryName+"-"+data.industrys[0].industryCode);
                 if(qyImg.length>0){
                     //企业照片
-                    var qyPhotos = "";
+                    var qyPhotos1 = "",
+                        qyPhotos2 = "";
                     for(var i in qyImg){
-                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>"
+                        if(qyImg[i].attachmentGroup == "enterprise"){
+                            qyPhotos1 += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>";
+                        }else if(qyImg[i].attachmentGroup == "equipment"){
+                            qyPhotos2 += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].attachmentAddress +"' style='width: 600px;height: 400px'> </div>";
+                        }
                     }
-                    $(".silder-main").html(qyPhotos);
+                    $("#silder1").html(qyPhotos1);
+                    $("#silder2").html(qyPhotos2);
+                    // $("#silder3").html(qyPhotos2);
                     //图片点击
                     layer.photos({
                         photos: '.lay-img'
@@ -56,7 +76,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     });
 
                     $(".js-silder").silder({
-                        auto: true,//自动播放，传入任何可以转化为true的值都会自动轮播
+                        auto: false,//自动播放，传入任何可以转化为true的值都会自动轮播
                         speed: 20,//轮播图运动速度
                         sideCtrl: true,//是否需要侧边控制按钮
                         bottomCtrl: true,//是否需要底部控制按钮
@@ -66,7 +86,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     });
                 }else{
                     var str = '<p style="text-align: center">未上传企业照片</p>';
-                    $(".silder-main").html(str);
+                    $("#silder1").html(str);
                 }
             }
         })
@@ -78,7 +98,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/license/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -119,7 +139,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -145,7 +165,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         })
     };
     //请求实时数据
-    var loadChartForSite = function(arry){
+    var loadChartForSite = function(idarry,arry){
         // if(arry){
         //     console.log(arry);
         // }
@@ -187,7 +207,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             if(arry){
                 layui.each(arry,function (index,item) {
                     if(obj.mn == item){
-                        loadTechnologyList(obj);
+                        loadTechnologyList(obj,idarry);
                     }
                 })
             }
@@ -270,7 +290,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             data: data,
@@ -381,7 +401,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -420,12 +440,13 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
             success: function (result){
-                var row = result.data.rows;
+                var row = result.data.rows,
+                    arry = [];
                 $("#select_equip").empty();
                 if(row == null){
                     $("#select_equip").append("<option value='' selected='selected'>无设备</option>");
@@ -433,12 +454,20 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     $("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
                 }else{
                     for(var i in row){
-                        $("#select_equip").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                        if(row[i].eaOrEb == "EB"){
+                            $("#select_equip").append("<option value="+row[i].id+">"+row[i].equipmentName+"</option>");
+                            arry.push(row[i].id);
+                        }
+                    }
+                    if(arry.length>0){
+                        loadFactorSelect(arry[0]);
+                    }else{
+                        $("#select_equip").append("<option value='' selected='selected'>无设备</option>");
+                        $("#select_fac").empty();
+                        $("#select_fac").append("<option value='' selected='selected'>无监测因子</option>");
                     }
                 }
-                // $('#select_equip').find('option').eq(6).attr('selected', true)
                 form.render('select');
-                loadFactorSelect(row[0].id);
             }
         })
     };
@@ -456,7 +485,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -540,7 +569,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data,
@@ -639,26 +668,156 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
             success: function (result){
-                var arry = [];
+                var arry = [],
+                    idarry = [];
                 if(result.data.rows){
                     var rows = result.data.rows;
                     layui.each(rows,function (index,item) {
-                        arry.push(item.mn)
+                        arry.push(item.mn);
+                        idarry.push(item.id);
                     })
-                    loadChartForSite(arry);
+                    loadTeList(idarry,arry);
                 }
             }
         })
     });
     //设备列表
-    var loadTechnologyList = function (obj) {
-        //查询设备
-
+    var loadTeList = function (idarry,arry) {
+        layui.each(idarry,function (index,item) {
+            var data = {
+                pageNumber : 1,
+                pageSize : 1000,
+                equipmentMap : {
+                    dauId : item
+                }
+            };
+            var field = JSON.stringify(data);
+            $.ajax({
+                url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/equipment/query/page',
+                headers: {
+                    'Content-type': 'application/json;charset=UTF-8',
+                   Authorization:Authorization
+                },
+                type: 'post',
+                data: field,
+                success: function (result) {
+                    var rows1 = result.data.rows,
+                        str = "",
+                        arry1 = [];
+                    layui.each(rows1, function(index,item){
+                        if(item.eaOrEb == "EA"){
+                            var data = {
+                                pageNumber : 1,
+                                pageSize : 1000,
+                                factorMap : {
+                                    equipmentId : item.id
+                                }
+                            };
+                            var field = JSON.stringify(data);
+                            $.ajax({
+                                url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/factor/query/page',
+                                headers: {
+                                    'Content-type': 'application/json;charset=UTF-8',
+                                   Authorization:Authorization
+                                },
+                                type: 'post',
+                                data: field,
+                                success: function (result) {
+                                    var rows2 = result.data.rows;
+                                    var code = rows2[0].factorCode.substring(rows2[0].factorCode.length-3);
+                                    str += '<tr>' +
+                                        '<td>'+item.equipmentName+'</td>' +
+                                        '<td>'+code+'</td>' +
+                                        '<td>-</td>' +
+                                        '<td>-</td>' +
+                                        '<td>-</td>' +
+                                        '<td>-</td>' +
+                                        '<td>-</td>' +
+                                        '<td>异常</td>' +
+                                        '</tr>';
+                                    $("#list1").html(str);
+                                }
+                            })
+                        }
+                    });
+                    var Prompt = "<span style='color: red'>实时数据加载中。。。。。</span>"
+                    $("#Prompt").html(Prompt);
+                    loadChartForSite(idarry,arry);
+                }
+            })
+        })
+        var id = $(window.parent.document).find('.layui-layer-content').attr('id');//企业id
+        $.ajax({
+            url : '../../data/equipmentData.json',
+            success: function (result){
+                var data;
+                $.each(result,function (index,item) {
+                    console.log(id)
+                    if(item.id == id){
+                        data = item.data;
+                        console.log(item)
+                        $('#demo_image_1').attr('src',item.img);
+                        $('#demo_image_1').attr('width',item.data.demo_image_1.canvas.width);
+                        $('#demo_image_1').attr('height',item.data.demo_image_1.canvas.height);
+                        $('.pin').easypinShow({
+                            data : data,
+                            popover: {
+                                show: true,
+                                animate: true
+                            }
+                        });
+                    }
+                });
+            }
+        })
+    };
+    var loadTechnologyList = function (obj,idarry) {
+        // console.log(obj);
+        var Prompt = "<span style='color: green'>数据加载完成！</span>"
+        $("#Prompt").html(Prompt);
+        var dataTime = obj.dataTime,  //时间
+            sensor = obj.sensor, // "72"
+            equipmentType = obj.equipmentType+obj.equipmentCode, //"d02"
+            xrtd = obj.xrtd, //值
+            num,
+            cell,
+            arry = [];
+        var ta = dataTime.split(''),    //可以用正则代替，我不会
+            time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
+        var str = "正常运行";
+        $("#list1").find("tr").each(function () {
+            arry.push($(this).children('td').eq(1).text())
+        })
+        layui.each(arry,function (index,item) {
+            if(equipmentType == item){
+                num = index
+            }
+        })
+        switch (sensor){
+            case "72":
+                cell = 3;
+                break;
+            case "61":
+                cell = 4;
+                break;
+            case "65":
+                cell = 5;
+                break;
+            case "52":
+                cell = 6;
+                break;
+        }
+        if(num&&cell){
+            //查询设备
+            $("#table1")[0].rows[num].childNodes[2].innerText = time;
+            $("#table1")[0].rows[num].childNodes[7].innerText = str;
+            $("#table1")[0].rows[num].childNodes[cell].innerText = xrtd;
+        }
     };
     /*输出内容，注意顺序*/
     var obj = {

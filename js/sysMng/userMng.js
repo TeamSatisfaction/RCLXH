@@ -8,6 +8,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         form = layui.form(),
         uTobody = $('#user-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //页面跳转
     var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
@@ -48,7 +49,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/user',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             dataType : 'json',
             type : 'post',
@@ -82,7 +83,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/user/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             dataType : 'json',
             type : 'post',
@@ -105,8 +106,8 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.idCard+ '</td>' +
                             '<td>' + item.status + '</td>' +
                             '<td style="text-align: center">'+
-                            '<a class="auth-btn" data-authId="59" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="用户编辑"><img src="../../img/mng/alter.png"></a>'+
-                            '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="81" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="分配角色"><img src="../../img/mng/configure.png"></a>'+
+                            // '<a class="auth-btn" data-authId="59" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="用户编辑"><img src="../../img/mng/alter.png"></a>'+
+                            '<a class="auth-btn" data-authId="81" href="#" onclick="layui.userMng.userRoleMngWin(\''+item.id+'\')" title="分配角色"><img src="../../img/mng/configure.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="57" href="#" onclick="layui.userMng.initializePassword(\''+item.id+'\')" title="初始化密码"><img src="../../img/mng/password.png"></a>'+
                             '&nbsp;&nbsp;&nbsp;<a class="auth-btn" data-authId="17" href="#" onclick="layui.userMng.deleteUser(\''+item.id+'\')" title="删除用户"><img src="../../img/mng/delete.png"></a></td>'+
                             '</tr>';
@@ -160,7 +161,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/user/query/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'get',
                     success : function (result) {
@@ -169,7 +170,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                         $.ajax({
                             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
                             headers : {
-                                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                Authorization:Authorization
                             },
                             type : 'get',
                             success : function (result) {
@@ -251,7 +252,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url: '' + urlConfig + '/v01/htwl/lxh/user/role',
                     headers: {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                       Authorization:Authorization
                     },
                     type: 'post',
                     data : field,
@@ -282,7 +283,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url: '' + urlConfig + '/v01/htwl/lxh/user/role',
                     headers: {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                       Authorization:Authorization
                     },
                     type: 'delete',
                     data : field,
@@ -313,7 +314,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url: '' + urlConfig + '/v01/htwl/lxh/user/changepwd',
                     headers: {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                       Authorization:Authorization
                     },
                     type: 'put',
                     data : field,
@@ -324,9 +325,32 @@ layui.define(['layer','element','laypage','form'],function (exports){
             }
         })
     };
-    //删除用户
+    //删除用户/v01/htwl/lxh/user/{userId}
     var deleteUser = function (id) {
-
+        layer.msg('是否删除该用户', {
+            icon: 3,
+            time: 20000, //20s后自动关闭
+            btn: ['确定', '取消'],
+            yes : function (index,layero) {
+                $.ajax({
+                    url: '' + urlConfig + '/v01/htwl/lxh/user/'+id+'',
+                    headers: {
+                       Authorization:Authorization
+                    },
+                    type: 'delete',
+                    success: function (result) {
+                        if(result.code == '1000'){
+                            layer.msg('删除成功', { icon: 1, shade: 0.4, time: 1000 },function () {
+                                // layer.close(index);
+                                location.reload(); // 页面刷新
+                            });
+                        }else {
+                            layer.msg(result.resultdesc, {icon: 2});
+                        }
+                    }
+                })
+            }
+        })
     };
     var obj = {
         loadPage : loadPage,

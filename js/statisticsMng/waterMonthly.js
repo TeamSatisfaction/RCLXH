@@ -6,6 +6,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         layer = layui.layer,
         laypage = layui.laypage;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //当前时间
     var date = new Date();
     var seperator1 = "-";
@@ -48,7 +49,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/statistics/daily/wastewater',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             async : false,

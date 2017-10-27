@@ -6,12 +6,13 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         form = layui.form(),
         rTobody = $('#role-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //加载角色列表
     var loadRoleData = function () {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -76,7 +77,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     url :''+urlConfig+'/v01/htwl/lxh/role',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     dataType : 'json',
                     type : 'post',
@@ -103,7 +104,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/role/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'delete',
                     success : function (result){
@@ -152,19 +153,17 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     };
                     arry.push(data);
                 }
-                 console.log(arry);
                 var field = JSON.stringify(arry);
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/role/menu',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'post',
                     data : field,
                     success : function (result){
                         layer.msg('提交成功！', {icon: 1});
-                        // console.log(result);
                     }
                 });
                 //提交按钮权限
@@ -188,7 +187,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                     url :''+urlConfig+'//v01/htwl/lxh/auth',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'post',
                     data : field,
@@ -231,7 +230,7 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/role/menu/'+id+'',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -279,13 +278,11 @@ layui.define(['layer','element','laypage','form'],function (exports) {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/role/auth/'+id+'',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
-                var treeButtons = $("#treeButton").find("input"),
-                    unMatchedStr = '';
-                console.log(result)
+                var treeButtons = $("#treeButton").find("input");
                 layui.each(result, function (index, item) {
                     var isMatched = false;
                     for(var i in treeButtons){
@@ -294,11 +291,21 @@ layui.define(['layer','element','laypage','form'],function (exports) {
                             isMatched = true;
                         }
                     }
-                    unMatchedStr+= (isMatched?'':('<div>'+item.authId+'</div>'));
                 });
-                $("#unMatchedAuth").empty().html(unMatchedStr);
-                // console.log(unMatchedStr)
                 form.render();
+            }
+        })
+        $.ajax({
+            url: '../../data/menuData.json',
+            dataType : 'json',
+            type: 'get',
+            success: function(msg){
+                var authList = msg.authList,
+                    unMatchedStr = '';
+                layui.each(authList, function (index, item) {
+                    unMatchedStr+= ('<div>'+item.authId+'</div>');
+                })
+                $("#unMatchedAuth").empty().html(unMatchedStr);
             }
         })
     };

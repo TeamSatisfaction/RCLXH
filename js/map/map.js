@@ -12,6 +12,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         Cname,
         mn;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     layui.link('../../css/style.css');
     /*加载JS模块*/
     layui.extend({ //设定模块别名
@@ -75,7 +76,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 backgroundColor: 'rgba(0,0,0,0)'
             },
             credits: {enabled: false},
-            title: {text: '2017年6月地表水统计情况'},
+            colors: ['#ff5722','#2ab453'],
+            title: {text: '2017年地表水统计情况'},
             tooltip: {pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'},
             plotOptions: {
                 pie: {
@@ -93,12 +95,8 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 type: 'pie',
                 name: '水质级别占比',
                 data: [
-                    ['Ⅰ类',   45.0],
-                    ['Ⅱ类',   26.8],
-                    ['Ⅲ类',   26.8],
-                    ['Ⅳ类',   8.5],
-                    ['Ⅴ类',   6.2],
-                    ['Ⅵ类',   0.7]
+                    ['Ⅱ类',   1],
+                    ['Ⅲ类',   99],
                 ]
             }]
         };
@@ -214,10 +212,10 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                 unit = "℃";
                 break;
             case "浊度" :
-                unit = "FNU";
+                unit = "FTU";
                 break;
             case "电导率" :
-                unit = "us/cm";
+                unit = "μS/cm";
                 break;
             case "溶解氧" :
                 unit = "mg/L";
@@ -227,7 +225,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             data: data,
@@ -342,7 +340,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/enterprise/all',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -358,6 +356,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
                 form.render('select');
+
                 loadDauSelect(result[0].base_enterprise_id,result[0].name);
                 Cname = result[0].name;
                 Cid = result[0].base_enterprise_id;
@@ -381,7 +380,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -439,7 +438,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -485,7 +484,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -533,7 +532,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //     url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
         //     headers: {
         //         'Content-type': 'application/json;charset=UTF-8',
-        //         Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+        //        Authorization:Authorization
         //     },
         //     type: 'post',
         //     data: field,
@@ -565,7 +564,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data,
@@ -607,11 +606,11 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         var str = '';
         var m_tobody = $('#monthly_result');
         var m_title = $('#m_title');
-        m_title.html('2017年荣昌区濑溪河流域第'+currQuarter+'季度环境统计数据');
+        m_title.html(''+year+'年荣昌区濑溪河流域第'+currQuarter+'季度环境统计数据');
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/online/monthly',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data,
@@ -655,7 +654,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data1,
@@ -675,7 +674,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data2,
@@ -695,7 +694,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data3,

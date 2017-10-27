@@ -6,6 +6,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     /*方法*/
     var $ = layui.jquery;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     var mapServer = "http://cache1.arcgisonline.cn/ArcGIS/rest/services/ChinaOnlineCommunity/MapServer";
     var lat0 = 105.5779702660,
         lgt0 = 29.4048578414;
@@ -43,14 +44,16 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     function loadCompanydata () {
         var data = {
             pageNum : 1,
-            pageSize : 1000
+            pageSize : 65,
+            enterpriseRole : 'production_enterprise',
+            areaCode : '500000-500153'
         };
         var field = JSON.stringify(data);
         $.ajax({
-            url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -83,7 +86,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/alrm/enterprise/statistics',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type: 'get',
             success: function(result){

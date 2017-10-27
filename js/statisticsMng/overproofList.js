@@ -3,6 +3,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         layer = layui.layer,
         laypage = layui.laypage;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     var loadList = function (curr) {
         var ename = $("input[name=eName]").val(),
             startTime = $("input[name=beginTime]").val(),
@@ -23,7 +24,7 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/statistics/exceeding',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             async : false,

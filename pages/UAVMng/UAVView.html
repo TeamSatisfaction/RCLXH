@@ -9,10 +9,10 @@
     <script src="../../layUi/layui.js"></script>
     <script type="text/javascript" src="../../js/lib/ckplayer/ckplayer.js" charset="utf-8"></script>
     <style type="text/css">
-        body{height: 100%}
+        body{height: 90%}
         .uavbody{height: 100%;}
-        .uavlist{width: 300px;height:97%;float: left;margin: 10px;border-color:grey;border-style:solid; border-width:1px;}
-        .uavvideo{width: calc(100% - 335px);height:97%;float: right;margin: 10px 10px 10px 0;border-color:grey;border-style:solid; border-width:1px;}
+        .uavlist{width: 300px;height:100%;float: left;border-color:grey;border-style:solid; border-width:1px;}
+        .uavvideo{width: calc(100% - 325px);height:100%;float: right;border-color:grey;border-style:solid; border-width:1px;}
         .uav_divider{ background-color: white; padding: 7px; margin: 1px 0; color: #666666}
         .uav_inner{}
     </style>
@@ -30,23 +30,47 @@
 </head>
 <body >
     <div class="uavbody">
-        <div class="uavlist">
-            <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">
-                <ul class="layui-tab-title">
-                    <li class="layui-this">历史视频</li>
-                    <li>实时视频</li>
-                </ul>
-                <div class="layui-tab-content">
-                    <div class="uav_divider">视频列表（点击查看视频）</div>
-                    <div class="uav_inner">
-                        <img src="http://www.ckplayer.com/static/images/cqdw.jpg" width="250">
+        <div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief" style="height: 100%">
+            <ul class="layui-tab-title">
+                <li class="layui-this">历史视频</li>
+                <li>实时视频</li>
+            </ul>
+            <div class="layui-tab-content" style="height: 100%">
+                <div class="layui-tab-item layui-show" style="height: 100%">
+                    <div class="uavlist">
+                        <div class="uav_divider">视频列表（点击查看视频）</div>
+                        <div class="uav_inner">
+                            <img src="http://www.ckplayer.com/static/images/cqdw.jpg" width="250">
+                        </div>
+                    </div>
+                    <div class="uavvideo">
+                        <div id="a1"></div>
+                    </div>
+                </div>
+                <div class="layui-tab-item">
+                    <div class="uavvideo">
+                        <div id="a2"></div>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="uavvideo">
-            <div id="a1"></div>
-        </div>
+            <!--<div class="uavlist">-->
+                <!--<div class="layui-tab layui-tab-brief" lay-filter="docDemoTabBrief">-->
+                    <!--<ul class="layui-tab-title">-->
+                        <!--<li class="layui-this">历史视频</li>-->
+                        <!--<li>实时视频</li>-->
+                    <!--</ul>-->
+                    <!--<div class="layui-tab-content">-->
+                        <!--<div class="uav_divider">视频列表（点击查看视频）</div>-->
+                        <!--<div class="uav_inner">-->
+                            <!--<img src="http://www.ckplayer.com/static/images/cqdw.jpg" width="250">-->
+                        <!--</div>-->
+                    <!--</div>-->
+                <!--</div>-->
+            <!--</div>-->
+            <!--<div class="uavvideo">-->
+                <!--<div id="a1"></div>-->
+            <!--</div>-->
     </div>
     <script type="text/javascript">
         var width  = $(".uavvideo").width(),

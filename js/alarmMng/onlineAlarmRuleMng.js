@@ -8,6 +8,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         form = layui.form();
     var urlConfig = sessionStorage.getItem("urlConfig");
     var urlConfig1 = sessionStorage.getItem("urlConfig1");
+    var Authorization = sessionStorage.getItem("Authorization");
     //报警规则select
     form.on('select(alarmRule)', function(data){
         loadAlarmRuleList();
@@ -74,7 +75,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                             $.ajax({
                                 url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time/'+item.id+'',
                                 headers : {
-                                    Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                    Authorization:Authorization
                                 },
                                 async: false,
                                 type: 'get',
@@ -343,7 +344,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     $.ajax({
                         url: url,
                         headers: {
-                            Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                           Authorization:Authorization
                         },
                         data : data,
                         type: 'post',
@@ -399,7 +400,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'post',
                     data : field,
@@ -431,7 +432,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/user/role/query',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -454,7 +455,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         $.ajax({
             url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/all/equipment',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -476,7 +477,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         $.ajax({
             url: '' + urlConfig + '/v01/htwl/lxh/jcsjgz/all/factor',
             headers: {
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             success: function (result) {
@@ -578,7 +579,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                         url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
                                         headers : {
                                             'Content-type': 'application/json;charset=UTF-8',
-                                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                            Authorization:Authorization
                                         },
                                         type : type,
                                         data : field,
@@ -691,7 +692,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                         url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
                                         headers : {
                                             'Content-type': 'application/json;charset=UTF-8',
-                                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                            Authorization:Authorization
                                         },
                                         type : type,
                                         data : field,
@@ -779,7 +780,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                         url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
                                         headers : {
                                             'Content-type': 'application/json;charset=UTF-8',
-                                            Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                                            Authorization:Authorization
                                         },
                                         type : type,
                                         data : field,
@@ -954,7 +955,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type: 'get',
             success: function (result) {

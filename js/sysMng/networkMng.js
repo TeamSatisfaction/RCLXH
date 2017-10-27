@@ -9,6 +9,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         form = layui.form();
     var scyTobody = $('#scy-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //页面跳转
     var loadPage = function(url,p){
         var parent = window.parent.document;    //主页面的DOM
@@ -29,7 +30,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             data : field,
             type: 'post',
@@ -105,7 +106,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             dataType : 'json',
             type : 'post',
@@ -154,7 +155,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'put',
                     data : field,
@@ -181,7 +182,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             $.ajax({
                 url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/'+id+'',
                 headers: {
-                    Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                   Authorization:Authorization
                 },
                 type: 'get',
                 success: function (result) {
@@ -220,7 +221,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau',
                     headers: {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                       Authorization:Authorization
                     },
                     type: 'put',
                     data: field,
@@ -249,7 +250,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -274,7 +275,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/discharge/port/'+id+'',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -306,7 +307,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'delete',
                     success : function (result){
@@ -379,7 +380,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'post',
             data : field,
@@ -503,7 +504,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 $.ajax({
                     url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/'+id+'',
                     headers : {
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'delete',
                     success : function (result){
@@ -552,7 +553,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                     url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor',
                     headers : {
                         'Content-type': 'application/json;charset=UTF-8',
-                        Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                        Authorization:Authorization
                     },
                     type : 'post',
                     data : field,

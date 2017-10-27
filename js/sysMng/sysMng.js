@@ -17,7 +17,7 @@ layui.define(['layer', 'element','form'],function (exports) {
         switch (tabIndex){
             case '0':layui.companyMng.loadCompanyList();break;
             case '1':layui.MSMng.loadMSData();break;
-            case '2':layui.equipmentMng.loadEquipmentData();break;
+            case '2':layui.equipmentMng.loadMnSelect();;break;
             case '3':layui.networkMng.loadNetWorkData();break;
             case '4':layui.userMng.loadUserData();break;
             case '5':layui.roleMng.loadRoleData();break;
@@ -32,8 +32,8 @@ layui.define(['layer', 'element','form'],function (exports) {
             var flag = false;
             for(var i in authList){
                 if(authList[i].authId == $(this).attr('data-authId')){
-                    $(this).attr('data-ajaxUrl', authList[i].url);
-                    $(this).attr('data-ajaxType', authList[i].type);
+                    // $(this).attr('data-ajaxUrl', authList[i].url);
+                    // $(this).attr('data-ajaxType', authList[i].type);
                     $(this).show();
                     flag = true;
                 }

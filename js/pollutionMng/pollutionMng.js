@@ -8,7 +8,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         form = layui.form(),
         cTobody = $('#company-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
-    var access_token = sessionStorage.getItem("access_token");
+    var Authorization = sessionStorage.getItem("Authorization");
+    // var access_token = sessionStorage.getItem("access_token");
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
@@ -35,7 +36,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers : {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'post',
             data : field,

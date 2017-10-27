@@ -8,6 +8,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         form = layui.form(),
         aTobody = $('#alarm-result');
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //页面跳转
     var loadPage = function(url){
         var parent = window.parent.document;    //主页面的DOM
@@ -18,7 +19,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/statistics/total',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -38,7 +39,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/statistics',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             data : data,
             type : 'get',
@@ -53,7 +54,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/close/rate',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             success : function (result){
@@ -182,7 +183,7 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/alrm/enterprise/statistics',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             data : data,
             type: 'get',

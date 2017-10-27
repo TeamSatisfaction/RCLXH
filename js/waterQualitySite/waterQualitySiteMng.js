@@ -12,6 +12,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         mn,
         cn;
     var urlConfig = sessionStorage.getItem("urlConfig");
+    var Authorization = sessionStorage.getItem("Authorization");
     //监测详情数据
     var loadChartsData = function () {
         var websocket = null;
@@ -124,7 +125,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/online',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'get',
             data: data,
@@ -286,7 +287,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -342,7 +343,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -384,7 +385,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -421,7 +422,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/factor/query/page',
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
-                Authorization: 'admin,670B14728AD9902AECBA32E22FA4F6BD'
+               Authorization:Authorization
             },
             type: 'post',
             data: field,
@@ -550,7 +551,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
             headers : {
-                Authorization:'admin,670B14728AD9902AECBA32E22FA4F6BD'
+                Authorization:Authorization
             },
             type : 'get',
             data : data,
@@ -605,10 +606,10 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             tbodyData[dataItem.dataTime] = [];
                         }
                         if(item.oneThreshold){                              //放阈值
-                            var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));   //阈值1
-                            var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"==")); //阈值1判断符
-                            var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null; //阈值2
-                            var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":"==")):null;//阈值2判断符
+                            var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":(item.oneConditionsName === "大于等于"?"＜":(item.oneConditionsName === "小于等于"?"＞":"="))));   //阈值1
+                            var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":(item.oneConditionsName === "大于等于"?">=":(item.oneConditionsName === "小于等于"?"<=":"==")))); //阈值1判断符
+                            var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":(item.twoConditionsName === "大于等于"?"＜":(item.twoConditionsName === "小于等于"?"＞":"=")))):null; //阈值2
+                            var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":(item.twoConditionsName === "大于等于"?">=":(item.twoConditionsName === "小于等于"?"<=":"==")))):null;//阈值2判断符
 
                             var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
                             tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
