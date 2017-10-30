@@ -304,7 +304,7 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                             '<h2 class="layui-colla-title list-title" data-id="'+item.baseEnterpriseId+'" data-name = "'+item.name+'" onclick="layui.waterQualitySiteMng.loadChartForSite(this,'+cn+')">' +
                             ' <span>'+(index+1)+'</span>'+
                             '<span>' + item.name + '</span></h2>' +
-                            '<div class="layui-colla-content"> ' +
+                            '<div class="layui-colla-content layui-show"> ' +
                             '<span>所属流域：濑溪河流域<br>断面水质：Ⅲ类<br>地理位置：'+item.address+''+
                             '</span></div>'+
                             '</div>'

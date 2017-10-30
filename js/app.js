@@ -4,7 +4,8 @@
  **/
 sessionStorage.setItem("urlConfig", 'http://113.204.228.66:8095');
 // sessionStorage.setItem("urlConfig", 'http://172.21.92.236:8095');
-sessionStorage.setItem("urlConfig1", 'http://172.21.92.236:9702');
+sessionStorage.setItem("urlConfig1", 'http://113.204.228.66:9702');
+// sessionStorage.setItem("urlConfig1", 'http://172.21.92.236:9702');
 layui.define(['layer', 'form', 'element'], function(exports){
     var $ = layui.jquery,
         layer = layui.layer,

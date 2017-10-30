@@ -298,4 +298,130 @@
       }
     }
   }
+},{
+  "id" : "9d26e31916fd4b8083c6f56541cfe529",
+  "name" : "安富街道",
+  "img" : "../../img/data/gongkuang/9d26e31916fd4b8083c6f56541cfe529.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "00a63ff490804a4aa7c775a294833a13",
+  "name" : "清江",
+  "img" : "../../img/data/gongkuang/00a63ff490804a4aa7c775a294833a13.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "9942003b31c54731a08607ab7ae210d9",
+  "name" : "永荣",
+  "img" : "../../img/data/gongkuang/9942003b31c54731a08607ab7ae210d9.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "9d0978a85dfa40fe83fc7db650c2a1b8",
+  "name" : "城市污水厂 ",
+  "img" : "../../img/data/gongkuang/9d0978a85dfa40fe83fc7db650c2a1b8.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "9593be3464614d658ecac2c6e3628a21",
+  "name" : "中医院 ",
+  "img" : "../../img/data/gongkuang/9593be3464614d658ecac2c6e3628a21.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "96de2cdbacf64bc38c62e72d6bab7b3c",
+  "name" : "益民医院 ",
+  "img" : "../../img/data/gongkuang/96de2cdbacf64bc38c62e72d6bab7b3c.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
+},{
+  "id" : "ba2c7c1b905f4439b235401c07b7e692",
+  "name" : "包黑子 ",
+  "img" : "../../img/data/gongkuang/ba2c7c1b905f4439b235401c07b7e692.jpg",
+  "data":{
+    "demo_image_1": {
+      "0": {
+        "coords": {
+          "lat": "274",
+          "long": "138"
+        }
+      },
+      "canvas": {
+        "width": "1600",
+        "height": "700"
+      }
+    }
+  }
 }]

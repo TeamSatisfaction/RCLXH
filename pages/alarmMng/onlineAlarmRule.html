@@ -123,12 +123,16 @@
                     </div>
                 </div>
                 <div class="layui-form-item">
-                    <div class="layui-inline" style="width: calc(90% + 20px);">
+                    <div class="layui-inline">
                         <label class="layui-form-label">报警条件关系：</label>
                         <div class="layui-input-block">
                             <input name="is_contain" value="1" title="and" checked type="radio">
                             <input name="is_contain" value="2" title="or" type="radio">
                         </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">关闭时间(分)：</label>
+                        <input name="close_time" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="" id="close_time">
                     </div>
                 </div>
                 <!--<div class="layui-form-item">-->

@@ -44,13 +44,16 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
     function loadCompanydata () {
         var data = {
             pageNum : 1,
-            pageSize : 65,
-            enterpriseRole : 'production_enterprise',
+            pageSize : 1000,
+            enterpriseRole : '',
             areaCode : '500000-500153'
         };
         var field = JSON.stringify(data);
+        console.log(field)
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
+            // url :' http://172.21.92.236:8095/v01/htwl/lxh/enterprise/page',
+            // sessionStorage.setItem("urlConfig", 'http://172.21.92.236:8095');
             headers: {
                 'Content-type': 'application/json;charset=UTF-8',
                Authorization:Authorization

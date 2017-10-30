@@ -9,12 +9,108 @@
     <script src="../../layUi/layui.js"></script>
     <script type="text/javascript" src="../../js/lib/ckplayer/ckplayer.js" charset="utf-8"></script>
     <style type="text/css">
-        body{height: 90%}
-        .uavbody{height: 100%;}
-        .uavlist{width: 300px;height:100%;float: left;border-color:grey;border-style:solid; border-width:1px;}
-        .uavvideo{width: calc(100% - 325px);height:100%;float: right;border-color:grey;border-style:solid; border-width:1px;}
-        .uav_divider{ background-color: white; padding: 7px; margin: 1px 0; color: #666666}
-        .uav_inner{}
+        body{height: 90%;}
+        .uavbody{height: 100%}
+        .uavlist{width: 430px;height:100%;float: right;border-radius: 6px;}
+        .uavvideo{width: calc(100% - 455px);height:100%;float: left; border-radius: 6px; background: #000; overflow: hidden;  position: relative;  margin-top: 3px;}
+        .uavvideo1{height:100%;border-color:grey;border-style:solid; border-width:1px;}
+        .video_rs_t{
+            width:100%;
+            height:65px;
+            border-bottom:1px solid #252525;
+            position:relative;
+            line-height:65px;
+            font-size:12px;
+            color:#4d4d4d;
+            text-align:center;
+        }
+        .video_rs_t span{
+            float:left;
+            font-size:16px;
+            margin-left:25px;
+            color:#fff;
+        }
+        .video_rs_b{
+            width:100%;
+            height:90%;
+            overflow:auto;
+            overflow-X:hidden;
+        }
+        .one_tb{
+            width:100%;
+            height:96px;
+            overflow:hidden;
+            border-bottom:1px solid #252525;
+            cursor:pointer;
+        }
+        .one_tb:hover{
+            background:#212121;
+        }
+        .one_tb_l{
+            width:52px;
+            height:96px;
+            line-height:96px;
+            text-align:center;
+            float:left;
+            color:#fff;
+            font-size:12px;
+            float:left;
+            overflow:hidden;
+        }
+        .one_tb_c{
+            width:88px;
+            height:44px;
+            color:#fff;
+            font-size:12px;
+            float:left;
+            overflow:hidden;
+            margin-top:26px;
+            position:relative;
+        }
+        .one_tb_c img{
+            width:88px;
+            height:44px;
+            float:left;
+        }
+        .one_tb_c b{
+            display:block;
+            width:14px;
+            height:16px;
+            position:absolute;
+            background:url(../../img/xd.png) no-repeat center;
+            top:50%;
+            left:50%;
+            margin-top:-7px;
+            margin-left:-8px;
+            display:none;
+        }
+        .one_tb.on .one_tb_c b{
+            display:block;
+        }
+        .one_tb_r{
+            width:236px;
+            height:44px;
+            float:left;
+            overflow:hidden;
+            margin-top:26px;
+            margin-left:22px
+        }
+        .one_tb_r h3{
+            font-size:13px;
+            color:#fff;
+            font-weight:100;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis;
+        }
+        .one_tb_r span{
+            font-size:12px;
+            color:#fff;
+            margin-top:11px;
+            white-space:nowrap;
+            overflow:hidden;
+            text-overflow:ellipsis
+        }
     </style>
     <script>
         layui.link('../../css/style.css');
@@ -35,12 +131,30 @@
                 <li class="layui-this">历史视频</li>
                 <li>实时视频</li>
             </ul>
-            <div class="layui-tab-content" style="height: 100%">
+            <div class="layui-tab-content" style="height: 100%;background: #1a1a1a;">
                 <div class="layui-tab-item layui-show" style="height: 100%">
                     <div class="uavlist">
-                        <div class="uav_divider">视频列表（点击查看视频）</div>
-                        <div class="uav_inner">
-                            <img src="http://www.ckplayer.com/static/images/cqdw.jpg" width="250">
+                        <!--top-->
+                        <div class="video_rs_t">
+                            <span>视频列表</span>
+                            <p style="color: white">1视频</p>
+                        </div>
+                        <!--bottom-->
+                        <div class="video_rs_b">
+                            <!--一条-->
+                            <ul>
+                                <li  class="one_tb" vid_src="http://jq22.qiniudn.com/jq22.mp4">
+                                    <span class="one_tb_l">1</span>
+                                    <div class="one_tb_c">
+                                        <img src="../../img/data/shipin.png">
+                                    </div>
+                                    <div class="one_tb_r">
+                                        <h3>濑溪河流域周边企业巡检</h3>
+                                        <span>视频时间：</span>
+                                        <span>2017-10-27 15:35:56</span>
+                                    </div>
+                                </li>
+                            </ul>
                         </div>
                     </div>
                     <div class="uavvideo">
@@ -48,8 +162,8 @@
                     </div>
                 </div>
                 <div class="layui-tab-item">
-                    <div class="uavvideo">
-                        <div id="a2"></div>
+                    <div class="uavvideo1">
+                        <div id="a2" style="margin: 0 auto;"></div>
                     </div>
                 </div>
             </div>
@@ -73,18 +187,18 @@
             <!--</div>-->
     </div>
     <script type="text/javascript">
-        var width  = $(".uavvideo").width(),
+        var width1 = $(".uavvideo").width(),
             height  = $(".uavvideo").height();
-        console.log(width,height);
         var flashvars={
             c:0,//是否读取文本配置,0不是，1是
             p:0,//视频默认0是暂停，1是播放，2是不加载视频
             e:1,//视频结束后的动作，0是调用js函数，1是循环播放，2是暂停播放并且不调用广告，3是调用视频推荐列表的插件，4是清除视频流并调用js功能和1差不多，5是暂停播放并且调用暂停广告
-            i:'http://www.ckplayer.com/static/images/cqdw.jpg'//初始图片地址
+            i:'../../img/data/shipin.png'//初始图片地址
         };
-        var video=['http://img.ksbbs.com/asset/Mon_1605/0ec8cc80112a2d6.mp4->video/mp4'];
+        var video=['http://jq22.qiniudn.com/jq22.mp4->video/mp4'];
         var support=['all'];
-        CKobject.embedHTML5('a1','ckplayer_a1',width,height,video,flashvars,support);
+        CKobject.embedHTML5('a1','ckplayer_a1',width1,height,video,flashvars,support);
+        CKobject.embedHTML5('a2','ckplayer_a1',width1,height,video,flashvars,support);
 //        var video = ['http://movie.ks.js.cn/flv/other/1_0.mp4->video/mp4'];
     </script>
 </body>

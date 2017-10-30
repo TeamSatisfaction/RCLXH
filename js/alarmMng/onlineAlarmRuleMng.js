@@ -51,8 +51,10 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             $("#rule-head").html(head);
             if(type == 'online_alarm_rule'){
                 url = ''+urlConfig1+'/v02/htwl/alarm/rule/online'
+                // url :'http://172.21.92.236:9702/v02/htwl/alarm/rule/online'
             }else if(type == 'poly_online_alarm_rule'){
                 url = ''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online'
+                // url :'http://172.21.92.236:9702/v02/htwl/aggregation/alarm/rule/online'
             }
             $.ajax({
                 url :url,
@@ -73,7 +75,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         layui.each(thisData, function(index, item) {
                             var ruleName='';
                             $.ajax({
-                                url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time/'+item.id+'',
+                               url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time/'+item.id+'',
                                 headers : {
                                     Authorization:Authorization
                                 },
@@ -104,6 +106,17 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                 }
             })
         }else if(type == 'licence_alarm_rule'||type == 'biggest_alarm_rule'||type == 'total_alarm_rule'){
+            var head1;
+            if(type == 'licence_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
+                head1 = '触发条件(天)';
+            }else if(type == 'biggest_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest';
+                head1 = '触发条件(立方米/秒)';
+            }else if(type == 'total_alarm_rule'){
+                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total';
+                head1 = '触发条件(吨)';
+            }
             var data = {
                 enterpriseId : id,
                 pageNo : curr||1,
@@ -111,25 +124,18 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             };
             col  = '<col width="60">'+
                 '<col width="200">'+
-                '<col width="150">'+
+                '<col width="200">'+
                 '<col>'+
                 '<col width="100">';
             head = '<tr>'+
                 '<th>序号</th>'+
                 '<th>规则类型</th>'+
-                '<th>触发条件</th>'+
+                '<th>'+head1+'</th>'+
                 '<th>报警规则描述</th>'+
                 '<th style="text-align: center">操作</th>'+
                 '</tr>';
             $("#rule-col").html(col);
             $("#rule-head").html(head);
-            if(type == 'licence_alarm_rule'){
-                url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
-            }else if(type == 'biggest_alarm_rule'){
-                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest'
-            }else if(type == 'total_alarm_rule'){
-                url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total'
-            }
             $.ajax({
                 url :url,
                 type : 'get',
@@ -192,6 +198,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
                         two_threshold = body.contents().find("input[name='two_threshold']").val(),
                         is_contain = body.contents().find("input[name='is_contain']:checked").val(),
+                        close_time =  body.contents().find("input[name='close_time']:checked").val(),
                         threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
                     var data = {
                         epId : id,
@@ -209,10 +216,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         twoConditionsName : two_conditions_name,
                         twoConditionKey : two_conditions_key,
                         twoThreshold : two_threshold,
+                        closeTime : close_time,
                         isContain : is_contain
                     };
                     $.ajax({
                         url :''+urlConfig1+'/v02/htwl/alarm/rule/online',
+                        // url :'http://172.21.92.236:9702/v02/htwl/alarm/rule/online',
                         headers : {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -263,6 +272,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
                         calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
                         calculation_value = body.contents().find("input[name='calculation_value']").val(),
+                        close_time = body.contents().find("input[name='close_time']").val(),
 
                         threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
                     var data = {
@@ -282,6 +292,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         calculationName : calculation_name,
                         calculationValue : calculation_value,
                         conditionsName : conditions_name,
+                        closeTime : close_time,
                         conditionKey : condition_key
                     };
                     $.ajax({
@@ -523,6 +534,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         two_conditions_name = body.contents().find("select[name='two_conditions_name']").find("option:selected").text(),
                         two_conditions_key = body.contents().find("select[name='two_conditions_name']").val(),
                         two_threshold = body.contents().find("input[name='two_threshold']").val(),
+                        close_time = body.contents().find("input[name='close_time']").val(),
                         is_contain = body.contents().find("input[name='is_contain']:checked").val();
                     var data = {
                         id: id,
@@ -540,6 +552,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         twoConditionsName: two_conditions_name,
                         twoConditionKey: two_conditions_key,
                         twoThreshold: two_threshold,
+                        closeTime : close_time,
                         isContain: is_contain
                     };
                     var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
@@ -566,6 +579,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     var field = JSON.stringify(d);
                     $.ajax({
                         url: ''+urlConfig1+'/v02/htwl/alarm/rule/online',
+                        // url :'http://172.21.92.236:9702/v02/htwl/alarm/rule/online',
                         headers: {
                             'Content-type': 'application/x-www-form-urlencoded'
                         },
@@ -634,7 +648,8 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         aggregation_name = body.contents().find("select[name='aggregation_name']").find("option:selected").text(),
                         aggregation_value = body.contents().find("select[name='aggregation_name']").val(),
                         calculation_name = body.contents().find("select[name='calculation_name']").find("option:selected").text(),
-                        calculation_value = body.contents().find("input[name='calculation_value']").val();
+                        calculation_value = body.contents().find("input[name='calculation_value']").val(),
+                        close_time = body.contents().find("input[name='close_time']").val();
 
                     var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
                     var threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
@@ -675,6 +690,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         calculationName: calculation_name,
                         calculationValue: calculation_value,
                         conditionsName: conditions_name,
+                        closeTime : close_time,
                         conditionKey: condition_key
                     };
                     $.ajax({
@@ -746,7 +762,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     var tId = body.contents().find("input[name='id']").val(),
                         type;
                     var data1={id : id},
-                        data2={id : id};
+                        data2={refid : id};
                     if(tId != ''){
                         data2.id = tId;
                         type = "put"
@@ -764,7 +780,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         data2.threeLevelTime = "999999999";
                     }
                     var field = JSON.stringify(data2);
-                    console.log(data1,data2)
+                    console.log(field)
                     $.ajax({
                         url:url,
                         headers: {
@@ -851,6 +867,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     $("input[name='is_contain'][value='"+result.isContain+"']").prop("checked",true);
                     $('#one_threshold').val(result.oneThreshold);
                     $('#two_threshold').val(result.twoThreshold);
+                    $('#close_time').val(result.closeTime);
                     form.render();
                 }
             })
@@ -881,6 +898,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     });
                     $('#start_time').val(result.startTime);
                     $('#end_time').val(result.endTime);
+                    $('#close_time').val(result.closeTime);
                     $('#conditions_name').children("option").each(function(){
                         if (this.text == result.conditionsName) {
                             this.setAttribute("selected","selected");

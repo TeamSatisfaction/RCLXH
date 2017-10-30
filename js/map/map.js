@@ -134,14 +134,10 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //将消息显示在网页上
         function setMessageInnerHTML(innerHTML){
             var obj = JSON.parse(innerHTML);
-            // console.log(obj)
-            // console.log(obj.xcode,code);
             if(obj.mn == mn&&obj.xcode == code){
                 if(code == "ez52Z01"){
-                    console.log(obj)
                     drawLine(obj.xcum);
                 }else {
-                    console.log(obj)
                     drawLine(obj.xrtd);
                 }
             }
@@ -278,7 +274,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         },
                         minTickInterval : 0.1
                         // ,plotLines: [{
-                        //     value: 26.6,
+                        //     value: 24.6,
                         //     dashStyle:'ShortDash',
                         //     width: 3,
                         //     color: 'red',
@@ -302,6 +298,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                         data: arr,
                         marker: {
                             enabled: true
+                            // fillColor:'red' //设置所有数据点的颜色值
                         }
                     }]
                 };
@@ -356,10 +353,16 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     }
                 }
                 form.render('select');
-
-                loadDauSelect(result[0].base_enterprise_id,result[0].name);
-                Cname = result[0].name;
-                Cid = result[0].base_enterprise_id;
+                $('#c_select').children("option").each(function(){
+                    if (this.value == "4028808d5d62f005015d7e2be784002b") {
+                        this.setAttribute("selected","selected");
+                    }
+                });
+                Cid = "4028808d5d62f005015d7e2be784002b";
+                Cname = "濑溪河流域水质自动监测站";
+                loadDauSelect(Cid);
+                // Cname = result[0].name;
+                // Cid = result[0].base_enterprise_id;
                 $('.mapStats_statsTitle').html(Cname);
             }
         })
@@ -628,7 +631,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     '<tr><td>COD</td><td>mg/L</td><td>'+result.e202B+'</td></tr>' +
                     '<tr><td>氨氮</td><td>mg/L</td><td>'+result.e203F+'</td></tr>' +
                     '<tr><td>总镍</td><td>mg/L</td><td>'+result.e208J+'</td></tr>' +
-                    '<tr><td>PH</td><td>PH</td><td>'+result.e206C+'</td></tr>' +
+                    '<tr><td>PH</td><td>无量纲</td><td>'+result.e206C+'</td></tr>' +
                     '<tr><td>高锰酸盐</td><td>mg/L</td><td>'+result.e211M+'</td></tr>' +
                     '<tr><td>水温</td><td>℃</td><td>'+result.e210L+'</td></tr>';
                 m_tobody.html(str);
@@ -659,13 +662,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type : 'get',
             data : data1,
             success : function (result) {
-                console.log(result);
                 var data = result.list;
-                console.log(data.length);
                 if(data.length > 0){
+                    var remark = data[0].remark,
+                        res = remark.replace(/\[.*?\]/g,''),
+                        res1 = res.replace(/\{|}/g,'');
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
-                        '<span>'+data[0].remark+'</span>' ;
+                        '<span>'+res1+'</span>' ;
                     $("#alarm-list1").html(str);
                 }
                 $('#detection_alarm_num').html(data.length);
@@ -679,13 +683,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type : 'get',
             data : data2,
             success : function (result) {
-                // console.log(result);
                 var data = result.list;
-                // console.log(data.length);
                 if(data.length > 0){
+                    var remark = data[0].remark,
+                        res = remark.replace(/\[.*?\]/g,''),
+                        res1 = res.replace(/\{|}/g,'');
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
-                        '<span>'+data[0].remark+'</span>' ;
+                        '<span>'+res1+'</span>' ;
                     $("#alarm-list2").html(str);
                 }
                 $('#working_alarm_num').html(data.length);
@@ -699,13 +704,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             type : 'get',
             data : data3,
             success : function (result) {
-                console.log(result);
                 var data = result.list;
-                console.log(data.length);
                 if(data.length > 0){
+                    var remark = data[0].remark,
+                        res = remark.replace(/\[.*?\]/g,''),
+                        res1 = res.replace(/\{|}/g,'');
                     var str = '<span>'+data[0].alarmTime+'</span>' +
                         '<span>'+data[0].enterpriseName+'</span>' +
-                        '<span>'+data[0].remark+'</span>' ;
+                        '<span>'+res1+'</span>' ;
                     $("#alarm-list3").html(str);
                 }
                 $('#video_alarm_num').html(data.length);

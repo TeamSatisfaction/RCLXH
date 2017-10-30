@@ -17,15 +17,16 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //载入联网列表
     var loadNetWorkData = function (curr) {
-        var aname = $('#mnName').val(),
+        var mn = $('#mnName').val(),
             data = {
                 pageNumber : curr||1,
                 pageSize : 16,
                 dauMap : {
-                    aname : aname
+                    mn : mn
                 }
             };
         var field = JSON.stringify(data);
+        console.log(field)
         $.ajax({
             url: ''+urlConfig+'/v01/htwl/lxh/jcsjgz/dau/query/page',
             headers: {

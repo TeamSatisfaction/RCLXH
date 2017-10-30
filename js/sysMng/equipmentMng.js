@@ -75,6 +75,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                                     '<td>' + item.equipmentNo + '</td>' +
                                     '<td>' + item.productor + '</td>' +
                                     '<td>' + type_text + '</td>' +
+                                    '<td>' + item.classicType + '</td>' +
                                     '<td>' + item.usedDate + '</td>' +
                                     '<td>' + item.equipmentType + '</td>' +
                                     '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.equipmentMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>' +

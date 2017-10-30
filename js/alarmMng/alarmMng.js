@@ -30,19 +30,23 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         var parent = window.parent.document;    //主页面的DOM
         $(parent).find("#index_frame").attr("src", url);
     };
-    //上传文件
-    layui.upload({
-        url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
-        elem: '#s-alarm',
-        headers : {
-            Authorization:Authorization
-        },
-        method : 'post',
-        success: function(res){
-            console.log(res);
-            return false;
-        }
-    });
+    // //上传文件
+    // layui.upload({
+    //     url : ' http://172.16.1.20:9564/v01/htwl/file/upload',
+    //     elem: '#s-alarm',
+    //     headers : {
+    //         Authorization:Authorization
+    //     },
+    //     method : 'post',
+    //     success: function(res){
+    //         console.log(res);
+    //         return false;
+    //     }
+    // });
+    //遮罩
+    function ityzl_SHOW_LOAD_LAYER(){
+        return layer.msg('加载中...', {icon: 16,shade: [0.5, '#f5f5f5'],scrollbar: false,offset: '0px', time:100000}) ;
+    }
     /*上传图片*/
     var imgSelect = function (input) {
         var formData = new FormData();
@@ -199,8 +203,13 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 Authorization:Authorization
             },
             type : 'get',
-            success : function (result){
-                console.log(result)
+            beforeSend: function () {
+                i = ityzl_SHOW_LOAD_LAYER();
+            },
+            success : function (result) {
+                layer.close(i);
+                layer.msg('加载完成！',{time: 1000,offset: '10px'});
+                // console.log(result)
                 var remark = result.remark,
                     res = remark.replace(/\[.*?\]/g,''),
                     res1 = res.replace(/\{|}/g,'');
@@ -237,7 +246,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     $(".layui-btn").attr('disabled','disabled');
                 }
                 $("#alarmType1").html(result.alarmType);
-                $("#alarmLevel1").html(result.alarmLevel+'级');
+                $("#alarmLevel1").html(result.alarmLevel);
                 $("#alarmTime1").html(result.alarmTime);
                 $("#enterpriseName1").html(result.enterpriseName);
                 $("#remark1").html(res1);
@@ -319,16 +328,13 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                         }
                     })
                 }else if(result.alarmType = '视频报警'){
-                    var qyImg = [{
-                        "url":"../../img/data/002.png"
-                    },{
-                        "url":"../../img/data/001.png"
-                    }
-                    ];
+                    $("#upButton").hide();
+                    var imgarry = result.ruleName.split(",");
+                    console.log(imgarry)
                     //设备照片
                     var qyPhotos = "";
-                    for(var i in qyImg){
-                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ qyImg[i].url +"' style='width: 600px;height: 240px'> </div>"
+                    for(var i=0;i<imgarry.length-1;i++){
+                        qyPhotos += "<div class='silder-main-img lay-img'> <img src='"+ imgarry[i] +"' style='width: 600px;height: 240px'> </div>"
                     }
                     $(".silder-main").html(qyPhotos);
                     //图片点击
@@ -659,7 +665,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         else
             return null;
     };
-    layer.ready(function(){
+    var loadAlarmRole = function () {
         $("#getType").find("li").each(function () {
             $(this).hide();
         });
@@ -672,7 +678,6 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
             type : 'get',
             success : function (msg) {
                 var authList = msg.authList;
-                console.log(authList)
                 layui.each(authList,function (index,item) {
                     if(item.authId == "11"){
                         $("#getType").find("li:eq(0)").show();
@@ -700,7 +705,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                 }
             }
         })
-    });
+    }
     var obj = {
         loadPage : loadPage,
         imgSelect : imgSelect,
@@ -710,7 +715,8 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
         reportAlarmWin : reportAlarmWin,
         closeAlarmWin : closeAlarmWin,
         dealAlarmWin : dealAlarmWin,
-        loadaCharts : loadaCharts
+        loadaCharts : loadaCharts,
+        loadAlarmRole : loadAlarmRole
     };
     exports('alarmMng',obj);
 })

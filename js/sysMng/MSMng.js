@@ -98,17 +98,19 @@ layui.define(['layer','element','laypage','form'],function (exports){
         layer.full(index);
     };
     var addMSWin = function () {
-        layer.open({
+        var index = layer.open({
             title : '新增监控站',
+            moveOut: true,
             type : 2,
             area : ['800px','550px'],
-            content : '../../pages/sysMng/addMsView.html',
+            content : '../../pages/sysMng/addMonitoringView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',
             yes  : function (index,layero) {
                 layero.find("iframe").contents().find('#ms-save').click();
             }
-        })
+        });
+        // layer.full(index);
     };
     //form表单提交
     form.on('submit(formDemo)', function(data){
@@ -149,7 +151,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
             id : id,
             type : 2,
             area : ['800px','500px'],
-            content : '../../pages/sysMng/addMsView.html',
+            content : '../../pages/sysMng/addMonitoringView.html',
             btn: [ '提交','返回'],
             btnAlign: 'c',
             yes  : function (index,layero) {
