@@ -23,7 +23,6 @@
             layui.map.loadCompanySelect();
             layui.map.loadMonthlydata();
             layui.map.loadChartForSite();
-            layui.map.loadAlardata();
             layui.map.loadAlarmData();
         }).link('../../css/style.css'); //加载入口
     </script>
@@ -136,14 +135,16 @@
             </div>
         </div>
     </div>
-    <div class="notification" style="width: 300px;height: 100px;text-align: center">
+    <div class="notification" style="width: 300px;text-align: center">
         <div style="margin-bottom: 15px">
             <p class="remind" style="color: red">报警提醒</p>
-            <span class="time">2017-07-22 04:38:35</span>
+            <span class="time" id="alarmTime"></span>
             <i class="layui-icon" onclick="layui.map.closeNotification()">&#x1006;</i>
         </div>
-        <div class="content" onclick="layui.alarmMng.alarmDetailsWin('3')">
-            重庆市荣昌区江特表面处理厂<br/>后营门污水排放口 COD排放超标<br/>点击处理
+        <div class="content" id="alarmDetails" onclick="layui.map.loadPage('pages/alarmMng/alarmMng.html')">
+            <p id="eName"></p>
+            <p id="remark"></p>
+            <p>点击处理</p>
         </div>
     </div>
     <div class="mapLegend">

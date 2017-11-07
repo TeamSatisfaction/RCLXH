@@ -36,15 +36,17 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             col  = '<col width="60">'+
                 '<col width="350">'+
                 '<col>'+
-                '<col width="100">'+
                 '<col width="120">'+
-                '<col width="100">';
+                '<col width="150">'+
+                // '<col width="150">'+
+                '<col width="120">';
             head = '<tr>'+
                 '<th>序号</th>'+
                 '<th>规则名称</th>'+
                 '<th>仪表名称</th>'+
                 '<th>设备类型</th>'+
                 '<th>监测因子</th>'+
+                // '<th>报警条件</th>'+
                 '<th style="text-align: center">操作</th>'+
                 '</tr>';
             $("#rule-col").html(col);
@@ -88,12 +90,16 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                     }
                                 }
                             });
+                            // var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":(item.oneConditionsName === "大于等于"?">=":(item.oneConditionsName === "小于等于"?"<=":"==")))); //阈值1判断符
+                            // var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":(item.twoConditionsName === "大于等于"?">=":(item.twoConditionsName === "小于等于"?"<=":"==")))):null;//阈值2判断符
+                            // alarmValue = comparisonAlt + item.oneThreshold + (comparison1Alt?('，'+comparison1Alt+item.twoThreshold):'')
                             str = '<tr>' +
                                 '<td>'+(index+1)+'</td>' +
                                 '<td>' + ruleName + '</td>' +
                                 '<td>' + item.fourthLayerEncodingName + '</td>' +
                                 '<td>' + item.firstLayerEncodingName + '</td>' +
                                 '<td>' + item.thirdLayerEncodingName+ '</td>' +
+                                // '<td>' + alarmValue+ '</td>' +
                                 '<td style="text-align: center">' +
                                 '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
                                 '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
@@ -109,13 +115,13 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
             var head1;
             if(type == 'licence_alarm_rule'){
                 url = ''+urlConfig1+'/v02/htwl/alarm/rule/license';
-                head1 = '触发条件(天)';
+                head1 = '触发时间(天)';
             }else if(type == 'biggest_alarm_rule'){
                 url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest';
-                head1 = '触发条件(立方米/秒)';
+                head1 = '触发时间(天)';
             }else if(type == 'total_alarm_rule'){
                 url = ''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total';
-                head1 = '触发条件(吨)';
+                head1 = '触发时间(天)';
             }
             var data = {
                 enterpriseId : id,
@@ -154,6 +160,61 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                 '<td>' + text + '</td>' +
                                 '<td>'+item.rules+'</td>' +
                                 '<td>'+item.remark+'</td>' +
+                                '<td style="text-align: center">' +
+                                '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
+                                '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
+                                '</tr>';
+                            arr.push(str);
+                        })
+                        return arr.join('');
+                    }
+                    ruleTobody.html(render(list, obj.curr));
+                }
+            })
+        }else if(type == 'stop_alarm_rule'){
+            col  = '<col width="60">'+
+                '<col width="350">'+
+                '<col>'+
+                '<col width="120">'+
+                '<col width="150">'+
+                '<col width="120">';
+            head = '<tr>'+
+                '<th>序号</th>'+
+                '<th>规则名称</th>'+
+                '<th>设备名称</th>'+
+                '<th>监测因子</th>'+
+                '<th>报警条件</th>'+
+                '<th style="text-align: center">操作</th>'+
+                '</tr>';
+            $("#rule-col").html(col);
+            $("#rule-head").html(head);
+            var data = {
+                enterpriseId : id,
+                pageNo : curr||1,
+                pageSize : 16
+            };
+            $.ajax({
+                url : ''+urlConfig1+'/v02/htwl/alarm/equipment/stop',
+                type : 'get',
+                data : data,
+                success : function (result){
+                    console.log(result);
+                    var list = result.list,
+                        str = "",
+                        alarmValue,
+                        nums = 16; //每页出现的数据量
+                    var render = function(list, curr){
+                        var arr = []
+                            , thisData = list.concat().splice(curr * nums - nums, nums);
+                        layui.each(thisData, function(index, item) {
+                            // var comparisonAlt = (item.conditionsName === "大于"?">":(item.conditionsName === "小于"?"<":(item.conditionsName === "大于等于"?">=":(item.conditionsName === "小于等于"?"<=":"==")))); //阈值1判断符
+                            alarmValue = item.conditionsName + item.sensorVal;
+                            str = '<tr>' +
+                                '<td>'+(index+1)+'</td>' +
+                                '<td>'+item.equipmentName+'</td>' +
+                                '<td>' +item.sensorEquipmentName+ '</td>' +
+                                '<td>'+item.sensorName+'</td>' +
+                                '<td>'+alarmValue+'</td>' +
                                 '<td style="text-align: center">' +
                                 '<a href="#" onclick="layui.onlineAlarmRuleMng.alterAlarmRuleWin(\''+item.id+'\')" title="编辑"><img src="../../img/mng/alter.png"></a>' +
                                 '&nbsp;&nbsp;&nbsp;<a href="#" onclick="layui.onlineAlarmRuleMng.deleteAlarmRule(\''+item.id+'\')" title="删除"><img src="../../img/mng/delete.png"item.id></a></td>' +
@@ -367,6 +428,72 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                                     layer.close(index); //再执行关闭
                                     loadAlarmRuleList();
                                     addAlarmRuleTime(result.param.id,remark)
+                                })
+                            }
+                        },
+                        error: function(result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2,time:1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == 'stop_alarm_rule'){
+            layer.open({
+                title :"新增设备停运报警规则",
+                id : id,
+                type : 2,
+                moveOut: true,
+                area : ['900px','400px'],
+                content : '../../pages/alarmMng/equipStopAlarmRule.html',
+                btn: [ '提交','返回'],
+                btnAlign: 'c',
+                yes  : function (index,layero) {
+                    var body = layer.getChildFrame('body',index),
+                        equipmentName = body.contents().find("input[name='equipmentName']").val(),  //规则名称
+                        sensorEquipmentName = body.contents().find("select[name='sensorEquipmentName']").find("option:selected").text(),
+                        sensorEquipmentKey = body.contents().find("select[name='sensorEquipmentName']").val(),
+                        sensorName = body.contents().find("select[name='sensorName']").find("option:selected").text(),
+                        sensorKey = body.contents().find("select[name='sensorName']").val(),
+                        conditionsName = body.contents().find("select[name='conditions']").find("option:selected").text(),
+                        conditions = body.contents().find("select[name='conditions']").val(),
+                        sensorVal = body.contents().find("input[name='sensorVal']").val();
+                    var data = {
+                        epId : id,
+                        equipmentName : equipmentName,
+                        sensorEquipmentName : sensorEquipmentName,
+                        sensorEquipmentKey : sensorEquipmentKey,
+                        sensorName : sensorName,
+                        sensorKey : sensorKey,
+                        conditionsName : conditionsName,
+                        conditions : conditions,
+                        sensorVal : sensorVal,
+                        oneLevelKey : "1",
+                        oneLevelType : "1",
+                        oneLevelTime : "1",
+                        twoLevelKey : "2",
+                        twoLevelType : "2",
+                        twoLevelTime : "2",
+                        threeLevelKey : "3",
+                        threeLevelkey : "3",
+                        threeLevelTime : "3",
+                        threeLevelType : "3"
+                    }
+                    $.ajax({
+                        url: '' + urlConfig1 + '/v02/htwl/alarm/equipment/stop',
+                        headers: {
+                            Authorization:Authorization
+                        },
+                        data : data,
+                        type: 'post',
+                        success: function (result) {
+                            console.log(result);
+                            if(result.code == "1000"){
+                                layer.msg('新增规则成功！',{icon:1,time:1000},function () {
+                                    // layer.close();
+                                    layer.close(index); //再执行关闭
+                                    loadAlarmRuleList();
+                                    addAlarmRuleTime(result.param.id)
                                 })
                             }
                         },
@@ -780,7 +907,6 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         data2.threeLevelTime = "999999999";
                     }
                     var field = JSON.stringify(data2);
-                    console.log(field)
                     $.ajax({
                         url:url,
                         headers: {
@@ -788,6 +914,108 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                         },
                         type: 'put',
                         data: data1,
+                        success: function (result) {
+                            if (result.code == '1000') {
+                                layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
+                                    loadAlarmRuleList();
+                                    $.ajax({
+                                        url :''+urlConfig+'/v01/htwl/lxh/alrm/report/time',
+                                        headers : {
+                                            'Content-type': 'application/json;charset=UTF-8',
+                                            Authorization:Authorization
+                                        },
+                                        type : type,
+                                        data : field,
+                                        success : function (result){
+                                            console.log(result)
+                                            if(result.resultcode == "2"){
+                                                layer.msg('修改上报时间成功！', {icon: 1,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }else{
+                                                layer.msg('修改上报时间失败！', {icon: 2,time:1000}, function() {
+                                                    layer.close(index); //再执行关闭
+                                                });
+                                            }
+                                        }
+                                    })
+                                });
+                            }
+                        },
+                        error: function (result) {
+                            var message = result.responseJSON.errors[0].defaultMessage;
+                            layer.msg(message, {icon: 2, time: 1000});
+                        }
+                    })
+                }
+            })
+        }else if(type == "stop_alarm_rule"){
+            layer.open({
+                title: '修改设备停运报警规则',
+                type: 2,
+                id: id,
+                moveOut: true,
+                area: ['1000px', '600px'],
+                content: '../../pages/alarmMng/alterEquipStopAlarmRule.html',
+                btn: ['提交', '返回'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    var body = layer.getChildFrame('body',index),
+                        equipmentName = body.contents().find("input[name='equipmentName']").val(),  //规则名称
+                        sensorEquipmentName = body.contents().find("select[name='sensorEquipmentName']").find("option:selected").text(),
+                        sensorEquipmentKey = body.contents().find("select[name='sensorEquipmentName']").val(),
+                        sensorName = body.contents().find("select[name='sensorName']").find("option:selected").text(),
+                        sensorKey = body.contents().find("select[name='sensorName']").val(),
+                        conditionsName = body.contents().find("select[name='conditions']").find("option:selected").text(),
+                        conditions = body.contents().find("select[name='conditions']").val(),
+                        sensorVal = body.contents().find("input[name='sensorVal']").val();
+                    var threeLevelTime = body.contents().find("input[name='threeLevelTime']").val();
+                    var threeLevelKey = body.contents().find("input[name='threeLevelKey']").val();
+                    var tId = body.contents().find("input[name='id']").val(),
+                        type;
+                    var d={refid : id};
+                    if(tId != ''){
+                        d.id = tId;
+                        type = "put"
+                    }else{
+                        type = "post"
+                    }
+                    body.contents().find("form").find('input,select').each(function(){
+                        d[this.name]=this.value
+                    });
+                    if(threeLevelTime == ""){
+                        d.threeLevelType = '1';
+                        d.threeLevelTime = "999999999";
+                    }
+                    var field = JSON.stringify(d);
+                    var data = {
+                        id : id,
+                        equipmentName : equipmentName,
+                        sensorEquipmentName : sensorEquipmentName,
+                        sensorEquipmentKey : sensorEquipmentKey,
+                        sensorName : sensorName,
+                        sensorKey : sensorKey,
+                        conditionsName : conditionsName,
+                        conditions : conditions,
+                        sensorVal : sensorVal,
+                        oneLevelKey : "1",
+                        oneLevelType : "1",
+                        oneLevelTime : "1",
+                        twoLevelKey : "2",
+                        twoLevelType : "2",
+                        twoLevelTime : "2",
+                        threeLevelKey : "3",
+                        threeLevelkey : "3",
+                        threeLevelTime : "3",
+                        threeLevelType : "3"
+                    }
+                    $.ajax({
+                        url: '' + urlConfig1 + '/v02/htwl/alarm/equipment/stop',
+                        headers: {
+                            'Content-type': 'application/x-www-form-urlencoded'
+                        },
+                        type: 'put',
+                        data: data,
                         success: function (result) {
                             if (result.code == '1000') {
                                 layer.msg('修改规则成功！', {icon: 1, time: 1000}, function () {
@@ -965,6 +1193,31 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
                     // });
                 }
             })
+        }else if(title == '修改设备停运报警规则'){
+            $.ajax({
+                url : ''+urlConfig1+'/v02/htwl/alarm/equipment/stop/'+id+'',
+                type: 'get',
+                success : function (result) {
+                    $("input[name='equipmentName']").val(result.equipmentName);
+                    $("input[name='sensorVal']").val(result.sensorVal);
+                    $("select[name='sensorEquipmentName']").children("option").each(function(){
+                        if (this.text == result.sensorEquipmentName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $("select[name='sensorName']").children("option").each(function(){
+                        if (this.text == result.sensorName) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    $("select[name='conditions']").children("option").each(function(){
+                        if (this.value == result.conditions) {
+                            this.setAttribute("selected","selected");
+                        }
+                    });
+                    form.render('select');
+                }
+            })
         }
     };
     //载入上报时间
@@ -1017,6 +1270,12 @@ layui.define(['layer', 'element','laypage','form'],function (exports) {
            url =''+urlConfig1+'/v02/htwl/aggregation/alarm/rule/online/'+id+'';
         }else if(text == "许可证报警规则"){
             url =''+urlConfig1+'/v02/htwl/alarm/rule/license/'+id+'';
+        }else if(text == "排污最大流量报警规则"){
+            url =''+urlConfig1+'/v02/htwl/alarm/rule/sewage/biggest/'+id+'';
+        }else if(text == "排污总量报警规则"){
+            url =''+urlConfig1+'/v02/htwl/alarm/rule/sewage/total/'+id+'';
+        }else if(text == "设备停运报警规则"){
+            url =''+urlConfig1+'/v02/htwl/alarm/equipment/stop/'+id+'';
         }
         layer.msg('是否确定删除该规则', {
             icon: 3,

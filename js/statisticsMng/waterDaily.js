@@ -66,36 +66,45 @@ layui.define(['layer','element','layedit','laypage'], function(exports) {
                     layui.each(result, function(index, item){
                         var valueObj = {}
                         for (var j in item.avgList){
-                            valueObj[item.avgList[j].codeName] = item.avgList[j].avg;
+                            if(item.avgList[j].codeName){
+                                valueObj[item.avgList[j].codeName] = item.avgList[j].avg;
+                            }
                         }
-                        str = '<tr>' +
-                            '<td>'+(index+1)+'</td>' +
-                            '<td>' + item.name + '</td>' +
-                            '<td>' + valueObj.废水流量 + '</td>' +
-                            '<td>' + valueObj.COD + '</td>' +
-                            '<td>' + valueObj.氨氮 + '</td>' +
-                            '<td>' + valueObj.总磷 + '</td>' +
-                            '<td>' + valueObj.总氮 + '</td>' +
-                            '<td>' + valueObj.PH + '</td>' +
-                            '<td>' + valueObj.六价铬 + '</td>' +
-                            '<td>' + valueObj.总镍 + '</td>' +
-                            '<td>' + valueObj.生物毒性 + '</td>' +
-                            '<td>' + valueObj.温度 + '</td>' +
-                            '<td>' + valueObj.高锰酸盐 + '</td>' +
-                            '<td>' + valueObj.浊度 + '</td>' +
-                            '<td>' + valueObj.电导率 + '</td>' +
-                            '<td>' + valueObj.溶解氧 + '</td>' +
-                            '<td>' + valueObj.总电量 + '</td>' +
-                            // '<td>' + item.head + '</td>' +
-                            // '<td>' + item.headPhone+ '</td>' +
-                            // '<td>' + item.lon + '</td>' +
-                            // '<td>' + item.lat + '</td>' +
-                            '</tr>';
-                        arr.push(str.replace(/undefined/g, '-'));
+                        console.log(valueObj)
+                        if(JSON.stringify(valueObj) != "{}"){
+                            str = '<tr>' +
+                                '<td></td>' +
+                                '<td>' + item.name + '</td>' +
+                                '<td>' + valueObj.废水流量 + '</td>' +
+                                '<td>' + valueObj.COD + '</td>' +
+                                '<td>' + valueObj.氨氮 + '</td>' +
+                                '<td>' + valueObj.总磷 + '</td>' +
+                                '<td>' + valueObj.总氮 + '</td>' +
+                                '<td>' + valueObj.PH + '</td>' +
+                                '<td>' + valueObj.六价铬 + '</td>' +
+                                '<td>' + valueObj.总镍 + '</td>' +
+                                '<td>' + valueObj.生物毒性 + '</td>' +
+                                '<td>' + valueObj.温度 + '</td>' +
+                                '<td>' + valueObj.高锰酸盐 + '</td>' +
+                                '<td>' + valueObj.浊度 + '</td>' +
+                                '<td>' + valueObj.电导率 + '</td>' +
+                                '<td>' + valueObj.溶解氧 + '</td>' +
+                                '<td>' + valueObj.总电量 + '</td>' +
+                                // '<td>' + item.head + '</td>' +
+                                // '<td>' + item.headPhone+ '</td>' +
+                                // '<td>' + item.lon + '</td>' +
+                                // '<td>' + item.lat + '</td>' +
+                                '</tr>';
+                            arr.push(str.replace(/undefined/g, '-'));
+                        }
                     });
                     return arr.join('');
                 };
                 $("#fsrbb-list").html(render(result));
+                var len = $('#fsrbb-list tr').length;
+                for(var i = 0;i<len;i++){
+                    $('#fsrbb-list tr:eq('+i+') td:first').text(i+1);
+                }
                 //调用分页
                 // laypage({
                 //     cont: 'demo1',

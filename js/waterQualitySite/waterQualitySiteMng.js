@@ -570,8 +570,8 @@ layui.define(['layer', 'element','layedit','form'],function (exports){
                         case "总磷" :
                             item.factorName = "总磷(mg/L)";
                             break;
-                        case "高锰酸盐" :
-                            item.factorName = "高锰酸盐(mg/L)";
+                        case "高锰酸盐指数" :
+                            item.factorName = "高锰酸盐指数(mg/L)";
                             break;
                         case "氨氮" :
                             item.factorName = "氨氮(mg/L)";

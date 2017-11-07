@@ -135,6 +135,9 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             case "working_alarm":
                                 item.alarmType = '设备工况报警'
                                 break;
+                            case "other_alarm":
+                                item.alarmType = '其他报警'
+                                break;
                         }
                        switch (item.status){
                            case "0":
@@ -223,7 +226,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     case "working_alarm":
                         result.alarmType = '设备工况报警'
                         break;
-                    case "working_alarm":
+                    case "other_alarm":
                         result.alarmType = '其他报警'
                         break;
                 }
@@ -327,7 +330,7 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                             loadaCharts(code,codeName,arr);
                         }
                     })
-                }else if(result.alarmType = '视频报警'){
+                }else if(result.alarmType == '视频分析报警'){
                     $("#upButton").hide();
                     var imgarry = result.ruleName.split(",");
                     console.log(imgarry)
@@ -422,7 +425,12 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     success: function (result){
                         console.log(result);
                         if(result.resultdesc == '成功'){
-                            layer.msg('提交成功！', {icon: 1,time:1000},function () {
+                            layer.msg('上报成功！', {icon: 1,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
+                        }else{
+                            layer.msg('上报失败！', {icon: 2,time:1000},function () {
                                 layer.close(index);
                                 parent.location.reload(); // 父页面刷新
                             });
@@ -467,9 +475,15 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     success: function (result){
                         console.log(result);
                         if(result.resultdesc == '成功'){
-                            layer.msg('关闭成功！', {icon: 1});
-                            layer.close(index);
-                            parent.location.reload(); // 父页面刷新
+                            layer.msg('关闭成功！', {icon: 1,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
+                        }else{
+                            layer.msg('关闭失败！', {icon: 2,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
                         }
                     }
                 })
@@ -491,43 +505,39 @@ layui.define(['layer','element','layedit','laypage','upload','form'], function(e
                     dealRemark = $('#desc1').val(),
                     attachment = $("input[name=nonefiles]").val();
                     // attachment = 'http://static.cqhtwl.com.cn/txt/2017-07-21/756195ccdd994085b3cb91ccca00b2f8.txt';
-                if(attachment == ''){
-                    layer.msg('上传附件失败！', {icon: 2});
-                }else{
-                    var data = {
-                        alarmId : alarmId,
-                        dealTime : dealTime,
-                        dealRemark : dealRemark,
-                        attachment : attachment,
-                        status  : '1'
-                    };
-                    var field = JSON.stringify(data);
-                    console.log(data);
-                    $.ajax({
-                        url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
-                        // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/deal",
-                        headers : {
-                            'Content-type': 'application/json;charset=UTF-8',
-                            Authorization:Authorization
-                        },
-                        data : field,
-                        type : 'post',
-                        success: function (result){
-                            console.log(result);
-                            if(result.resultdesc == '成功'){
-                                layer.msg('处理成功！', {icon: 1,time:1000},function () {
-                                    layer.close(index);
-                                    parent.location.reload(); // 父页面刷新
-                                });
-                            }else{
-                                layer.msg('处理失败！', {icon: 2,time:1000},function () {
-                                    layer.close(index);
-                                    parent.location.reload(); // 父页面刷新
-                                });
-                            }
+                var data = {
+                    alarmId : alarmId,
+                    dealTime : dealTime,
+                    dealRemark : dealRemark,
+                    attachment : attachment,
+                    status  : '1'
+                };
+                var field = JSON.stringify(data);
+                console.log(data);
+                $.ajax({
+                    url: ""+urlConfig+"/v01/htwl/lxh/alrm/deal",
+                    // url: "http://172.21.92.236:8095/v01/htwl/lxh/alrm/deal",
+                    headers : {
+                        'Content-type': 'application/json;charset=UTF-8',
+                        Authorization:Authorization
+                    },
+                    data : field,
+                    type : 'post',
+                    success: function (result){
+                        console.log(result);
+                        if(result.resultdesc == '成功'){
+                            layer.msg('处理成功！', {icon: 1,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
+                        }else{
+                            layer.msg('处理失败！', {icon: 2,time:1000},function () {
+                                layer.close(index);
+                                parent.location.reload(); // 父页面刷新
+                            });
                         }
-                    })
-                }
+                    }
+                })
             }
         });
     };

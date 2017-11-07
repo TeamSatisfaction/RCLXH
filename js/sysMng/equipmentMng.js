@@ -29,6 +29,7 @@ layui.define(['layer', 'element','laypage','form', 'laytpl'],function (exports){
                     dauId : dauId
                 }
             };
+            console.log(dauId)
         var field = JSON.stringify(data);
         if(dauId != '') {
             $.ajax({

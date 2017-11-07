@@ -14,7 +14,8 @@
         }).extend({
             onlineAlarmRuleMng :  'alarmMng/onlineAlarmRuleMng',
         }).use('onlineAlarmRuleMng',function () {
-
+            layui.onlineAlarmRuleMng.loadEquipmentSelect();
+            layui.onlineAlarmRuleMng.loadFactorSelect();
         }); //加载入口
     </script>
 </head>
@@ -22,28 +23,46 @@
 <div class="layui-layout-admin add-form" style="margin-top: 10px;text-align: center">
     <form class="layui-form" action="" style="text-align: center">
         <div class="layui-form-item">
+            <div class="layui-inline" style="width: calc(90% + 15px);">
+                <label class="layui-form-label">规则名称：</label>
+                <input name="equipmentName" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="">
+            </div>
+        </div>
+        <div class="layui-form-item">
             <div class="layui-inline">
-                <label class="layui-form-label">报警处理方式：</label>
+                <label class="layui-form-label">设备名称：</label>
                 <div class="layui-input-inline">
-                    <select  lay-verify="required" lay-search="" name="rulesType" id="rulesType">
+                    <select  lay-verify="required" lay-search="" name="sensorEquipmentName" id="fourth_layer_encoding_name">
                         <option value="">--请选择--</option>
-                        <option value="">--请选择--</option>
-                        <option value="0">触发报警</option>
-                        <option value="1">自动关闭报警</option>
                     </select>
                 </div>
             </div>
             <div class="layui-inline">
-                <label class="layui-form-label">触发条件：</label>
-                <input autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="required" name="rules" id="rules">
+                <label class="layui-form-label">监测因子：</label>
+                <div class="layui-input-inline">
+                    <select  lay-verify="required" lay-search="" name="sensorName" id="third_layer_encoding_name">
+                        <option value="">--请选择--</option>
+                    </select>
+                </div>
             </div>
         </div>
         <div class="layui-form-item">
-            <div class="layui-inline" style="width: calc(90% + 20px);">
-                <label class="layui-form-label">报警规则描述：</label>
-                <div class="layui-input-block">
-                    <textarea  class="layui-textarea" name="remark" id="remark" style="margin-left: -20px;width: calc(100% - 80px);"></textarea>
+            <div class="layui-inline">
+                <label class="layui-form-label">报警条件：</label>
+                <div class="layui-input-inline">
+                    <select name="conditions"  lay-search="" id="conditions">
+                        <option value="">--请选择--</option>
+                        <option value="ne">大于</option>
+                        <option value="lt">小于</option>
+                        <option value="eq">等于</option>
+                        <option value="gt">大于等于</option>
+                        <option value="le">小于等于</option>
+                    </select>
                 </div>
+            </div>
+            <div class="layui-inline">
+                <label class="layui-form-label">阈值：</label>
+                <input name="sensorVal" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="">
             </div>
         </div>
     </form>

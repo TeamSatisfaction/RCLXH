@@ -570,6 +570,7 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         };
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/online/monitor',
+            // url :' http://172.21.92.236:8095/v01/htwl/lxh/online/monitor',
             headers : {
                 Authorization:Authorization
             },
@@ -587,62 +588,64 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
                     $("#jiance-table").html(result.resultdesc)
                 }else{
                     layui.each(result,function (index,item){
-                        switch (item.factorName){
-                            case "COD" :
-                                item.factorName = "COD(mg/L)";
-                                break;
-                            case "总磷" :
-                                item.factorName = "总磷(mg/L)";
-                                break;
-                            case "高锰酸盐" :
-                                item.factorName = "高锰酸盐(mg/L)";
-                                break;
-                            case "氨氮" :
-                                item.factorName = "氨氮(mg/L)";
-                                break;
-                            case "生物毒性" :
-                                item.factorName = "生物毒性(%)";
-                                break;
-                            case "温度" :
-                                item.factorName = "温度(℃)";
-                                break;
-                            case "浊度" :
-                                item.factorName = "浊度(FTU)";
-                                break;
-                            case "PH" :
-                                item.factorName = "PH(无量纲)";
-                                break;
-                            case "电导率" :
-                                item.factorName = "电导率(μS/cm)";
-                                break;
-                            case "溶解氧" :
-                                item.factorName = "溶解氧(mg/L)";
-                                break;
-                        };
-                        head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
-                        colsNum1.append(head1);
-                        head2 = '<th>实测值</th>'+
-                            '<th>阈值</th>';
-                        colsNum2.append(head2);
-                        //onlineData 整理数据
-                        layui.each(item.onlineData,function (dataIndex,dataItem){
-                            if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
-                                tbodyData[dataItem.dataTime] = [];
-                            }
-                            if(item.oneThreshold){                              //放阈值
-                                var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":"="));   //阈值1
-                                var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":"==")); //阈值1判断符
-                                var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":"=")):null; //阈值2
-                                var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":"==")):null;//阈值2判断符
+                        if(item.onlineData.length > 0){
+                            switch (item.factorName){
+                                case "COD" :
+                                    item.factorName = "COD(mg/L)";
+                                    break;
+                                case "总磷" :
+                                    item.factorName = "总磷(mg/L)";
+                                    break;
+                                case "高锰酸盐" :
+                                    item.factorName = "高锰酸盐(mg/L)";
+                                    break;
+                                case "氨氮" :
+                                    item.factorName = "氨氮(mg/L)";
+                                    break;
+                                case "生物毒性" :
+                                    item.factorName = "生物毒性(%)";
+                                    break;
+                                case "温度" :
+                                    item.factorName = "温度(℃)";
+                                    break;
+                                case "浊度" :
+                                    item.factorName = "浊度(FTU)";
+                                    break;
+                                case "PH" :
+                                    item.factorName = "PH(无量纲)";
+                                    break;
+                                case "电导率" :
+                                    item.factorName = "电导率(μS/cm)";
+                                    break;
+                                case "溶解氧" :
+                                    item.factorName = "溶解氧(mg/L)";
+                                    break;
+                            };
+                            head1 = '<th colspan="2" data-code="'+item.factorCode+'">'+item.factorName+'</th>';
+                            colsNum1.append(head1);
+                            head2 = '<th>实测值</th>'+
+                                '<th>阈值</th>';
+                            colsNum2.append(head2);
+                            //onlineData 整理数据
+                            layui.each(item.onlineData,function (dataIndex,dataItem){
+                                if(!tbodyData.hasOwnProperty(dataItem.dataTime)){   //如果没有该时间则新增字段
+                                    tbodyData[dataItem.dataTime] = [];
+                                }
+                                if(item.oneThreshold){                              //放阈值
+                                    var comparison = (item.oneConditionsName === "大于"?"≤":(item.oneConditionsName === "小于"?"≥":(item.oneConditionsName === "大于等于"?"＜":(item.oneConditionsName === "小于等于"?"＞":"="))));   //阈值1
+                                    var comparisonAlt = (item.oneConditionsName === "大于"?">":(item.oneConditionsName === "小于"?"<":(item.oneConditionsName === "大于等于"?">=":(item.oneConditionsName === "小于等于"?"<=":"==")))); //阈值1判断符
+                                    var comparison1 = item.twoThreshold?(item.twoConditionsName === "大于"?"≤":(item.twoConditionsName === "小于"?"≥":(item.twoConditionsName === "大于等于"?"＜":(item.twoConditionsName === "小于等于"?"＞":"=")))):null; //阈值2
+                                    var comparison1Alt = item.twoThreshold?(item.twoConditionsName === "大于"?">":(item.twoConditionsName === "小于"?"<":(item.twoConditionsName === "大于等于"?">=":(item.twoConditionsName === "小于等于"?"<=":"==")))):null;//阈值2判断符
 
-                                var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
-                                tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
-                                tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('，'+comparison1+item.twoThreshold):''));
-                            }else {
-                                tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
-                                tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
-                            }
-                        });
+                                    var isOver = eval(dataItem.val+comparisonAlt+item.oneThreshold+(comparison1Alt?('||'+dataItem.val+comparison1Alt+item.twoThreshold):''));//判断是否超出阈值
+                                    tbodyData[dataItem.dataTime].push(isOver?('<font color="red">'+dataItem.val+'</font>'):dataItem.val);    //放value
+                                    tbodyData[dataItem.dataTime].push(comparison + item.oneThreshold + (comparison1?('，'+comparison1+item.twoThreshold):''));
+                                }else {
+                                    tbodyData[dataItem.dataTime].push(dataItem.val);    //放value
+                                    tbodyData[dataItem.dataTime].push('-');        //没有阈值，放null占格子
+                                }
+                            });
+                        }
                     });
                     var i = 1;
                     for(var dataTime in tbodyData){
@@ -791,20 +794,37 @@ layui.define(['layer', 'element','laypage','form'],function (exports){
         $("#Prompt").html(Prompt);
         var dataTime = obj.dataTime,  //时间
             sensor = obj.sensor, // "72"
-            equipmentType = obj.equipmentType+obj.equipmentCode, //"d02"
-            xrtd = obj.xrtd, //值
+            equipmentTypes = obj.equipmentType+obj.equipmentCode, //"d02"
+            xrtd, //值
             num,
             cell,
-            arry = [];
+            arry = [],
+            str = '';
+        if(obj.equipmentType == "Z"){
+            xrtd = obj.xcum
+            if(xrtd > 0){
+                str = '正常运行'
+            }
+        }else{
+            if(sensor == "72"){
+                xrtd = obj.xrs
+                if(xrtd == "0"){
+                    str = '设备关闭'
+                }else if(xrtd == "1"){
+                    str = '正常运行'
+                }
+            }else{
+                xrtd = obj.xrtd
+            }
+        }
         var ta = dataTime.split(''),    //可以用正则代替，我不会
             time = ta[0]+ta[1]+ta[2]+ta[3]+'-'+ta[4]+ta[5]+'-'+ta[6]+ta[7]+' '+ta[8]+ta[9]+':'+ta[10]+ta[11]+':'+ta[12]+ta[13];
-        var str = "正常运行";
         $("#list1").find("tr").each(function () {
             arry.push($(this).children('td').eq(1).text())
         })
         layui.each(arry,function (index,item) {
-            if(equipmentType == item){
-                num = index
+            if(equipmentTypes == item){
+                num = index+1
             }
         })
         switch (sensor){

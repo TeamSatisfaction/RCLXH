@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <link href="../../layUi/css/layui.css" rel="stylesheet">
+    <script src="../../layUi/layui.js"></script>
+    <script>
+        layui.link('../../css/style.css');
+        layui.config({
+            base: '../../js/' //你的模块目录
+        }).extend({
+            onlineAlarmRuleMng :  'alarmMng/onlineAlarmRuleMng',
+        }).use('onlineAlarmRuleMng',function () {
+            layui.onlineAlarmRuleMng.loadEquipmentSelect();
+            layui.onlineAlarmRuleMng.loadFactorSelect();
+            layui.onlineAlarmRuleMng.loadRoleSelect();
+        }); //加载入口
+    </script>
+</head>
+<body>
+<div class="layui-layout-admin add-form">
+    <form class="layui-form layui-collapse" action="" id="rule_form" method="post">
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">基本信息</h2>
+            <div class="layui-colla-content layui-show" style="margin-left: 30px">
+                <div class="layui-form-item">
+                    <div class="layui-inline" style="width: calc(90% + 15px);">
+                        <label class="layui-form-label">规则名称：</label>
+                        <input name="equipmentName" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">设备名称：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="required" lay-search="" name="sensorEquipmentName" id="fourth_layer_encoding_name">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">监测因子：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="required" lay-search="" name="sensorName" id="third_layer_encoding_name">
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">报警条件：</label>
+                        <div class="layui-input-inline">
+                            <select name="conditions"  lay-search="" id="conditions">
+                                <option value="">--请选择--</option>
+                                <option value="ne">大于</option>
+                                <option value="lt">小于</option>
+                                <option value="eq">等于</option>
+                                <option value="gt">大于等于</option>
+                                <option value="le">小于等于</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">阈值：</label>
+                        <input name="sensorVal" autocomplete="off" class="layui-input layui-input-inline" type="text" lay-verify="">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="layui-colla-item">
+            <h2 class="layui-colla-title">上报时间</h2>
+            <div class="layui-colla-content layui-show" style="margin-left: 30px">
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警类型：</label>
+                        <input name="oneLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="一级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="" lay-search="" name="oneLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">一级报警时间(分)：</label>
+                        <input name="oneLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="required">
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警类型：</label>
+                        <input name="twoLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="二级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="" lay-search="" name="twoLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                        <span class="required">*</span>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">二级报警时间(分)：</label>
+                        <input name="twoLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
+                        <span class="required">*</span>
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警类型：</label>
+                        <input name="threeLevelKey" class="layui-input layui-input-inline" type="text" lay-verify="" value="三级报警">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="margin-top: 15px">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警角色：</label>
+                        <div class="layui-input-inline">
+                            <select  lay-verify="" lay-search="" name="threeLevelType" class="roleSelect">
+                                <option value="">--请选择--</option>
+                                <option value="">--请选择--</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-inline">
+                        <label class="layui-form-label">三级报警时间(分)：</label>
+                        <input name="threeLevelTime" class="layui-input layui-input-inline" type="text" lay-verify="">
+                    </div>
+                </div>
+                <div class="layui-form-item" style="display: none">
+                    <div class="layui-inline">
+                        <label class="layui-form-label">id：</label>
+                        <input name="id" class="layui-input layui-input-inline" type="text" lay-verify="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+</body>
+</html>

@@ -365,7 +365,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
     };
     //载入设备
     var loadEquipmentList = function (curr) {
-        console.log("1")
         var eTobody = $('#equipment-results'),
             id = $(window.parent.document).find('.layui-layer-content').attr('id');//数采仪id
         var data = {
@@ -376,7 +375,6 @@ layui.define(['layer','element','laypage','form'],function (exports){
                 }
             };
         var field = JSON.stringify(data);
-        console.log(data)
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/jcsjgz/equipment/query/page',
             headers : {
@@ -413,7 +411,7 @@ layui.define(['layer','element','laypage','form'],function (exports){
                             '<td>' + item.equipmentNo+ '</td>' +
                             '<td>' + item.productor + '</td>' +
                             '<td>' + type_text + '</td>' +
-                            // '<td>' + item.classicType + '</td>' +
+                            '<td>' + item.classicType + '</td>' +
                             '<td>' + item.usedDate + '</td>' +
                             '<td>' + item.equipmentType + '</td>' +
                             '<td style="text-align: center"><a class="auth-btn" data-authId="44" href="#" onclick="layui.networkMng.equipmentDataWin(\''+item.id+'\')" title="详情"><img src="../../img/mng/details.png"></a>'+

@@ -30,11 +30,51 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
             }
         })
     };
+    //获取日期的前几个月日期
+    var GetPreMonthDay =  function (date,monthNum) {
+        var dateArr = date.split('-');
+        var year = dateArr[0]; //获取当前日期的年份
+        var month = dateArr[1]; //获取当前日期的月份
+        var day = dateArr[2]; //获取当前日期的日
+        var days = new Date(year, month, 0);
+        days = days.getDate(); //获取当前日期中月的天数
+        var year2 = year;
+        var month2 = parseInt(month) - monthNum;
+        if (month2 <=0) {
+            year2 = parseInt(year2) - parseInt(month2 / 12 == 0 ? 1 : parseInt(month2) / 12);
+            month2 = 12 - (Math.abs(month2) % 12);
+        }
+        // var day2 = day;
+        // var days2 = new Date(year2, month2, 0);
+        // days2 = days2.getDate();
+        // if (day2 > days2) {
+        //     day2 = days2;
+        // }
+        if (month2 < 10) {
+            month2 = '0' + month2;
+        }
+        var t2 = year2 + '-' + month2 + '-' + "01";
+        // console.log(t2)
+        return t2;
+    }
     //载入报警趋势
     var loadAlarmTrend = function () {
+        var date = new Date();
+        var seperator1 = "-";
+        var month = date.getMonth() + 1;
+        var strDate = date.getDate();
+        if (month >= 1 && month <= 9) {
+            month = "0" + month;
+        }
+        if (strDate >= 0 && strDate <= 9) {
+            strDate = "0" + strDate;
+        }
+        var currentdate = date.getFullYear() + seperator1 + month + seperator1 + strDate;
+        // console.log(currentdate)
+        var startTime = GetPreMonthDay(currentdate,"4");
         var data = {
-            startTime : "2017-08-01 00:00:00",
-            entTime  : "2017-10-20 23:59:59"
+            startTime : startTime + "00:00:00",
+            entTime  : currentdate+ "23:59:59"
         };
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/alrm/statistics',
@@ -90,7 +130,9 @@ layui.define(['layer','element','layedit','laypage','form'], function(exports){
                 categories : categories
             },
             tooltip: {
-                valueSuffix: '个'
+                valueSuffix: '个',
+                crosshairs: true,
+                shared: true
             },
             yAxis: {
                 title: {

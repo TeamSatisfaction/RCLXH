@@ -49,7 +49,7 @@ layui.define('layer', function(exports){ //提示：模块也可以依赖其它�
             areaCode : '500000-500153'
         };
         var field = JSON.stringify(data);
-        console.log(field)
+        // console.log(field)
         $.ajax({
             url :''+urlConfig+'/v01/htwl/lxh/enterprise/page',
             // url :' http://172.21.92.236:8095/v01/htwl/lxh/enterprise/page',

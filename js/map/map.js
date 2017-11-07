@@ -141,6 +141,10 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
                     drawLine(obj.xrtd);
                 }
             }
+            if(!obj.mn){
+                console.log(obj)
+                showNotification(obj)
+            }
         }
     };
     //转换时间格式
@@ -323,14 +327,21 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
     }
 
     /*新报警提示*/
-    // function showNotification() {
-    //     $(".notification").slideDown();
-    //     setTimeout('layui.map.closeNotification()', 20000)
-    // }
-    // function closeNotification() {
-    //     $(".notification").slideUp();
-    // }
-    // setInterval('layui.map.showNotification()', 10000);
+    function showNotification(obj) {
+        var remark = obj.remark,
+            res = remark.replace(/\[.*?\]/g,''),
+            res1 = res.replace(/\{|}/g,'');
+        var date=changeTime(new Date(obj.alarmTime));
+        $("#alarmTime").html(date);
+        $("#eName").html(obj.enterpriseName);
+        $("#remark").html(res1);
+        $(".notification").slideDown();
+        setTimeout('layui.map.closeNotification()', 20000)
+    }
+    function closeNotification() {
+        $(".notification").slideUp();
+    }
+    // setInterval('layui.map.showNotification()', 1000);
 
     //企业select
     function loadCompanySelect() {
@@ -341,7 +352,7 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
             },
             type: 'get',
             success: function (result) {
-                console.log(result)
+                // console.log(result)
                 $("#c_select").empty();
                 if(result == null){
                     $("#c_select").append("<option value='' selected='selected'>无企业</option>");
@@ -558,24 +569,24 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         //     }
         // })
     });
-    //报警信息
-    function loadAlardata() {
-        var data = {
-            pageNo : 1,
-            pageSize : 10000
-        };
-        $.ajax({
-            url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
-            headers : {
-                Authorization:Authorization
-            },
-            type : 'get',
-            data : data,
-            success : function (result){
-                console.log(result);
-            }
-        })
-    }
+    // //报警信息
+    // function loadAlardata() {
+    //     var data = {
+    //         pageNo : 1,
+    //         pageSize : 10000
+    //     };
+    //     $.ajax({
+    //         url :''+urlConfig+'/v01/htwl/lxh/alrm/query',
+    //         headers : {
+    //             Authorization:Authorization
+    //         },
+    //         type : 'get',
+    //         data : data,
+    //         success : function (result){
+    //             console.log(result);
+    //         }
+    //     })
+    // }
     //环境统计list
     function loadMonthlydata() {
         var myDate = new Date(),
@@ -723,14 +734,14 @@ layui.define(['layer', 'element', 'layedit','form'], function(exports){ //提示
         btnClick : btnClick,
         loadPage: loadPage,
         close: close,
-        // showNotification:showNotification,
-        // closeNotification:closeNotification,
+        showNotification:showNotification,
+        closeNotification:closeNotification,
         // searchCharts : searchCharts,
         loadChartForSite : loadChartForSite,
         loadCompanySelect : loadCompanySelect,
         loadDauSelect:loadDauSelect,
         loadFactorSelect : loadFactorSelect,
-        loadAlardata : loadAlardata,
+        // loadAlardata : loadAlardata,
         loadMonthlydata : loadMonthlydata,
         loadAlarmData : loadAlarmData
     });
